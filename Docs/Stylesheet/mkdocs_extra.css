@@ -1,0 +1,110 @@
+.md-typeset h1 {
+  font-size: 2em;
+  font-weight: 900;
+  line-height: 0; 
+  margin: 0 0 1.25em;
+  letter-spacing: -.01em
+}
+
+.md-typeset h2 {
+  font-weight: 700;
+  letter-spacing: -.01em
+}
+
+.md-typeset h2 {
+  font-size: 1.5625em;
+  line-height: 1.4;
+  margin: 1.6em 0 .64em
+}
+
+.md-typeset h3 {
+  font-size: 1.25em;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.5;
+  margin: 1.6em 0 .8em
+}
+
+.md-typeset h2+h3 {
+  margin-top: .8em
+}
+
+.md-typeset h4 {
+  font-weight: 700;
+  letter-spacing: -.01em;
+  margin: 1em 0
+}
+
+.md-typeset h5,
+.md-typeset h6 {
+  color: var(--md-default-fg-color--light);
+  font-size: .8em;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  margin: 1.25em 0
+}
+
+.md-typeset h5 {
+  text-transform: uppercase
+}
+
+.md-typeset img {
+  box-shadow: 1px 5px 10px 1px #898989;
+  border-radius: 0px;
+  border: 0px;
+  height: auto;
+  max-width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.md-typeset code {
+  border-radius: .1rem;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  font-size: .85em;
+  padding: 0 .2941176471em;
+  margin: 0.2rem;
+  word-break: break-word
+}
+
+
+.md-typeset blockquote {
+  color: var(--md-default-fg-color--light);
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  /* padding-top: .5em;
+  padding-bottom: 0.1rem; */
+  /* font-size:medium;
+  font-family: var(--font-mono);
+  font-weight: 400; */
+}
+ 
+@media screen and (min-width:100em) {
+  html {
+      font-size: 125.0%
+  }
+}
+
+@media screen and (min-width:125em) {
+  html {
+      font-size: 150%
+  }
+}
+
+.md-grid {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80rem
+}
+
+/* body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --md-text-font-family: var(--md-text-font, _), -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+  --md-code-font-family: var(--md-code-font, _), SFMono-Regular, Consolas, Menlo, monospace;
+  text-shadow: 0px 0px 2px #AAAAAA
+} */

@@ -1,0 +1,3 @@
+[submodule "Source/0-QEngineUtilities"]
+	path = Source/0-QEngineUtilities
+	url = https://github.com/Italink/QEngineUtilities.git

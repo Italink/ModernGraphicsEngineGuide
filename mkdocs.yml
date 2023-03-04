@@ -1,0 +1,128 @@
+site_name: Modern Graphics Engine Guide
+copyright: Copyright &copy; 2016 - 2023 Italink
+docs_dir: Docs
+repo_url: https://github.com/Italink/ModernGraphicsEngineGuide
+repo_name: Github
+nav:
+    - '开篇' : 'README.md'
+    - C++:
+        - '0 - 计算机发展史': '00-C++/1.计算机发展史.md'
+        - '1 - C++基础': '00-C++/2.C++基础.md'
+        - '2 - 工具链': '00-C++/3.工具链.md'
+        - '3 - 宏、模板、反射': '00-C++/4.宏、模板、反射.md'
+        - '4 - 内存管理': '00-C++/5.内存管理.md'
+        - '5 - GUI': '00-C++/6.GUI.md'
+    - '图形API':
+        - "0 - 概述" : "01-GraphicsAPI/0.概述.md"
+        - "1 - 渲染窗口" : ""
+        - "2 - 着色器" : ""
+        - "3 - 缓冲区" : ""
+        - "4 - 纹理" : ""
+        - "5 - 混合与测试" : ""
+        - "6 - 实例化" : ""
+        - "7 - 多渲染目标" : ""
+        - "8 - 离屏渲染" : ""
+        - "9 - 间接渲染" : ""
+    - '引擎技术':
+        - "0 - 渲染架构" : "02-EngineTechnology/Waitting.md"
+        - "1 - 编辑器" : ""
+        - "2 - DebugDraw" : ""
+        - "3 - GPU调试" : ""
+    - '图形技术':
+        - '0 - 网格体渲染': "03-GraphicsTechnology/Waitting.md"
+        - '1 - 天空盒':  ""
+        - '2 - GPU粒子':  ""
+        - '3 - 后期滤镜':  ""
+        - '4 - 光照':  ""
+        - '5 - 体积雾':  ""
+        - '6 - 天空大气':  ""
+        - '7 - 地形':  ""
+theme:
+    icon:
+        repo: fontawesome/brands/github
+    language: zh
+    name: material
+    custom_dir: Docs/Stylesheet
+    features:
+        - content.code.annotate
+        - content.code.copy
+        - content.tooltips
+        - navigation.expand
+        - navigation.footer
+        - navigation.indexes
+        - navigation.sections
+        - navigation.instant
+        - navigation.tabs
+        - navigation.top
+        - navigation.tracking
+        - search.highlight
+        - search.share
+        - search.suggest
+        - toc.follow
+        - announce.dismiss
+    palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+plugins:
+    - glightbox
+    - search:
+        separator: '[\s\u200b\-]'
+    - git-revision-date-localized:
+        enable_creation_date: true
+        type: iso_datetime
+    - git-committers:
+        repository: Italink/ModernGraphicsEngineGuide
+        branch: main
+        docs_path: Docs
+        enabled: true
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Italink
+    - icon: simple/zhihu
+      link: https://www.zhihu.com/people/italink
+  copyright: Copyright &copy; 2016 - 2020 Martin Donath
+markdown_extensions:
+    - abbr
+    - admonition
+    - def_list
+    - footnotes
+    - md_in_html
+    - toc:
+        permalink: true
+    - pymdownx.arithmatex:
+        generic: true
+    - pymdownx.betterem:
+        smart_enable: all
+    - pymdownx.caret
+    - pymdownx.details
+    - pymdownx.highlight:
+        anchor_linenums: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - pymdownx.superfences
+    - pymdownx.inlinehilite
+    - pymdownx.keys
+    - pymdownx.magiclink:
+        repo_url_shorthand: true
+        user: squidfunk
+        repo: mkdocs-material
+    - pymdownx.mark
+    - pymdownx.smartsymbols
+    - pymdownx.tabbed:
+        alternate_style: true
+    - pymdownx.tasklist:
+        custom_checkbox: true
+    - pymdownx.tilde
+extra_css:
+  - Stylesheet/mkdocs_extra.css
+
