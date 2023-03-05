@@ -2,7 +2,7 @@
 #include <QProcess>
 #include <QFile>
 #include <QDir>
-#include "private\qshaderbaker_p.h"
+#include "private/qshaderbaker_p.h"
 
 QShader newShaderFromCode(QShader::Stage stage, const char* code) {
 	QShaderBaker baker;

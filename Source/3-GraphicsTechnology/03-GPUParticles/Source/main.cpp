@@ -1,7 +1,7 @@
 #include <QApplication>
 #include "QRenderWidget.h"
-#include "Render/RenderPass/QSceneOutputRenderPass.h"
-#include "Render/RenderComponent/QParticlesRenderComponent.h"
+#include "Render/Pass/QSceneForwardRenderPass.h"
+#include "Render/Component/QParticlesRenderComponent.h"
 
 int main(int argc, char** argv) {
 	qputenv("QSG_INFO", "1");
@@ -12,11 +12,12 @@ int main(int argc, char** argv) {
 	widget.setupCamera();
 	widget.setFrameGraph(
 		QFrameGraphBuilder::begin()
-		->addPass("Triangle", (new QSceneOutputRenderPass())
-			->addRenderComponent((new QParticlesRenderComponent())
+		->addPass("Particles", (new QSceneForwardRenderPass())
+			->addRenderComponent(
+				(new QParticlesRenderComponent())
 			)
 		)
-		->end()
+		->end("Particles",QSceneForwardRenderPass::BaseColor)
 	);
 	widget.resize({ 800,600 });
 	widget.show();

@@ -1,7 +1,7 @@
 #include <QApplication>
 #include "QRenderWidget.h"
-#include "Render/RenderPass/QSceneOutputRenderPass.h"
-#include "Render/RenderComponent/QSkyboxRenderComponent.h"
+#include "Render/Pass/QSceneForwardRenderPass.h"
+#include "Render/Component/QSkyboxRenderComponent.h"
 
 int main(int argc, char** argv) {
 	qputenv("QSG_INFO", "1");
@@ -12,16 +12,14 @@ int main(int argc, char** argv) {
 	widget.setupCamera();
 	widget.setFrameGraph(
 		QFrameGraphBuilder::begin()
-		->addPass("Triangle", (new QSceneOutputRenderPass())
+		->addPass("Skybox", (new QSceneForwardRenderPass())
 			->addRenderComponent((new QSkyboxRenderComponent())
 				->setupSkyBoxImage(QImage(RESOURCE_DIR"/Skybox.jpeg"))
 			)
 		)
-		->end()
+		->end("Skybox", QSceneForwardRenderPass::BaseColor)
 	);
 	widget.resize({ 800,600 });
 	widget.show();
 	return app.exec();
 }
-
-#include "main.moc"

@@ -1,8 +1,8 @@
 #include <QApplication>
 #include "QRenderWidget.h"
 #include "Render/QFrameGraph.h"
-#include "Render/RenderPass/QSceneOutputRenderPass.h"
-#include "Render/RenderComponent/QSkeletalMeshRenderComponent.h"
+#include "Render/Pass/QSceneForwardRenderPass.h"
+#include "Render/Component/QSkeletalMeshRenderComponent.h"
 
 int main(int argc, char **argv)
 {
@@ -15,12 +15,12 @@ int main(int argc, char **argv)
 	camera->setRotation(QVector3D(-0.225f, 3.0f, 0.0f));
 	widget.setFrameGraph(
 		QFrameGraphBuilder::begin()
-		->addPass("Triangle", (new QSceneOutputRenderPass())
+		->addPass("SkeletalMesh", (new QSceneForwardRenderPass())
 			->addRenderComponent((new QSkeletalMeshRenderComponent)
 				->setupSkeletalMeshPath(RESOURCE_DIR"/Catwalk Walk Turn 180 Tight R.fbx")
 			)
 		)
-		->end()
+		->end("SkeletalMesh",QSceneForwardRenderPass::BaseColor)
 	);
 	widget.resize({ 800,600 });
 	widget.show();
