@@ -52,11 +52,11 @@ int main(int argc, char** argv) {
 			->setupBlurIter(1)
 			->setupInputTexture(QBlurRenderPass::InpSlot::Src, "BrightPixel", QPixelFilterRenderPass::OutSlot::Result)
 		)
-		->addPass("BloomMerage", (new QBloomMerageRenderPass)
+		->addPass("ToneMapping", (new QBloomMerageRenderPass)
 			->setupInputTexture(QBloomMerageRenderPass::InSlot::Raw, "Scene", QSceneForwardRenderPass::OutSlot::BaseColor)
 			->setupInputTexture(QBloomMerageRenderPass::InSlot::Blur, "BloomBlur", QBlurRenderPass::OutSlot::Result)
 		)
-		->end("BloomMerage", QBloomMerageRenderPass::OutSlot::Result)
+		->end("ToneMapping", QBloomMerageRenderPass::OutSlot::Result)
 		);
 	widget.resize({ 800,600 });
 	widget.show();

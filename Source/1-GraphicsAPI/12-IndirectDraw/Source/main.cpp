@@ -66,7 +66,7 @@ protected:
 		mStorageBuffer.reset(mRhi->newBuffer(QRhiBuffer::Static, QRhiBuffer::StorageBuffer, sizeof(float)));
 		mStorageBuffer->create();
 
-		mIndirectDrawBuffer.reset(mRhi->newVkBuffer(QRhiBuffer::Immutable, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, sizeof(mDispatchParam)));
+		mIndirectDrawBuffer.reset(mRhi->newVkBuffer(QRhiBuffer::Static, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, sizeof(mDispatchParam)));
 		mIndirectDrawBuffer->create();
 
 		mShaderBindings.reset(mRhi->newShaderResourceBindings());
