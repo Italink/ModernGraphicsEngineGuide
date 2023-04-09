@@ -1,0 +1,11 @@
+Model Information:
+* title:	The mandalorian Ship - Starfighter N1
+* source:	https://sketchfab.com/3d-models/the-mandalorian-ship-starfighter-n1-29b17c10beef48ddb868c2ae7c4374df
+* author:	ImADefaultCube117 (https://sketchfab.com/20193dd085)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "The mandalorian Ship - Starfighter N1" (https://sketchfab.com/3d-models/the-mandalorian-ship-starfighter-n1-29b17c10beef48ddb868c2ae7c4374df) by ImADefaultCube117 (https://sketchfab.com/20193dd085) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)

@@ -80,7 +80,7 @@ protected:
 		mShaderBindings.reset(mRhi->newShaderResourceBindings());
 		mShaderBindings->create();
 
-		QShader vs = QRhiEx::newShaderFromCode(QShader::VertexStage, R"(#version 440
+		QShader vs = mRhi->newShaderFromCode(QShader::VertexStage, R"(#version 440
 layout(location = 0) in vec3 position;
 layout(location = 1) in vec4 color;
 layout(location = 0) out vec4 v_color;
@@ -94,7 +94,7 @@ void main(){
 )");
 		Q_ASSERT(vs.isValid());
 
-		QShader fs = QRhiEx::newShaderFromCode(QShader::FragmentStage, R"(#version 440
+		QShader fs = mRhi->newShaderFromCode(QShader::FragmentStage, R"(#version 440
 layout(location = 0) in vec4 v_color;
 layout(location = 0) out vec4 fragColor;
 void main(){

@@ -15,7 +15,7 @@ int main(int argc, char **argv)
 	qputenv("QSG_INFO", "1");
 	QApplication app(argc, argv);
 
-    QSharedPointer<QRhi> rhi = QRhiEx::newRhiEx();
+    QSharedPointer<QRhiEx> rhi = QRhiEx::newRhiEx();
 	QScopedPointer<QRhiTexture> renderTargetTexture;
 	QScopedPointer<QRhiTextureRenderTarget> renderTarget;
 	QScopedPointer<QRhiRenderPassDescriptor> renderTargetDesc;
@@ -53,23 +53,23 @@ int main(int argc, char **argv)
 		mPipeline->setDepthOp(QRhiGraphicsPipeline::Always);
 		mPipeline->setDepthWrite(false);
 
-		QShader vs = QRhiEx::newShaderFromCode(QShader::VertexStage, R"(#version 440
-layout(location = 0) in vec2 position;
-out gl_PerVertex { 
-	vec4 gl_Position;
-};
-void main(){
-    gl_Position = vec4(position,0.0f,1.0f);
-}
-)");
+		QShader vs = rhi->newShaderFromCode(QShader::VertexStage, R"(#version 440
+			layout(location = 0) in vec2 position;
+			out gl_PerVertex { 
+				vec4 gl_Position;
+			};
+			void main(){
+				gl_Position = vec4(position,0.0f,1.0f);
+			}
+		)");
 		Q_ASSERT(vs.isValid());
 
-		QShader fs = QRhiEx::newShaderFromCode(QShader::FragmentStage, R"(#version 440
-layout(location = 0) out vec4 fragColor;
-void main(){
-    fragColor = vec4(0.1f,0.5f,0.9f,1.0f);
-}
-)");
+		QShader fs = rhi->newShaderFromCode(QShader::FragmentStage, R"(#version 440
+			layout(location = 0) out vec4 fragColor;
+			void main(){
+				fragColor = vec4(0.1f,0.5f,0.9f,1.0f);
+			}
+		)");
 		Q_ASSERT(fs.isValid());
 
 		mPipeline->setShaderStages({

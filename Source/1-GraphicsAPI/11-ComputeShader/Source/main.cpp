@@ -58,7 +58,7 @@ protected:
 		mTexture->create();
 
 		mTexturePainter.reset(new TexturePainter);
-		mTexturePainter->setupRhi(mRhi);
+		mTexturePainter->setupRhi(mRhi.get());
 		mTexturePainter->setupRenderPassDesc(mSwapChain->renderPassDescriptor());
 		mTexturePainter->setupSampleCount(mSwapChain->sampleCount());
 		mTexturePainter->setupTexture(mTexture.get());
@@ -68,12 +68,12 @@ protected:
 		mShaderBindings->setBindings({
 			QRhiShaderResourceBinding::bufferLoadStore(0,QRhiShaderResourceBinding::ComputeStage,mStorageBuffer.get()),
 			QRhiShaderResourceBinding::imageLoadStore(1,QRhiShaderResourceBinding::ComputeStage,mTexture.get(),0),
-			});
+		});
 		mShaderBindings->create();
 
 		mPipeline.reset(mRhi->newComputePipeline());
 
-		QShader cs = QRhiEx::newShaderFromCode(QShader::ComputeStage, R"(#version 440
+		QShader cs = mRhi->newShaderFromCode(QShader::ComputeStage, R"(#version 440
 layout(std140, binding = 0) buffer StorageBuffer{
 	int counter;
 }SSBO;

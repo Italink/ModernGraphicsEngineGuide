@@ -109,7 +109,7 @@ protected:
 		mPipeline->setDepthOp(QRhiGraphicsPipeline::Always);
 		mPipeline->setDepthWrite(false);
 
-		QShader vs = QRhiEx::newShaderFromCode(QShader::VertexStage, R"(#version 440
+		QShader vs = mRhi->newShaderFromCode(QShader::VertexStage, R"(#version 440
 layout(location = 0) in vec2 position;
 out gl_PerVertex { 
 	vec4 gl_Position;
@@ -120,7 +120,7 @@ void main(){
 )");
 		Q_ASSERT(vs.isValid());
 
-		QShader fs = QRhiEx::newShaderFromCode(QShader::FragmentStage, R"(#version 440
+		QShader fs = mRhi->newShaderFromCode(QShader::FragmentStage, R"(#version 440
 layout(location = 0) out vec4 fragColor0;
 layout(location = 1) out vec4 fragColor1;
 void main(){
@@ -150,7 +150,7 @@ void main(){
 		mPipeline->create();
 
 		mTexturePainter.reset(new TexturePainter);
-		mTexturePainter->setupRhi(mRhi);
+		mTexturePainter->setupRhi(mRhi.get());
 		mTexturePainter->setupTexture(mTexture0.get());
 		mTexturePainter->setupRenderPassDesc(mSwapChain->renderPassDescriptor());
 		mTexturePainter->setupSampleCount(mSwapChain->sampleCount());

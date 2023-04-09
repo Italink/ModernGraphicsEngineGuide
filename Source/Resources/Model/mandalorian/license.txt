@@ -1,0 +1,11 @@
+Model Information:
+* title:	Mandalorian Blender Model
+* source:	https://sketchfab.com/3d-models/mandalorian-blender-model-0ad6c7b238da405c963f710417285808
+* author:	wintrez (https://sketchfab.com/wintrez)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Mandalorian Blender Model" (https://sketchfab.com/3d-models/mandalorian-blender-model-0ad6c7b238da405c963f710417285808) by wintrez (https://sketchfab.com/wintrez) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

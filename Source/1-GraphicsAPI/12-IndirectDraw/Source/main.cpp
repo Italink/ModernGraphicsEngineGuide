@@ -4,6 +4,7 @@
 #include "Render/Painter/TexturePainter.h"
 #include "private/qrhivulkan_p.h"
 #include "qvulkanfunctions.h"
+#include "private/qvulkandefaultinstance_p.h"
 
 class IndirectDrawWindow : public QRhiWindow {
 private:
@@ -23,6 +24,39 @@ public:
 		sigSubmit.request();
 	}
 protected:
+	void initRhiResource() {
+		mStorageBuffer.reset(mRhi->newBuffer(QRhiBuffer::Static, QRhiBuffer::StorageBuffer, sizeof(float)));
+		mStorageBuffer->create();
+
+		mIndirectDrawBuffer.reset(mRhi->newVkBuffer(QRhiBuffer::Static, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, sizeof(mDispatchParam)));
+		mIndirectDrawBuffer->create();
+
+		mShaderBindings.reset(mRhi->newShaderResourceBindings());
+		mShaderBindings->setBindings({
+			QRhiShaderResourceBinding::bufferLoadStore(0,QRhiShaderResourceBinding::ComputeStage,mStorageBuffer.get()),
+			});
+		mShaderBindings->create();
+		mPipeline.reset(mRhi->newComputePipeline());
+		QShader cs = mRhi->newShaderFromCode(QShader::ComputeStage, R"(#version 440
+			layout(std140, binding = 0) buffer StorageBuffer{
+				int counter;
+			}SSBO;
+			layout (binding = 1, rgba8) uniform image2D Tex;
+
+			void main(){
+				int currentCounter = atomicAdd(SSBO.counter,1);
+			}
+		)");
+		Q_ASSERT(cs.isValid());
+
+		mPipeline->setShaderStage({
+			QRhiShaderStage(QRhiShaderStage::Compute, cs),
+			});
+
+		mPipeline->setShaderResourceBindings(mShaderBindings.get());
+		mPipeline->create();
+	}
+
 	virtual void onRenderTick() override {
 		QRhiRenderTarget* currentRenderTarget = mSwapChain->currentFrameRenderTarget();
 		QRhiCommandBuffer* currentCmdBuffer = mSwapChain->currentFrameCommandBuffer();
@@ -46,7 +80,7 @@ protected:
 		QRhiVulkanNativeHandles* vkHandles = (QRhiVulkanNativeHandles*)mRhi->nativeHandles();
 		auto buffer = mIndirectDrawBuffer->nativeBuffer();
 		VkBuffer vkBuffer = *(VkBuffer*)buffer.objects[0];
-		QVulkanInstance* vkInstance = mRhi->getVkInstance();
+		QVulkanInstance* vkInstance = QVulkanDefaultInstance::instance();
 		vkInstance->deviceFunctions(vkHandles->dev)->vkCmdDispatchIndirect(vkCmdBufferHandle->commandBuffer, vkBuffer, 0);
 		currentCmdBuffer->endComputePass();
 		static QRhiBufferReadbackResult mCtxReader;
@@ -60,39 +94,6 @@ protected:
 		currentCmdBuffer->resourceUpdate(resourceUpdates);
 		mRhi->finish();
 		mDispatchParam[0]++;
-	}
-
-	void initRhiResource() {
-		mStorageBuffer.reset(mRhi->newBuffer(QRhiBuffer::Static, QRhiBuffer::StorageBuffer, sizeof(float)));
-		mStorageBuffer->create();
-
-		mIndirectDrawBuffer.reset(mRhi->newVkBuffer(QRhiBuffer::Static, VK_BUFFER_USAGE_INDIRECT_BUFFER_BIT, sizeof(mDispatchParam)));
-		mIndirectDrawBuffer->create();
-
-		mShaderBindings.reset(mRhi->newShaderResourceBindings());
-		mShaderBindings->setBindings({
-			QRhiShaderResourceBinding::bufferLoadStore(0,QRhiShaderResourceBinding::ComputeStage,mStorageBuffer.get()),
-			});
-		mShaderBindings->create();
-		mPipeline.reset(mRhi->newComputePipeline());
-		QShader cs = QRhiEx::newShaderFromCode(QShader::ComputeStage, R"(#version 440
-layout(std140, binding = 0) buffer StorageBuffer{
-	int counter;
-}SSBO;
-layout (binding = 1, rgba8) uniform image2D Tex;
-
-void main(){
-	int currentCounter = atomicAdd(SSBO.counter,1);
-}
-)");
-		Q_ASSERT(cs.isValid());
-
-		mPipeline->setShaderStage({
-			QRhiShaderStage(QRhiShaderStage::Compute, cs),
-			});
-
-		mPipeline->setShaderResourceBindings(mShaderBindings.get());
-		mPipeline->create();
 	}
 };
 
