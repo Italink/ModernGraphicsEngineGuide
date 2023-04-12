@@ -11,9 +11,8 @@ int main(int argc, char **argv){
 	QRhiWindow::InitParams initParams;
 	initParams.backend = QRhi::Implementation::Vulkan;
 	QRenderWidget widget(initParams);
-	widget.setupCamera();
-
-	auto StaticMesh = QStaticMesh::CreateFromFile(RESOURCE_DIR"/cerberus.fbx");
+	widget.setupCamera()
+		->setPosition(QVector3D(0, 0, 25));
 
 	widget.setFrameGraph(
 		QFrameGraph::Begin()
@@ -21,7 +20,9 @@ int main(int argc, char **argv){
 			QPbrBasePassDeferred::Create("BasePass")
 			.addComponent(
 				QStaticMeshRenderComponent::Create("StaticMesh")
-				.setStaticMesh(StaticMesh)
+				.setStaticMesh(QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian/scene.gltf"))
+				.setTranslate(QVector3D(0, -5, 0))
+				.setRotation(QVector3D(-90, 0, 0))
 			)
 		)
 		.addPass(
@@ -33,6 +34,8 @@ int main(int argc, char **argv){
 			.setTextureIn_Focus("BasePass", QPbrBasePassDeferred::Out::BaseColor)
 			.setTextureIn_LoseFocus("Dilation", QDilationRenderPass::Out::Result)
 			.setTextureIn_Position("BasePass", QPbrBasePassDeferred::Out::Position)
+			.setNear(1)
+			.setFar(2)
 		)
 		.end("DepthOfField", QDepthOfFieldRenderPass::Result)
 	);
