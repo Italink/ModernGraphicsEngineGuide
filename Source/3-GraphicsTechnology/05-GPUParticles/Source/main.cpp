@@ -34,7 +34,7 @@ public:
 			}
 		}
 		params.spawnParams->addParam("MinSize", 0.0f);
-		params.spawnParams->addParam("MaxSize", 0.1f);
+		params.spawnParams->addParam("MaxSize", 0.3f);
 		params.spawnParams->addParam("PositionPool", positionPool, false);
 
 		params.spawnDefine = R"(	

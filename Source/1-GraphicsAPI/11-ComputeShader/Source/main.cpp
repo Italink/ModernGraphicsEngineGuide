@@ -28,11 +28,11 @@ protected:
 		QRhiRenderTarget* currentRenderTarget = mSwapChain->currentFrameRenderTarget();
 		QRhiCommandBuffer* currentCmdBuffer = mSwapChain->currentFrameCommandBuffer();
 
-		if (sigInit.receive()) {
+		if (sigInit.ensure()) {
 			initRhiResource();
 		}
 		QRhiResourceUpdateBatch* resourceUpdates = nullptr;
-		if (sigSubmit.receive()) {
+		if (sigSubmit.ensure()) {
 			resourceUpdates = mRhi->nextResourceUpdateBatch();
 			submitRhiData(resourceUpdates);
 		}
