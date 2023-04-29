@@ -55,7 +55,6 @@ int main(int argc, char** argv) {
 		.end("ToneMapping", QToneMappingRenderPass::Out::Result)
 	);
 
-	widget.resize({ 800,600 });
-	widget.show();
+	widget.showMaximized();
 	return app.exec();
 }

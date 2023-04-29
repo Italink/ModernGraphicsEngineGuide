@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
 		)
 		.end("Sky", QSkyRenderPass::Out::SkyTexture)
 	);
-	widget.resize({ 800,600 });
-	widget.show();
+
+	widget.showMaximized();
 	return app.exec();
 }

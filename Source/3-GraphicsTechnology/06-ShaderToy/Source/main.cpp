@@ -124,7 +124,7 @@ void main(void)
 		)
 		.end("GlslSandbox", QGlslSandboxRenderPass::Out::Output)
 	);
-	widget.resize({ 800,600 });
-	widget.show();
+
+    widget.showMaximized();
 	return app.exec();
 }

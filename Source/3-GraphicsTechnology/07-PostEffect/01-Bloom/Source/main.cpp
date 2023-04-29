@@ -12,25 +12,27 @@ int main(int argc, char** argv) {
 	QRhiWindow::InitParams initParams;
 	initParams.backend = QRhi::Implementation::Vulkan;
 	QRenderWidget widget(initParams);
-	widget.setupCamera();
+	widget.setupCamera()
+		->setPosition(QVector3D(0,0,80));
+
 	widget.setFrameGraph(
 		QFrameGraph::Begin()
 		.addPass(
 			QBasePassForward::Create("BasePass")
 			.addComponent(
 				QParticlesRenderComponent::Create("GPU Particles")
-				.setColor(QColor4D(0.2, 1, 1.8))
+				.setEmitter(new QGpuParticleEmitter)
 			)
 		)
 		.addPass(
 			QPixelFilterRenderPass::Create("BrightPixels")
 			.setTextureIn_Src("BasePass",QBasePassForward::Out::BaseColor)
 			.setFilterCode(R"(
-				const float threshold = 1.0f;
+				const float threshold = 0.5f;
 				void main() {
 					vec4 color = texture(uTexture, vUV);
 					float value = max(max(color.r,color.g),color.b);
-					outFragColor = (1-step(value, threshold)) * color * 100;
+					outFragColor = (1-step(value, threshold)) * color;
 				}
 			)")
 		)
@@ -50,7 +52,7 @@ int main(int argc, char** argv) {
 		)
 		.end("ToneMapping", QToneMappingRenderPass::Out::Result)
 	);
-	widget.resize({ 800,600 });
-	widget.show();
+
+	widget.showMaximized();
 	return app.exec();
 }

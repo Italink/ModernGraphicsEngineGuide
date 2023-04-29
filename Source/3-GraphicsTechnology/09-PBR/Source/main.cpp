@@ -51,8 +51,7 @@ int main(int argc, char** argv) {
 		.end("Lighting", QPbrLightingPass::Out::FragColor)
 	);
 
-	widget.resize({ 800,600 });
-	widget.show();
+	widget.showMaximized();
 
 	return app.exec();
 }

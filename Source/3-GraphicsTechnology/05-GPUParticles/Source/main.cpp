@@ -5,7 +5,6 @@
 #include "Render/Component/QParticlesRenderComponent.h"
 #include "QPainter"
 
-
 class MyGpuParticleEmitter : public QGpuParticleEmitter {
 	Q_OBJECT
 	Q_PROPERTY(QImage PositionSampleImage READ getImage WRITE setImage)
@@ -129,8 +128,7 @@ int main(int argc, char** argv) {
 		.end("BasePass",QBasePassForward::BaseColor)
 	);
 
-	widget.resize({ 800,600 });
-	widget.show();
+	widget.showMaximized();
 	return app.exec();
 }
 

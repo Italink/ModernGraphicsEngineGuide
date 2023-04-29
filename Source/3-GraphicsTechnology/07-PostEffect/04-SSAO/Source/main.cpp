@@ -41,8 +41,7 @@ int main(int argc, char **argv){
 		.end("Blur", QBlurRenderPass::Result)
 	);
 
-	widget.resize({ 800,600 });
-	widget.show();
+	widget.showMaximized();
 	return app.exec();
 }
 

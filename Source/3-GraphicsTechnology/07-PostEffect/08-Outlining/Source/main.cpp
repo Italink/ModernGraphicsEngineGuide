@@ -7,7 +7,6 @@ int main(int argc, char** argv) {
 	QRhiWindow::InitParams initParams;
 	QRenderWidget widget(initParams);
 	widget.setupCamera();
-	widget.resize({ 800,600 });
-	widget.show();
+	widget.showMaximized();
 	return app.exec();
 }

@@ -26,7 +26,6 @@ int main(int argc, char **argv){
 		.end("BasePass", QBasePassForward::BaseColor)
 	);
 
-	widget.resize({ 800,600 });
-	widget.show();
+	widget.showMaximized();
 	return app.exec();
 }
