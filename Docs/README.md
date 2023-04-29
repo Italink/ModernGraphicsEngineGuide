@@ -53,7 +53,7 @@ comments: true
     - [x] [GUI](00-C++/6.GUI.md)
 - 图形 API
     - [x] [概述](01-GraphicsAPI/0.概述.md)
-    - [x] [渲染窗口](01-GraphicsAPI/1.渲染窗口.md)
+    - [x] [基础](01-GraphicsAPI/1.基础.md)
     - [x] 图形渲染管线
     - [x] 纹理
     - [x] 实例化
@@ -66,10 +66,10 @@ comments: true
 
     - [x] 渲染架构
     - [x] 编辑器
-    - [x] DebugDraw
+    - [ ] DebugDraw
     - [ ] GPU 调试
-    - [ ] 数字信号处理
-    - [ ] 视频渲染
+    - [x] 数字信号处理
+    - [x] 视频渲染
     - [ ] 插件
     - [ ] 脚本
 - 图形技术
