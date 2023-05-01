@@ -17,8 +17,8 @@ static float InstancingData[] = {
 
 class InstancingWindow : public QRhiWindow {
 private:
-	QRhiEx::Signal sigInit;
-	QRhiEx::Signal sigSubmit;
+	QRhiEx::Signal mSigInit;
+	QRhiEx::Signal mSigSubmit;
 
 	QScopedPointer<QRhiBuffer> mVertexBuffer;
 	QScopedPointer<QRhiBuffer> mInstancingBuffer;
@@ -26,19 +26,19 @@ private:
 	QScopedPointer<QRhiGraphicsPipeline> mPipeline;
 public:
 	InstancingWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
-		sigInit.request();
-		sigSubmit.request();
+		mSigInit.request();
+		mSigSubmit.request();
 	}
 protected:
 	virtual void onRenderTick() override {
 		QRhiRenderTarget* currentRenderTarget = mSwapChain->currentFrameRenderTarget();
-		QRhiCommandBuffer* currentCmdBuffer = mSwapChain->currentFrameCommandBuffer();
+		QRhiCommandBuffer* cmdBuffer = mSwapChain->currentFrameCommandBuffer();
 
-		if (sigInit.ensure()) {
+		if (mSigInit.ensure()) {
 			initRhiResource();
 		}
 		QRhiResourceUpdateBatch* resourceUpdates = nullptr;
-		if (sigSubmit.ensure()) {
+		if (mSigSubmit.ensure()) {
 			resourceUpdates = mRhi->nextResourceUpdateBatch();
 			submitRhiData(resourceUpdates);
 		}
@@ -46,19 +46,19 @@ protected:
 		const QColor clearColor = QColor::fromRgbF(0.2f, 0.2f, 0.2f, 1.0f);
 		const QRhiDepthStencilClearValue dsClearValue = { 1.0f,0 };
 
-		currentCmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue, resourceUpdates);
+		cmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue, resourceUpdates);
 
-		currentCmdBuffer->setGraphicsPipeline(mPipeline.get());
-		currentCmdBuffer->setViewport(QRhiViewport(0, 0, mSwapChain->currentPixelSize().width(), mSwapChain->currentPixelSize().height()));
-		currentCmdBuffer->setShaderResources();
+		cmdBuffer->setGraphicsPipeline(mPipeline.get());
+		cmdBuffer->setViewport(QRhiViewport(0, 0, mSwapChain->currentPixelSize().width(), mSwapChain->currentPixelSize().height()));
+		cmdBuffer->setShaderResources();
 		const QRhiCommandBuffer::VertexInput vertexBindings[] = {
 			{ mVertexBuffer.get(), 0 },
 			{ mInstancingBuffer.get(), 0 },
 		};
-		currentCmdBuffer->setVertexInput(0, 2, vertexBindings);
-		currentCmdBuffer->draw(3, 3);
+		cmdBuffer->setVertexInput(0, 2, vertexBindings);
+		cmdBuffer->draw(3, 3);
 
-		currentCmdBuffer->endPass();
+		cmdBuffer->endPass();
 	}
 
 	void initRhiResource() {
@@ -107,18 +107,18 @@ protected:
 		mPipeline->setShaderStages({
 			{ QRhiShaderStage::Vertex, vs },
 			{ QRhiShaderStage::Fragment, fs }
-			});
+		});
 
 		QRhiVertexInputLayout inputLayout;
 		inputLayout.setBindings({
 			QRhiVertexInputBinding(2 * sizeof(float)),
 			QRhiVertexInputBinding(2 * sizeof(float), QRhiVertexInputBinding::PerInstance),
-			});
+		});
 
 		inputLayout.setAttributes({
 			QRhiVertexInputAttribute(0, 0, QRhiVertexInputAttribute::Float2, 0),
 			QRhiVertexInputAttribute(1, 1, QRhiVertexInputAttribute::Float2, 0),
-			});
+		});
 
 		mPipeline->setVertexInputLayout(inputLayout);
 		mPipeline->setShaderResourceBindings(mShaderBindings.get());

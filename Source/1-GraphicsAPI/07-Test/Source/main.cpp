@@ -19,8 +19,8 @@ static float VertexData2[] = {
 
 class DepthStencilTestWindow : public QRhiWindow {
 private:
-	QRhiEx::Signal sigInit;
-	QRhiEx::Signal sigSubmit;
+	QRhiEx::Signal mSigInit;
+	QRhiEx::Signal mSigSubmit;
 
 	QScopedPointer<QRhiShaderResourceBindings> mShaderBindings;
 
@@ -31,19 +31,19 @@ private:
 	QScopedPointer<QRhiGraphicsPipeline> mPipeline2;
 public:
 	DepthStencilTestWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
-		sigInit.request();
-		sigSubmit.request();
+		mSigInit.request();
+		mSigSubmit.request();
 	}
 protected:
 	virtual void onRenderTick() override {
 		QRhiRenderTarget* currentRenderTarget = mSwapChain->currentFrameRenderTarget();
-		QRhiCommandBuffer* currentCmdBuffer = mSwapChain->currentFrameCommandBuffer();
+		QRhiCommandBuffer* cmdBuffer = mSwapChain->currentFrameCommandBuffer();
 
-		if (sigInit.ensure()) {
+		if (mSigInit.ensure()) {
 			initRhiResource();
 		}
 		QRhiResourceUpdateBatch* resourceUpdates = nullptr;
-		if (sigSubmit.ensure()) {
+		if (mSigSubmit.ensure()) {
 			resourceUpdates = mRhi->nextResourceUpdateBatch();
 			submitRhiData(resourceUpdates);
 		}
@@ -51,23 +51,23 @@ protected:
 		const QColor clearColor = QColor::fromRgbF(0.2f, 0.2f, 0.2f, 1.0f);
 		const QRhiDepthStencilClearValue dsClearValue = { 1.0f,0 };
 
-		currentCmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue, resourceUpdates);
+		cmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue, resourceUpdates);
 
-		currentCmdBuffer->setGraphicsPipeline(mPipeline1.get());
-		currentCmdBuffer->setViewport(QRhiViewport(0, 0, mSwapChain->currentPixelSize().width(), mSwapChain->currentPixelSize().height()));
-		currentCmdBuffer->setShaderResources();
+		cmdBuffer->setGraphicsPipeline(mPipeline1.get());
+		cmdBuffer->setViewport(QRhiViewport(0, 0, mSwapChain->currentPixelSize().width(), mSwapChain->currentPixelSize().height()));
+		cmdBuffer->setShaderResources();
 		const QRhiCommandBuffer::VertexInput vertexBindings1(mVertexBuffer1.get(), 0);
-		currentCmdBuffer->setVertexInput(0, 1, &vertexBindings1);
-		currentCmdBuffer->draw(3);
+		cmdBuffer->setVertexInput(0, 1, &vertexBindings1);
+		cmdBuffer->draw(3);
 
-		currentCmdBuffer->setGraphicsPipeline(mPipeline2.get());
-		currentCmdBuffer->setViewport(QRhiViewport(0, 0, mSwapChain->currentPixelSize().width(), mSwapChain->currentPixelSize().height()));
-		currentCmdBuffer->setShaderResources();
+		cmdBuffer->setGraphicsPipeline(mPipeline2.get());
+		cmdBuffer->setViewport(QRhiViewport(0, 0, mSwapChain->currentPixelSize().width(), mSwapChain->currentPixelSize().height()));
+		cmdBuffer->setShaderResources();
 		const QRhiCommandBuffer::VertexInput vertexBindings2(mVertexBuffer2.get(), 0);
-		currentCmdBuffer->setVertexInput(0, 1, &vertexBindings2);
-		currentCmdBuffer->draw(3);
+		cmdBuffer->setVertexInput(0, 1, &vertexBindings2);
+		cmdBuffer->draw(3);
 
-		currentCmdBuffer->endPass();
+		cmdBuffer->endPass();
 	}
 
 	void initRhiResource() {

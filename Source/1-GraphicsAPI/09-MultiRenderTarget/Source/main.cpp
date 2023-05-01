@@ -12,8 +12,8 @@ static float VertexData[] = {
 
 class MRTWindow : public QRhiWindow {
 private:
-	QRhiEx::Signal sigInit;
-	QRhiEx::Signal sigSubmit;
+	QRhiEx::Signal mSigInit;
+	QRhiEx::Signal mSigSubmit;
 
 	QScopedPointer<QRhiBuffer> mVertexBuffer;
 	QScopedPointer<QRhiShaderResourceBindings> mShaderBindings;
@@ -28,18 +28,18 @@ private:
 
 public:
 	MRTWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
-		sigInit.request();
-		sigSubmit.request();
+		mSigInit.request();
+		mSigSubmit.request();
 	}
 protected:
 	virtual void onRenderTick() override {
 		QRhiRenderTarget* currentRenderTarget = mSwapChain->currentFrameRenderTarget();
-		QRhiCommandBuffer* currentCmdBuffer = mSwapChain->currentFrameCommandBuffer();
-		if (sigInit.ensure()) {
+		QRhiCommandBuffer* cmdBuffer = mSwapChain->currentFrameCommandBuffer();
+		if (mSigInit.ensure()) {
 			initRhiResource();
 		}
 		QRhiResourceUpdateBatch* resourceUpdates = nullptr;
-		if (sigSubmit.ensure()) {
+		if (mSigSubmit.ensure()) {
 			resourceUpdates = mRhi->nextResourceUpdateBatch();
 			resourceUpdates->uploadStaticBuffer(mVertexBuffer.get(), VertexData);
 		}
@@ -47,16 +47,16 @@ protected:
 		const QColor clearColor = QColor::fromRgbF(0.2f, 0.2f, 0.2f, 1.0f);
 		const QRhiDepthStencilClearValue dsClearValue = { 1.0f,0 };
 
-		currentCmdBuffer->beginPass(mRenderTarget.get(), clearColor, dsClearValue, resourceUpdates);
+		cmdBuffer->beginPass(mRenderTarget.get(), clearColor, dsClearValue, resourceUpdates);
 
-		currentCmdBuffer->setGraphicsPipeline(mPipeline.get());
-		currentCmdBuffer->setViewport(QRhiViewport(0, 0, mRenderTarget->pixelSize().width(), mRenderTarget->pixelSize().height()));
-		currentCmdBuffer->setShaderResources();
+		cmdBuffer->setGraphicsPipeline(mPipeline.get());
+		cmdBuffer->setViewport(QRhiViewport(0, 0, mRenderTarget->pixelSize().width(), mRenderTarget->pixelSize().height()));
+		cmdBuffer->setShaderResources();
 		const QRhiCommandBuffer::VertexInput vertexBindings(mVertexBuffer.get(), 0);
-		currentCmdBuffer->setVertexInput(0, 1, &vertexBindings);
-		currentCmdBuffer->draw(3);
+		cmdBuffer->setVertexInput(0, 1, &vertexBindings);
+		cmdBuffer->draw(3);
 
-		currentCmdBuffer->endPass();
+		cmdBuffer->endPass();
 
 		static int counter = 0;
 		static QRhiTexture* CurrentTexture = nullptr;
@@ -72,9 +72,9 @@ protected:
 		}
 		counter++;
 
-		currentCmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue);
-		mTexturePainter->paint(currentCmdBuffer, currentRenderTarget);
-		currentCmdBuffer->endPass();
+		cmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue);
+		mTexturePainter->paint(cmdBuffer, currentRenderTarget);
+		cmdBuffer->endPass();
 
 	}
 

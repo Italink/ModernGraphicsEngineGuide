@@ -12,11 +12,11 @@ static float VertexData[] = {
 class MyFirstTextureWindow : public QRhiWindow {
 public:
 	MyFirstTextureWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
-		sigInit.request();
+		mSigInit.request();
 	}
 private:
-	QRhiEx::Signal sigInit;
-	QRhiEx::Signal sigSubmit;
+	QRhiEx::Signal mSigInit;
+	QRhiEx::Signal mSigSubmit;
 
 	QImage mImage;
 	QScopedPointer<QRhiBuffer> mVertexBuffer;
@@ -111,7 +111,7 @@ protected:
 		mPipeline->setRenderPassDescriptor(mSwapChainPassDesc.get());
 		mPipeline->create();
 
-		sigSubmit.request();
+		mSigSubmit.request();
 	}
 
 	void submitRhiData(QRhiResourceUpdateBatch* resourceUpdates) {
@@ -122,14 +122,14 @@ protected:
 
 	virtual void onRenderTick() override {
 		QRhiRenderTarget* currentRenderTarget = mSwapChain->currentFrameRenderTarget();
-		QRhiCommandBuffer* currentCmdBuffer = mSwapChain->currentFrameCommandBuffer();
+		QRhiCommandBuffer* cmdBuffer = mSwapChain->currentFrameCommandBuffer();
 
-		if (sigInit.ensure()) {
+		if (mSigInit.ensure()) {
 			initRhiResource();
 		}
 
 		QRhiResourceUpdateBatch* resourceUpdates = nullptr;
-		if (sigSubmit.ensure()) {
+		if (mSigSubmit.ensure()) {
 			resourceUpdates = mRhi->nextResourceUpdateBatch();
 			submitRhiData(resourceUpdates);
 		}
@@ -137,16 +137,16 @@ protected:
 		const QColor clearColor = QColor::fromRgbF(0.0f, 0.0f, 0.0f, 1.0f);
 		const QRhiDepthStencilClearValue dsClearValue = { 1.0f,0 };
 
-		currentCmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue, resourceUpdates);
+		cmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue, resourceUpdates);
 
-		currentCmdBuffer->setGraphicsPipeline(mPipeline.get());
-		currentCmdBuffer->setViewport(QRhiViewport(0, 0, mSwapChain->currentPixelSize().width(), mSwapChain->currentPixelSize().height()));
-		currentCmdBuffer->setShaderResources();
+		cmdBuffer->setGraphicsPipeline(mPipeline.get());
+		cmdBuffer->setViewport(QRhiViewport(0, 0, mSwapChain->currentPixelSize().width(), mSwapChain->currentPixelSize().height()));
+		cmdBuffer->setShaderResources();
 		const QRhiCommandBuffer::VertexInput vertexBindings(mVertexBuffer.get(), 0);
-		currentCmdBuffer->setVertexInput(0, 1, &vertexBindings);
-		currentCmdBuffer->draw(4);
+		cmdBuffer->setVertexInput(0, 1, &vertexBindings);
+		cmdBuffer->draw(4);
 
-		currentCmdBuffer->endPass();
+		cmdBuffer->endPass();
 	}
 };
 

@@ -5,8 +5,8 @@
 
 class ComputeShaderWindow : public QRhiWindow {
 private:
-	QRhiEx::Signal sigInit;
-	QRhiEx::Signal sigSubmit;
+	QRhiEx::Signal mSigInit;
+	QRhiEx::Signal mSigSubmit;
 
 	QScopedPointer<QRhiBuffer> mStorageBuffer;
 	QScopedPointer<QRhiTexture> mTexture;
@@ -20,35 +20,35 @@ private:
 	const int ImageHeight = 64;
 public:
 	ComputeShaderWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
-		sigInit.request();
-		sigSubmit.request();
+		mSigInit.request();
+		mSigSubmit.request();
 	}
 protected:
 	virtual void onRenderTick() override {
 		QRhiRenderTarget* currentRenderTarget = mSwapChain->currentFrameRenderTarget();
-		QRhiCommandBuffer* currentCmdBuffer = mSwapChain->currentFrameCommandBuffer();
+		QRhiCommandBuffer* cmdBuffer = mSwapChain->currentFrameCommandBuffer();
 
-		if (sigInit.ensure()) {
+		if (mSigInit.ensure()) {
 			initRhiResource();
 		}
 		QRhiResourceUpdateBatch* resourceUpdates = nullptr;
-		if (sigSubmit.ensure()) {
+		if (mSigSubmit.ensure()) {
 			resourceUpdates = mRhi->nextResourceUpdateBatch();
 			submitRhiData(resourceUpdates);
 		}
 
-		currentCmdBuffer->beginComputePass(resourceUpdates, QRhiCommandBuffer::BeginPassFlag::ExternalContent);
-		currentCmdBuffer->setComputePipeline(mPipeline.get());
-		currentCmdBuffer->setShaderResources();
-		currentCmdBuffer->dispatch(ImageWidth, ImageHeight, 1);
-		currentCmdBuffer->endComputePass();
+		cmdBuffer->beginComputePass(resourceUpdates, QRhiCommandBuffer::BeginPassFlag::ExternalContent);
+		cmdBuffer->setComputePipeline(mPipeline.get());
+		cmdBuffer->setShaderResources();
+		cmdBuffer->dispatch(ImageWidth, ImageHeight, 1);
+		cmdBuffer->endComputePass();
 
 		const QColor clearColor = QColor::fromRgbF(0.2f, 0.2f, 0.2f, 1.0f);
 		const QRhiDepthStencilClearValue dsClearValue = { 1.0f,0 };
 
-		currentCmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue);
-		mTexturePainter->paint(currentCmdBuffer, currentRenderTarget);
-		currentCmdBuffer->endPass();
+		cmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue);
+		mTexturePainter->paint(cmdBuffer, currentRenderTarget);
+		cmdBuffer->endPass();
 	}
 
 	void initRhiResource() {

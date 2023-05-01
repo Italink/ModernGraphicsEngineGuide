@@ -59,13 +59,13 @@ public:
 protected:
 	virtual void onRenderTick() override {
 		QRhiRenderTarget* currentRenderTarget = mSwapChain->currentFrameRenderTarget();
-		QRhiCommandBuffer* currentCmdBuffer = mSwapChain->currentFrameCommandBuffer();
+		QRhiCommandBuffer* cmdBuffer = mSwapChain->currentFrameCommandBuffer();
 
 		const QColor clearColor = QColor::fromRgbF(0.0f, 0.0f, 1.0f, 1.0f);
 		const QRhiDepthStencilClearValue dsClearValue = { 1.0f,0 };
 
-		currentCmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue);
-		currentCmdBuffer->endPass();
+		cmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue);
+		cmdBuffer->endPass();
 	}
 };
 
