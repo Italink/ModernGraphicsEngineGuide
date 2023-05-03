@@ -26,7 +26,6 @@ protected:
 		if (mSigInit.ensure()) {
 			mVertexBuffer.reset(mRhi->newBuffer(QRhiBuffer::Immutable, QRhiBuffer::VertexBuffer, sizeof(VertexData)));
 			mVertexBuffer->create();
-
 			QRhiVertexInputLayout inputLayout;
 			inputLayout.setBindings({
 				QRhiVertexInputBinding(6 * sizeof(float))		//定义每个VertexBuffer，单组顶点数据的跨度，这里是 6 * sizeof(float)，可以当作是GPU会从Buffer0（0是Index）读取 6 * sizeof(float) 传给 Vertex Shader

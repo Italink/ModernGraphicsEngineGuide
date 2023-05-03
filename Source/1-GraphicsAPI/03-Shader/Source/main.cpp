@@ -10,19 +10,19 @@
 #include "QPushButton"
 #include "QLabel"
 
-QShader createShaderFromCode(QShader::Stage stage, const char* code) {
-	QShaderBaker baker;
+QShader newShaderFromCode(QShader::Stage stage, const char* code) {
+	QShaderBaker baker;						//着色器烘培器
 	baker.setGeneratedShaderVariants({ QShader::StandardShader });
 	baker.setGeneratedShaders({
-	    QShaderBaker::GeneratedShader{ QShader::Source::SpirvShader,QShaderVersion(100)},
+	    QShaderBaker::GeneratedShader{QShader::Source::SpirvShader,QShaderVersion(100)},
 		QShaderBaker::GeneratedShader{QShader::Source::GlslShader,QShaderVersion(430)},
 		QShaderBaker::GeneratedShader{QShader::Source::MslShader,QShaderVersion(12)},
 		QShaderBaker::GeneratedShader{QShader::Source::HlslShader,QShaderVersion(60)},
 	});
+	baker.setSourceString(code, stage);		//装配GLSL源码
+	QShader shader = baker.bake();			//执行烘培，将之编译成各个图形API的着色器代码
 
-	baker.setSourceString(code, stage);
-	QShader shader = baker.bake();
-	if (!shader.isValid()) {
+	if (!shader.isValid()) {				//打印编译报错
 		QStringList codelist = QString(code).split('\n');
 		for (int i = 0; i < codelist.size(); i++) {
 			qWarning() << i + 1 << codelist[i].toLocal8Bit().data();
@@ -32,10 +32,10 @@ QShader createShaderFromCode(QShader::Stage stage, const char* code) {
 	return shader;
 }
 
-QShader createShaderFromFile(QShader::Stage stage, const char* filename) {
+QShader newShaderFromFile(QShader::Stage stage, const char* filename) {
 	QFile file(filename);
 	if (file.open(QIODevice::ReadOnly))
-		return createShaderFromCode(stage,file.readAll().constData());
+		return newShaderFromCode(stage,file.readAll().constData());
 	return QShader();
 }
 
@@ -46,11 +46,10 @@ QShader newShaderFromQSBFile(const char* filename) {
 	return QShader();
 }
 
-void RunQtShaderTool() {
+void RunQtShaderToolByQProcess() {
 	QProcess runShaderTool;
 	runShaderTool.setProgram("qsb");
 	runShaderTool.setProcessChannelMode(QProcess::MergedChannels);
-
 	runShaderTool.setArguments({
 		"--glsl","430",
 		"--msl","12" ,
@@ -72,7 +71,7 @@ int main(int argc, char **argv)
 
 	QGridLayout* layout = new QGridLayout(&main);
 
-	QPushButton* btCompile = new QPushButton("Compile");
+	QPushButton* btCompile = new QPushButton("Vulkan GLSL");
 	QTextEdit* editor = new QTextEdit;
 	QTextBrowser* glslBrowser = new QTextBrowser;
 	QTextBrowser* hlslBrowser = new QTextBrowser;
@@ -81,7 +80,7 @@ int main(int argc, char **argv)
 	layout->addWidget(btCompile, 0, 0);
 	layout->addWidget(editor, 1, 0);
 
-	layout->addWidget(new QLabel("GLSL"), 0, 1, Qt::AlignCenter);
+	layout->addWidget(new QLabel("OpenGL GLSL"), 0, 1, Qt::AlignCenter);
 	layout->addWidget(glslBrowser, 1, 1);
 
 	layout->addWidget(new QLabel("HLSL"), 0, 2, Qt::AlignCenter);
@@ -103,7 +102,7 @@ void main()
 })");
 
 	QObject::connect(btCompile, &QPushButton::clicked, [&]() {
-		QShader shader = createShaderFromCode(QShader::FragmentStage, editor->toPlainText().toLocal8Bit());
+		QShader shader = newShaderFromCode(QShader::FragmentStage, editor->toPlainText().toLocal8Bit());
 		glslBrowser->setText(shader.shader(QShaderKey(QShader::GlslShader, QShaderVersion(430))).shader());
 		hlslBrowser->setText(shader.shader(QShaderKey(QShader::HlslShader, QShaderVersion(60))).shader());
 		mslBrowser->setText(shader.shader(QShaderKey(QShader::MslShader, QShaderVersion(12))).shader());
