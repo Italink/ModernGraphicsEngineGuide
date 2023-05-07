@@ -78,12 +78,7 @@ protected:
 		QRhiGraphicsPipeline::TargetBlend targetBlend;
 		targetBlend.enable = false;
 		mPipeline->setTargetBlends({ QRhiGraphicsPipeline::TargetBlend() });
-
 		mPipeline->setSampleCount(mSwapChain->sampleCount());
-
-		mPipeline->setDepthTest(false);
-		mPipeline->setDepthOp(QRhiGraphicsPipeline::Always);
-		mPipeline->setDepthWrite(false);
 		mPipeline->setTopology(QRhiGraphicsPipeline::Triangles);
 
 		QShader vs = mRhi->newShaderFromCode(QShader::VertexStage, R"(#version 440
@@ -157,7 +152,7 @@ protected:
 		}
 		UniformBlock ubo;
 		ubo.mousePos = QVector2D(mapFromGlobal(QCursor::pos())) * qApp->devicePixelRatio();
-		ubo.time = QTime::currentTime().msecsSinceStartOfDay() / 1000.0f;;
+		ubo.time = QTime::currentTime().msecsSinceStartOfDay() / 1000.0f;
 		batch->updateDynamicBuffer(mUniformBuffer.get(), 0, sizeof(UniformBlock), &ubo);
 
 		const QColor clearColor = QColor::fromRgbF(0.0f, 0.0f, 0.0f, 1.0f);
