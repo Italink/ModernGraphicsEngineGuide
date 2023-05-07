@@ -1,13 +1,25 @@
 #include <QApplication>
 #include "Render/RHI/QRhiWindow.h"
+#include "QDateTime"
 
 static float VertexData[] = {
 	//position(xy)		texture coord(uv)
-	 1.0f,   1.0f,		1.0f,  0.0f,
-	-1.0f,   1.0f,		0.0f,  0.0f,
-	 1.0f,  -1.0f,		1.0f,  1.0f,
-	-1.0f,  -1.0f,		0.0f,  1.0f
+	 1.0f,   1.0f,		1.0f,  1.0f,
+	 1.0f,  -1.0f,		1.0f,  0.0f,
+	-1.0f,  -1.0f,		0.0f,  0.0f,
+	-1.0f,   1.0f,		0.0f,  1.0f,
 };
+
+static uint32_t IndexData[] = {
+	0,1,2,
+	2,3,0
+};
+
+struct UniformBlock {
+	QVector2D mousePos;
+	float time;
+};
+
 
 class MyFirstTextureWindow : public QRhiWindow {
 public:
@@ -20,6 +32,8 @@ private:
 
 	QImage mImage;
 	QScopedPointer<QRhiBuffer> mVertexBuffer;
+	QScopedPointer<QRhiBuffer> mIndexBuffer;
+	QScopedPointer<QRhiBuffer> mUniformBuffer;
 	QScopedPointer<QRhiTexture> mTexture;
 	QScopedPointer<QRhiSampler> mSapmler;
 	QScopedPointer<QRhiShaderResourceBindings> mShaderBindings;
@@ -44,10 +58,17 @@ protected:
 		mVertexBuffer.reset(mRhi->newBuffer(QRhiBuffer::Immutable, QRhiBuffer::VertexBuffer, sizeof(VertexData)));
 		mVertexBuffer->create();
 
+		mIndexBuffer.reset(mRhi->newBuffer(QRhiBuffer::Immutable, QRhiBuffer::IndexBuffer, sizeof(IndexData)));
+		mIndexBuffer->create();
+
+		mUniformBuffer.reset(mRhi->newBuffer(QRhiBuffer::Dynamic, QRhiBuffer::UniformBuffer, sizeof(UniformBlock)));
+		mUniformBuffer->create();
+
 		mShaderBindings.reset(mRhi->newShaderResourceBindings());
 
 		mShaderBindings->setBindings({
-			QRhiShaderResourceBinding::sampledTexture(0, QRhiShaderResourceBinding::FragmentStage, mTexture.get(),mSapmler.get())
+			QRhiShaderResourceBinding::sampledTexture(0, QRhiShaderResourceBinding::FragmentStage, mTexture.get(),mSapmler.get()),
+			QRhiShaderResourceBinding::uniformBuffer(1, QRhiShaderResourceBinding::FragmentStage, mUniformBuffer.get())
 		});
 
 		mShaderBindings->create();
@@ -63,7 +84,7 @@ protected:
 		mPipeline->setDepthTest(false);
 		mPipeline->setDepthOp(QRhiGraphicsPipeline::Always);
 		mPipeline->setDepthWrite(false);
-		mPipeline->setTopology(QRhiGraphicsPipeline::TriangleStrip);
+		mPipeline->setTopology(QRhiGraphicsPipeline::Triangles);
 
 		QShader vs = mRhi->newShaderFromCode(QShader::VertexStage, R"(#version 440
 			layout(location = 0) in vec2 inPosition;
@@ -85,9 +106,15 @@ protected:
 			layout(location = 0) in vec2 vUV;
 			layout(location = 0) out vec4 outFragColor;
 			layout(binding = 0) uniform sampler2D inTexture;
+			layout(binding = 1) uniform UniformBlock{
+				vec2 mousePos;
+				float time;
+			}UBO;
 			void main()
 			{
-				outFragColor = texture(inTexture,vUV);
+				const float speed = 5.0f;
+				vec4 mixColor = vec4(1.0f) * sin(UBO.time * speed);
+				outFragColor = mix(texture(inTexture,vUV), mixColor, distance(gl_FragCoord.xy,UBO.mousePos)/500);
 			}
 		)");
 		Q_ASSERT(fs.isValid());
@@ -114,49 +141,46 @@ protected:
 		mSigSubmit.request();
 	}
 
-	void submitRhiData(QRhiResourceUpdateBatch* resourceUpdates) {
-		resourceUpdates->uploadStaticBuffer(mVertexBuffer.get(), VertexData);
-		resourceUpdates->uploadTexture(mTexture.get(), mImage);
-		qDebug() << mImage;
-	}
-
 	virtual void onRenderTick() override {
-		QRhiRenderTarget* currentRenderTarget = mSwapChain->currentFrameRenderTarget();
-		QRhiCommandBuffer* cmdBuffer = mSwapChain->currentFrameCommandBuffer();
-
 		if (mSigInit.ensure()) {
 			initRhiResource();
 		}
 
-		QRhiResourceUpdateBatch* resourceUpdates = nullptr;
+		QRhiRenderTarget* renderTarget = mSwapChain->currentFrameRenderTarget();
+		QRhiCommandBuffer* cmdBuffer = mSwapChain->currentFrameCommandBuffer();
+
+		QRhiResourceUpdateBatch* batch = mRhi->nextResourceUpdateBatch();
 		if (mSigSubmit.ensure()) {
-			resourceUpdates = mRhi->nextResourceUpdateBatch();
-			submitRhiData(resourceUpdates);
+			batch->uploadStaticBuffer(mIndexBuffer.get(), IndexData);
+			batch->uploadStaticBuffer(mVertexBuffer.get(), VertexData);
+			batch->uploadTexture(mTexture.get(), mImage);
 		}
+		UniformBlock ubo;
+		ubo.mousePos = QVector2D(mapFromGlobal(QCursor::pos())) * qApp->devicePixelRatio();
+		ubo.time = QTime::currentTime().msecsSinceStartOfDay() / 1000.0f;;
+		batch->updateDynamicBuffer(mUniformBuffer.get(), 0, sizeof(UniformBlock), &ubo);
 
 		const QColor clearColor = QColor::fromRgbF(0.0f, 0.0f, 0.0f, 1.0f);
 		const QRhiDepthStencilClearValue dsClearValue = { 1.0f,0 };
 
-		cmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue, resourceUpdates);
+		cmdBuffer->beginPass(renderTarget, clearColor, dsClearValue, batch);
 
 		cmdBuffer->setGraphicsPipeline(mPipeline.get());
 		cmdBuffer->setViewport(QRhiViewport(0, 0, mSwapChain->currentPixelSize().width(), mSwapChain->currentPixelSize().height()));
 		cmdBuffer->setShaderResources();
 		const QRhiCommandBuffer::VertexInput vertexBindings(mVertexBuffer.get(), 0);
-		cmdBuffer->setVertexInput(0, 1, &vertexBindings);
-		cmdBuffer->draw(4);
-
+		cmdBuffer->setVertexInput(0, 1, &vertexBindings, mIndexBuffer.get(), 0, QRhiCommandBuffer::IndexUInt32);
+		cmdBuffer->drawIndexed(6);
 		cmdBuffer->endPass();
 	}
 };
-
 
 int main(int argc, char **argv){
     qputenv("QSG_INFO", "1");
     QApplication app(argc, argv);
 
     QRhiWindow::InitParams initParams;
-    initParams.backend = QRhi::D3D11;
+    initParams.backend = QRhi::Vulkan;
     MyFirstTextureWindow* window = new MyFirstTextureWindow(initParams);
 	window->resize({ 800,600 });
 	window->show();
