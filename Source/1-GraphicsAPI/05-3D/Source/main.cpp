@@ -1,61 +1,15 @@
 #include <QApplication>
 #include "Render/RHI/QRhiWindow.h"
+#include "Utils/CubeData.h"
 #include "QDateTime"
 
-static float CubeData[] = {
-		 1.0f, -1.0f, -1.0f, 	//+x
-		 1.0f, -1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-
-		-1.0f, -1.0f,  1.0f, 	//-x	
-		-1.0f, -1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
-
-		-1.0f,  1.0f, -1.0f, 	//+y
-		 1.0f,  1.0f, -1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f,  1.0f,
-		-1.0f,  1.0f, -1.0f,
-
-		-1.0f, -1.0f, -1.0f, 	//-y
-		-1.0f, -1.0f,  1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		-1.0f, -1.0f,  1.0f,
-		 1.0f, -1.0f,  1.0f,
-
-		-1.0f, -1.0f,  1.0f, 	//+z
-		-1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f,  1.0f,  1.0f,
-		 1.0f, -1.0f,  1.0f,
-		-1.0f, -1.0f,  1.0f,
-
-		-1.0f,  1.0f, -1.0f, 	//-z
-		-1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f, -1.0f, -1.0f,
-		 1.0f,  1.0f, -1.0f,
-		-1.0f,  1.0f, -1.0f,
-};
-
 struct UniformBlock {
-	QGenericMatrix<4, 4, float> model;
-	QGenericMatrix<4, 4, float> view;
-	QGenericMatrix<4, 4, float> project;
+	QGenericMatrix<4, 4, float> MVP;
 };
 
-
-class MyFirstTextureWindow : public QRhiWindow {
+class MyWindow : public QRhiWindow {
 public:
-	MyFirstTextureWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
+	MyWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
 		mSigInit.request();
 	}
 private:
@@ -68,7 +22,6 @@ private:
 	QScopedPointer<QRhiShaderResourceBindings> mShaderBindings;
 	QScopedPointer<QRhiGraphicsPipeline> mPipeline;
 
-
 protected:
 	void initRhiResource() {
 		mVertexBuffer.reset(mRhi->newBuffer(QRhiBuffer::Immutable, QRhiBuffer::VertexBuffer, sizeof(CubeData)));
@@ -78,46 +31,34 @@ protected:
 		mUniformBuffer->create();
 
 		mShaderBindings.reset(mRhi->newShaderResourceBindings());
-
 		mShaderBindings->setBindings({
 			QRhiShaderResourceBinding::uniformBuffer(0, QRhiShaderResourceBinding::VertexStage, mUniformBuffer.get())
 		});
-
 		mShaderBindings->create();
 
 		mPipeline.reset(mRhi->newGraphicsPipeline());
 
-		QRhiGraphicsPipeline::TargetBlend targetBlend;
-		targetBlend.enable = false;
-		mPipeline->setTargetBlends({ QRhiGraphicsPipeline::TargetBlend() });
-
 		mPipeline->setSampleCount(mSwapChain->sampleCount());
-
 		mPipeline->setTopology(QRhiGraphicsPipeline::Triangles);
 
 		QShader vs = mRhi->newShaderFromCode(QShader::VertexStage, R"(#version 440
 			layout(location = 0) in vec3 inPosition;
-			layout(location = 0) out float vDepth;
 			layout(binding = 0) uniform UniformBlock{
-				mat4 model;
-				mat4 view;
-				mat4 project;
+				mat4 MVP;
 			}UBO;
 			out gl_PerVertex { vec4 gl_Position; };
 			void main()
 			{
-				gl_Position = UBO.project * UBO.view * UBO.model * vec4(inPosition ,1.0f);
-				vDepth = gl_Position.z;
+				gl_Position = UBO.MVP * vec4(inPosition ,1.0f);
 			}
 		)");
 		Q_ASSERT(vs.isValid());
 
 		QShader fs = mRhi->newShaderFromCode(QShader::FragmentStage, R"(#version 440
-			layout(location = 0) in float vDepth;
 			layout(location = 0) out vec4 outFragColor;
 			void main()
 			{
-				outFragColor = vec4(vDepth/10);
+				outFragColor = vec4(1);
 			}
 		)");
 		Q_ASSERT(fs.isValid());
@@ -171,10 +112,7 @@ protected:
 		model.rotate(time * 180, QVector3D(1, 1, 1));
 
 		UniformBlock ubo;
-		ubo.project = project.toGenericMatrix<4, 4>();
-		ubo.view = view.toGenericMatrix<4, 4>();
-		ubo.model = model.toGenericMatrix<4, 4>();
-
+		ubo.MVP = (project * view * model).toGenericMatrix<4, 4>();
 		batch->updateDynamicBuffer(mUniformBuffer.get(), 0, sizeof(UniformBlock), &ubo);
 
 		const QColor clearColor = QColor::fromRgbF(0.0f, 0.0f, 0.0f, 1.0f);
@@ -197,7 +135,7 @@ int main(int argc, char** argv) {
 
 	QRhiWindow::InitParams initParams;
 	initParams.backend = QRhi::Vulkan;
-	MyFirstTextureWindow* window = new MyFirstTextureWindow(initParams);
+	MyWindow* window = new MyWindow(initParams);
 	window->resize({ 800,600 });
 	window->show();
 

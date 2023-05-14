@@ -21,9 +21,9 @@ struct UniformBlock {
 };
 
 
-class MyFirstTextureWindow : public QRhiWindow {
+class MyWindow : public QRhiWindow {
 public:
-	MyFirstTextureWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
+	MyWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
 		mSigInit.request();
 	}
 private:
@@ -176,7 +176,7 @@ int main(int argc, char **argv){
 
     QRhiWindow::InitParams initParams;
     initParams.backend = QRhi::Vulkan;
-    MyFirstTextureWindow* window = new MyFirstTextureWindow(initParams);
+    MyWindow* window = new MyWindow(initParams);
 	window->resize({ 800,600 });
 	window->show();
 
