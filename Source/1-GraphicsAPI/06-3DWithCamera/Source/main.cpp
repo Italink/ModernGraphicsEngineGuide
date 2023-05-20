@@ -39,8 +39,8 @@ protected:
 
 		mShaderBindings.reset(mRhi->newShaderResourceBindings());
 		mShaderBindings->setBindings({
-			QRhiShaderResourceBinding::uniformBuffer(0, QRhiShaderResourceBinding::VertexStage, mUniformBuffer.get())
-			});
+			QRhiShaderResourceBinding::uniformBuffer(0, QRhiShaderResourceBinding::StageFlag::VertexStage, mUniformBuffer.get())
+		});
 		mShaderBindings->create();
 
 		mPipeline.reset(mRhi->newGraphicsPipeline());
@@ -73,16 +73,16 @@ protected:
 		mPipeline->setShaderStages({
 			{ QRhiShaderStage::Vertex, vs },
 			{ QRhiShaderStage::Fragment, fs }
-			});
+		});
 
 		QRhiVertexInputLayout inputLayout;
 		inputLayout.setBindings({
 			{ 3 * sizeof(float) }
-			});
+		});
 
 		inputLayout.setAttributes({
 			{ 0, 0, QRhiVertexInputAttribute::Float3, 0 }
-			});
+		});
 
 		mPipeline->setVertexInputLayout(inputLayout);
 		mPipeline->setShaderResourceBindings(mShaderBindings.get());

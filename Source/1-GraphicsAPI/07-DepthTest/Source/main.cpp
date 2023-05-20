@@ -88,16 +88,16 @@ protected:
 		mPipeline->setShaderStages({
 			{ QRhiShaderStage::Vertex, vs },
 			{ QRhiShaderStage::Fragment, fs }
-			});
+		});
 
 		QRhiVertexInputLayout inputLayout;
 		inputLayout.setBindings({
 			{ 3 * sizeof(float) }
-			});
+		});
 
 		inputLayout.setAttributes({
 			{ 0, 0, QRhiVertexInputAttribute::Float3, 0 }
-			});
+		});
 
 		mPipeline->setVertexInputLayout(inputLayout);
 		mPipeline->setShaderResourceBindings(mCubeShaderBindings.get());

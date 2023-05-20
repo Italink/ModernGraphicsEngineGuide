@@ -16,10 +16,9 @@ static uint32_t IndexData[] = {
 };
 
 struct UniformBlock {
-	QVector2D mousePos;
 	float time;
+	alignas(8) QVector2D mousePos;
 };
-
 
 class MyWindow : public QRhiWindow {
 public:
@@ -47,8 +46,8 @@ protected:
 
 		mSapmler.reset(mRhi->newSampler(
 			QRhiSampler::Filter::Linear,
-			QRhiSampler::Filter::Linear,
 			QRhiSampler::Filter::Nearest,
+			QRhiSampler::Filter::Linear,
 			QRhiSampler::AddressMode::Repeat,
 			QRhiSampler::AddressMode::Repeat,
 			QRhiSampler::AddressMode::Repeat
@@ -67,8 +66,8 @@ protected:
 		mShaderBindings.reset(mRhi->newShaderResourceBindings());
 
 		mShaderBindings->setBindings({
-			QRhiShaderResourceBinding::sampledTexture(0, QRhiShaderResourceBinding::FragmentStage, mTexture.get(),mSapmler.get()),
-			QRhiShaderResourceBinding::uniformBuffer(1, QRhiShaderResourceBinding::FragmentStage, mUniformBuffer.get())
+			QRhiShaderResourceBinding::uniformBuffer(0, QRhiShaderResourceBinding::StageFlag::FragmentStage, mUniformBuffer.get()),
+			QRhiShaderResourceBinding::sampledTexture(1, QRhiShaderResourceBinding::StageFlag::FragmentStage, mTexture.get(),mSapmler.get())
 		});
 
 		mShaderBindings->create();
@@ -80,7 +79,7 @@ protected:
 		mPipeline->setTargetBlends({ QRhiGraphicsPipeline::TargetBlend() });
 		mPipeline->setSampleCount(mSwapChain->sampleCount());
 		mPipeline->setTopology(QRhiGraphicsPipeline::Triangles);
-
+		
 		QShader vs = mRhi->newShaderFromCode(QShader::VertexStage, R"(#version 440
 			layout(location = 0) in vec2 inPosition;
 			layout(location = 1) in vec2 inUV;
@@ -100,16 +99,22 @@ protected:
 		QShader fs = mRhi->newShaderFromCode(QShader::FragmentStage, R"(#version 440
 			layout(location = 0) in vec2 vUV;
 			layout(location = 0) out vec4 outFragColor;
-			layout(binding = 0) uniform sampler2D inTexture;
-			layout(binding = 1) uniform UniformBlock{
-				vec2 mousePos;
+
+			layout(binding = 0) uniform UniformBlock{
 				float time;
+				vec2 mousePos;
 			}UBO;
+
+			layout(binding = 1) uniform sampler2D inTexture;
+
 			void main()
 			{
+				vec4 textureColor = texture(inTexture,vUV);				//当前片段的纹理颜色
+
 				const float speed = 5.0f;
-				vec4 mixColor = vec4(1.0f) * sin(UBO.time * speed);
-				outFragColor = mix(texture(inTexture,vUV), mixColor, distance(gl_FragCoord.xy,UBO.mousePos)/500);
+				vec4 mixColor = vec4(1.0f) * sin(UBO.time * speed);		//根据时间因子和正弦函数，制作一个随时间发生明暗变化的颜色，你可以使用 outFragColor = mixColor 查看它的输出
+			
+				outFragColor = mix(textureColor, mixColor, distance(gl_FragCoord.xy,UBO.mousePos)/500);	 //根据当时鼠标位置跟像素坐标的距离，来混合两种颜色
 			}
 		)");
 		Q_ASSERT(fs.isValid());
@@ -166,6 +171,7 @@ protected:
 		const QRhiCommandBuffer::VertexInput vertexBindings(mVertexBuffer.get(), 0);
 		cmdBuffer->setVertexInput(0, 1, &vertexBindings, mIndexBuffer.get(), 0, QRhiCommandBuffer::IndexUInt32);
 		cmdBuffer->drawIndexed(6);
+
 		cmdBuffer->endPass();
 	}
 };
