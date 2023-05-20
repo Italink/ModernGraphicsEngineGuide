@@ -54,8 +54,11 @@ comments: true
 - 图形 API
     - [x] [概述](01-GraphicsAPI/0.概述.md)
     - [x] [基础](01-GraphicsAPI/1.基础.md)
-    - [x] 图形渲染管线
-    - [x] 纹理
+    - [x] [图形渲染管线](01-GraphicsAPI/2.图形渲染管线.md)
+    - [x] [着色器](01-GraphicsAPI/3.着色器.md)
+    - [x] [纹理和缓冲区](01-GraphicsAPI/4.缓冲区和纹理.md)
+    - [x] 3D空间
+    - [x] 测试与混合
     - [x] 实例化
     - [x] 多渲染目标
     - [x] 离屏渲染
