@@ -17,7 +17,7 @@ nav:
         - "1 - 基础" : "01-GraphicsAPI/1.基础.md"
         - "2 - 图形渲染管线" : "01-GraphicsAPI/2.图形渲染管线.md"
         - "3 - 着色器" : "01-GraphicsAPI/3.着色器.md"
-        - "4 - 缓冲区" : "01-GraphicsAPI/4.缓冲区和纹理.md"
+        - "4 - 缓冲区与纹理" : "01-GraphicsAPI/4.缓冲区与纹理.md"
         - "5 - 3D空间" : "Waitting.md"
         - "6 - 混合与测试" : "Waitting.md"
         - "7 - 实例化" : "Waitting.md"
