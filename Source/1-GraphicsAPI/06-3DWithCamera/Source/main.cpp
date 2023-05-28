@@ -105,9 +105,9 @@ protected:
 			batch->uploadStaticBuffer(mVertexBuffer.get(), CubeData);
 		}
 
-		QMatrix4x4 project = mCamera->getMatrixClipWithCorr(mRhi.get());
+		QMatrix4x4 project = mCamera->getProjectionMatrixWithCorr(mRhi.get());
 
-		QMatrix4x4 view = mCamera->getMatrixView();
+		QMatrix4x4 view = mCamera->getViewMatrix();
 
 		float time = QTime::currentTime().msecsSinceStartOfDay() / 1000.0f;
 		float factor = qAbs(qSin(time));
