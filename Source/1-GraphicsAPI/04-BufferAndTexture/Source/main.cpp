@@ -34,7 +34,7 @@ private:
 	QScopedPointer<QRhiBuffer> mIndexBuffer;
 	QScopedPointer<QRhiBuffer> mUniformBuffer;
 	QScopedPointer<QRhiTexture> mTexture;
-	QScopedPointer<QRhiSampler> mSapmler;
+	QScopedPointer<QRhiSampler> mSampler;
 	QScopedPointer<QRhiShaderResourceBindings> mShaderBindings;
 	QScopedPointer<QRhiGraphicsPipeline> mPipeline;
 protected:
@@ -44,7 +44,7 @@ protected:
 		mTexture.reset(mRhi->newTexture(QRhiTexture::RGBA8, mImage.size()));
 		mTexture->create();
 
-		mSapmler.reset(mRhi->newSampler(
+		mSampler.reset(mRhi->newSampler(
 			QRhiSampler::Filter::Linear,
 			QRhiSampler::Filter::Nearest,
 			QRhiSampler::Filter::Linear,
@@ -52,7 +52,7 @@ protected:
 			QRhiSampler::AddressMode::Repeat,
 			QRhiSampler::AddressMode::Repeat
 		));
-		mSapmler->create();
+		mSampler->create();
 
 		mVertexBuffer.reset(mRhi->newBuffer(QRhiBuffer::Immutable, QRhiBuffer::VertexBuffer, sizeof(VertexData)));
 		mVertexBuffer->create();
@@ -67,7 +67,7 @@ protected:
 
 		mShaderBindings->setBindings({
 			QRhiShaderResourceBinding::uniformBuffer(0, QRhiShaderResourceBinding::StageFlag::FragmentStage, mUniformBuffer.get()),
-			QRhiShaderResourceBinding::sampledTexture(1, QRhiShaderResourceBinding::StageFlag::FragmentStage, mTexture.get(),mSapmler.get())
+			QRhiShaderResourceBinding::sampledTexture(1, QRhiShaderResourceBinding::StageFlag::FragmentStage, mTexture.get(),mSampler.get())
 		});
 
 		mShaderBindings->create();

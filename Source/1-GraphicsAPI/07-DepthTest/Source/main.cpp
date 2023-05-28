@@ -18,12 +18,10 @@ private:
 	QRhiEx::Signal mSigSubmit;
 
 	QScopedPointer<QRhiBuffer> mCubeVertexBuffer;
-
-	QScopedPointer<QRhiBuffer> mPlaneVertexBuffer;
-
 	QScopedPointer<QRhiBuffer> mCubeUniformBuffer;
 	QScopedPointer<QRhiShaderResourceBindings> mCubeShaderBindings;
 
+	QScopedPointer<QRhiBuffer> mPlaneVertexBuffer;
 	QScopedPointer<QRhiBuffer> mPlaneUniformBuffer;
 	QScopedPointer<QRhiShaderResourceBindings> mPlaneShaderBindings;
 
