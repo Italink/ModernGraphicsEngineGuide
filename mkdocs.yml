@@ -39,10 +39,9 @@ nav:
         - '6 - 天空大气':  "Waitting.md"
         - '7 - 地形':  "Waitting.md"
     - 'Unreal Engine':
-        - '0 - 工程结构': '04-UnrealEngine/0.工程结构.md'
-        - '1 - 基础编程': '04-UnrealEngine/1.基础编程.md'
+        - '0 - 基础编程': '04-UnrealEngine/0.基础编程.md'
+        - '1 - Slate开发': '04-UnrealEngine/1.Slate开发.md'
         - '2 - 插件开发': '04-UnrealEngine/2.插件开发.md'
-        - '3 - Slate编程': '04-UnrealEngine/3.Slate编程.md'
 theme:
     icon:
         repo: fontawesome/brands/github
