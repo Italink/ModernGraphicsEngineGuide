@@ -3,9 +3,10 @@
 #include "Render/QFrameGraph.h"
 #include "Render/Pass/QBasePassForward.h"
 #include "Render/Component/QStaticMeshRenderComponent.h"
+#include "QEngineApplication.h"
 
 int main(int argc, char **argv){
-	QApplication app(argc, argv);
+	QEngineApplication app(argc, argv);
 	QRhiWindow::InitParams initParams;
 	initParams.backend = QRhi::Implementation::Vulkan;
 	QRenderWidget widget(initParams);

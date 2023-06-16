@@ -1,4 +1,5 @@
 #include <QApplication>
+#include "QEngineApplication.h"
 #include "Render/RHI/QRhiWindow.h"
 
 static float VertexData[] = {										//顶点数据
@@ -106,8 +107,7 @@ protected:
 
 int main(int argc, char **argv)
 {
-    qputenv("QSG_INFO", "1");
-    QApplication app(argc, argv);
+	QEngineApplication app(argc, argv);
     QRhiWindow::InitParams initParams;
     TriangleWindow window(initParams);
 	window.resize({ 800,600 });

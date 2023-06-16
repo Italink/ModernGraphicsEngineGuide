@@ -24,6 +24,7 @@ function(add_example EXAMPLE_PATH)
         ${PROJECT_SOURCE}
     )
     target_link_libraries(${EXAMPLE_NAME} PRIVATE QEngineUtilities)
+    qengine_setup_env(${EXAMPLE_NAME})
 endfunction()
 
 if(QENGINE_BUILD_RELEASE)
@@ -31,7 +32,6 @@ if(QENGINE_BUILD_RELEASE)
 else()
     set(QENGINE_RESOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Resources")
 endif()
-
 
 function(add_example_dir_internal DIR_PATH GROUP_NAME)
     file(GLOB EXAMPLE_LIST RELATIVE ${DIR_PATH} ${DIR_PATH}/*)
