@@ -26,18 +26,18 @@ nav:
         - "10 - 间接渲染" : "Waitting.md"
     - '引擎技术':
         - "0 - 渲染架构" : "02-EngineTechnology/Waitting.md"
-        - "1 - 编辑器" : "Waitting.md"
-        - "2 - DebugDraw" : "Waitting.md"
-        - "3 - GPU调试" : "Waitting.md"
+        - "1 - 编辑器架构" : "02-EngineTechnology/1.编辑器架构.md"
+        - "2 - DebugDraw" : "02-EngineTechnology/Waitting.md"
+        - "3 - GPU调试" : "02-EngineTechnology/Waitting.md"
     - '图形技术':
         - '0 - 网格体渲染': "03-GraphicsTechnology/Waitting.md"
-        - '1 - 天空盒':  "Waitting.md"
-        - '2 - GPU粒子':  "Waitting.md"
-        - '3 - 后期滤镜':  "Waitting.md"
-        - '4 - 光照':  "Waitting.md"
-        - '5 - 体积雾':  "Waitting.md"
-        - '6 - 天空大气':  "Waitting.md"
-        - '7 - 地形':  "Waitting.md"
+        - '1 - 天空盒':  "03-GraphicsTechnology/Waitting.md"
+        - '2 - GPU粒子':  "03-GraphicsTechnology/Waitting.md"
+        - '3 - 后期滤镜':  "03-GraphicsTechnology/Waitting.md"
+        - '4 - 光照':  "03-GraphicsTechnology/Waitting.md"
+        - '5 - 体积雾':  "03-GraphicsTechnology/Waitting.md"
+        - '6 - 天空大气':  "03-GraphicsTechnology/Waitting.md"
+        - '7 - 地形':  "03-GraphicsTechnology/Waitting.md"
     - 'Unreal Engine':
         - '0 - 基础编程': '04-UnrealEngine/0.基础编程.md'
         - '1 - Slate开发': '04-UnrealEngine/1.Slate开发.md'
