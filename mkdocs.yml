@@ -42,6 +42,7 @@ nav:
         - '0 - 基础编程': '04-UnrealEngine/0.基础编程.md'
         - '1 - Slate开发': '04-UnrealEngine/1.Slate开发.md'
         - '2 - 插件开发': '04-UnrealEngine/2.插件开发.md'
+        - '3 - 粒子系统': '04-UnrealEngine/3.粒子系统.md'
 theme:
     icon:
         repo: fontawesome/brands/github

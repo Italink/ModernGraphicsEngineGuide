@@ -6,6 +6,7 @@
 #include "Render/Pass/QDepthOfFieldRenderPass.h"
 #include "Render/Pass/PBR/QPbrBasePassDeferred.h"
 #include "Render/Component/QParticlesRenderComponent.h"
+#include "QEngineApplication.h"
 
 class MyGpuParticleEmitter : public QGpuParticleEmitter {
 public:
@@ -53,7 +54,7 @@ public:
 };
 
 int main(int argc, char **argv){
-	QApplication app(argc, argv);
+	QEngineApplication app(argc, argv);
 	QRhiWindow::InitParams initParams;
 	initParams.backend = QRhi::Implementation::Vulkan;
 	QRenderWidget widget(initParams);
