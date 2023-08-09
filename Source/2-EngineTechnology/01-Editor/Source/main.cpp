@@ -1,4 +1,4 @@
-#include <QApplication>
+#include "QEngineApplication.h"
 #include "QRenderWidget.h"
 #include "Render/Pass/QBasePassForward.h"
 #include "Render/IRenderComponent.h"
@@ -113,7 +113,7 @@ protected:
 };
 
 int main(int argc, char** argv) {
-	QApplication app(argc, argv);
+	QEngineApplication app(argc, argv);
 	QRhiWindow::InitParams initParams;
 	QRenderWidget widget(initParams);
 

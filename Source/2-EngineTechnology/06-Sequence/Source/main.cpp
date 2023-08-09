@@ -1,4 +1,4 @@
-#include <QApplication>
+#include "QEngineApplication.h"
 #include "QRenderWidget.h"
 #include "Render/Pass/QBasePassForward.h"
 #include "Render/Pass/QVideoRenderPass.h"

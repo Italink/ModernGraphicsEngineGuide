@@ -1,4 +1,4 @@
-#include <QApplication>
+#include "QEngineApplication.h"
 #include "QRenderWidget.h"
 #include "Render/QFrameGraph.h"
 #include "Render/Component/QStaticMeshRenderComponent.h"
@@ -26,7 +26,7 @@ public:
 			outParticle.lifetime = 3.0f;
 			outParticle.scaling = vec3(rand(0.45,Params.MinSize,Params.MaxSize));
 			
-			float noiseStrength = 10;
+			const float noiseStrength = 10;
 			vec3 noiseOffset = vec3(rand(0.12,-noiseStrength,noiseStrength),0,rand(0.11561,-noiseStrength,noiseStrength));
 			outParticle.position = noiseOffset;
 			outParticle.velocity = vec3(0,rand(0.124,0,0.0005),rand(0.4451,-0.0005,0.0005));
@@ -58,8 +58,8 @@ int main(int argc, char **argv){
 	QRhiWindow::InitParams initParams;
 	initParams.backend = QRhi::Implementation::Vulkan;
 	QRenderWidget widget(initParams);
-	auto camera = widget.setupCamera();
 
+	auto camera = widget.setupCamera();
 	camera->setPosition(QVector3D(0.0f, 0.1f, 10.0f));
 
 	widget.setFrameGraph(
@@ -67,7 +67,7 @@ int main(int argc, char **argv){
 		.addPass(
 			QPbrBasePassDeferred::Create("BasePass")
 			.addComponent(
-				QParticlesRenderComponent::Create("Particels")
+				QParticlesRenderComponent::Create("Particles")
 				.setEmitter(new MyGpuParticleEmitter)
 			)
 		)

@@ -2,13 +2,14 @@
 #include <QProcess>
 #include <QFile>
 #include <QDir>
-#include "private/qshaderbaker_p.h"
 #include "QWidget"
 #include "QTextEdit"
 #include "QTextBrowser"
 #include "QBoxLayout"
 #include "QPushButton"
 #include "QLabel"
+#include "rhi/qshader.h"
+#include "rhi/qshaderbaker.h"
 
 QShader newShaderFromCode(QShader::Stage stage, const char* code) {
 	QShaderBaker baker;						//着色器烘培器

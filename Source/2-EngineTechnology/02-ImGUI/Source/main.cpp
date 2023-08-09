@@ -1,11 +1,10 @@
-#include <QApplication>
+#include "QEngineApplication.h"
 #include "QRenderWidget.h"
 #include "Render/QFrameGraph.h"
 #include "Render/Pass/QImGUIRenderPass.h"
 
 int main(int argc, char** argv) {
-	qputenv("QSG_INFO", "1");
-	QApplication app(argc, argv);
+	QEngineApplication app(argc, argv);
 	QRhiWindow::InitParams initParams;
 	initParams.backend = QRhi::Implementation::Vulkan;
 	QRenderWidget widget(initParams);
@@ -14,7 +13,8 @@ int main(int argc, char** argv) {
 		QFrameGraph::Begin()
 		.addPass(
 			QImGUIRenderPass::Create("ImGui")
-			.setPaintFunctor([]() {
+			.setPaintFunctor([](ImGuiContext* Ctx) {
+				ImGui::SetCurrentContext(Ctx);
 				ImGui::ShowFontSelector("Font");
 				ImGui::ShowStyleSelector("Style");
 				ImGui::ShowDemoWindow();

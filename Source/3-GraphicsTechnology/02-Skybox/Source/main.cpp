@@ -1,11 +1,11 @@
-#include <QApplication>
+#include "QEngineApplication.h"
 #include "QRenderWidget.h"
 #include "Render/Pass/QBasePassForward.h"
 #include "Render/Pass/QBlurRenderPass.h"
 #include "Render/Pass/QSkyRenderPass.h"
 
 int main(int argc, char** argv) {
-	QApplication app(argc, argv);
+	QEngineApplication app(argc, argv);
 
 	QRhiWindow::InitParams initParams;
 	initParams.backend = QRhi::Vulkan;

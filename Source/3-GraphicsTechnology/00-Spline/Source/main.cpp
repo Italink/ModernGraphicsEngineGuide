@@ -1,11 +1,11 @@
-#include <QApplication>
+#include "QEngineApplication.h"
 #include "QRenderWidget.h"
 #include "Render/QFrameGraph.h"
 #include "Render/Pass/QBasePassForward.h"
 #include "Render/Component/QSplineRenderComponent.h"
 
 int main(int argc, char** argv) {
-	QApplication app(argc, argv);
+	QEngineApplication app(argc, argv);
 	QRhiWindow::InitParams initParams;
 	initParams.backend = QRhi::Implementation::Vulkan;
 	QRenderWidget widget(initParams);
@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
 			QBasePassForward::Create("BasePass")
 			.addComponent(
 				QSplineRenderComponent::Create("Spline")
-			.setPoints(points)
+				.setPoints(points)
 			)
 		)
 		.end("BasePass", QBasePassForward::BaseColor)

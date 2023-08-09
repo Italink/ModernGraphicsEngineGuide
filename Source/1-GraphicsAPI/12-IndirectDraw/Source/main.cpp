@@ -83,7 +83,7 @@ protected:
 		QVulkanInstance* vkInstance = QVulkanDefaultInstance::instance();
 		vkInstance->deviceFunctions(vkHandles->dev)->vkCmdDispatchIndirect(vkCmdBufferHandle->commandBuffer, vkBuffer, 0);
 		cmdBuffer->endComputePass();
-		static QRhiBufferReadbackResult mCtxReader;
+		static QRhiReadbackResult mCtxReader;
 		mCtxReader.completed = [this]() {
 			int counter;
 			memcpy(&counter, mCtxReader.data.constData(), mCtxReader.data.size());

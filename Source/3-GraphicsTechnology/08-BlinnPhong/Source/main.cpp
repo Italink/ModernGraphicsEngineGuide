@@ -1,4 +1,4 @@
-#include <QApplication>
+#include "QEngineApplication.h"
 #include "QRenderWidget.h"
 #include "Asset/QStaticMesh.h"
 #include "Render/Component/Light/QPointLightComponent.h"
@@ -9,7 +9,7 @@
 #include "Render/Pass/QSkyRenderPass.h"
 
 int main(int argc, char** argv) {
-	QApplication app(argc, argv);
+	QEngineApplication app(argc, argv);
 
 	QRhiWindow::InitParams initParams;
 

@@ -1,4 +1,4 @@
-#include <QApplication>
+#include "QEngineApplication.h"
 #include "QRenderWidget.h"
 #include "Render/Pass/QBasePassForward.h"
 #include "Render/Pass/QVideoRenderPass.h"
@@ -6,9 +6,10 @@
 #include "Render/Pass/QBlurRenderPass.h"
 #include "Render/Pass/QBloomRenderPass.h"
 #include "Render/Pass/QToneMappingRenderPass.h"
+#include "QEngineApplication.h"
 
 int main(int argc, char** argv) {
-	QApplication app(argc, argv);
+	QEngineApplication app(argc, argv);
 	QRhiWindow::InitParams initParams;
 	initParams.backend = QRhi::Implementation::Vulkan;
 	QRenderWidget widget(initParams);

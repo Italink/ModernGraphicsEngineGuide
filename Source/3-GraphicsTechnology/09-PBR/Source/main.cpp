@@ -1,4 +1,4 @@
-#include <QApplication>
+#include "QEngineApplication.h"
 #include "Asset/QStaticMesh.h"
 #include "QRenderWidget.h"
 #include "Render/Component/QStaticMeshRenderComponent.h"
@@ -12,7 +12,7 @@
 int main(int argc, char** argv) {
 	qputenv("QSG_INFO", "1");
 
-	QApplication app(argc, argv);
+	QEngineApplication app(argc, argv);
 
 	QRhiWindow::InitParams initParams;
 	initParams.backend = QRhi::Vulkan;
