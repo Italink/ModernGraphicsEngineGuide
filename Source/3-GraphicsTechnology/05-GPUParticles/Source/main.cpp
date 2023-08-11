@@ -33,7 +33,7 @@ public:
 			}
 		}
 		params.spawnParams->addParam("MinSize", 0.0f);
-		params.spawnParams->addParam("MaxSize", 0.3f);
+		params.spawnParams->addParam("MaxSize", 0.001f);
 		params.spawnParams->addParam("PositionPool", positionPool, false);
 
 		params.spawnDefine = R"(	
@@ -88,7 +88,7 @@ public:
 private:
 	QRandomGenerator mRandom;
 	float mMinSize = 0.0f;
-	float mMaxSize = 2.0f;
+	float mMaxSize = 0.001f;
 protected:
 	void onSpawn(Particle& outParticle) override {
 		outParticle.age = 0.0f;
@@ -119,10 +119,12 @@ int main(int argc, char** argv) {
 			.addComponent(
 				QParticlesRenderComponent::Create("GPU Particles")
 				.setEmitter(new MyGpuParticleEmitter)
+				.setParticleShape(QStaticMesh::CreateFromText("GPU", QFont()))
 			)
 			.addComponent(
 				QParticlesRenderComponent::Create("CPU Particles")
 				.setEmitter(new MyCpuParticleEmitter)
+				.setParticleShape(QStaticMesh::CreateFromText("CPU", QFont()))
 			)
 		)
 		.end("BasePass",QBasePassForward::BaseColor)
