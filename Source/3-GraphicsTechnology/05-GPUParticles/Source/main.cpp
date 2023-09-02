@@ -38,7 +38,7 @@ public:
 
 		params.spawnDefine = R"(	
 			float rand(float seed, float min, float max){
-				return min + (max-min) * fract(sin(dot(vec2(gl_GlobalInvocationID.x * seed * UpdateCtx.deltaSec,UpdateCtx.timestamp) ,vec2(12.9898,78.233))) * 43758.5453);
+				return min + (max-min) * fract(sin(dot(vec2(gl_GlobalInvocationID.x  * seed * UpdateCtx.deltaSec,UpdateCtx.timestamp) ,vec2(12.9898,78.233))) * 43758.5453);
 			}
 		)";
 
@@ -49,9 +49,9 @@ public:
 			
 			float noiseStrength = 0.01;
 			vec3 noiseOffset = vec3(rand(0.12,-noiseStrength,noiseStrength),rand(0.11561,-noiseStrength,noiseStrength),0);
-			outParticle.position = Params.PositionPool[int(rand(0.13212,0,Params.PositionPool.length()))].xyz + noiseOffset;
+			outParticle.position = Params.PositionPool[int(rand(0.234212,0,Params.PositionPool.length()))].xyz + noiseOffset;
 
-			outParticle.velocity = vec3(0,rand(0.124,0,0.0001),rand(0.4451,-0.00005,0.000000));
+			outParticle.velocity = vec3(0,rand(0.24324,0,0.0001),rand(23.4451,-0.00005,0.000000));
 		)";
 
 		params.updateDefine = R"(	
@@ -63,7 +63,7 @@ public:
 		params.updateCode = R"(		
 			outParticle.age	 = inParticle.age + UpdateCtx.deltaSec;
 			outParticle.position = inParticle.position + inParticle.velocity;
-			outParticle.velocity = inParticle.velocity + vec3(rand(0.41,-0.000001,0.000001),0,0);
+			outParticle.velocity = inParticle.velocity + 0.001*vec3(rand(42.2135,-0.0001,0.0001),0,0);
 			outParticle.scaling  = inParticle.scaling;
 			outParticle.rotation = inParticle.rotation;
 		)";
@@ -119,7 +119,6 @@ int main(int argc, char** argv) {
 			.addComponent(
 				QParticlesRenderComponent::Create("GPU Particles")
 				.setEmitter(new MyGpuParticleEmitter)
-				.setParticleShape(QStaticMesh::CreateFromText("GPU", QFont()))
 			)
 			.addComponent(
 				QParticlesRenderComponent::Create("CPU Particles")

@@ -6,14 +6,15 @@
 #include "Render/Pass/QDepthOfFieldRenderPass.h"
 #include "Render/Pass/PBR/QPbrBasePassDeferred.h"
 #include "Render/Component/QParticlesRenderComponent.h"
-#include "QEngineApplication.h"
+#include <QPainter>
+#include <QPainterPath>
 
 class MyGpuParticleEmitter : public QGpuParticleEmitter {
 public:
 	MyGpuParticleEmitter() {
 		QGpuParticleEmitter::InitParams params;
 		params.spawnParams->addParam("MinSize", 0.0f);
-		params.spawnParams->addParam("MaxSize", 0.3f);
+		params.spawnParams->addParam("MaxSize", 0.01f);
 
 		params.spawnDefine = R"(	
 			float rand(float seed, float min, float max){
@@ -55,12 +56,37 @@ public:
 
 int main(int argc, char **argv){
 	QEngineApplication app(argc, argv);
+	QLoggingCategory::setFilterRules("qt.vulkan=true");
 	QRhiWindow::InitParams initParams;
 	initParams.backend = QRhi::Implementation::Vulkan;
 	QRenderWidget widget(initParams);
 
 	auto camera = widget.setupCamera();
 	camera->setPosition(QVector3D(0.0f, 0.1f, 10.0f));
+
+	QImage image(100,100,QImage::Format_RGBA8888);
+	image.fill(Qt::transparent);
+	QPainter painter(&image);
+	QPoint center(50, 50);
+	QPainterPath path;
+	for (int i = 0; i < 5; i++) {
+		float x1 = qCos((18 + 72 * i) * M_PI/180) * 50,
+			  y1 = qSin((18 + 72 * i) * M_PI/180) * 50,
+			  x2 = qCos((54 + 72 * i) * M_PI/180) * 20,
+			  y2 = qSin((54 + 72 * i) * M_PI/180) * 20;
+
+		if (i == 0) {
+			path.moveTo(x1 + center.x(), y1 + center.y());
+			path.lineTo(x2 + center.x(), y2 + center.y());
+		}
+		else {
+			path.lineTo(x1 + center.x(), y1 + center.y());
+			path.lineTo(x2 + center.x(), y2 + center.y());
+		}
+		
+	}
+	path.closeSubpath();
+	painter.fillPath(path,Qt::white);
 
 	widget.setFrameGraph(
 		QFrameGraph::Begin()
@@ -69,6 +95,7 @@ int main(int argc, char **argv){
 			.addComponent(
 				QParticlesRenderComponent::Create("Particles")
 				.setEmitter(new MyGpuParticleEmitter)
+				.setParticleShape(QStaticMesh::CreateFromImage(image))
 			)
 		)
 		.addPass(

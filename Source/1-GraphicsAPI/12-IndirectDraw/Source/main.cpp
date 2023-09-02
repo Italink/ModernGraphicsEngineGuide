@@ -4,7 +4,7 @@
 #include "Render/Painter/TexturePainter.h"
 #include "private/qrhivulkan_p.h"
 #include "qvulkanfunctions.h"
-#include "private/qvulkandefaultinstance_p.h"
+#include "Render/RHI/Vulkan/QRhiVulkanExHelper.h"
 
 class IndirectDrawWindow : public QRhiWindow {
 private:
@@ -80,7 +80,7 @@ protected:
 		QRhiVulkanNativeHandles* vkHandles = (QRhiVulkanNativeHandles*)mRhi->nativeHandles();
 		auto buffer = mIndirectDrawBuffer->nativeBuffer();
 		VkBuffer vkBuffer = *(VkBuffer*)buffer.objects[0];
-		QVulkanInstance* vkInstance = QVulkanDefaultInstance::instance();
+		QVulkanInstance* vkInstance = vulkanInstance();
 		vkInstance->deviceFunctions(vkHandles->dev)->vkCmdDispatchIndirect(vkCmdBufferHandle->commandBuffer, vkBuffer, 0);
 		cmdBuffer->endComputePass();
 		static QRhiReadbackResult mCtxReader;
