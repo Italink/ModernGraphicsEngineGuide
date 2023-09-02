@@ -1,4 +1,4 @@
-#include <QApplication>
+﻿#include <QApplication>
 #include <QDesktopServices>
 #include <QUrl>
 #include "Render/RHI/QRhiEx.h"

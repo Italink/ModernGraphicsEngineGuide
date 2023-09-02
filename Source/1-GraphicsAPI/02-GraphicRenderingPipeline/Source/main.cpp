@@ -24,7 +24,7 @@ public:
 	}
 protected:
 	virtual void onRenderTick() override {
-		if (mSigInit.ensure()) {
+		if (mSigInit.ensure()) {	//初始化资源
 			mVertexBuffer.reset(mRhi->newBuffer(QRhiBuffer::Immutable, QRhiBuffer::VertexBuffer, sizeof(VertexData)));
 			mVertexBuffer->create();
 			QRhiVertexInputLayout inputLayout;
@@ -85,14 +85,14 @@ protected:
 		QRhiCommandBuffer* cmdBuffer = mSwapChain->currentFrameCommandBuffer();		//交互链中的当前指令缓冲
 
 		if (mSigSubmit.ensure()) {
-			QRhiResourceUpdateBatch* batch = mRhi->nextResourceUpdateBatch();
+			QRhiResourceUpdateBatch* batch = mRhi->nextResourceUpdateBatch();		//申请资源操作合批入口
 			batch->uploadStaticBuffer(mVertexBuffer.get(), VertexData);				//上传顶点数据
 			cmdBuffer->resourceUpdate(batch);
 		}
 
 		const QColor clearColor = QColor::fromRgbF(0.0f, 0.0f, 0.0f, 1.0f);			//使用该值来清理 渲染目标 中的 颜色附件
 		const QRhiDepthStencilClearValue dsClearValue = { 1.0f,0 };					//使用该值来清理 渲染目标 中的 深度和模板附件
-		cmdBuffer->beginPass(renderTarget, clearColor, dsClearValue, nullptr);		//开启一个渲染通道
+		cmdBuffer->beginPass(renderTarget, clearColor, dsClearValue, nullptr);		//开启渲染通道
 
 		cmdBuffer->setGraphicsPipeline(mPipeline.get());							//设置图形渲染管线
 		cmdBuffer->setViewport(QRhiViewport(0, 0, mSwapChain->currentPixelSize().width(), mSwapChain->currentPixelSize().height()));		//设置图像的绘制区域
@@ -101,7 +101,7 @@ protected:
 		cmdBuffer->setVertexInput(0, 1, &vertexInput);								
 		cmdBuffer->draw(3);															//执行绘制，其中 3 代表着有 3个顶点数据 输入
 
-		cmdBuffer->endPass();														//关闭渲染通道
+		cmdBuffer->endPass();														//结束渲染通道
 	}
 };
 
@@ -109,6 +109,7 @@ int main(int argc, char **argv)
 {
 	QEngineApplication app(argc, argv);
     QRhiWindow::InitParams initParams;
+	initParams.backend = QRhi::Vulkan;
     TriangleWindow window(initParams);
 	window.resize({ 800,600 });
 	window.show();

@@ -74,6 +74,7 @@ int main(int argc, char **argv)
     QApplication app(argc, argv);
 
     QRhiWindow::InitParams initParams;
+	initParams.backend = QRhi::Vulkan;
     ExampleRhiWindow window(initParams);
 	window.setTitle("01-RhiWindow");
 	window.resize({ 400,400 });

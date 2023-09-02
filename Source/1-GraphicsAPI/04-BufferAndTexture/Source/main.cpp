@@ -76,7 +76,8 @@ protected:
 
 		QRhiGraphicsPipeline::TargetBlend targetBlend;
 		targetBlend.enable = false;
-		mPipeline->setTargetBlends({ QRhiGraphicsPipeline::TargetBlend() });
+		mPipeline->setTargetBlends({ targetBlend });
+
 		mPipeline->setSampleCount(mSwapChain->sampleCount());
 		mPipeline->setTopology(QRhiGraphicsPipeline::Triangles);
 		
@@ -177,7 +178,6 @@ protected:
 };
 
 int main(int argc, char **argv){
-    qputenv("QSG_INFO", "1");
     QApplication app(argc, argv);
 
     QRhiWindow::InitParams initParams;
