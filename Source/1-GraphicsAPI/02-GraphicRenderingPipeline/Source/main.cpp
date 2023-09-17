@@ -11,8 +11,8 @@ static float VertexData[] = {										//顶点数据
 
 class TriangleWindow : public QRhiWindow {
 private:
-	QRhiEx::Signal mSigInit;										//用于初始化的信号
-	QRhiEx::Signal mSigSubmit;										//用于提交资源的信号
+	QRhiSignal mSigInit;										//用于初始化的信号
+	QRhiSignal mSigSubmit;										//用于提交资源的信号
 	QScopedPointer<QRhiBuffer> mVertexBuffer;						//顶点缓冲区
 	QScopedPointer<QRhiShaderResourceBindings> mShaderBindings;		//描述符集布局绑定
 	QScopedPointer<QRhiGraphicsPipeline> mPipeline;					//图形渲染管线
@@ -47,7 +47,7 @@ protected:
 			mPipeline->setSampleCount(mSwapChain->sampleCount());
 			mPipeline->setRenderPassDescriptor(mSwapChainPassDesc.get());
 
-			QShader vs = mRhi->newShaderFromCode(QShader::VertexStage, R"(#version 440
+			QShader vs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::VertexStage, R"(#version 440
 				layout(location = 0) in vec2 position;		//这里需要与上面的inputLayout 对应
 				layout(location = 1) in vec4 color;
 
@@ -64,7 +64,7 @@ protected:
 			)");
 			Q_ASSERT(vs.isValid());
 
-			QShader fs = mRhi->newShaderFromCode(QShader::FragmentStage, R"(#version 440
+			QShader fs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::FragmentStage, R"(#version 440
 				layout (location = 0) in vec4 vColor;		//上一阶段的out变成了这一阶段的in
 				layout (location = 0) out vec4 fragColor;	//片段着色器输入
 				void main(){

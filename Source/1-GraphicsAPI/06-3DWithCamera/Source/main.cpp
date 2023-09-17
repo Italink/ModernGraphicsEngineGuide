@@ -25,8 +25,8 @@ public:
 		mSigInit.request();
 	}
 private:
-	QRhiEx::Signal mSigInit;
-	QRhiEx::Signal mSigSubmit;
+	QRhiSignal mSigInit;
+	QRhiSignal mSigSubmit;
 
 	QScopedPointer<QCamera> mCamera;
 	QImage mImage;
@@ -74,7 +74,7 @@ protected:
 		mPipeline->setSampleCount(mSwapChain->sampleCount());
 		mPipeline->setTopology(QRhiGraphicsPipeline::Triangles);
 
-		QShader vs = mRhi->newShaderFromCode(QShader::VertexStage, R"(#version 440
+		QShader vs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::VertexStage, R"(#version 440
 			layout(location = 0) in vec3 inPosition;
 			layout(location = 1) in vec2 inUV;
 			layout(location = 0) out vec2 vUV;
@@ -92,7 +92,7 @@ protected:
 		)");
 		Q_ASSERT(vs.isValid());
 
-		QShader fs = mRhi->newShaderFromCode(QShader::FragmentStage, R"(#version 440
+		QShader fs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::FragmentStage, R"(#version 440
 			layout(location = 0) in vec2 vUV;
 			layout(location = 0) out vec4 outFragColor;
 			layout(binding = 1) uniform sampler2D uTexture;

@@ -13,8 +13,8 @@ public:
 		mSigInit.request();
 	}
 private:
-	QRhiEx::Signal mSigInit;
-	QRhiEx::Signal mSigSubmit;
+	QRhiSignal mSigInit;
+	QRhiSignal mSigSubmit;
 
 	QScopedPointer<QRhiBuffer> mVertexBuffer;
 	QScopedPointer<QRhiBuffer> mUniformBuffer;
@@ -41,7 +41,7 @@ protected:
 		mPipeline->setSampleCount(mSwapChain->sampleCount());
 		mPipeline->setTopology(QRhiGraphicsPipeline::Triangles);
 
-		QShader vs = mRhi->newShaderFromCode(QShader::VertexStage, R"(#version 440
+		QShader vs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::VertexStage, R"(#version 440
 			layout(location = 0) in vec3 inPosition;
 			layout(binding = 0) uniform UniformBlock{
 				mat4 MVP;
@@ -54,7 +54,7 @@ protected:
 		)");
 		Q_ASSERT(vs.isValid());
 
-		QShader fs = mRhi->newShaderFromCode(QShader::FragmentStage, R"(#version 440
+		QShader fs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::FragmentStage, R"(#version 440
 			layout(location = 0) out vec4 outFragColor;
 			void main()
 			{
