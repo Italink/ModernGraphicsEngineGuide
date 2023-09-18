@@ -19,11 +19,7 @@ nav:
         - "3 - 着色器" : "01-GraphicsAPI/3.着色器.md"
         - "4 - 缓冲区与纹理" : "01-GraphicsAPI/4.缓冲区与纹理.md"
         - "5 - 3D空间" : "01-GraphicsAPI/5.三维空间.md"
-        - "6 - 混合与测试" : "Waitting.md"
-        - "7 - 实例化" : "Waitting.md"
-        - "8 - 多渲染目标" : "Waitting.md"
-        - "0 - 离屏渲染" : "Waitting.md"
-        - "10 - 间接渲染" : "Waitting.md"
+        - "6 - 图形API进阶" : "01-GraphicsAPI/6.图形渲染进阶.md"
     - '引擎技术':
         - "0 - 渲染架构" : "02-EngineTechnology/Waitting.md"
         - "1 - 编辑器架构" : "02-EngineTechnology/1.编辑器架构.md"
