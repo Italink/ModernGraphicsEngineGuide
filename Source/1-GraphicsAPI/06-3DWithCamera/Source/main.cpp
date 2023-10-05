@@ -1,8 +1,7 @@
 #include <QApplication>
 #include "Render/RHI/QRhiWindow.h"
 #include "QDateTime"
-#include "Utils/QCamera.h"
-#include "Render/Painter/TexturePainter.h"
+#include "Utils/QRhiCamera.h"
 
 struct UniformBlock {
 	QGenericMatrix<4, 4, float> MVP;
@@ -21,14 +20,14 @@ static float GridData[] = {
 
 class MyWindow : public QRhiWindow {
 public:
-	MyWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
+	MyWindow(QRhiHelper::InitParams inInitParams) :QRhiWindow(inInitParams) {
 		mSigInit.request();
 	}
 private:
 	QRhiSignal mSigInit;
 	QRhiSignal mSigSubmit;
 
-	QScopedPointer<QCamera> mCamera;
+	QScopedPointer<QRhiCamera> mCamera;
 	QImage mImage;
 	QScopedPointer<QRhiTexture> mTexture;
 	QScopedPointer<QRhiSampler> mSampler;
@@ -38,7 +37,8 @@ private:
 	QScopedPointer<QRhiGraphicsPipeline> mPipeline;
 protected:
 	void initRhiResource() {
-		mCamera.reset(new QCamera);
+		mCamera.reset(new QRhiCamera);
+		mCamera->setupRhi(mRhi.get());
 		mCamera->setupWindow(this);
 		mCamera->setPosition(QVector3D(0, 10, 0));
 
@@ -74,7 +74,7 @@ protected:
 		mPipeline->setSampleCount(mSwapChain->sampleCount());
 		mPipeline->setTopology(QRhiGraphicsPipeline::Triangles);
 
-		QShader vs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::VertexStage, R"(#version 440
+		QShader vs = QRhiHelper::newShaderFromCode(QShader::VertexStage, R"(#version 440
 			layout(location = 0) in vec3 inPosition;
 			layout(location = 1) in vec2 inUV;
 			layout(location = 0) out vec2 vUV;
@@ -92,7 +92,7 @@ protected:
 		)");
 		Q_ASSERT(vs.isValid());
 
-		QShader fs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::FragmentStage, R"(#version 440
+		QShader fs = QRhiHelper::newShaderFromCode(QShader::FragmentStage, R"(#version 440
 			layout(location = 0) in vec2 vUV;
 			layout(location = 0) out vec4 outFragColor;
 			layout(binding = 1) uniform sampler2D uTexture;
@@ -141,7 +141,7 @@ protected:
 			batch->generateMips(mTexture.get());
 		}
 
-		QMatrix4x4 project = mCamera->getProjectionMatrixWithCorr(mRhi.get());
+		QMatrix4x4 project = mCamera->getProjectionMatrixWithCorr();
 
 		QMatrix4x4 view = mCamera->getViewMatrix();
 
@@ -169,7 +169,7 @@ int main(int argc, char** argv) {
 	qputenv("QSG_INFO", "1");
 	QApplication app(argc, argv);
 
-	QRhiWindow::InitParams initParams;
+	QRhiHelper::InitParams initParams;
 	initParams.backend = QRhi::Vulkan;
 	MyWindow* window = new MyWindow(initParams);
 	window->resize({ 800,600 });

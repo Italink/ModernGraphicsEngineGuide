@@ -19,7 +19,7 @@ private:
 	QScopedPointer<QRhiGraphicsPipeline> mPipeline;
 	QVector<QVector2D> mInstanceData;
 public:
-	InstancingWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
+	InstancingWindow(QRhiHelper::InitParams inInitParams) :QRhiWindow(inInitParams) {
 		mSigInit.request();
 		mSigSubmit.request();
 
@@ -57,7 +57,7 @@ protected:
 			mPipeline->setDepthOp(QRhiGraphicsPipeline::Always);
 			mPipeline->setDepthWrite(false);
 
-			QShader vs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::VertexStage, R"(#version 440
+			QShader vs = QRhiHelper::newShaderFromCode(QShader::VertexStage, R"(#version 440
 			layout(location = 0) in vec2 position;
 			layout(location = 1) in vec2 offset;
 
@@ -70,7 +70,7 @@ protected:
 		)");
 			Q_ASSERT(vs.isValid());
 
-			QShader fs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::FragmentStage, R"(#version 440
+			QShader fs = QRhiHelper::newShaderFromCode(QShader::FragmentStage, R"(#version 440
 			layout(location = 0) out vec4 fragColor;
 			void main(){
 				fragColor = vec4(0.1f,0.5f,0.9f,1.0f);
@@ -126,7 +126,7 @@ int main(int argc, char **argv)
 {
     qputenv("QSG_INFO", "1");
     QApplication app(argc, argv);
-    QRhiWindow::InitParams initParams;
+    QRhiHelper::InitParams initParams;
     initParams.backend = QRhi::D3D11;
     InstancingWindow* window = new InstancingWindow(initParams);
 	window->resize({ 800,600 });

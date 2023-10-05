@@ -1,7 +1,6 @@
 #include <QApplication>
 
 #include "Render/RHI/QRhiWindow.h"
-#include "Render/Painter/TexturePainter.h"
 #include "private/qrhivulkan_p.h"
 #include "qvulkanfunctions.h"
 
@@ -20,7 +19,7 @@ private:
 	QScopedPointer<QRhiComputePipeline> mPipeline;
 	QScopedPointer<QRhiShaderResourceBindings> mShaderBindings;
 public:
-	IndirectDrawWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
+	IndirectDrawWindow(QRhiHelper::InitParams inInitParams) :QRhiWindow(inInitParams) {
 		mSigInit.request();
 		mSigSubmit.request();
 	}
@@ -42,21 +41,21 @@ protected:
 				});
 			mShaderBindings->create();
 			mPipeline.reset(mRhi->newComputePipeline());
-			QShader cs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::ComputeStage, R"(#version 440
-			layout(std140, binding = 0) buffer StorageBuffer{
-				int counter;
-			}SSBO;
-			layout (binding = 1, rgba8) uniform image2D Tex;
+			QShader cs = QRhiHelper::newShaderFromCode(QShader::ComputeStage, R"(#version 440
+				layout(std140, binding = 0) buffer StorageBuffer{
+					int counter;
+				}SSBO;
+				layout (binding = 1, rgba8) uniform image2D Tex;
 
-			void main(){
-				int currentCounter = atomicAdd(SSBO.counter,1);
-			}
-		)");
+				void main(){
+					int currentCounter = atomicAdd(SSBO.counter,1);
+				}
+			)");
 			Q_ASSERT(cs.isValid());
 
 			mPipeline->setShaderStage({
 				QRhiShaderStage(QRhiShaderStage::Compute, cs),
-				});
+			});
 
 			mPipeline->setShaderResourceBindings(mShaderBindings.get());
 			mPipeline->create();
@@ -110,7 +109,7 @@ int main(int argc, char **argv)
 {
     qputenv("QSG_INFO", "1");
     QApplication app(argc, argv);
-    QRhiWindow::InitParams initParams;
+    QRhiHelper::InitParams initParams;
     initParams.backend = QRhi::Vulkan;
     IndirectDrawWindow window(initParams);
 	window.resize({ 800,600 });

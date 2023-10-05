@@ -9,7 +9,7 @@ struct UniformBlock {
 
 class MyWindow : public QRhiWindow {
 public:
-	MyWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
+	MyWindow(QRhiHelper::InitParams inInitParams) :QRhiWindow(inInitParams) {
 		mSigInit.request();
 	}
 private:
@@ -41,7 +41,7 @@ protected:
 		mPipeline->setSampleCount(mSwapChain->sampleCount());
 		mPipeline->setTopology(QRhiGraphicsPipeline::Triangles);
 
-		QShader vs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::VertexStage, R"(#version 440
+		QShader vs = QRhiHelper::newShaderFromCode(QShader::VertexStage, R"(#version 440
 			layout(location = 0) in vec3 inPosition;
 			layout(binding = 0) uniform UniformBlock{
 				mat4 MVP;
@@ -54,7 +54,7 @@ protected:
 		)");
 		Q_ASSERT(vs.isValid());
 
-		QShader fs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::FragmentStage, R"(#version 440
+		QShader fs = QRhiHelper::newShaderFromCode(QShader::FragmentStage, R"(#version 440
 			layout(location = 0) out vec4 outFragColor;
 			void main()
 			{
@@ -135,7 +135,7 @@ int main(int argc, char** argv) {
 	qputenv("QSG_INFO", "1");
 	QApplication app(argc, argv);
 
-	QRhiWindow::InitParams initParams;
+	QRhiHelper::InitParams initParams;
 	initParams.backend = QRhi::Vulkan;
 	MyWindow* window = new MyWindow(initParams);
 	window->resize({ 800,600 });

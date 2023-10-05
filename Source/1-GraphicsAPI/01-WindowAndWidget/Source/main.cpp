@@ -55,7 +55,7 @@ protected:
 
 class ExampleRhiWindow : public QRhiWindow {
 public:
-	ExampleRhiWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {}
+	ExampleRhiWindow(QRhiHelper::InitParams inInitParams) :QRhiWindow(inInitParams) {}
 protected:
 	virtual void onRenderTick() override {
 		QRhiRenderTarget* currentRenderTarget = mSwapChain->currentFrameRenderTarget();
@@ -73,7 +73,7 @@ int main(int argc, char **argv)
 {
     QApplication app(argc, argv);
 
-    QRhiWindow::InitParams initParams;
+    QRhiHelper::InitParams initParams;
 	initParams.backend = QRhi::Vulkan;
     ExampleRhiWindow window(initParams);
 	window.setTitle("01-RhiWindow");

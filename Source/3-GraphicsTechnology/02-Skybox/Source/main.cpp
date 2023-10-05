@@ -1,27 +1,33 @@
-#include "QEngineApplication.h"
+#include <QApplication>
 #include "QRenderWidget.h"
-#include "Render/Pass/QBasePassForward.h"
-#include "Render/Pass/QBlurRenderPass.h"
-#include "Render/Pass/QSkyRenderPass.h"
+#include "Render/RenderGraph/PassBuilder/QSkyPassBuilder.h"
+#include "QEngineApplication.h"
+#include "Render/PassBuilder/QOutputPassBuilder.h"
+
+class MyRenderer : public IRenderer {
+private:
+	QSharedPointer<QSkyPassBuilder> mSkyPass{ new QSkyPassBuilder };
+public:
+	MyRenderer()
+		: IRenderer({ QRhi::Vulkan })
+	{
+		mSkyPass->setSkyBoxImageByPath(RESOURCE_DIR"/Image/environment.hdr");
+	}
+protected:
+	void setupGraph(QRenderGraphBuilder& graphBuilder) override {
+		QSkyPassBuilder::Output skyOut
+			= graphBuilder.addPassBuilder("SkyPass", mSkyPass);
+
+		QOutputPassBuilder::Output cout
+			= graphBuilder.addPassBuilder<QOutputPassBuilder>("OutputPass")
+			.setInitialTexture(skyOut.SkyTexture);
+	}
+};
 
 int main(int argc, char** argv) {
+	qputenv("QSG_INFO", "1");
 	QEngineApplication app(argc, argv);
-
-	QRhiWindow::InitParams initParams;
-	initParams.backend = QRhi::Vulkan;
-	QRenderWidget widget(initParams);
-
-	widget.setupCamera();
-	widget.setFrameGraph(
-		QFrameGraph::Begin()
-		.addPass
-		(
-			QSkyRenderPass::Create("Sky")
-			.setSkyBoxImagePath(RESOURCE_DIR"/Image/environment.hdr")
-		)
-		.end("Sky", QSkyRenderPass::Out::SkyTexture)
-	);
-
+	QRenderWidget widget(new MyRenderer());
 	widget.showMaximized();
 	return app.exec();
 }

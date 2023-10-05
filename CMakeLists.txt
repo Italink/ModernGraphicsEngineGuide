@@ -4,7 +4,7 @@ project(ModernGraphicsEngineGuide CXX)
 
 option(QENGINE_BUILD_RELEASE "Build Release" FALSE)
 
-set(RELEASE_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../Release)
+set(RELEASE_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Release)
 
 function(add_shader TARGET_NAME SHADER_PATH)
     set(OUTPUT_SHADER_PATH ${SHADER_PATH}.qsb)  #输出文件路径
@@ -24,6 +24,10 @@ function(add_example EXAMPLE_PATH)
         ${PROJECT_SOURCE}
     )
     target_link_libraries(${EXAMPLE_NAME} PRIVATE QEngineUtilities)
+    #add_custom_command(TARGET ${EXAMPLE_NAME} POST_BUILD     
+    #    COMMAND ${CMAKE_COMMAND} -E copy
+    #        $<TARGET_FILE_DIR:${EXAMPLE_NAME}>
+    #        $<TARGET_RUNTIME_DLLS:QEngineUtilities>)     
     qengine_setup_env(${EXAMPLE_NAME})
 endfunction()
 
@@ -33,11 +37,11 @@ else()
     set(QENGINE_RESOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Resources")
 endif()
 
-function(add_example_dir_internal DIR_PATH GROUP_NAME)
+function(add_example_dir DIR_PATH GROUP_NAME)
     file(GLOB EXAMPLE_LIST RELATIVE ${DIR_PATH} ${DIR_PATH}/*)
     foreach(EXAMPLE_NAME ${EXAMPLE_LIST})
         if(NOT EXISTS "${DIR_PATH}/${EXAMPLE_NAME}/Source")
-            add_example_dir_internal(${DIR_PATH}/${EXAMPLE_NAME} ${GROUP_NAME}/${EXAMPLE_NAME})
+            add_example_dir(${DIR_PATH}/${EXAMPLE_NAME} ${GROUP_NAME}/${EXAMPLE_NAME})
         elseif(IS_DIRECTORY ${DIR_PATH}/${EXAMPLE_NAME})
             add_example(${DIR_PATH}/${EXAMPLE_NAME})
             set_target_properties(${EXAMPLE_NAME} PROPERTIES FOLDER ${GROUP_NAME})
@@ -50,24 +54,25 @@ function(add_example_dir_internal DIR_PATH GROUP_NAME)
     endforeach()
 endfunction()
 
-function(add_example_dir DIR_NAME)
-    add_example_dir_internal(${CMAKE_CURRENT_SOURCE_DIR}/${DIR_NAME} ${DIR_NAME})
-endfunction()
-
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "Generated Files")
 
-add_subdirectory(0-QEngineUtilities)
+add_subdirectory(Source/0-QEngineUtilities)
 
 set(CMAKE_MAP_IMPORTED_CONFIG_DEBUGEDITOR Debug Release)
 find_package(Qt6 COMPONENTS Core Widgets Gui Multimedia ShaderTools REQUIRED)
 
-add_example_dir(1-GraphicsAPI)
-add_example_dir(2-EngineTechnology)
-add_example_dir(3-GraphicsTechnology)
+add_example_dir(${CMAKE_CURRENT_SOURCE_DIR}/Source/1-GraphicsAPI 1-GraphicsAPI)
+add_example_dir(${CMAKE_CURRENT_SOURCE_DIR}/Source/2-EngineTechnology 2-EngineTechnology)
+add_example_dir(${CMAKE_CURRENT_SOURCE_DIR}/Source/3-GraphicsTechnology 3-GraphicsTechnology)
 
 # 部分示例的特殊操作
 add_shader(03-Shader ${QENGINE_RESOURCE_DIR}/Shader/color.frag)
-set_property(TARGET 01-Editor PROPERTY AUTOMOC ON)
+set_property(TARGET 00-Blur PROPERTY AUTOMOC ON)
+set_property(TARGET 01-Bloom PROPERTY AUTOMOC ON)
+set_property(TARGET 02-Outlining PROPERTY AUTOMOC ON)
+set_property(TARGET 03-SSAO PROPERTY AUTOMOC ON)
+set_property(TARGET 04-DepthOfField PROPERTY AUTOMOC ON)
+set_property(TARGET 00-RenderingArchitecture PROPERTY AUTOMOC ON)
 set_property(TARGET 05-GPUParticles PROPERTY AUTOMOC ON)
 set_property(TARGET 03-SSAO PROPERTY AUTOMOC ON)

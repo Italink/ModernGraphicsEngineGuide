@@ -23,7 +23,7 @@ private:
 	QScopedPointer<QRhiShaderResourceBindings> mShaderBindings;
 	QScopedPointer<QRhiGraphicsPipeline> mPipeline;
 public:
-	TriangleWindow(QRhiWindow::InitParams inInitParams)
+	TriangleWindow(QRhiHelper::InitParams inInitParams)
 		: QRhiWindow(inInitParams) {
 		mSigInit.request();
 		mSigSubmit.request();
@@ -58,7 +58,7 @@ protected:
 			mPipeline->setSampleCount(mSwapChain->sampleCount());
 			mPipeline->setRenderPassDescriptor(mSwapChainPassDesc.get());
 
-			QShader vs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::VertexStage, R"(#version 440
+			QShader vs = QRhiHelper::newShaderFromCode(QShader::VertexStage, R"(#version 440
 				layout(location = 0) in vec2 position;		
 				layout(location = 1) in vec4 color;
 				layout(location = 0) out vec4 vColor;		
@@ -77,7 +77,7 @@ protected:
 			)");
 			Q_ASSERT(vs.isValid());
 
-			QShader fs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::FragmentStage, R"(#version 440
+			QShader fs = QRhiHelper::newShaderFromCode(QShader::FragmentStage, R"(#version 440
 				layout (location = 0) in vec4 vColor;		
 				layout (location = 0) out vec4 fragColor;	
 				void main(){
@@ -126,7 +126,7 @@ protected:
 int main(int argc, char** argv)
 {
 	QEngineApplication app(argc, argv);
-	QRhiWindow::InitParams initParams;
+	QRhiHelper::InitParams initParams;
 	initParams.backend = QRhi::Vulkan;
 	TriangleWindow window(initParams);
 	window.resize({ 800,600 });

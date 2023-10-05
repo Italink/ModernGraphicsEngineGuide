@@ -1,54 +1,59 @@
-#include "QEngineApplication.h"
+#include <QApplication>
+#include "QtConcurrent/qtconcurrentrun.h"
 #include "QRenderWidget.h"
-#include "Asset/QStaticMesh.h"
-#include "Render/Component/Light/QPointLightComponent.h"
 #include "Render/Component/QStaticMeshRenderComponent.h"
-#include "Render/Pass/BlinnPhong/QBlinnPhongBasePassDeferred.h"
-#include "Render/Pass/BlinnPhong/QBlinnPhongLightingPass.h"
-#include "Render/Pass/QBasePassForward.h"
-#include "Render/Pass/QSkyRenderPass.h"
+#include "Render/PassBuilder/PBR/QPbrMeshPassBuilder.h"
+#include "Render/PassBuilder/PBR/QPbrLightingPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/QSkyPassBuilder.h"
+#include "QEngineApplication.h"
+#include "Render/PassBuilder/QOutputPassBuilder.h"
+
+class MyRenderer : public IRenderer {
+private:
+	QStaticMeshRenderComponent mStaticComp;
+	QSharedPointer<QPbrMeshPassBuilder> mMeshPass{ new QPbrMeshPassBuilder };
+	QSharedPointer<QPbrLightingPassBuilder> mLightingPass{ new QPbrLightingPassBuilder };
+	QSharedPointer<QSkyPassBuilder> mSkyPass{ new QSkyPassBuilder };
+public:
+	MyRenderer()
+		: IRenderer({ QRhi::Vulkan })
+	{
+		QtConcurrent::run([this]() {
+			mStaticComp.setStaticMesh(QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian_ship/scene.gltf"));
+			});
+
+		mSkyPass->setSkyBoxImageByPath(RESOURCE_DIR"/Image/environment.hdr");
+
+		addComponent(&mStaticComp);
+	}
+protected:
+	void setupGraph(QRenderGraphBuilder& graphBuilder) override {
+		QSkyPassBuilder::Output skyOut
+			= graphBuilder.addPassBuilder("SkyPass", mSkyPass);
+
+		QPbrMeshPassBuilder::Output meshOut
+			= graphBuilder.addPassBuilder("PbrMeshPass", mMeshPass);
+
+		QPbrLightingPassBuilder::Output lightingOut
+			= graphBuilder.addPassBuilder("LightingPass", mLightingPass)
+			.setBaseColor(meshOut.BaseColor)
+			.setMetallic(meshOut.Metallic)
+			.setNormal(meshOut.Normal)
+			.setPosition(meshOut.Position)
+			.setRoughness(meshOut.Roughness)
+			.setSkyCube(skyOut.SkyCube)
+			.setSkyTexture(skyOut.SkyTexture);
+
+		QOutputPassBuilder::Output cout
+			= graphBuilder.addPassBuilder<QOutputPassBuilder>("OutputPass")
+			.setInitialTexture(lightingOut.LightingResult);
+	}
+};
 
 int main(int argc, char** argv) {
+	qputenv("QSG_INFO", "1");
 	QEngineApplication app(argc, argv);
-
-	QRhiWindow::InitParams initParams;
-
-	QRenderWidget widget(initParams);
-	auto camera = widget.setupCamera();
-	camera->setPosition(QVector3D(20, 15, 12));
-	camera->setRotation(QVector3D(-30, 145, 0));
-
-	auto staticMesh = QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian_ship/scene.gltf");
-
-	widget.setFrameGraph(
-		QFrameGraph::Begin()
-		.addPass(
-			QSkyRenderPass::Create("Sky")
-			.setSkyBoxImagePath(RESOURCE_DIR"/Image/environment.hdr")
-		)
-		.addPass(
-			QBlinnPhongBasePassDeferred::Create("BasePass")
-			.addComponent(
-				QStaticMeshRenderComponent::Create("StaticMesh")
-				.setStaticMesh(staticMesh)
-				.setRotation(QVector3D(-90,0,0))
-			)
-			.addComponent(
-				QPointLightComponent::Create("PointLight")
-			)
-		)
-		.addPass(
-			QBlinnPhongLightingPass::Create("Lighting")
-			.setTextureIn_Albedo("BasePass", QBlinnPhongBasePassDeferred::Out::BaseColor)
-			.setTextureIn_Position("BasePass", QBlinnPhongBasePassDeferred::Out::Position)
-			.setTextureIn_Normal("BasePass", QBlinnPhongBasePassDeferred::Out::Normal)
-			.setTextureIn_Specular("BasePass", QBlinnPhongBasePassDeferred::Out::Specular)
-			.setTextureIn_SkyTexture("Sky", QSkyRenderPass::Out::SkyTexture)
-		)
-		.end("Lighting", QBlinnPhongLightingPass::Out::FragColor)
-	);
-
+	QRenderWidget widget(new MyRenderer());
 	widget.showMaximized();
-
 	return app.exec();
 }

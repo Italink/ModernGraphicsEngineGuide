@@ -53,7 +53,7 @@ int main(int argc, char **argv)
 		mPipeline->setDepthOp(QRhiGraphicsPipeline::Always);
 		mPipeline->setDepthWrite(false);
 
-		QShader vs = QRhiHelper::newShaderFromCode(rhi.get(), QShader::VertexStage, R"(#version 440
+		QShader vs = QRhiHelper::newShaderFromCode(QShader::VertexStage, R"(#version 440
 			layout(location = 0) in vec2 position;
 			out gl_PerVertex { 
 				vec4 gl_Position;
@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 		)");
 		Q_ASSERT(vs.isValid());
 
-		QShader fs = QRhiHelper::newShaderFromCode(rhi.get(), QShader::FragmentStage, R"(#version 440
+		QShader fs = QRhiHelper::newShaderFromCode(QShader::FragmentStage, R"(#version 440
 			layout(location = 0) out vec4 fragColor;
 			void main(){
 				fragColor = vec4(0.1f,0.5f,0.9f,1.0f);

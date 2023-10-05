@@ -1,31 +1,39 @@
 #include "QEngineApplication.h"
 #include "QRenderWidget.h"
-#include "Render/QFrameGraph.h"
-#include "Render/Pass/QBasePassForward.h"
+#include "QtConcurrent/qtconcurrentrun.h"
 #include "Render/Component/QSkeletalMeshRenderComponent.h"
+#include "Render/PassBuilder/QOutputPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/QMeshPassBuilder.h"
 
-int main(int argc, char **argv){
+class MyRenderer : public IRenderer {
+private:
+	QSkeletalMeshRenderComponent mSkeletonComp;
+	QSharedPointer<QMeshPassBuilder> mMeshPass{ new QMeshPassBuilder };
+public:
+	MyRenderer()
+		: IRenderer({ QRhi::Vulkan })
+	{
+		mSkeletonComp.setSkeletalMesh(QSkeletalMesh::CreateFromFile(RESOURCE_DIR"/Model/Catwalk Walk Turn 180 Tight R.fbx"));
+		
+		getCamera()->setPosition(QVector3D(0, 190, -700));
+		getCamera()->setRotation(QVector3D(-5, 265, 0));
+		addComponent(&mSkeletonComp);
+	}
+protected:
+	void setupGraph(QRenderGraphBuilder& graphBuilder) override {
+		QMeshPassBuilder::Output meshOut
+			= graphBuilder.addPassBuilder("MeshPass", mMeshPass);
+
+		QOutputPassBuilder::Output cout
+			= graphBuilder.addPassBuilder<QOutputPassBuilder>("OutputPass")
+			.setInitialTexture(meshOut.BaseColor);
+	}
+};
+
+int main(int argc, char** argv) {
+	qputenv("QSG_INFO", "1");
 	QEngineApplication app(argc, argv);
-	QRhiWindow::InitParams initParams;
-	initParams.backend = QRhi::Implementation::Vulkan;
-	QRenderWidget widget(initParams);
-
-	auto camera = widget.setupCamera();
-	camera->setPosition(QVector3D(0, 190, -700));
-	camera->setRotation(QVector3D(-5, 265, 0));
-
-	widget.setFrameGraph(
-		QFrameGraph::Begin()
-		.addPass(
-			QBasePassForward::Create("BasePass")
-			.addComponent(
-				QSkeletalMeshRenderComponent::Create("SkeletalMesh")
-				.setSkeletalMesh(QSkeletalMesh::CreateFromFile(RESOURCE_DIR"/Model/Catwalk Walk Turn 180 Tight R.fbx"))
-			)
-		)
-		.end("BasePass", QBasePassForward::BaseColor)
-	);
-
+	QRenderWidget widget(new MyRenderer());
 	widget.showMaximized();
 	return app.exec();
 }

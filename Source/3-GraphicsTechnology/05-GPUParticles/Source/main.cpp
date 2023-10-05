@@ -1,9 +1,11 @@
 #include "QEngineApplication.h"
 #include "QRenderWidget.h"
+#include "Render/PassBuilder/QOutputPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/QMeshPassBuilder.h"
 #include "QRandomGenerator"
-#include "Render/Pass/QBasePassForward.h"
 #include "Render/Component/QParticlesRenderComponent.h"
 #include "QPainter"
+#include "Asset/QParticleEmitter.h"
 
 class MyGpuParticleEmitter : public QGpuParticleEmitter {
 	Q_OBJECT
@@ -104,31 +106,38 @@ protected:
 	}
 };
 
+
+class MyRenderer : public IRenderer {
+private:
+	QParticlesRenderComponent mCpuParticlesComp;
+	QParticlesRenderComponent mGpuParticlesComp;
+	QSharedPointer<QMeshPassBuilder> mMeshPass{ new QMeshPassBuilder };
+public:
+	MyRenderer()
+		: IRenderer({ QRhi::Vulkan })
+	{
+		mCpuParticlesComp.setEmitter(new MyCpuParticleEmitter);
+		mCpuParticlesComp.setParticleShape(QStaticMesh::CreateFromText("CPU", QFont()));
+		mGpuParticlesComp.setEmitter(new MyGpuParticleEmitter);
+
+		addComponent(&mCpuParticlesComp);
+		addComponent(&mGpuParticlesComp);
+	}
+protected:
+	void setupGraph(QRenderGraphBuilder& graphBuilder) override {
+		QMeshPassBuilder::Output meshOut
+			= graphBuilder.addPassBuilder("MeshPass", mMeshPass);
+
+		QOutputPassBuilder::Output cout
+			= graphBuilder.addPassBuilder<QOutputPassBuilder>("OutputPass")
+			.setInitialTexture(meshOut.BaseColor);
+	}
+};
+
 int main(int argc, char** argv) {
+	qputenv("QSG_INFO", "1");
 	QEngineApplication app(argc, argv);
-	QRhiWindow::InitParams initParams;
-	initParams.backend = QRhi::Implementation::Vulkan;
-	QRenderWidget widget(initParams);
-
-	widget.setupCamera();
-
-	widget.setFrameGraph(
-		QFrameGraph::Begin()
-		.addPass(
-			QBasePassForward::Create("BasePass")
-			.addComponent(
-				QParticlesRenderComponent::Create("GPU Particles")
-				.setEmitter(new MyGpuParticleEmitter)
-			)
-			.addComponent(
-				QParticlesRenderComponent::Create("CPU Particles")
-				.setEmitter(new MyCpuParticleEmitter)
-				.setParticleShape(QStaticMesh::CreateFromText("CPU", QFont()))
-			)
-		)
-		.end("BasePass",QBasePassForward::BaseColor)
-	);
-
+	QRenderWidget widget(new MyRenderer());
 	widget.showMaximized();
 	return app.exec();
 }

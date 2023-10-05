@@ -1,39 +1,66 @@
 #include "QEngineApplication.h"
 #include "QRenderWidget.h"
-#include "Render/QFrameGraph.h"
-#include "Render/Pass/QBasePassForward.h"
+#include "QtConcurrent/qtconcurrentrun.h"
 #include "Render/Component/QStaticMeshRenderComponent.h"
-#include "Render/Pass/QBlurRenderPass.h"
+#include "Render/PassBuilder/QOutputPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/QMeshPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/QBlurPassBuilder.h"
 
-int main(int argc, char **argv){
+#define Q_PROPERTY_VAR(Type,Name)\
+    Q_PROPERTY(Type Name READ get_##Name WRITE set_##Name) \
+    Type get_##Name(){ return Name; } \
+    void set_##Name(Type var){ \
+        Name = var;  \
+    } \
+    Type Name
+
+class MyRenderer : public IRenderer {
+	Q_OBJECT
+	Q_PROPERTY_VAR(int, BlurIterations) = 2;
+	Q_PROPERTY_VAR(int, BlurSize) = 20;
+	Q_PROPERTY_VAR(int, DownSampleCount) = 4;
+
+	Q_CLASSINFO("BlurIterations", "Min=1,Max=8")
+	Q_CLASSINFO("BlurSize", "Min=1,Max=80")
+	Q_CLASSINFO("DownSampleCount", "Min=1,Max=16")
+private:
+	QStaticMeshRenderComponent mStaticComp;
+	QSharedPointer<QMeshPassBuilder> mMeshPass{ new QMeshPassBuilder };
+public:
+	MyRenderer()
+		: IRenderer({ QRhi::Vulkan })
+	{
+		mStaticComp.setStaticMesh(QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian/scene.gltf"));
+		mStaticComp.setTranslate(QVector3D(0, -5, 0));
+		mStaticComp.setRotation(QVector3D(-90, 0, 0));
+
+		addComponent(&mStaticComp);
+
+		getCamera()->setPosition(QVector3D(0, 0, 25));
+	}
+protected:
+	void setupGraph(QRenderGraphBuilder& graphBuilder) override {
+		QMeshPassBuilder::Output meshOut
+			= graphBuilder.addPassBuilder("MeshPass", mMeshPass);
+
+		QBlurPassBuilder::Output blurOut = graphBuilder.addPassBuilder<QBlurPassBuilder>("BlurPass")
+			.setBaseColorTexture(meshOut.BaseColor)
+			.setBlurIterations(BlurIterations)
+			.setBlurSize(BlurSize)
+			.setDownSampleCount(DownSampleCount);
+
+		QOutputPassBuilder::Output cout
+			= graphBuilder.addPassBuilder<QOutputPassBuilder>("OutputPass")
+			.setInitialTexture(blurOut.BlurResult);
+	}
+};
+
+int main(int argc, char** argv) {
+	qputenv("QSG_INFO", "1");
 	QEngineApplication app(argc, argv);
-	QRhiWindow::InitParams initParams;
-	initParams.backend = QRhi::Implementation::Vulkan;
-	QRenderWidget widget(initParams);
-	widget.setupCamera()
-		->setPosition(QVector3D(0,0,25));
-	widget.setFrameGraph(
-		QFrameGraph::Begin()
-		.addPass(
-			QBasePassForward::Create("BasePass")
-			.addComponent(
-				QStaticMeshRenderComponent::Create("StaticMesh")
-				.setStaticMesh(QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian/scene.gltf"))
-				.setTranslate(QVector3D(0,-5,0))
-				.setRotation(QVector3D(-90,0,0))
-			)
-		)
-		.addPass(
-			QBlurRenderPass::Create("Blur")
-			.setBlurIterations(2)
-			.setBlurSize(10)
-			.setDownSampleCount(4)
-			.setTextureIn_Src( "BasePass", QBasePassForward::Out::BaseColor)
-		)
-		.end("Blur", QBlurRenderPass::Result)
-	);
-
+	QRenderWidget widget(new MyRenderer());
 	widget.showMaximized();
 	return app.exec();
 }
 
+#include "main.moc"

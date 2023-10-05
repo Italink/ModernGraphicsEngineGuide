@@ -1,36 +1,44 @@
 #include "QEngineApplication.h"
+#include "QtConcurrent/qtconcurrentrun.h"
 #include "QRenderWidget.h"
-#include "Render/QFrameGraph.h"
-#include "Render/Pass/QBasePassForward.h"
 #include "Render/Component/QStaticMeshRenderComponent.h"
+#include "Render/PassBuilder/QOutputPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/QMeshPassBuilder.h"
+
+class MyRenderer : public IRenderer {
+private:
+	QStaticMeshRenderComponent mTextTextureComp;
+	QStaticMeshRenderComponent mTextMeshComp;
+	QSharedPointer<QMeshPassBuilder> mMeshPass{ new QMeshPassBuilder };
+public:
+	MyRenderer()
+		: IRenderer({ QRhi::Vulkan })
+	{
+		//QtConcurrent::run([this]() {
+
+		//});
+		mTextTextureComp.setStaticMesh(QStaticMesh::CreateFromText("TextTexture", QFont("微软雅黑", 64), Qt::white, Qt::Horizontal, 2, true));
+		mTextMeshComp.setStaticMesh(QStaticMesh::CreateFromText("TextMesh", QFont("微软雅黑", 64), Qt::white, Qt::Horizontal, 2, false));
+		addComponent(&mTextTextureComp);
+		addComponent(&mTextMeshComp);
+	}
+protected:
+	void setupGraph(QRenderGraphBuilder& graphBuilder) override {
+
+		QMeshPassBuilder::Output meshOut
+			= graphBuilder.addPassBuilder("MeshPass", mMeshPass);
+
+
+		QOutputPassBuilder::Output cout
+			= graphBuilder.addPassBuilder<QOutputPassBuilder>("OutputPass")
+			.setInitialTexture(meshOut.BaseColor);
+	}
+};
 
 int main(int argc, char** argv) {
+	qputenv("QSG_INFO", "1");
 	QEngineApplication app(argc, argv);
-	QRhiWindow::InitParams initParams;
-	initParams.backend = QRhi::Implementation::Vulkan;
-	QRenderWidget widget(initParams);
-	widget.setupCamera()
-		->setPosition(QVector3D(0,0, 2000));
-
-	widget.setFrameGraph(
-		QFrameGraph::Begin()
-		.addPass(
-			QBasePassForward::Create("BasePass")
-			.addComponent(
-				QStaticMeshRenderComponent::Create("TextTexture")
-				.setStaticMesh(QStaticMesh::CreateFromText("TextTexture",QFont("微软雅黑",64), Qt::white, Qt::Horizontal, 2, true))
-				.setTranslate(QVector3D(0, 100, 0))
-			)
-			.addComponent(
-				QStaticMeshRenderComponent::Create("TextMesh")
-				.setStaticMesh(QStaticMesh::CreateFromText("TextMesh", QFont("微软雅黑", 64), Qt::white, Qt::Horizontal, 2, false))
-				.setTranslate(QVector3D(0,-100,0))
-			)
-		)
-		.end("BasePass", QBasePassForward::BaseColor)
-	);
-
+	QRenderWidget widget(new MyRenderer());
 	widget.showMaximized();
 	return app.exec();
 }
-

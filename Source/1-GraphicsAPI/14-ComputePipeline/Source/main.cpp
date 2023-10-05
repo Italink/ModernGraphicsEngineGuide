@@ -1,7 +1,5 @@
 #include <QApplication>
-
 #include "Render/RHI/QRhiWindow.h"
-#include "Render/Painter/TexturePainter.h"
 
 class ComputeShaderWindow : public QRhiWindow {
 private:
@@ -14,12 +12,14 @@ private:
 	QScopedPointer<QRhiComputePipeline> mPipeline;
 	QScopedPointer<QRhiShaderResourceBindings> mShaderBindings;
 
-	QScopedPointer<TexturePainter> mTexturePainter;
+	QScopedPointer<QRhiSampler> mPaintSampler;
+	QScopedPointer<QRhiShaderResourceBindings> mPaintShaderBindings;
+	QScopedPointer<QRhiGraphicsPipeline> mPaintPipeline;
 
 	const int ImageWidth = 64;
 	const int ImageHeight = 64;
 public:
-	ComputeShaderWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
+	ComputeShaderWindow(QRhiHelper::InitParams inInitParams) :QRhiWindow(inInitParams) {
 		mSigInit.request();
 		mSigSubmit.request();
 	}
@@ -34,13 +34,6 @@ protected:
 			mTexture.reset(mRhi->newTexture(QRhiTexture::RGBA8, QSize(ImageWidth, ImageHeight), 1, QRhiTexture::UsedWithLoadStore));		//图像可被计算管线读取和存储
 			mTexture->create();
 
-			mTexturePainter.reset(new TexturePainter);
-			mTexturePainter->setupRhi(mRhi.get());
-			mTexturePainter->setupRenderPassDesc(mSwapChain->renderPassDescriptor());
-			mTexturePainter->setupSampleCount(mSwapChain->sampleCount());
-			mTexturePainter->setupTexture(mTexture.get());
-			mTexturePainter->compile();
-
 			mPipeline.reset(mRhi->newComputePipeline());
 			mShaderBindings.reset(mRhi->newShaderResourceBindings());
 			mShaderBindings->setBindings({
@@ -49,7 +42,7 @@ protected:
 			});
 			mShaderBindings->create();
 
-			QShader cs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::ComputeStage, R"(#version 440
+			QShader cs = QRhiHelper::newShaderFromCode(QShader::ComputeStage, R"(#version 440
 				layout(std140, binding = 0) buffer StorageBuffer{
 					int counter;
 				}SSBO;
@@ -70,7 +63,64 @@ protected:
 
 			mPipeline->setShaderResourceBindings(mShaderBindings.get());
 			mPipeline->create();
+
+			mPaintPipeline.reset(mRhi->newGraphicsPipeline());
+			QRhiGraphicsPipeline::TargetBlend blendState;
+			blendState.dstColor = QRhiGraphicsPipeline::One;
+			blendState.srcColor = QRhiGraphicsPipeline::One;
+			blendState.dstAlpha = QRhiGraphicsPipeline::One;
+			blendState.srcAlpha = QRhiGraphicsPipeline::One;
+			blendState.enable = true;
+			mPaintPipeline->setTargetBlends({ blendState });
+			mPaintPipeline->setSampleCount(currentRenderTarget->sampleCount());
+			mPaintPipeline->setDepthTest(false);
+
+			QString vsCode = R"(#version 450
+				layout (location = 0) out vec2 vUV;
+				out gl_PerVertex{
+					vec4 gl_Position;
+				};
+				void main() {
+					vUV = vec2((gl_VertexIndex << 1) & 2, gl_VertexIndex & 2);
+					gl_Position = vec4(vUV * 2.0f - 1.0f, 0.0f, 1.0f);
+					%1
+				}
+			)";
+			QShader vs = QRhiHelper::newShaderFromCode(QShader::VertexStage, vsCode.arg(mRhi->isYUpInNDC() ? "	vUV.y = 1 - vUV.y;" : "").toLocal8Bit());
+
+			QShader fs = QRhiHelper::newShaderFromCode(QShader::FragmentStage, R"(#version 450
+				layout (binding = 0) uniform sampler2D uSamplerColor;
+				layout (location = 0) in vec2 vUV;
+				layout (location = 0) out vec4 outFragColor;
+				void main() {
+					outFragColor = vec4(texture(uSamplerColor, vUV).rgb,1.0f);
+				}
+			)");
+			mPaintPipeline->setShaderStages({
+				{ QRhiShaderStage::Vertex, vs },
+				{ QRhiShaderStage::Fragment, fs }
+				});
+
+			mPaintSampler.reset(mRhi->newSampler(
+				QRhiSampler::Filter::Linear,
+				QRhiSampler::Filter::Linear,
+				QRhiSampler::Filter::None,
+				QRhiSampler::Repeat,
+				QRhiSampler::Repeat,
+				QRhiSampler::Repeat
+			));
+			mPaintSampler->create();
+
+			mPaintShaderBindings.reset(mRhi->newShaderResourceBindings());
+			mPaintShaderBindings->setBindings({
+				QRhiShaderResourceBinding::sampledTexture(0,QRhiShaderResourceBinding::FragmentStage,mTexture.get(),mPaintSampler.get())
+			});
+			mPaintShaderBindings->create();
+			mPaintPipeline->setShaderResourceBindings(mPaintShaderBindings.get());
+			mPaintPipeline->setRenderPassDescriptor(currentRenderTarget->renderPassDescriptor());
+			mPaintPipeline->create();
 		}
+
 		QRhiResourceUpdateBatch* resourceUpdates = nullptr;
 		resourceUpdates = mRhi->nextResourceUpdateBatch();
 		const int counter = 0;
@@ -85,7 +135,10 @@ protected:
 		const QRhiDepthStencilClearValue dsClearValue = { 1.0f,0 };
 
 		cmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue);
-		mTexturePainter->paint(cmdBuffer, currentRenderTarget);
+		cmdBuffer->setGraphicsPipeline(mPaintPipeline.get());
+		cmdBuffer->setViewport(QRhiViewport(0, 0, currentRenderTarget->pixelSize().width(), currentRenderTarget->pixelSize().height()));
+		cmdBuffer->setShaderResources(mPaintShaderBindings.get());
+		cmdBuffer->draw(4);
 		cmdBuffer->endPass();
 	}
 };
@@ -94,7 +147,7 @@ int main(int argc, char **argv)
 {
     qputenv("QSG_INFO", "1");
     QApplication app(argc, argv);
-    QRhiWindow::InitParams initParams;
+    QRhiHelper::InitParams initParams;
     ComputeShaderWindow window(initParams);
 	window.resize({ 800,600 });
 	window.show();

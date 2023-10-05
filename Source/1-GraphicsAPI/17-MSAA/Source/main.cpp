@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 
     QSharedPointer<QRhi> rhi = QRhiHelper::create();
 
-	if (rhi->isFeatureSupported(QRhi::Feature::MultisampleTexture)) {
+	if (!rhi->isFeatureSupported(QRhi::Feature::MultisampleTexture)) {
 		return -1;
 	}
 
@@ -62,7 +62,7 @@ int main(int argc, char **argv)
 		mPipeline->setDepthOp(QRhiGraphicsPipeline::Always);
 		mPipeline->setDepthWrite(false);
 
-		QShader vs = QRhiHelper::newShaderFromCode(rhi.get(), QShader::VertexStage, R"(#version 440
+		QShader vs = QRhiHelper::newShaderFromCode(QShader::VertexStage, R"(#version 440
 			layout(location = 0) in vec2 position;
 			out gl_PerVertex { 
 				vec4 gl_Position;
@@ -73,7 +73,7 @@ int main(int argc, char **argv)
 		)");
 		Q_ASSERT(vs.isValid());
 
-		QShader fs = QRhiHelper::newShaderFromCode(rhi.get(), QShader::FragmentStage, R"(#version 440
+		QShader fs = QRhiHelper::newShaderFromCode(QShader::FragmentStage, R"(#version 440
 			layout(location = 0) out vec4 fragColor;
 			void main(){
 				fragColor = vec4(0.1f,0.5f,0.9f,1.0f);
@@ -136,7 +136,6 @@ int main(int argc, char **argv)
 	QRhiReadbackDescription rb(msaaResolveTexture.get());		//回读 msaaResolveTexture 而不是 msaaTexture
 	resourceUpdates->readBackTexture(rb, &rbResult);
 	cmdBuffer->endPass(resourceUpdates);
-
 	rhi->endOffscreenFrame();
 	QDesktopServices::openUrl(QUrl("file:" + outputPath, QUrl::TolerantMode));
 	return app.exec();

@@ -1,38 +1,31 @@
 #include "QEngineApplication.h"
-#include "QtConcurrent/qtconcurrentrun.h"
 #include "QRenderWidget.h"
-#include "Render/Component/QSplineRenderComponent.h"
+#include "QtConcurrent/qtconcurrentrun.h"
+#include "Render/Component/Derived/QSpectrumRenderComponent.h"
+#include "Render/Component/QStaticMeshRenderComponent.h"
 #include "Render/PassBuilder/QOutputPassBuilder.h"
 #include "Render/RenderGraph/PassBuilder/QMeshPassBuilder.h"
 
 class MyRenderer : public IRenderer {
 private:
-	QSplineRenderComponent mSplineComp;
+	QSpectrumRenderComponent mSpectrumComp;
 	QSharedPointer<QMeshPassBuilder> mMeshPass{ new QMeshPassBuilder };
 public:
 	MyRenderer()
 		: IRenderer({ QRhi::Vulkan })
 	{
-		QList<QSplinePoint> points;
+		mSpectrumComp.setAudio(RESOURCE_DIR"/Audio/MySunset.mp3");
+		mSpectrumComp.setBarCount(1000);
+		mSpectrumComp.setTranslate(QVector3D(0, -0.5, 0));
 
-		int numOfPoint = 10;
-		int scaleFactor = 10;
-
-		for (int i = 0; i < numOfPoint; i++) {
-			QSplinePoint point;
-			point.mPoint.setX((i - numOfPoint / 2) * scaleFactor);
-			point.mPoint.setY(i % 2 ? scaleFactor : -scaleFactor);
-			points << point;
-		}
-
-		mSplineComp.setPoints(points);
-
-		addComponent(&mSplineComp);
+		addComponent(&mSpectrumComp);
 	}
 protected:
 	void setupGraph(QRenderGraphBuilder& graphBuilder) override {
+
 		QMeshPassBuilder::Output meshOut
 			= graphBuilder.addPassBuilder("MeshPass", mMeshPass);
+
 
 		QOutputPassBuilder::Output cout
 			= graphBuilder.addPassBuilder<QOutputPassBuilder>("OutputPass")

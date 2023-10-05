@@ -1,18 +1,26 @@
 #include "QEngineApplication.h"
 #include "QRenderWidget.h"
-#include "Render/QFrameGraph.h"
-#include "Render/Component/QStaticMeshRenderComponent.h"
-#include "Render/Pass/QDilationRenderPass.h"
-#include "Render/Pass/QDepthOfFieldRenderPass.h"
-#include "Render/Pass/PBR/QPbrBasePassDeferred.h"
-#include "Render/Component/QParticlesRenderComponent.h"
 #include <QPainter>
 #include <QPainterPath>
+#include "QtConcurrent/qtconcurrentrun.h"
+#include "Render/PassBuilder/QOutputPassBuilder.h"
+#include "Render/Component/QParticlesRenderComponent.h"
+#include "Render/PassBuilder/PBR/QPbrMeshPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/QDepthOfFieldPassBuilder.h"
+
+#define Q_PROPERTY_VAR(Type,Name)\
+    Q_PROPERTY(Type Name READ get_##Name WRITE set_##Name) \
+    Type get_##Name(){ return Name; } \
+    void set_##Name(Type var){ \
+        Name = var;  \
+    } \
+    Type Name
 
 class MyGpuParticleEmitter : public QGpuParticleEmitter {
 public:
 	MyGpuParticleEmitter() {
 		QGpuParticleEmitter::InitParams params;
+
 		params.spawnParams->addParam("MinSize", 0.0f);
 		params.spawnParams->addParam("MaxSize", 0.01f);
 
@@ -30,7 +38,7 @@ public:
 			const float noiseStrength = 10;
 			vec3 noiseOffset = vec3(rand(0.12,-noiseStrength,noiseStrength),0,rand(0.11561,-noiseStrength,noiseStrength));
 			outParticle.position = noiseOffset;
-			outParticle.velocity = vec3(0,rand(0.124,0,0.0005),rand(0.4451,-0.0005,0.0005));
+			outParticle.velocity = vec3(0,rand(0.124,0,0.05),rand(0.4451,-0.0005,0.0005));
 		)";
 
 		params.updateDefine = R"(	
@@ -41,8 +49,8 @@ public:
 
 		params.updateCode = R"(		
 			outParticle.age	 = inParticle.age + UpdateCtx.deltaSec;
-			outParticle.position = inParticle.position + inParticle.velocity;
-			outParticle.velocity = inParticle.velocity + vec3(rand(0.41,-0.000001,0.000001),0,0);
+			outParticle.position = inParticle.position + inParticle.velocity * UpdateCtx.deltaSec;
+			outParticle.velocity = inParticle.velocity + vec3(rand(0.41,-0.1,0.1),0,0)* UpdateCtx.deltaSec;
 			outParticle.scaling  = inParticle.scaling;
 			outParticle.rotation = inParticle.rotation;
 		)";
@@ -54,59 +62,78 @@ public:
 	}
 };
 
-int main(int argc, char **argv){
-	QEngineApplication app(argc, argv);
-	QLoggingCategory::setFilterRules("qt.vulkan=true");
-	QRhiWindow::InitParams initParams;
-	initParams.backend = QRhi::Implementation::Vulkan;
-	QRenderWidget widget(initParams);
+class MyRenderer : public IRenderer {
+	Q_OBJECT
+	Q_PROPERTY_VAR(float, Focus) = 0.05f;
+	Q_PROPERTY_VAR(float, FocalLength) = 20.0f;
+	Q_PROPERTY_VAR(float, Aperture) = 10.5f;
+	Q_PROPERTY_VAR(int, ApertureBlades) = 5;
+	Q_PROPERTY_VAR(float, BokehSqueeze) = 0.0f;
+	Q_PROPERTY_VAR(float, BokehSqueezeFalloff) = 1.0f;
+	Q_PROPERTY_VAR(int, Iterations) = 64;
+private:
+	QParticlesRenderComponent mParticlesComp;
+public:
+	MyRenderer()
+		: IRenderer({ QRhi::Vulkan })
+	{
+		QImage image(100, 100, QImage::Format_RGBA8888);
+		image.fill(Qt::transparent);
+		QPainter painter(&image);
+		QPoint center(50, 50);
+		QPainterPath path;
+		for (int i = 0; i < 5; i++) {
+			float x1 = qCos((18 + 72 * i) * M_PI / 180) * 50,
+				y1 = qSin((18 + 72 * i) * M_PI / 180) * 50,
+				x2 = qCos((54 + 72 * i) * M_PI / 180) * 20,
+				y2 = qSin((54 + 72 * i) * M_PI / 180) * 20;
 
-	auto camera = widget.setupCamera();
-	camera->setPosition(QVector3D(0.0f, 0.1f, 10.0f));
-
-	QImage image(100,100,QImage::Format_RGBA8888);
-	image.fill(Qt::transparent);
-	QPainter painter(&image);
-	QPoint center(50, 50);
-	QPainterPath path;
-	for (int i = 0; i < 5; i++) {
-		float x1 = qCos((18 + 72 * i) * M_PI/180) * 50,
-			  y1 = qSin((18 + 72 * i) * M_PI/180) * 50,
-			  x2 = qCos((54 + 72 * i) * M_PI/180) * 20,
-			  y2 = qSin((54 + 72 * i) * M_PI/180) * 20;
-
-		if (i == 0) {
-			path.moveTo(x1 + center.x(), y1 + center.y());
-			path.lineTo(x2 + center.x(), y2 + center.y());
+			if (i == 0) {
+				path.moveTo(x1 + center.x(), y1 + center.y());
+				path.lineTo(x2 + center.x(), y2 + center.y());
+			}
+			else {
+				path.lineTo(x1 + center.x(), y1 + center.y());
+				path.lineTo(x2 + center.x(), y2 + center.y());
+			}
 		}
-		else {
-			path.lineTo(x1 + center.x(), y1 + center.y());
-			path.lineTo(x2 + center.x(), y2 + center.y());
-		}
-		
+		path.closeSubpath();
+		painter.fillPath(path, Qt::white);
+		mParticlesComp.setParticleShape(QStaticMesh::CreateFromImage(image));
+		mParticlesComp.setEmitter(new MyGpuParticleEmitter);
+
+		addComponent(&mParticlesComp);
+
+		getCamera()->setPosition(QVector3D(0.0f, 0.1f, 10.0f));
 	}
-	path.closeSubpath();
-	painter.fillPath(path,Qt::white);
+protected:
+	void setupGraph(QRenderGraphBuilder& graphBuilder) override {
+		QPbrMeshPassBuilder::Output meshOut
+			= graphBuilder.addPassBuilder<QPbrMeshPassBuilder>("MeshPass");
 
-	widget.setFrameGraph(
-		QFrameGraph::Begin()
-		.addPass(
-			QPbrBasePassDeferred::Create("BasePass")
-			.addComponent(
-				QParticlesRenderComponent::Create("Particles")
-				.setEmitter(new MyGpuParticleEmitter)
-				.setParticleShape(QStaticMesh::CreateFromImage(image))
-			)
-		)
-		.addPass(
-			QDepthOfFieldRenderPass::Create("DepthOfField")
-			.setTextureIn_Src("BasePass", QPbrBasePassDeferred::Out::BaseColor)
-			.setTextureIn_Position("BasePass", QPbrBasePassDeferred::Out::Position)
-		)
-		.end("DepthOfField", QDepthOfFieldRenderPass::Result)
-	);
+		QDepthOfFieldPassBuilder::Output dofOut = graphBuilder.addPassBuilder<QDepthOfFieldPassBuilder>("DepthOfFieldPass")
+			.setBaseColorTexture(meshOut.BaseColor)
+			.setPositionTexture(meshOut.Position)
+			.setFocus(Focus)
+			.setFocalLength(FocalLength)
+			.setAperture(Aperture)
+			.setApertureBlades(ApertureBlades)
+			.setBokehSqueeze(BokehSqueeze)
+			.setBokehSqueezeFalloff(BokehSqueezeFalloff)
+			.setIterations(Iterations);
 
+		QOutputPassBuilder::Output cout
+			= graphBuilder.addPassBuilder<QOutputPassBuilder>("OutputPass")
+			.setInitialTexture(dofOut.DepthOfFieldResult);
+	}
+};
+
+int main(int argc, char** argv) {
+	qputenv("QSG_INFO", "1");
+	QEngineApplication app(argc, argv);
+	QRenderWidget widget(new MyRenderer());
 	widget.showMaximized();
 	return app.exec();
 }
 
+#include "main.moc"

@@ -1,62 +1,31 @@
 #include "QEngineApplication.h"
 #include "QRenderWidget.h"
-#include "Render/QFrameGraph.h"
+#include "QtConcurrent/qtconcurrentrun.h"
 #include "Render/Component/QStaticMeshRenderComponent.h"
-#include "Render/Pass/PBR/QPbrBasePassDeferred.h"
-#include "Render/Pass/QSsaoRenderPass.h"
-#include "Render/Pass/QBlurRenderPass.h"
+#include "Render/PassBuilder/QOutputPassBuilder.h"
+#include "Render/PassBuilder/PBR/QPbrMeshPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/QSsaoPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/QBlurPassBuilder.h"
 
-class QSsaoMergeRenderPass :public IRenderPass {
-	Q_OBJECT
-		Q_BUILDER_BEGIN_RENDER_PASS(QSsaoMergeRenderPass, Raw, Ssao)
-		Q_BUILDER_END_RENDER_PASS(Result)
+class QSsaoMergePassBuilder : public IRenderPassBuilder {
+	QRP_INPUT_BEGIN(QSsaoMergePassBuilder)
+		QRP_INPUT_ATTR(QRhiTextureRef, BaseColor);
+		QRP_INPUT_ATTR(QRhiTextureRef, SsaoTexture);
+	QRP_INPUT_END()
+
+	QRP_OUTPUT_BEGIN(QSsaoMergePassBuilder)
+		QRP_OUTPUT_ATTR(QRhiTextureRef, SsaoMergeResult)
+	QRP_OUTPUT_END()
+private:
+	QRhiTextureRef mColorAttachment;
+	QRhiTextureRenderTargetRef mRenderTarget;
+	QShader mMergeFS;
+	QRhiSamplerRef mSampler;
+	QRhiShaderResourceBindingsRef mMergeBindings;
+	QRhiGraphicsPipelineRef mMergePipeline;
 public:
-	void resizeAndLinkNode(const QSize& size) override {
-		QRhiTexture* raw = getTextureIn_Raw();
-		QRhiTexture* ssao = getTextureIn_Ssao();
-
-		mRT.colorAttachment.reset(mRhi->newTexture(QRhiTexture::RGBA32F, raw->pixelSize(), 1, QRhiTexture::RenderTarget | QRhiTexture::UsedAsTransferSource));
-		mRT.colorAttachment->create();
-		mRT.renderTarget.reset(mRhi->newTextureRenderTarget({ mRT.colorAttachment.get() }));
-		mRT.renderPassDesc.reset(mRT.renderTarget->newCompatibleRenderPassDescriptor());
-		mRT.renderTarget->setRenderPassDescriptor(mRT.renderPassDesc.get());
-		mRT.renderTarget->create();
-
-		mSampler.reset(mRhi->newSampler(QRhiSampler::Linear,
-			QRhiSampler::Linear,
-			QRhiSampler::None,
-			QRhiSampler::ClampToEdge,
-			QRhiSampler::ClampToEdge));
-		mSampler->create();
-		mBindings.reset(mRhi->newShaderResourceBindings());
-		mBindings->setBindings({
-			QRhiShaderResourceBinding::sampledTexture(0,QRhiShaderResourceBinding::FragmentStage,raw, mSampler.get()),
-			QRhiShaderResourceBinding::sampledTexture(1,QRhiShaderResourceBinding::FragmentStage,ssao,mSampler.get())
-			});
-		mBindings->create();
-		registerTextureOut_Result(mRT.colorAttachment.get());
-	}
-	void compile() override {
-		mPipeline.reset(mRhi->newGraphicsPipeline());
-		QRhiGraphicsPipeline::TargetBlend blendState;
-		blendState.enable = true;
-		mPipeline->setTargetBlends({ blendState });
-		mPipeline->setSampleCount(mRT.renderTarget->sampleCount());
-
-		QString vsCode = R"(#version 450
-			layout (location = 0) out vec2 vUV;
-			out gl_PerVertex{
-				vec4 gl_Position;
-			};
-			void main() {
-				vUV = vec2((gl_VertexIndex << 1) & 2, gl_VertexIndex & 2);
-				gl_Position = vec4(vUV * 2.0f - 1.0f, 0.0f, 1.0f);
-				%1
-			}
-		)";
-		QShader vs = QRhiHelper::newShaderFromCode(mRhi, QShader::VertexStage, vsCode.arg(mRhi->isYUpInNDC() ? "	vUV.y = 1 - vUV.y;" : "").toLocal8Bit());
-
-		QShader fs = QRhiHelper::newShaderFromCode(mRhi, QShader::FragmentStage, R"(#version 450
+	QSsaoMergePassBuilder() {
+		mMergeFS = QRhiHelper::newShaderFromCode(QShader::FragmentStage, R"(#version 450
 			layout (binding = 0) uniform sampler2D uSrcTexture;
 			layout (binding = 1) uniform sampler2D uSsaoTexture;
 			layout (location = 0) in vec2 vUV;
@@ -67,82 +36,117 @@ public:
 				outFragColor = vec4(srcColor.rgb * ssaoColor.r,srcColor.a);
 			}
 		)");
-
-		mPipeline->setShaderStages({
-			{ QRhiShaderStage::Vertex, vs },
-			{ QRhiShaderStage::Fragment, fs }
-			});
-
-		QRhiVertexInputLayout inputLayout;
-
-		mPipeline->setVertexInputLayout(inputLayout);
-		mPipeline->setShaderResourceBindings(mBindings.get());
-		mPipeline->setRenderPassDescriptor(mRT.renderTarget->renderPassDescriptor());
-		mPipeline->create();
 	}
-	void render(QRhiCommandBuffer* cmdBuffer) override {
-		cmdBuffer->beginPass(mRT.renderTarget.get(), QColor::fromRgbF(0.0f, 0.0f, 0.0f, 0.0f), { 1.0f, 0 });
-		cmdBuffer->setGraphicsPipeline(mPipeline.get());
-		cmdBuffer->setViewport(QRhiViewport(0, 0, mRT.renderTarget->pixelSize().width(), mRT.renderTarget->pixelSize().height()));
-		cmdBuffer->setShaderResources(mBindings.get());
+	void setup(QRenderGraphBuilder& builder) override {
+		builder.setupTexture(mColorAttachment, "SsaoMerge", QRhiTexture::Format::RGBA32F, mInput._BaseColor->pixelSize(), 1, QRhiTexture::RenderTarget | QRhiTexture::UsedAsTransferSource);
+		builder.setupRenderTarget(mRenderTarget, "SsaoMergeRT", QRhiTextureRenderTargetDescription(mColorAttachment.get()));
+
+		builder.setupSampler(mSampler, "SsaoMergeSampler", QRhiSampler::Nearest, QRhiSampler::Nearest, QRhiSampler::None, QRhiSampler::ClampToEdge, QRhiSampler::ClampToEdge, QRhiSampler::ClampToEdge);
+
+		builder.setupShaderResourceBindings(mMergeBindings, "SsaoMergeBindings", {
+			QRhiShaderResourceBinding::sampledTexture(0, QRhiShaderResourceBinding::FragmentStage,mInput._BaseColor.get() ,mSampler.get()),
+			QRhiShaderResourceBinding::sampledTexture(1, QRhiShaderResourceBinding::FragmentStage,mInput._SsaoTexture.get() ,mSampler.get()),
+		});
+		QRhiGraphicsPipelineState PSO;
+		PSO.shaderResourceBindings = mMergeBindings.get();
+		PSO.sampleCount = mRenderTarget->sampleCount();
+		PSO.renderPassDesc = mRenderTarget->renderPassDescriptor();
+		QRhiGraphicsPipeline::TargetBlend targetBlends;
+		targetBlends.enable = true;
+		PSO.targetBlends = { targetBlends };
+		PSO.shaderStages = {
+			QRhiShaderStage(QRhiShaderStage::Vertex, builder.getFullScreenVS()),
+			QRhiShaderStage(QRhiShaderStage::Fragment, mMergeFS)
+		};
+		builder.setupGraphicsPipeline(mMergePipeline, "SsaoMergePipeline", PSO);
+
+		mOutput.SsaoMergeResult = mColorAttachment;
+	}
+	void execute(QRhiCommandBuffer* cmdBuffer) override {
+		const QColor clearColor = QColor::fromRgbF(0.0f, 0.0f, 0.0f, 1.0f);
+		const QRhiDepthStencilClearValue dsClearValue = { 1.0f,0 };
+		cmdBuffer->beginPass(mRenderTarget.get(), clearColor, dsClearValue);
+		cmdBuffer->setGraphicsPipeline(mMergePipeline.get());
+		cmdBuffer->setViewport(QRhiViewport(0, 0, mRenderTarget->pixelSize().width(), mRenderTarget->pixelSize().height()));
+		cmdBuffer->setShaderResources(mMergeBindings.get());
 		cmdBuffer->draw(4);
 		cmdBuffer->endPass();
 	}
+}; 
+
+#define Q_PROPERTY_VAR(Type, Name)\
+    Q_PROPERTY(Type Name READ get_##Name WRITE set_##Name) \
+    Type get_##Name(){ return Name; } \
+    void set_##Name(Type var){ \
+        Name = var;  \
+    } \
+    Type Name
+
+
+class MyRenderer : public IRenderer {
+	Q_OBJECT
+
+	Q_PROPERTY_VAR(float, Bias) = 0.1f;
+	Q_PROPERTY_VAR(float, Radius) = 2.0f;
+	Q_PROPERTY_VAR(int, SampleSize) = 64;
+
+	Q_PROPERTY_VAR(int, BlurIterations) = 1;
+	Q_PROPERTY_VAR(int, BlurSize) = 4;
+	Q_PROPERTY_VAR(int, DownSampleCount) = 2;
+
+	Q_CLASSINFO("SampleSize", "Min=1,Max=128")
+	Q_CLASSINFO("BlurIterations", "Min=1,Max=8")
+	Q_CLASSINFO("BlurSize", "Min=1,Max=80")
+	Q_CLASSINFO("DownSampleCount", "Min=1,Max=16")
 private:
-	struct RTResource {
-		QScopedPointer<QRhiTexture> colorAttachment;
-		QScopedPointer<QRhiTextureRenderTarget> renderTarget;
-		QScopedPointer<QRhiRenderPassDescriptor> renderPassDesc;
-	};
-	RTResource mRT;
-	QScopedPointer<QRhiGraphicsPipeline> mPipeline;
-	QScopedPointer<QRhiSampler> mSampler;
-	QScopedPointer<QRhiShaderResourceBindings> mBindings;
+	QStaticMeshRenderComponent mStaticComp;
+public:
+	MyRenderer()
+		: IRenderer({ QRhi::Vulkan })
+	{
+		mStaticComp.setStaticMesh(QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian_ship/scene.gltf"));
+		mStaticComp.setRotation(QVector3D(-90, 0, 0));
+
+		addComponent(&mStaticComp);
+
+		getCamera()->setPosition(QVector3D(20, 15, 12));
+		getCamera()->setRotation(QVector3D(-30, 145, 0));
+	}
+protected:
+	void setupGraph(QRenderGraphBuilder& graphBuilder) override {
+		QPbrMeshPassBuilder::Output meshOut
+			= graphBuilder.addPassBuilder<QPbrMeshPassBuilder>("MeshPass");
+
+		QSsaoPassBuilder::Output ssaoOut = graphBuilder.addPassBuilder<QSsaoPassBuilder>("SsaoPass")
+			.setNormalTexture(meshOut.Normal)
+			.setPositionTexture(meshOut.Position)
+			.setBias(Bias)
+			.setRadius(Radius)
+			.setSampleSize(SampleSize);
+
+		QBlurPassBuilder::Output blurOut = graphBuilder.addPassBuilder<QBlurPassBuilder>("BlurPass")
+			.setBaseColorTexture(ssaoOut.SsaoResult)
+			.setBlurIterations(BlurIterations)
+			.setBlurSize(BlurSize)
+			.setDownSampleCount(DownSampleCount);
+
+		QSsaoMergePassBuilder::Output merge = graphBuilder.addPassBuilder<QSsaoMergePassBuilder>("SsaoMergePass")
+			.setBaseColor(meshOut.BaseColor)
+			.setSsaoTexture(blurOut.BlurResult);
+
+		QOutputPassBuilder::Output cout
+			= graphBuilder.addPassBuilder<QOutputPassBuilder>("OutputPass")
+			.setInitialTexture(merge.SsaoMergeResult);
+	}
 };
 
-
-int main(int argc, char **argv){
+int main(int argc, char** argv) {
+	qputenv("QSG_INFO", "1");
 	QEngineApplication app(argc, argv);
-	QRhiWindow::InitParams initParams;
-	initParams.backend = QRhi::Implementation::Vulkan;
-	QRenderWidget widget(initParams);
-
-	auto camera = widget.setupCamera();
-	camera->setPosition(QVector3D(20, 15, 12));
-	camera->setRotation(QVector3D(-30, 145, 0));
-
-	widget.setFrameGraph(
-		QFrameGraph::Begin()
-		.addPass(
-			QPbrBasePassDeferred::Create("BasePass")
-			.addComponent(
-				QStaticMeshRenderComponent::Create("StaticMesh")
-				.setStaticMesh(QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian_ship/scene.gltf"))
-				.setRotation(QVector3D(-90, 0, 0))
-			)
-		)
-		.addPass(
-			QSsaoRenderPass::Create("Ssao")
-			.setTextureIn_Position("BasePass", QPbrBasePassDeferred::Out::Position)
-			.setTextureIn_Normal("BasePass", QPbrBasePassDeferred::Out::Normal)
-		)
-		.addPass(
-			QBlurRenderPass::Create("Blur")
-			.setBlurIterations(1)
-			.setBlurSize(4)
-			.setDownSampleCount(2)
-			.setTextureIn_Src( "Ssao", QSsaoRenderPass::Out::Result)
-		)
-		.addPass(
-			QSsaoMergeRenderPass::Create("SsaoMerge")
-			.setTextureIn_Raw("BasePass", QPbrBasePassDeferred::Out::BaseColor)
-			.setTextureIn_Ssao("Blur", QBlurRenderPass::Out::Result)
-		)
-		.end("SsaoMerge", QSsaoMergeRenderPass::Result)
-	);
-
+	QRenderWidget widget(new MyRenderer());
 	widget.showMaximized();
 	return app.exec();
 }
+
 
 #include "main.moc"

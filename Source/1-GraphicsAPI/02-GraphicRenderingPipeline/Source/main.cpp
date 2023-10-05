@@ -17,7 +17,7 @@ private:
 	QScopedPointer<QRhiShaderResourceBindings> mShaderBindings;		//描述符集布局绑定
 	QScopedPointer<QRhiGraphicsPipeline> mPipeline;					//图形渲染管线
 public:
-	TriangleWindow(QRhiWindow::InitParams inInitParams) 
+	TriangleWindow(QRhiHelper::InitParams inInitParams) 
 		: QRhiWindow(inInitParams) {
 		mSigInit.request();			//请求初始化
 		mSigSubmit.request();		//请求提交资源
@@ -47,7 +47,7 @@ protected:
 			mPipeline->setSampleCount(mSwapChain->sampleCount());
 			mPipeline->setRenderPassDescriptor(mSwapChainPassDesc.get());
 
-			QShader vs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::VertexStage, R"(#version 440
+			QShader vs = QRhiHelper::newShaderFromCode(QShader::VertexStage, R"(#version 440
 				layout(location = 0) in vec2 position;		//这里需要与上面的inputLayout 对应
 				layout(location = 1) in vec4 color;
 
@@ -64,7 +64,7 @@ protected:
 			)");
 			Q_ASSERT(vs.isValid());
 
-			QShader fs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::FragmentStage, R"(#version 440
+			QShader fs = QRhiHelper::newShaderFromCode(QShader::FragmentStage, R"(#version 440
 				layout (location = 0) in vec4 vColor;		//上一阶段的out变成了这一阶段的in
 				layout (location = 0) out vec4 fragColor;	//片段着色器输入
 				void main(){
@@ -108,7 +108,7 @@ protected:
 int main(int argc, char **argv)
 {
 	QEngineApplication app(argc, argv);
-    QRhiWindow::InitParams initParams;
+    QRhiHelper::InitParams initParams;
 	initParams.backend = QRhi::Vulkan;
     TriangleWindow window(initParams);
 	window.resize({ 800,600 });

@@ -1,7 +1,7 @@
 #include <QApplication>
 
 #include "Render/RHI/QRhiWindow.h"
-#include "Render/Painter/TexturePainter.h"
+#include "Render/RenderGraph/Painter/TexturePainter.h"
 
 static float VertexData[] = {
 	//position(xy)	
@@ -26,10 +26,11 @@ private:
 	QScopedPointer<QRhiTextureRenderTarget> mRenderTarget;
 	QScopedPointer<QRhiRenderPassDescriptor> mRenderPassDesc;
 
-	QScopedPointer<TexturePainter> mTexturePainter;
-
+	QScopedPointer<QRhiSampler> mPaintSampler;
+	QScopedPointer<QRhiShaderResourceBindings> mPaintShaderBindings;
+	QScopedPointer<QRhiGraphicsPipeline> mPaintPipeline;
 public:
-	MRTWindow(QRhiWindow::InitParams inInitParams) :QRhiWindow(inInitParams) {
+	MRTWindow(QRhiHelper::InitParams inInitParams) :QRhiWindow(inInitParams) {
 		mSigInit.request();
 		mSigSubmit.request();
 	}
@@ -75,25 +76,25 @@ protected:
 			mPipeline->setDepthOp(QRhiGraphicsPipeline::Always);
 			mPipeline->setDepthWrite(false);
 
-			QShader vs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::VertexStage, R"(#version 440
-layout(location = 0) in vec2 position;
-out gl_PerVertex { 
-	vec4 gl_Position;
-};
-void main(){
-    gl_Position = vec4(position,0.0f,1.0f);
-}
-)");
+			QShader vs = QRhiHelper::newShaderFromCode(QShader::VertexStage, R"(#version 440
+				layout(location = 0) in vec2 position;
+				out gl_PerVertex { 
+					vec4 gl_Position;
+				};
+				void main(){
+					gl_Position = vec4(position,0.0f,1.0f);
+				}
+			)");
 			Q_ASSERT(vs.isValid());
 
-			QShader fs = QRhiHelper::newShaderFromCode(mRhi.get(), QShader::FragmentStage, R"(#version 440
-layout(location = 0) out vec4 fragColor0;		//输出到颜色附件0
-layout(location = 1) out vec4 fragColor1;		//输出到颜色附件1
-void main(){
-    fragColor0 = vec4(1.0f,0.0f,0.0f,1.0f);
-	fragColor1 = vec4(0.0f,0.0f,1.0f,1.0f);
-}
-)");
+			QShader fs = QRhiHelper::newShaderFromCode(QShader::FragmentStage, R"(#version 440
+				layout(location = 0) out vec4 fragColor0;		//输出到颜色附件0
+				layout(location = 1) out vec4 fragColor1;		//输出到颜色附件1
+				void main(){
+					fragColor0 = vec4(1.0f,0.0f,0.0f,1.0f);
+					fragColor1 = vec4(0.0f,0.0f,1.0f,1.0f);
+				}
+			)");
 			Q_ASSERT(fs.isValid());
 
 			mPipeline->setShaderStages({
@@ -104,24 +105,74 @@ void main(){
 			QRhiVertexInputLayout inputLayout;
 			inputLayout.setBindings({
 				QRhiVertexInputBinding(2 * sizeof(float))
-				});
+			});
 
 			inputLayout.setAttributes({
 				QRhiVertexInputAttribute(0, 0, QRhiVertexInputAttribute::Float2, 0),
-				});
+			});
 
 			mPipeline->setVertexInputLayout(inputLayout);
 			mPipeline->setShaderResourceBindings(mShaderBindings.get());
 			mPipeline->setRenderPassDescriptor(mRenderPassDesc.get());
 			mPipeline->create();
 
-			mTexturePainter.reset(new TexturePainter);
-			mTexturePainter->setupRhi(mRhi.get());
-			mTexturePainter->setupTexture(mColorAttachment0.get());
-			mTexturePainter->setupRenderPassDesc(mSwapChain->renderPassDescriptor());
-			mTexturePainter->setupSampleCount(mSwapChain->sampleCount());
-			mTexturePainter->compile();
+			mPaintPipeline.reset(mRhi->newGraphicsPipeline());
+			QRhiGraphicsPipeline::TargetBlend blendState;
+			blendState.dstColor = QRhiGraphicsPipeline::One;
+			blendState.srcColor = QRhiGraphicsPipeline::One;
+			blendState.dstAlpha = QRhiGraphicsPipeline::One;
+			blendState.srcAlpha = QRhiGraphicsPipeline::One;
+			blendState.enable = true;
+			mPaintPipeline->setTargetBlends({ blendState });
+			mPaintPipeline->setSampleCount(currentRenderTarget->sampleCount());
+			mPaintPipeline->setDepthTest(false);
+
+			QString vsCode = R"(#version 450
+				layout (location = 0) out vec2 vUV;
+				out gl_PerVertex{
+					vec4 gl_Position;
+				};
+				void main() {
+					vUV = vec2((gl_VertexIndex << 1) & 2, gl_VertexIndex & 2);
+					gl_Position = vec4(vUV * 2.0f - 1.0f, 0.0f, 1.0f);
+					%1
+				}
+			)";
+			vs = QRhiHelper::newShaderFromCode(QShader::VertexStage, vsCode.arg(mRhi->isYUpInNDC() ? "	vUV.y = 1 - vUV.y;" : "").toLocal8Bit());
+
+			fs = QRhiHelper::newShaderFromCode(QShader::FragmentStage, R"(#version 450
+				layout (binding = 0) uniform sampler2D uSamplerColor;
+				layout (location = 0) in vec2 vUV;
+				layout (location = 0) out vec4 outFragColor;
+				void main() {
+					outFragColor = vec4(texture(uSamplerColor, vUV).rgb,1.0f);
+				}
+			)");
+			mPaintPipeline->setShaderStages({
+				{ QRhiShaderStage::Vertex, vs },
+				{ QRhiShaderStage::Fragment, fs }
+				});
+
+			mPaintSampler.reset(mRhi->newSampler(
+				QRhiSampler::Filter::Linear,
+				QRhiSampler::Filter::Linear,
+				QRhiSampler::Filter::None,
+				QRhiSampler::Repeat,
+				QRhiSampler::Repeat,
+				QRhiSampler::Repeat
+			));
+			mPaintSampler->create();
+
+			mPaintShaderBindings.reset(mRhi->newShaderResourceBindings());
+			mPaintShaderBindings->setBindings({
+				QRhiShaderResourceBinding::sampledTexture(0,QRhiShaderResourceBinding::FragmentStage,mColorAttachment0.get(),mPaintSampler.get())
+			});
+			mPaintShaderBindings->create();
+			mPaintPipeline->setShaderResourceBindings(mPaintShaderBindings.get());
+			mPaintPipeline->setRenderPassDescriptor(currentRenderTarget->renderPassDescriptor());
+			mPaintPipeline->create();
 		}
+
 		QRhiResourceUpdateBatch* resourceUpdates = nullptr;
 		if (mSigSubmit.ensure()) {
 			resourceUpdates = mRhi->nextResourceUpdateBatch();
@@ -150,14 +201,21 @@ void main(){
 			else {
 				CurrentTexture = mColorAttachment1.get();
 			}
-			mTexturePainter->setupTexture(CurrentTexture);
-			mTexturePainter->compile();
+			mPaintShaderBindings->setBindings({
+				QRhiShaderResourceBinding::sampledTexture(0,QRhiShaderResourceBinding::FragmentStage,CurrentTexture,mPaintSampler.get())		//更新纹理绑定
+			});
+			mPaintShaderBindings->create();
 			counter = 0;
 		}
 		counter++;
 
 		cmdBuffer->beginPass(currentRenderTarget, clearColor, dsClearValue);
-		mTexturePainter->paint(cmdBuffer, currentRenderTarget);
+
+		cmdBuffer->setGraphicsPipeline(mPaintPipeline.get());
+		cmdBuffer->setViewport(QRhiViewport(0, 0, currentRenderTarget->pixelSize().width(), currentRenderTarget->pixelSize().height()));
+		cmdBuffer->setShaderResources(mPaintShaderBindings.get());
+		cmdBuffer->draw(4);
+
 		cmdBuffer->endPass();
 	}
 };
@@ -166,7 +224,7 @@ int main(int argc, char **argv)
 {
     qputenv("QSG_INFO", "1");
     QApplication app(argc, argv);
-    QRhiWindow::InitParams initParams;
+    QRhiHelper::InitParams initParams;
     MRTWindow window(initParams);
 	window.resize({ 800,600 });
 	window.show();

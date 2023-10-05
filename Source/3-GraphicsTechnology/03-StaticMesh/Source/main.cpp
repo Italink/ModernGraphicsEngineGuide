@@ -1,34 +1,39 @@
 #include "QEngineApplication.h"
 #include "QRenderWidget.h"
-#include "Render/QFrameGraph.h"
-#include "Render/Pass/QBasePassForward.h"
+#include "QtConcurrent/qtconcurrentrun.h"
 #include "Render/Component/QStaticMeshRenderComponent.h"
-#include "QEngineApplication.h"
+#include "Render/PassBuilder/QOutputPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/QMeshPassBuilder.h"
 
-int main(int argc, char **argv){
+class MyRenderer : public IRenderer {
+private:
+	QStaticMeshRenderComponent mStaticComp;
+	QSharedPointer<QMeshPassBuilder> mMeshPass{ new QMeshPassBuilder };
+public:
+	MyRenderer()
+		: IRenderer({ QRhi::Vulkan })
+	{
+		QtConcurrent::run([this]() {
+			mStaticComp.setStaticMesh(QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian_ship/scene.gltf"));
+		});
+
+		addComponent(&mStaticComp);
+	}
+protected:
+	void setupGraph(QRenderGraphBuilder& graphBuilder) override {
+		QMeshPassBuilder::Output meshOut
+			= graphBuilder.addPassBuilder("MeshPass", mMeshPass);
+
+		QOutputPassBuilder::Output cout
+			= graphBuilder.addPassBuilder<QOutputPassBuilder>("OutputPass")
+			.setInitialTexture(meshOut.BaseColor);
+	}
+};
+
+int main(int argc, char** argv) {
+	qputenv("QSG_INFO", "1");
 	QEngineApplication app(argc, argv);
-	QRhiWindow::InitParams initParams;
-	initParams.backend = QRhi::Implementation::Vulkan;
-	QRenderWidget widget(initParams);
-
-	auto camera = widget.setupCamera();
-	camera->setPosition(QVector3D(30,25,20));
-	camera->setRotation(QVector3D(-30,145,0));
-
-	widget.setFrameGraph(
-		QFrameGraph::Begin()
-		.addPass(
-			QBasePassForward::Create("BasePass")
-			.addComponent(
-				QStaticMeshRenderComponent::Create("StaticMesh")
-				.setStaticMesh(QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian_ship/scene.gltf"))
-				.setRotation(QVector3D(-90,0,0))
-			)
-		)
-		.end("BasePass", QBasePassForward::BaseColor)
-	);
-
+	QRenderWidget widget(new MyRenderer());
 	widget.showMaximized();
 	return app.exec();
 }
-
