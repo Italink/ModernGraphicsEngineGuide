@@ -21,7 +21,7 @@ nav:
         - "5 - 3D空间" : "01-GraphicsAPI/5.三维空间.md"
         - "6 - 图形API进阶" : "01-GraphicsAPI/6.图形渲染进阶.md"
     - '引擎技术':
-        - "0 - 渲染架构" : "02-EngineTechnology/Waitting.md"
+        - "0 - 渲染架构" : "02-EngineTechnology/0.渲染架构.md"
         - "1 - 编辑器架构" : "02-EngineTechnology/1.编辑器架构.md"
         - "2 - DebugDraw" : "02-EngineTechnology/Waitting.md"
         - "3 - GPU调试" : "02-EngineTechnology/Waitting.md"
