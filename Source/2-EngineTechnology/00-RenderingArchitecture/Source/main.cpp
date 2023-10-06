@@ -43,12 +43,13 @@ protected:
 				gl_Position =vec4(inPosition, 0.0f,1.0f);
 			}
 		)");
-		mProxy->setShaderMainCode(QRhiShaderStage::Fragment, R"(
+		mProxy->setShaderMainCode(QRhiShaderStage::Fragment, QString(R"(
 			void main(){
-				BaseColor = UBO.Color;
-			}
-		)");
-
+				%1
+			})")
+			.arg(hasColorAttachment("BaseColor")? "BaseColor = UBO.Color;" : "")
+			.toLocal8Bit()
+		);
 		mProxy->setOnUpload([this](QRhiResourceUpdateBatch* batch) {
 			batch->uploadStaticBuffer(mVertexBuffer.get(), VertexData);
 		});

@@ -30,13 +30,13 @@ public:
 	MyRenderer()
 		: IRenderer({ QRhi::Vulkan })
 	{
-		mStaticComp.setStaticMesh(QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian/scene.gltf"));
-		mStaticComp.setTranslate(QVector3D(0, -5, 0));
+		mStaticComp.setStaticMesh(QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian_ship/scene.gltf"));
 		mStaticComp.setRotation(QVector3D(-90, 0, 0));
 
 		addComponent(&mStaticComp);
 
-		getCamera()->setPosition(QVector3D(0, 0, 25));
+		getCamera()->setPosition(QVector3D(20, 15, 12));
+		getCamera()->setRotation(QVector3D(-30, 145, 0));
 	}
 protected:
 	void setupGraph(QRenderGraphBuilder& graphBuilder) override {

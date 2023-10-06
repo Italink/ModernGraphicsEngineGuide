@@ -8,6 +8,7 @@
 #include "Render/RenderGraph/PassBuilder/QBloomPassBuilder.h"
 #include "Render/RenderGraph/PassBuilder/QToneMappingPassBuilder.h"
 #include "Render/Component/QParticlesRenderComponent.h"
+#include "Render/Component/QStaticMeshRenderComponent.h"
 
 #define Q_PROPERTY_VAR(Type,Name)\
     Q_PROPERTY(Type Name READ get_##Name WRITE set_##Name) \
@@ -31,22 +32,23 @@ class MyRenderer : public IRenderer {
 	Q_CLASSINFO("BlurSize", "Min=1,Max=80")
 	Q_CLASSINFO("DownSampleCount", "Min=1,Max=16")
 private:
-	QParticlesRenderComponent mParticlesComp;
-	QSharedPointer<QMeshPassBuilder> mMeshPass{ new QMeshPassBuilder };
+	QStaticMeshRenderComponent mStaticComp;
 public:
 	MyRenderer()
 		: IRenderer({ QRhi::Vulkan })
 	{
-		mParticlesComp.setEmitter(new QGpuParticleEmitter);
+		mStaticComp.setStaticMesh(QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian_ship/scene.gltf"));
+		mStaticComp.setRotation(QVector3D(-90, 0, 0));
 
-		addComponent(&mParticlesComp);
+		addComponent(&mStaticComp);
 
-		getCamera()->setPosition(QVector3D(0, 0, 80));
+		getCamera()->setPosition(QVector3D(20, 15, 12));
+		getCamera()->setRotation(QVector3D(-30, 145, 0));
 	}
 protected:
 	void setupGraph(QRenderGraphBuilder& graphBuilder) override {
 		QMeshPassBuilder::Output meshOut
-			= graphBuilder.addPassBuilder("MeshPass", mMeshPass);
+			= graphBuilder.addPassBuilder<QMeshPassBuilder>("MeshPass");
 
 		QPixelFilterPassBuilder::Output filterOut = graphBuilder.addPassBuilder<QPixelFilterPassBuilder>("FilterPass")
 			.setBaseColorTexture(meshOut.BaseColor)
