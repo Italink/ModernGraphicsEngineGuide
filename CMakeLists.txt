@@ -2,9 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 project(ModernGraphicsEngineGuide CXX)
 
-option(QENGINE_BUILD_RELEASE "Build Release" FALSE)
-
-set(RELEASE_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Release)
+set(INSTALLATION_PACKAGE_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/InstallationPackage)
 
 function(add_shader TARGET_NAME SHADER_PATH)
     set(OUTPUT_SHADER_PATH ${SHADER_PATH}.qsb)  #输出文件路径
@@ -24,18 +22,13 @@ function(add_example EXAMPLE_PATH)
         ${PROJECT_SOURCE}
     )
     target_link_libraries(${EXAMPLE_NAME} PRIVATE QEngineUtilities)
+    set_property(TARGET ${EXAMPLE_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
     #add_custom_command(TARGET ${EXAMPLE_NAME} POST_BUILD     
     #    COMMAND ${CMAKE_COMMAND} -E copy
     #        $<TARGET_FILE_DIR:${EXAMPLE_NAME}>
     #        $<TARGET_RUNTIME_DLLS:QEngineUtilities>)     
     qengine_setup_env(${EXAMPLE_NAME})
 endfunction()
-
-if(QENGINE_BUILD_RELEASE)
-    set(QENGINE_RESOURCE_DIR "./Resources")
-else()
-    set(QENGINE_RESOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Resources")
-endif()
 
 function(add_example_dir DIR_PATH GROUP_NAME)
     file(GLOB EXAMPLE_LIST RELATIVE ${DIR_PATH} ${DIR_PATH}/*)
@@ -44,12 +37,8 @@ function(add_example_dir DIR_PATH GROUP_NAME)
             add_example_dir(${DIR_PATH}/${EXAMPLE_NAME} ${GROUP_NAME}/${EXAMPLE_NAME})
         elseif(IS_DIRECTORY ${DIR_PATH}/${EXAMPLE_NAME})
             add_example(${DIR_PATH}/${EXAMPLE_NAME})
-            set_target_properties(${EXAMPLE_NAME} PROPERTIES FOLDER ${GROUP_NAME})
-            target_compile_definitions(${EXAMPLE_NAME} PRIVATE RESOURCE_DIR="${QENGINE_RESOURCE_DIR}")      
-            if(QENGINE_BUILD_RELEASE)
-                set_target_properties(${EXAMPLE_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${RELEASE_OUTPUT_DIR}$<0:>)
-                set_target_properties(${EXAMPLE_NAME} PROPERTIES OUTPUT_NAME ${GROUP_NAME}-${EXAMPLE_NAME})
-            endif()
+            set_target_properties(${EXAMPLE_NAME} PROPERTIES FOLDER ${GROUP_NAME})   
+            install(TARGETS ${EXAMPLE_NAME} DESTINATION ${INSTALLATION_PACKAGE_OUTPUT_DIR})
         endif()
     endforeach()
 endfunction()
@@ -67,7 +56,7 @@ add_example_dir(${CMAKE_CURRENT_SOURCE_DIR}/Source/2-EngineTechnology 2-EngineTe
 add_example_dir(${CMAKE_CURRENT_SOURCE_DIR}/Source/3-GraphicsTechnology 3-GraphicsTechnology)
 
 # 部分示例的特殊操作
-add_shader(03-Shader ${QENGINE_RESOURCE_DIR}/Shader/color.frag)
+add_shader(03-Shader ${CMAKE_CURRENT_SOURCE_DIR}/Resources/Shader/color.frag)
 set_property(TARGET 00-Blur PROPERTY AUTOMOC ON)
 set_property(TARGET 01-Bloom PROPERTY AUTOMOC ON)
 set_property(TARGET 02-Outlining PROPERTY AUTOMOC ON)
@@ -76,3 +65,7 @@ set_property(TARGET 04-DepthOfField PROPERTY AUTOMOC ON)
 set_property(TARGET 00-RenderingArchitecture PROPERTY AUTOMOC ON)
 set_property(TARGET 05-GPUParticles PROPERTY AUTOMOC ON)
 set_property(TARGET 03-SSAO PROPERTY AUTOMOC ON)
+
+install(DIRECTORY Resources Source/0-QEngineUtilities/Binaries/ DESTINATION ${INSTALLATION_PACKAGE_OUTPUT_DIR})
+
+install(CODE "execute_process(COMMAND windeployqt 00-Blur.exe WORKING_DIRECTORY ${INSTALLATION_PACKAGE_OUTPUT_DIR})")

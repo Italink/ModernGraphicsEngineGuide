@@ -39,7 +39,7 @@ private:
 	QScopedPointer<QRhiGraphicsPipeline> mPipeline;
 protected:
 	void initRhiResource() {
-		mImage = QImage(RESOURCE_DIR"/Image/Logo.png").convertedTo(QImage::Format_RGBA8888);
+		mImage = QImage("Resources/Image/Logo.png").convertedTo(QImage::Format_RGBA8888);
 
 		mTexture.reset(mRhi->newTexture(QRhiTexture::RGBA8, mImage.size()));
 		mTexture->create();

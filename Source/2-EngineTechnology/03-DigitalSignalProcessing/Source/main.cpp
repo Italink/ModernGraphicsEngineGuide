@@ -14,7 +14,7 @@ public:
 	MyRenderer()
 		: IRenderer({ QRhi::Vulkan })
 	{
-		mSpectrumComp.setAudio(RESOURCE_DIR"/Audio/MySunset.mp3");
+		mSpectrumComp.setAudio("Resources/Audio/MySunset.mp3");
 		mSpectrumComp.setBarCount(1000);
 		mSpectrumComp.setTranslate(QVector3D(0, -0.5, 0));
 

@@ -11,7 +11,7 @@ public:
 	MyRenderer()
 		: IRenderer({ QRhi::Vulkan })
 	{
-		mSkyPass->setSkyBoxImageByPath(RESOURCE_DIR"/Image/environment.hdr");
+		mSkyPass->setSkyBoxImageByPath("Resources/Image/environment.hdr");
 	}
 protected:
 	void setupGraph(QRenderGraphBuilder& graphBuilder) override {

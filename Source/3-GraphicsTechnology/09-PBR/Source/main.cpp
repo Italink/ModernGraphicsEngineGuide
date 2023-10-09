@@ -2,8 +2,8 @@
 #include "QtConcurrent/qtconcurrentrun.h"
 #include "QRenderWidget.h"
 #include "Render/Component/QStaticMeshRenderComponent.h"
-#include "Render/PassBuilder/PBR/QPbrMeshPassBuilder.h"
-#include "Render/PassBuilder/PBR/QPbrLightingPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/PBR/QPbrMeshPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/PBR/QPbrLightingPassBuilder.h"
 #include "Render/RenderGraph/PassBuilder/QSkyPassBuilder.h"
 #include "QEngineApplication.h"
 #include "Render/PassBuilder/QOutputPassBuilder.h"
@@ -18,10 +18,10 @@ public:
 	MyRenderer()
 		: IRenderer({ QRhi::Vulkan })
 	{
-		mStaticComp.setStaticMesh(QStaticMesh::CreateFromFile(RESOURCE_DIR"/Model/mandalorian_ship/scene.gltf"));
+		mStaticComp.setStaticMesh(QStaticMesh::CreateFromFile("Resources/Model/mandalorian_ship/scene.gltf"));
 		mStaticComp.setRotation(QVector3D(-90, 0, 0));
 
-		mSkyPass->setSkyBoxImageByPath(RESOURCE_DIR"/Image/environment.hdr");
+		mSkyPass->setSkyBoxImageByPath("Resources/Image/environment.hdr");
 
 		addComponent(&mStaticComp);
 

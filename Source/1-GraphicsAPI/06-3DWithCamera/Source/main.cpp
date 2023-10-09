@@ -58,7 +58,7 @@ protected:
 		));
 		mSampler->create();
 
-		mImage = QImage(RESOURCE_DIR"/Image/Grid.png").convertedTo(QImage::Format_RGBA8888);
+		mImage = QImage("Resources/Image/Grid.png").convertedTo(QImage::Format_RGBA8888);
 		mTexture.reset(mRhi->newTexture(QRhiTexture::RGBA8, mImage.size(), 1 , QRhiTexture::Flag::MipMapped|QRhiTexture::UsedWithGenerateMips ));
 		mTexture->create();
 

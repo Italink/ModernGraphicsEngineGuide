@@ -13,7 +13,7 @@ public:
 	MyRenderer()
 		: IRenderer({ QRhi::Vulkan })
 	{
-		mSkeletonComp.setSkeletalMesh(QSkeletalMesh::CreateFromFile(RESOURCE_DIR"/Model/Catwalk Walk Turn 180 Tight R.fbx"));
+		mSkeletonComp.setSkeletalMesh(QSkeletalMesh::CreateFromFile("Resources/Model/Catwalk Walk Turn 180 Tight R.fbx"));
 		
 		getCamera()->setPosition(QVector3D(0, 190, -700));
 		getCamera()->setRotation(QVector3D(-5, 265, 0));

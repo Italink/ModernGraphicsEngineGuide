@@ -5,7 +5,7 @@
 #include "QtConcurrent/qtconcurrentrun.h"
 #include "Render/PassBuilder/QOutputPassBuilder.h"
 #include "Render/Component/QParticlesRenderComponent.h"
-#include "Render/PassBuilder/PBR/QPbrMeshPassBuilder.h"
+#include "Render/RenderGraph/PassBuilder/PBR/QPbrMeshPassBuilder.h"
 #include "Render/RenderGraph/PassBuilder/QDepthOfFieldPassBuilder.h"
 
 #define Q_PROPERTY_VAR(Type,Name)\

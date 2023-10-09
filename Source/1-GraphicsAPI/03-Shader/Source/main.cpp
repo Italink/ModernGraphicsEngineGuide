@@ -66,7 +66,7 @@ void RunQtShaderToolByQProcess() {
 int main(int argc, char **argv)
 {
 	QApplication app(argc, argv);
-	QDir::setCurrent(RESOURCE_DIR"/Shader");
+	QDir::setCurrent("Resources/Shader");
 
 	QWidget main;
 
