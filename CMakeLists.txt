@@ -3,6 +3,10 @@ cmake_minimum_required(VERSION 3.12)
 project(ModernGraphicsEngineGuide CXX)
 
 set(INSTALLATION_PACKAGE_OUTPUT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/InstallationPackage)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "Generated Files")
+set(CMAKE_MAP_IMPORTED_CONFIG_DEBUGEDITOR Debug Release)
+find_package(Qt6 COMPONENTS Core Widgets Gui Multimedia ShaderTools REQUIRED)
 
 function(add_shader TARGET_NAME SHADER_PATH)
     set(OUTPUT_SHADER_PATH ${SHADER_PATH}.qsb)  #输出文件路径
@@ -21,13 +25,8 @@ function(add_example EXAMPLE_PATH)
     add_executable(${EXAMPLE_NAME} 
         ${PROJECT_SOURCE}
     )
-    target_link_libraries(${EXAMPLE_NAME} PRIVATE QEngineUtilities)
-    set_property(TARGET ${EXAMPLE_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-    #add_custom_command(TARGET ${EXAMPLE_NAME} POST_BUILD     
-    #    COMMAND ${CMAKE_COMMAND} -E copy
-    #        $<TARGET_FILE_DIR:${EXAMPLE_NAME}>
-    #        $<TARGET_RUNTIME_DLLS:QEngineUtilities>)     
-    qengine_setup_env(${EXAMPLE_NAME})
+    target_link_libraries(${EXAMPLE_NAME} PRIVATE QEngineLaunch)
+    qengine_copy_dll(${EXAMPLE_NAME})
 endfunction()
 
 function(add_example_dir DIR_PATH GROUP_NAME)
@@ -43,13 +42,8 @@ function(add_example_dir DIR_PATH GROUP_NAME)
     endforeach()
 endfunction()
 
-set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-set_property(GLOBAL PROPERTY AUTOGEN_SOURCE_GROUP "Generated Files")
 
 add_subdirectory(Source/0-QEngineUtilities)
-
-set(CMAKE_MAP_IMPORTED_CONFIG_DEBUGEDITOR Debug Release)
-find_package(Qt6 COMPONENTS Core Widgets Gui Multimedia ShaderTools REQUIRED)
 
 add_example_dir(${CMAKE_CURRENT_SOURCE_DIR}/Source/1-GraphicsAPI 1-GraphicsAPI)
 add_example_dir(${CMAKE_CURRENT_SOURCE_DIR}/Source/2-EngineTechnology 2-EngineTechnology)
@@ -66,6 +60,18 @@ set_property(TARGET 00-RenderingArchitecture PROPERTY AUTOMOC ON)
 set_property(TARGET 05-GPUParticles PROPERTY AUTOMOC ON)
 set_property(TARGET 03-SSAO PROPERTY AUTOMOC ON)
 
-install(DIRECTORY Resources Source/0-QEngineUtilities/Binaries/ DESTINATION ${INSTALLATION_PACKAGE_OUTPUT_DIR})
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory  ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${CMAKE_CURRENT_BINARY_DIR}/Resources)
+
+get_property(QENGINE_TARGET_LIST GLOBAL PROPERTY QENGINE_TARGET_LIST)
+foreach(QENGINE_TARGET ${QENGINE_TARGET_LIST})
+    get_target_property(PLUGIN_TYPE ${QENGINE_TARGET} PLUGIN_TYPE)
+    if(PLUGIN_TYPE)
+        install(TARGETS ${QENGINE_TARGET} DESTINATION ${INSTALLATION_PACKAGE_OUTPUT_DIR}/Plugins)
+    else()
+        install(TARGETS ${QENGINE_TARGET} DESTINATION ${INSTALLATION_PACKAGE_OUTPUT_DIR})
+    endif()
+endforeach()
+
+install(DIRECTORY Resources DESTINATION ${INSTALLATION_PACKAGE_OUTPUT_DIR})
 
 install(CODE "execute_process(COMMAND windeployqt 00-Blur.exe WORKING_DIRECTORY ${INSTALLATION_PACKAGE_OUTPUT_DIR})")
