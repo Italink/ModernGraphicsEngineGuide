@@ -36,10 +36,11 @@ nav:
         - '7 - 地形':  "03-GraphicsTechnology/Waitting.md"
     - 'Unreal Engine':
         - '0 - 基础编程': '04-UnrealEngine/0.基础编程.md'
-        - '1 - Slate开发': '04-UnrealEngine/1.Slate开发.md'
+        - '1 - Slate 开发': '04-UnrealEngine/1.Slate开发.md'
         - '2 - 插件开发': '04-UnrealEngine/2.插件开发.md'
         - '3 - 粒子系统': '04-UnrealEngine/3.粒子系统.md'
-        - '4 - Niagara性能优化': '04-UnrealEngine/4.Niagra性能优化.md'
+        - '4 - Niagara 性能优化': '04-UnrealEngine/4.Niagra性能优化.md'
+        - '5 - Fluid Ninja 流体插件': '04-UnrealEngine/5.FluidNinja流体插件.md'
     - 'Other':
         - '0 - 开放世界杂谈': '05-Other/0.开放世界杂谈.md'
         - '1 - 元宇宙杂谈': '05-Other/1.元宇宙杂谈.md'
