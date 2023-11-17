@@ -40,6 +40,7 @@ nav:
         - '2 - 插件开发': '04-UnrealEngine/2.插件开发.md'
         - '3 - 粒子系统': '04-UnrealEngine/3.粒子系统.md'
         - '4 - Niagara性能优化': '04-UnrealEngine/4.Niagra性能优化.md'
+        - '5 - Fluid Ninja 流体模拟插件': '04-UnrealEngine/5.FluidNinja流体插件.md'
     - 'Gameplay':
         - '0 - 开放世界杂谈': '05-Gameplay/0.开放世界杂谈.md'
 theme:
