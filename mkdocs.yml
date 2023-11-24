@@ -92,6 +92,9 @@ plugins:
         docs_path: Docs
         enabled: true
 extra:
+  analytics:
+    provider: google
+    property: G-S1J8MN27P8
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/Italink
