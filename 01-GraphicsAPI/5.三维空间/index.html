@@ -1,0 +1,2440 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/">
+      
+      
+        <link rel="next" href="../6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.14">
+    
+    
+      
+        <title>5 - 3D空间 - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fad675c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-S1J8MN27P8",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
+
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76Z"/></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var content,el=document.querySelector("[data-md-component=announce]");el&&(content=el.querySelector(".md-typeset"),__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0))</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5 - 3D空间
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label=""  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-GraphicsTechnology/Waitting/" class="md-tabs__link">
+          
+  
+    
+  
+  图形技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-Other/0.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%9D%82%E8%B0%88/" class="md-tabs__link">
+          
+  
+    
+  
+  Other
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    开篇
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    C++
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            C++
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 计算机发展史
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - C++基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 工具链
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 宏、模板、反射
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 内存管理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - GUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    图形API
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            图形API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 图形渲染管线
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 着色器
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 缓冲区与纹理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    5 - 3D空间
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    5 - 3D空间
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      3D变换
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3D变换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normalized-device-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      标准化设备坐标(Normalized Device Coordinates）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="标准化设备坐标(Normalized Device Coordinates）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ndc" class="md-nav__link">
+    <span class="md-ellipsis">
+      NDC差异解决方案
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frame-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frame Buffer 坐标 差异
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      示例
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      建议与技巧
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      Camera
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Camera">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mipmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mipmap
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 图形API进阶
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    引擎技术
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            引擎技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 渲染架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 编辑器架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - DebugDraw
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - GPU调试
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    图形技术
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            图形技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 网格体渲染
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 天空盒
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - GPU粒子
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 后期滤镜
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 光照
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - 体积雾
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 天空大气
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7 - 地形
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Unreal Engine
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Unreal Engine
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 基础编程
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - Slate 开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 插件开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 粒子系统
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - Niagara 性能优化
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - Fluid Ninja 流体插件
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 开放世界制作
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Other
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Other
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-Other/0.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 开放世界杂谈
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-Other/1.%E5%85%83%E5%AE%87%E5%AE%99%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 元宇宙杂谈
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      3D变换
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3D变换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normalized-device-coordinates" class="md-nav__link">
+    <span class="md-ellipsis">
+      标准化设备坐标(Normalized Device Coordinates）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="标准化设备坐标(Normalized Device Coordinates）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ndc" class="md-nav__link">
+    <span class="md-ellipsis">
+      NDC差异解决方案
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frame-buffer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Frame Buffer 坐标 差异
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      示例
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      建议与技巧
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#camera" class="md-nav__link">
+    <span class="md-ellipsis">
+      Camera
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Camera">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#mipmap" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mipmap
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1">三维空间<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="3d">3D变换<a class="headerlink" href="#3d" title="Permanent link">&para;</a></h2>
+<p>现代计算机的图形显示器都是在显示二维的图像，事实上，投影在人体视网膜表面的图像也是二维的，那为什么人体能从二维的图像上感受到距离感和空间感呢？</p>
+<p>这是因为我们的大脑往往能捕获图像上的一些细节，从而重建三维空间的信息，就比如：</p>
+<ul>
+<li>近大远小的空间透视感</li>
+</ul>
+<p><a class="glightbox" href="../Resources/image-20230527223242963.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230527223242963" src="../Resources/image-20230527223242963.png" /></a></p>
+<ul>
+<li>光影产生的立体感</li>
+</ul>
+<p><a class="glightbox" href="../Resources/image-20230528152235000.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230528152235000" src="../Resources/image-20230528152235000.png" /></a></p>
+<p>除了单帧图像所携带的信息，人眼还会根据图像的运动情况来还原空间的信息，就比如运动视差：</p>
+<p><a class="glightbox" href="../Resources/Parallax_scroll.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="undefined" src="../Resources/Parallax_scroll.gif" /></a></p>
+<p>当然，还有一些其他因素，这里暂不展开讨论，感兴趣的小伙伴可以查阅：</p>
+<ul>
+<li>Wiki Depth Perception：<a href="https://en.wikipedia.org/wiki/Depth_perception">https://en.wikipedia.org/wiki/Depth_perception</a></li>
+</ul>
+<p>计算机的成像过程如下：</p>
+<p><a class="glightbox" href="../Resources/viewing-frustum-_frustum.fit_lim.size_768x.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/viewing-frustum-_frustum.fit_lim.size_768x.gif" /></a></p>
+<p>我们可以简单看作是，把3D空间的物体，拍扁贴到<code>近平面（Near Plane）</code>上</p>
+<p>在理论层面，3D空间中的物体在计算机中不过是一堆数据，贴到 近平面 的图像又是另一堆数据，而我们要做的，无非是将一堆数据转换成另一堆数据</p>
+<p>回顾一下我们初高中在学校所学习过的知识，思考以下场景：</p>
+<ul>
+<li>将 一个三角形 水平平移 5 个单位，你会怎么做？</li>
+<li>
+<p>很简单，三角形的所有顶点坐标的X值 <code>加5</code> 就行</p>
+</li>
+<li>
+<p>将 一个三角形 绕坐标原点旋转180度，怎么处理？</p>
+</li>
+<li>可以把三角形坐标从直角（笛卡尔）坐标系转换为极坐标系，角度 <code>增加180度</code> ，再转换回直接坐标系，就能得到转换后的顶点</li>
+<li>将 一个三角形 放大到原先的两倍，该这么办？</li>
+<li>所有顶点的坐标值都 <code>乘2</code> 就行了</li>
+</ul>
+<p>上述的几种情况包含了图形数据的大部分处理方式，你应该也能发现它们的处理流程都是固定模板的，在计算机中，固定模板的执行流程就意味着可以在硬件级别做大量优化。</p>
+<p>所有我们可以再想想，能不能上面的流程能不能再简化一下？使用一个模板就能执行所有可能的操作，这样计算机就能针对这一模板，进行极致的优化。</p>
+<p>答案肯定是有的，而这套模板就建立在 <a href="https://baike.baidu.com/item/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0">线性代数</a> 的体系之上</p>
+<p>对于一个三维坐标<code>(X,Y,Z)</code>，如果我们想让它平移<code>(Tx,Ty,Tz)</code>个单位，会给该坐标补上一个<a href="https://en.wikipedia.org/wiki/Homogeneous_coordinates">齐次坐标（Homogeneous_Coordinates）</a>，然后乘上一个 <strong>平移矩阵(Translation Matrix)</strong> ：</p>
+<p><a class="glightbox" href="../Resources/5e8862ed2174022bee08dd884f4300cf.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20210521111108645" src="../Resources/5e8862ed2174022bee08dd884f4300cf.png" /></a></p>
+<p>如果想让它在不同坐标分量上，缩放<code>(S1,S2,S3)</code>个大小，会给它乘上一个 <strong>缩放矩阵（Scale Matrix）</strong> ：</p>
+<p><a class="glightbox" href="../Resources/1df7ad4e15915530a451f053bbcfeea8.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20210521105821765" src="../Resources/1df7ad4e15915530a451f053bbcfeea8.png" /></a></p>
+<p>如果想绕它绕X轴旋转θ角度，会给它乘上一个 <strong>旋转矩阵（Rotate Matrix）</strong> ：</p>
+<p><a class="glightbox" href="../Resources/21ae934529205b73ae6d048c89898edb.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20210521111545555" src="../Resources/21ae934529205b73ae6d048c89898edb.png" /></a></p>
+<p>如果是Y轴：</p>
+<p><a class="glightbox" href="../Resources/aa579998d7db8ba46a9a96fe4c292232.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20210521111559180" src="../Resources/aa579998d7db8ba46a9a96fe4c292232.png" /></a></p>
+<p>Z轴：</p>
+<p><a class="glightbox" href="../Resources/9ef98d9520af66ac686cd86f70e85803.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20210521111610922" src="../Resources/9ef98d9520af66ac686cd86f70e85803.png" /></a></p>
+<p>在C++中，大多数数学库都提供了向量和矩阵的各类便捷函数，在Qt中，就提供了以下数据结构：</p>
+<ul>
+<li><a href="https://doc.qt.io/qt-6/qvector2d.html">QVector2D</a></li>
+<li><a href="https://doc.qt.io/qt-6/qvector3d.html">QVector3D</a></li>
+<li><a href="https://doc.qt.io/qt-6/qvector4d.html">QVector4D</a></li>
+<li><a href="https://doc.qt.io/qt-6/qmatrix4x4.html">QMatrix4x4</a></li>
+</ul>
+<p>比如这样的代码：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">QVector4D</span><span class="w"> </span><span class="nf">pos</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">model</span><span class="p">;</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">model</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">));</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">model</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">);</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">model</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span><span class="w"> </span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">QVector4D</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">model</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pos</span><span class="p">;</span>
+</code></pre></div>
+<p>代表的意义是：</p>
+<ul>
+<li>使用<code>model矩阵</code>先让<code>pos向量</code>绕X轴旋转180度，再将其缩放到原先的0.5倍，最后向X轴平移1个单位</li>
+</ul>
+<p>由于Qt中的向量使用的是 <strong>按列存储</strong> ，所以我们需要通过 <strong>左乘</strong> 的方式来处理变换，所以整个过程看起来像是反了一样</p>
+<p>还记得矩阵的乘法口诀吗？—— <strong>前行乘后列</strong></p>
+<p>根据这一特性，我们实际想要的是：一个<code>向量</code>乘以一个<code>矩阵</code>，得到的是一个变换后的<code>向量</code></p>
+<p>下图从 乘法计算 结果 的 类型 说明了为什么对于 <strong>按列存储的向量需要使用左乘</strong> ：</p>
+<p><a class="glightbox" href="../Resources/image-20230528104226972.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230528104226972" src="../Resources/image-20230528104226972.png" /></a></p>
+<p>虽然说对3D空间的变换是通过矩阵进行的，但如果把所有变换都糅合到一个矩阵里面，就回导致变换的二次处理加工变得非常困难。</p>
+<p>因此，现代图形学中，3D空间的变换还划分为几个阶段，这几个阶段有着不同的处理职责：</p>
+<p><a class="glightbox" href="../Resources/coordinate_systems.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="coordinate_systems" src="../Resources/coordinate_systems.png" /></a></p>
+<ul>
+<li>图形原先所处的空间，我们称作 <strong>局部空间（Local Space）</strong> ，我们可以通过 <strong>模型矩阵（Model Matrix）</strong> 将它的坐标转换到 <strong>世界空间（World Space）</strong> ， <strong>模型矩阵的职责是处理物体的平移，旋转，缩放</strong> 。</li>
+<li>通过 <strong>视图矩阵（View Matrix）</strong> ， 我们可以将 <strong>世界坐标（World Coordinate）</strong> 转换到 <strong>视图空间（View Space）</strong> 中的坐标， <strong>视图矩阵的职责是确立视点所在的位置和视野的朝向</strong></li>
+<li>再通过 <strong>投影矩阵（Projection Matrix）</strong> ，可以将 <strong>观察坐标（View Coordinate）</strong> 转换到 <strong>裁剪空间（Clip Space）</strong> 中的坐标， <strong>投影矩阵的职责是把视图空间的区域投影到标准设备坐标系（NDC）中</strong></li>
+<li><strong>裁剪坐标（Clip Coordinate）</strong> 经由 <strong>视口变换(Viewport Transform)</strong> 最终变换到 <strong>屏幕空间（Screen Space）</strong> 中</li>
+</ul>
+<p>在Qt中，我们可能会使用如下代码在CPU侧处理这些变换：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">corrMatrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">clipSpaceCorrMatrix</span><span class="p">();</span><span class="w">  </span><span class="c1">//裁剪空间矫正矩阵</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">project</span><span class="w"> </span><span class="p">;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1">// 设置Fov为90度，传入FrameBuffer的宽高比，设置近平面距离为0.01，远平面距离为1000</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">project</span><span class="p">.</span><span class="n">perspective</span><span class="p">(</span><span class="mf">90.0</span><span class="p">,</span><span class="w"> </span><span class="n">renderTarget</span><span class="o">-&gt;</span><span class="n">pixelSize</span><span class="p">().</span><span class="n">width</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="w"> </span><span class="n">renderTarget</span><span class="o">-&gt;</span><span class="n">pixelSize</span><span class="p">().</span><span class="n">height</span><span class="p">(),</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">);</span><span class="w">       </span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">view</span><span class="p">;</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="c1">// 从位置(10,0,0) 看向 (0,0,0)，视线的上向量为竖直向上（Y轴正方向）</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">view</span><span class="p">.</span><span class="n">lookAt</span><span class="p">(</span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">model</span><span class="p">;</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="n">model</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">model</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="mf">0.5</span><span class="p">);</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="n">model</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">180</span><span class="p">,</span><span class="w"> </span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="n">UniformBlock</span><span class="w"> </span><span class="n">ubo</span><span class="p">;</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">ubo</span><span class="p">.</span><span class="n">MVP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">corrMatrix</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">project</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">view</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">model</span><span class="p">).</span><span class="n">toGenericMatrix</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="o">&gt;</span><span class="p">();</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">updateDynamicBuffer</span><span class="p">(</span><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">UniformBlock</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ubo</span><span class="p">);</span>
+</code></pre></div>
+<p>在Shader中这样使用：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">VertexStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s">#version 440</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s">    layout(location = 0) in vec3 inPosition;</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="s">    layout(binding = 0) uniform UniformBlock{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="s">        mat4 MVP;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="s">    }UBO;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="s">    out gl_PerVertex { vec4 gl_Position; };</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="s">    void main()</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="s">    {</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="s">        gl_Position = UBO.MVP * vec4(inPosition ,1.0f);</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="s">    }</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="dl">)</span><span class="s">&quot;</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="normalized-device-coordinates">标准化设备坐标(Normalized Device Coordinates）<a class="headerlink" href="#normalized-device-coordinates" title="Permanent link">&para;</a></h3>
+<p>在前面的章节中，我们使用了这样的顶点数据：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">VertexData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">                                       </span><span class="c1">//顶点数据</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="c1">//position(xy)      color(rgba)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">     </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">     </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">};</span>
+</code></pre></div>
+<p>和顶点着色器：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">VertexStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s">#version 440</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="s">    layout(location = 0) in vec2 position;      //这里需要与上面的inputLayout 对应</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="s">    layout(location = 1) in vec4 color;</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="s">    layout (location = 0) out vec4 vColor;      //输出变量，这里的location是out的，而不是in</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="s">    out gl_PerVertex {                          //Vulkan GLSL中固定的定义</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="s">        vec4 gl_Position;                       </span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="s">    };</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="s">    void main(){</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="s">        gl_Position = vec4(position,0.0f,1.0f); //根据输入的position，设置实际的顶点输出</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="s">        vColor = color;                         //将输入的color传递给fragment shader</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="s">    }</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="dl">)</span><span class="s">&quot;</span><span class="p">);</span>
+</code></pre></div>
+<p>绘制出了一个三角形：</p>
+<p><a class="glightbox" href="../Resources/image-20230503194533809.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503194533809" src="../Resources/image-20230503194533809.png" /></a></p>
+<p>大家可能已经猜到了顶点位置里面 <code>0.0f</code>，-<code>0.5f</code>，<code>0.5f</code>所代表的意义，仿佛这些顶点坐标的取值范围是[-1,1]？这是因为图形API为了让坐标运算不受显示器分辨率的影响，都使用了 <strong>标准化设备坐标(Normalized Device Coordinates, 简称NDC)</strong> 的概念。</p>
+<p>以OpenGL为例，它遵循右手坐标系：</p>
+<p><a class="glightbox" href="../Resources/image-20230521094519474.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230521094519474" src="../Resources/image-20230521094519474.png" /></a></p>
+<p>任一轴向的取值范围为[-1,1]，就像这样：</p>
+<p><a class="glightbox" href="../Resources/image-20230521093725199.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230521093725199" src="../Resources/image-20230521093725199.png" /></a></p>
+<p>任何落在范围外的 <strong>顶点</strong> 会按一些策略进行图元裁剪，而不会显示在屏幕上 ：</p>
+<p><a class="glightbox" href="Resources/Screenshot_2022-04-27_092223_wjz58k.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="Resources/Screenshot_2022-04-27_092223_wjz58k.png" alt="被剪裁的三角形" style="zoom:50%;" /></a></p>
+<p>该过程详见：</p>
+<ul>
+<li><a href="https://registry.khronos.org/vulkan/specs/1.3/html/chap24.html">https://registry.khronos.org/vulkan/specs/1.3/html/chap24.html</a></li>
+</ul>
+<p>Vulkan也使用右手坐标系，因为Vulkan声称是下一代的OpenGL，跟OpenGL一样怎么好意思叫Vulkan，它总要跟OpenGL有一些标新立异的点，因此， <strong>Vulkan的Y轴是朝下的</strong> ，为了跟其他现代图形API保持一致， <strong>它的Z轴（深度) 取值范围变成了[0,1]</strong> ，就是这个样子：</p>
+<p><a class="glightbox" href="../Resources/image-20230527105811415.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230527105811415" src="../Resources/image-20230527105811415.png" /></a></p>
+<p>而 DirectX 和 Metal 又与它们不同， <strong>DirectX 和 Metal的NDC使用的是左手坐标系，且深度值范围是[0,1]</strong> ：</p>
+<p><a class="glightbox" href="../Resources/image-20230521100350075.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230521100350075" src="../Resources/image-20230521100350075.png" /></a></p>
+<p>关于它们的差异和细节，详见：</p>
+<ul>
+<li><a href="https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/coordinate-systems.html">https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/coordinate-systems.html</a></li>
+</ul>
+<h4 id="ndc">NDC差异解决方案<a class="headerlink" href="#ndc" title="Permanent link">&para;</a></h4>
+<p>这些 图形API 标准坐标系的差异，无疑给RHI的封装增加了一些难题，各个引擎对此都有自己的解决方案。</p>
+<p>在QRhi中，我们在使用时只需要顶点数据统一遵循OpenGL的NDC（即右手坐标系，任一轴向的取值范围为[0,1]）</p>
+<p>通过<code>QRhi::clipSpaceCorrMatrix()</code> 可以获取到一个当前图形API的矫正矩阵，使用它对所有顶点都处理一遍可以将之转换到对应API的NDC空间。</p>
+<p>该功能依赖于QRhi中的以下实现：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="nf">QRhiGles2::clipSpaceCorrMatrix</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="p">{</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">QMatrix4x4</span><span class="p">();</span><span class="w"> </span><span class="c1">// identity</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">}</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="nf">QRhiVulkan::clipSpaceCorrMatrix</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="p">{</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="c1">// See https://matthewwellings.com/blog/the-new-vulkan-coordinate-system/</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">isIdentity</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">        </span><span class="c1">// NB the ctor takes row-major</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">        </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QMatrix4x4</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">                       </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">-1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">                       </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">                       </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
+<a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="p">}</span>
+<a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a>
+<a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="nf">QRhiD3D11::clipSpaceCorrMatrix</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="p">{</span>
+<a id="__codelineno-5-23" name="__codelineno-5-23" href="#__codelineno-5-23"></a><span class="w">    </span><span class="c1">// Like with Vulkan, but Y is already good.</span>
+<a id="__codelineno-5-24" name="__codelineno-5-24" href="#__codelineno-5-24"></a>
+<a id="__codelineno-5-25" name="__codelineno-5-25" href="#__codelineno-5-25"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
+<a id="__codelineno-5-26" name="__codelineno-5-26" href="#__codelineno-5-26"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">isIdentity</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-27" name="__codelineno-5-27" href="#__codelineno-5-27"></a><span class="w">        </span><span class="c1">// NB the ctor takes row-major</span>
+<a id="__codelineno-5-28" name="__codelineno-5-28" href="#__codelineno-5-28"></a><span class="w">        </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QMatrix4x4</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<a id="__codelineno-5-29" name="__codelineno-5-29" href="#__codelineno-5-29"></a><span class="w">                       </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<a id="__codelineno-5-30" name="__codelineno-5-30" href="#__codelineno-5-30"></a><span class="w">                       </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span>
+<a id="__codelineno-5-31" name="__codelineno-5-31" href="#__codelineno-5-31"></a><span class="w">                       </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-5-32" name="__codelineno-5-32" href="#__codelineno-5-32"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-33" name="__codelineno-5-33" href="#__codelineno-5-33"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
+<a id="__codelineno-5-34" name="__codelineno-5-34" href="#__codelineno-5-34"></a><span class="p">}</span>
+<a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>
+<a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="nf">QRhiD3D12::clipSpaceCorrMatrix</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a><span class="p">{</span>
+<a id="__codelineno-5-38" name="__codelineno-5-38" href="#__codelineno-5-38"></a><span class="w">    </span><span class="c1">// Like with Vulkan, but Y is already good.</span>
+<a id="__codelineno-5-39" name="__codelineno-5-39" href="#__codelineno-5-39"></a>
+<a id="__codelineno-5-40" name="__codelineno-5-40" href="#__codelineno-5-40"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
+<a id="__codelineno-5-41" name="__codelineno-5-41" href="#__codelineno-5-41"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">isIdentity</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-42" name="__codelineno-5-42" href="#__codelineno-5-42"></a><span class="w">        </span><span class="c1">// NB the ctor takes row-major</span>
+<a id="__codelineno-5-43" name="__codelineno-5-43" href="#__codelineno-5-43"></a><span class="w">        </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QMatrix4x4</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<a id="__codelineno-5-44" name="__codelineno-5-44" href="#__codelineno-5-44"></a><span class="w">                       </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<a id="__codelineno-5-45" name="__codelineno-5-45" href="#__codelineno-5-45"></a><span class="w">                       </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span>
+<a id="__codelineno-5-46" name="__codelineno-5-46" href="#__codelineno-5-46"></a><span class="w">                       </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-5-47" name="__codelineno-5-47" href="#__codelineno-5-47"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-48" name="__codelineno-5-48" href="#__codelineno-5-48"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
+<a id="__codelineno-5-49" name="__codelineno-5-49" href="#__codelineno-5-49"></a><span class="p">}</span>
+<a id="__codelineno-5-50" name="__codelineno-5-50" href="#__codelineno-5-50"></a>
+<a id="__codelineno-5-51" name="__codelineno-5-51" href="#__codelineno-5-51"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="nf">QRhiMetal::clipSpaceCorrMatrix</span><span class="p">()</span><span class="w"> </span><span class="k">const</span>
+<a id="__codelineno-5-52" name="__codelineno-5-52" href="#__codelineno-5-52"></a><span class="p">{</span>
+<a id="__codelineno-5-53" name="__codelineno-5-53" href="#__codelineno-5-53"></a><span class="w">    </span><span class="c1">// depth range 0..1</span>
+<a id="__codelineno-5-54" name="__codelineno-5-54" href="#__codelineno-5-54"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
+<a id="__codelineno-5-55" name="__codelineno-5-55" href="#__codelineno-5-55"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">m</span><span class="p">.</span><span class="n">isIdentity</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-5-56" name="__codelineno-5-56" href="#__codelineno-5-56"></a><span class="w">        </span><span class="c1">// NB the ctor takes row-major</span>
+<a id="__codelineno-5-57" name="__codelineno-5-57" href="#__codelineno-5-57"></a><span class="w">        </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QMatrix4x4</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<a id="__codelineno-5-58" name="__codelineno-5-58" href="#__codelineno-5-58"></a><span class="w">                       </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span>
+<a id="__codelineno-5-59" name="__codelineno-5-59" href="#__codelineno-5-59"></a><span class="w">                       </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span>
+<a id="__codelineno-5-60" name="__codelineno-5-60" href="#__codelineno-5-60"></a><span class="w">                       </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-5-61" name="__codelineno-5-61" href="#__codelineno-5-61"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-62" name="__codelineno-5-62" href="#__codelineno-5-62"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">m</span><span class="p">;</span>
+<a id="__codelineno-5-63" name="__codelineno-5-63" href="#__codelineno-5-63"></a><span class="p">}</span>
+</code></pre></div>
+<p>对于一些二维的顶点，我们可以简单的翻转一下坐标的Y值，这也是上一节中纹理 <a href="https://link.zhihu.com/?target=https%3A//stackoverflow.com/questions/2588875/whats-the-best-way-to-draw-a-fullscreen-quad-in-opengl-3-2">无属性渲染</a> ，为什么要用<code>Y_UP_IN_NDC</code>对顶点翻转的来由：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">VertexStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s">#version 450</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="s">    layout (location = 0) out vec2 vUV;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="s">    out gl_PerVertex{</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="s">        vec4 gl_Position;</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="s">    };</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="s">    void main() {</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="s">        vUV = vec2((gl_VertexIndex &lt;&lt; 1) &amp; 2, gl_VertexIndex &amp; 2);      /</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="s">        gl_Position = vec4(vUV * 2.0f - 1.0f, 0.0f, 1.0f);</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="s">#if Y_UP_IN_NDC              //因为DX，GL与VK的NDC不一致，因此这里需要做一些兼容处理</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="s">    gl_Position.y = - gl_Position.y;</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="s">#endif </span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="s">    }</span><span class="dl">)</span><span class="s">&quot;</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">QShaderDefinitions</span><span class="p">()</span><span class="w">   </span><span class="c1">//该参数只是简单的在代码开头添加 #define Y_UP_IN_NDC 1        </span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">    </span><span class="p">.</span><span class="n">addDefinition</span><span class="p">(</span><span class="s">&quot;Y_UP_IN_NDC&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">isYUpInNDC</span><span class="p">())</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="p">);</span>
+</code></pre></div>
+<h3 id="frame-buffer">Frame Buffer 坐标 差异<a class="headerlink" href="#frame-buffer" title="Permanent link">&para;</a></h3>
+<p>此外，我们还需要注意图形API之间不仅仅有NDC的差异，FrameBuffer的坐标空间也有不同，由于<a href="https://gamedev.stackexchange.com/questions/83570/why-is-the-origin-in-computer-graphics-coordinates-at-the-top-left">历史原因</a>，早期的计算机阴极射线管（CRT）从左上角到右上角绘制图像，所以在大多数传统图形API，通常 <strong>以左上角为帧图像的坐标原点</strong> ，OpenGL成立之初想要改变这一点，让坐标系的使用更符合人类的通识（即二维平面上，使用左下角作为坐标原点，Y轴朝上，X轴朝右），但可惜的是，已经有太多的框架已经适应并普遍遵循原先的规定，这反倒导致了我们在 <strong>使用 OpenGL 的时候还需要对纹理进行上下翻转（Flip Y）</strong> ，在现代图形API （DirectX、Metal、Vulkan）， 都已经向历史妥协，所以大家在使用时注意遵循 ”传统“：</p>
+<p><a class="glightbox" href="../Resources/image-20230521104752631.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230521104752631" src="../Resources/image-20230521104752631.png" /></a></p>
+<h3 id="_2">示例<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>根据上面的一些描述，我们可以制作一些简单的小程序，比如一个随时间变换的立方体：</p>
+<p><a class="glightbox" href="../Resources/118.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="118" src="../Resources/118.gif" /></a></p>
+<p>示例代码位于 <a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/1-GraphicsAPI/05-3D/Source/main.cpp">05-3D</a></p>
+<p>核心代码只是：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">VertexStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s">#version 440</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="s">    layout(location = 0) in vec3 inPosition;</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="s">    layout(binding = 0) uniform UniformBlock{</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="s">        mat4 MVP;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="s">    }UBO;</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="s">    out gl_PerVertex { vec4 gl_Position; };</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="s">    void main()</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="s">    {</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="s">        gl_Position = UBO.MVP * vec4(inPosition ,1.0f);</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="s">    }</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="dl">)</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="n">Q_ASSERT</span><span class="p">(</span><span class="n">vs</span><span class="p">.</span><span class="n">isValid</span><span class="p">());</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">corrMatrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">clipSpaceCorrMatrix</span><span class="p">();</span><span class="w">  </span><span class="c1">//裁剪空间矫正矩阵</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">project</span><span class="p">;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">project</span><span class="p">.</span><span class="n">perspective</span><span class="p">(</span><span class="mf">90.0</span><span class="p">,</span><span class="w"> </span><span class="n">renderTarget</span><span class="o">-&gt;</span><span class="n">pixelSize</span><span class="p">().</span><span class="n">width</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">renderTarget</span><span class="o">-&gt;</span><span class="n">pixelSize</span><span class="p">().</span><span class="n">height</span><span class="p">(),</span><span class="w"> </span><span class="mf">0.01</span><span class="p">,</span><span class="w"> </span><span class="mi">1000</span><span class="p">);</span><span class="w">   </span><span class="c1">// 设置Fov为90度，传入FrameBuffer的宽高比，设置近平面距离为0.01，远平面距离为1000</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">view</span><span class="p">;</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">view</span><span class="p">.</span><span class="n">lookAt</span><span class="p">(</span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span><span class="w">       </span><span class="c1">// 从位置(10,0,0) 看向 (0,0,0)，视线的上向量为竖直向上（Y轴正方向）</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QTime</span><span class="o">::</span><span class="n">currentTime</span><span class="p">().</span><span class="n">msecsSinceStartOfDay</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1000.0f</span><span class="p">;</span><span class="w">         </span><span class="c1">//获取当前时间的秒数（浮点类型）</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="kt">float</span><span class="w"> </span><span class="n">factor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">qAbs</span><span class="p">(</span><span class="n">qSin</span><span class="p">(</span><span class="n">time</span><span class="p">));</span><span class="w">                        </span><span class="c1">//利用正弦函数让Y值随时间在[0,1]之间变化</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">model</span><span class="p">;</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="n">model</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">factor</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">));</span><span class="w">           </span><span class="c1">//随时间上下移动</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="n">model</span><span class="p">.</span><span class="n">scale</span><span class="p">(</span><span class="n">factor</span><span class="p">);</span><span class="w">                                    </span><span class="c1">//随时间缩放</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="n">model</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="n">time</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">180</span><span class="p">,</span><span class="w"> </span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span><span class="w">           </span><span class="c1">//随时间旋转</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="n">UniformBlock</span><span class="w"> </span><span class="n">ubo</span><span class="p">;</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="n">ubo</span><span class="p">.</span><span class="n">MVP</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">project</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">view</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">model</span><span class="p">).</span><span class="n">toGenericMatrix</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="o">&gt;</span><span class="p">();</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">updateDynamicBuffer</span><span class="p">(</span><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">UniformBlock</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ubo</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="_3">建议与技巧<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>上述文章并不完备，这里还有一些相关参考：</p>
+<ul>
+<li><a href="https://learnopengl-cn.github.io/01%20Getting%20started/08%20Coordinate%20Systems/">https://learnopengl-cn.github.io/01%20Getting%20started/08%20Coordinate%20Systems/</a></li>
+</ul>
+<p>3D空间变换涉及到大量的线性代数运算，里面的一些概念和细节，很难用一篇文章去涵盖，这里笔者再次推荐读者一定要去阅读一下《3D数学基础 图形和游戏开发 （第2版）》的前十章内容，它里面涵盖了图形学所必须的极大部分基础知识，认真过一遍，保证你的知识体系里面没有盲区~</p>
+<p>对于一个没有经历过透视变换的矩阵，它的平移，旋转，缩放参数是可提取的，在ImGuiZmo中有以下代码：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">DecomposeMatrixToComponents</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="o">*</span><span class="w"> </span><span class="n">matrix</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="o">*</span><span class="w"> </span><span class="n">translation</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="o">*</span><span class="w"> </span><span class="n">rotation</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="o">*</span><span class="w"> </span><span class="n">scale</span><span class="p">)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="p">{</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">  </span><span class="n">matrix_t</span><span class="w"> </span><span class="n">mat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="n">matrix_t</span><span class="o">*</span><span class="p">)</span><span class="n">matrix</span><span class="p">;</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="n">scale</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mat</span><span class="p">.</span><span class="n">v</span><span class="p">.</span><span class="n">right</span><span class="p">.</span><span class="n">Length</span><span class="p">();</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">  </span><span class="n">scale</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mat</span><span class="p">.</span><span class="n">v</span><span class="p">.</span><span class="n">up</span><span class="p">.</span><span class="n">Length</span><span class="p">();</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">  </span><span class="n">scale</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mat</span><span class="p">.</span><span class="n">v</span><span class="p">.</span><span class="n">dir</span><span class="p">.</span><span class="n">Length</span><span class="p">();</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">  </span><span class="n">mat</span><span class="p">.</span><span class="n">OrthoNormalize</span><span class="p">();</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">  </span><span class="n">rotation</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RAD2DEG</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">atan2f</span><span class="p">(</span><span class="n">mat</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">mat</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]);</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">  </span><span class="n">rotation</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RAD2DEG</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">atan2f</span><span class="p">(</span><span class="o">-</span><span class="n">mat</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="w"> </span><span class="n">sqrtf</span><span class="p">(</span><span class="n">mat</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">mat</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">mat</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">mat</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]));</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">  </span><span class="n">rotation</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">RAD2DEG</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">atan2f</span><span class="p">(</span><span class="n">mat</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span><span class="w"> </span><span class="n">mat</span><span class="p">.</span><span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]);</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">  </span><span class="n">translation</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mat</span><span class="p">.</span><span class="n">v</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">  </span><span class="n">translation</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mat</span><span class="p">.</span><span class="n">v</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">  </span><span class="n">translation</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mat</span><span class="p">.</span><span class="n">v</span><span class="p">.</span><span class="n">position</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="p">}</span>
+</code></pre></div>
+<p>当我们想要实现一个始终面向相机公告牌效果时，可以将View矩阵中的Rotate信息给去掉，如果不希望随相机的距离缩放，可以把Scale信息也给去掉，或者说直接这样（伪代码）：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">mat4</span><span class="w"> </span><span class="n">Model</span><span class="p">,</span><span class="n">View</span><span class="p">,</span><span class="n">Projection</span><span class="p">;</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="kt">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="kt">mat3</span><span class="w"> </span><span class="n">CorrMatrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inverse</span><span class="p">(</span><span class="n">View</span><span class="p">);</span><span class="w">        </span><span class="c1">//丢弃平移参数，求它的逆矩阵来矫正旋转和缩放</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="kt">vec3</span><span class="w"> </span><span class="n">facingCameraPos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Projection</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">View</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Model</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="n">CorrMatrix</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">position</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="n">f</span><span class="p">);</span>
+</code></pre></div></p>
+<h2 id="camera">Camera<a class="headerlink" href="#camera" title="Permanent link">&para;</a></h2>
+<p>相信接触过3D场景的小伙伴大多知道 <strong>摄像机（Camera）</strong> 的概念，在很多3D游戏中都提供这样的操作：</p>
+<ul>
+<li>使用 WASD 移动相机的位置，使用鼠标来控制视角的旋转</li>
+</ul>
+<p>而 Camera 的本质其实是在提供上文所提到的 <strong>视图矩阵（View Matrix）</strong> 和 <strong>投影矩阵（Projection Matrix）</strong></p>
+<p>我们可以窗口系统的输入事件，来调整这些矩阵。</p>
+<p>这里有笔者封装好的一个Camera类：</p>
+<ul>
+<li><a href="https://github.com/Italink/QEngineUtilities/blob/main/Core/Src/Utils/QCamera.cpp">https://github.com/Italink/QEngineUtilities/blob/main/Core/Src/Utils/QCamera.cpp</a></li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">QCamera</span><span class="w"> </span><span class="o">:</span><span class="k">public</span><span class="w"> </span><span class="n">QObject</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="n">Q_OBJECT</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nf">Q_PROPERTY</span><span class="p">(</span><span class="n">QVector3D</span><span class="w"> </span><span class="n">Position</span><span class="w"> </span><span class="n">READ</span><span class="w"> </span><span class="n">getPosition</span><span class="w"> </span><span class="n">WRITE</span><span class="w"> </span><span class="n">setPosition</span><span class="p">)</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="n">Q_PROPERTY</span><span class="p">(</span><span class="n">QVector3D</span><span class="w"> </span><span class="n">Rotation</span><span class="w"> </span><span class="n">READ</span><span class="w"> </span><span class="n">getRotation</span><span class="w"> </span><span class="n">WRITE</span><span class="w"> </span><span class="n">setRotation</span><span class="p">)</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span><span class="n">Q_PROPERTY</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">FOV</span><span class="w"> </span><span class="n">READ</span><span class="w"> </span><span class="n">getFov</span><span class="w"> </span><span class="n">WRITE</span><span class="w"> </span><span class="n">setFov</span><span class="p">)</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="n">Q_PROPERTY</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">NearPlane</span><span class="w"> </span><span class="n">READ</span><span class="w"> </span><span class="n">getNearPlane</span><span class="w"> </span><span class="n">WRITE</span><span class="w"> </span><span class="n">setNearPlane</span><span class="p">)</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span><span class="n">Q_PROPERTY</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">FarPlane</span><span class="w"> </span><span class="n">READ</span><span class="w"> </span><span class="n">getFarPlane</span><span class="w"> </span><span class="n">WRITE</span><span class="w"> </span><span class="n">setFarPlane</span><span class="p">)</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="n">Q_PROPERTY</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">MoveSpeed</span><span class="w"> </span><span class="n">READ</span><span class="w"> </span><span class="n">getMoveSpeed</span><span class="w"> </span><span class="n">WRITE</span><span class="w"> </span><span class="n">setMoveSpeed</span><span class="p">)</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="n">Q_PROPERTY</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">RotationSpeed</span><span class="w"> </span><span class="n">READ</span><span class="w"> </span><span class="n">getRotationSpeed</span><span class="w"> </span><span class="n">WRITE</span><span class="w"> </span><span class="n">setRotationSpeed</span><span class="p">)</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="n">QCamera</span><span class="p">();</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setupWindow</span><span class="p">(</span><span class="n">QWindow</span><span class="o">*</span><span class="w"> </span><span class="n">window</span><span class="p">);</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">getYaw</span><span class="p">();</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">getPitch</span><span class="p">();</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">getRoll</span><span class="p">();</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setYaw</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">inVar</span><span class="p">);</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setPitch</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">inVar</span><span class="p">);</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setRoll</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">inVar</span><span class="p">);</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="w">    </span><span class="n">QVector3D</span><span class="w"> </span><span class="nf">getPosition</span><span class="p">();</span>
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setPosition</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">QVector3D</span><span class="o">&amp;</span><span class="w"> </span><span class="n">newPosition</span><span class="p">);</span>
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a>
+<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setRotation</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">QVector3D</span><span class="o">&amp;</span><span class="w"> </span><span class="n">newRotation</span><span class="p">);</span>
+<a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">    </span><span class="n">QVector3D</span><span class="w"> </span><span class="nf">getRotation</span><span class="p">();</span>
+<a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a>
+<a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">getRotationSpeed</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mRotationSpeed</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setRotationSpeed</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">mRotationSpeed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a>
+<a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">getMoveSpeed</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mMoveSpeed</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setMoveSpeed</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">val</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="n">mMoveSpeed</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">val</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a><span class="w">    </span><span class="kt">float</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">getMoveSpeedRef</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mMoveSpeed</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a>
+<a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setFov</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">val</span><span class="p">);</span>
+<a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">getFov</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mFov</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-38" name="__codelineno-11-38" href="#__codelineno-11-38"></a>
+<a id="__codelineno-11-39" name="__codelineno-11-39" href="#__codelineno-11-39"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setAspectRatio</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">val</span><span class="p">);</span>
+<a id="__codelineno-11-40" name="__codelineno-11-40" href="#__codelineno-11-40"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">getAspectRatio</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mAspectRatio</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-41" name="__codelineno-11-41" href="#__codelineno-11-41"></a>
+<a id="__codelineno-11-42" name="__codelineno-11-42" href="#__codelineno-11-42"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setNearPlane</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">val</span><span class="p">);</span>
+<a id="__codelineno-11-43" name="__codelineno-11-43" href="#__codelineno-11-43"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">getNearPlane</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mNearPlane</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-44" name="__codelineno-11-44" href="#__codelineno-11-44"></a>
+<a id="__codelineno-11-45" name="__codelineno-11-45" href="#__codelineno-11-45"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">setFarPlane</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">val</span><span class="p">);</span>
+<a id="__codelineno-11-46" name="__codelineno-11-46" href="#__codelineno-11-46"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="nf">getFarPlane</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mFarPlane</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-11-47" name="__codelineno-11-47" href="#__codelineno-11-47"></a>
+<a id="__codelineno-11-48" name="__codelineno-11-48" href="#__codelineno-11-48"></a><span class="w">    </span><span class="n">QMatrix4x4</span><span class="w"> </span><span class="nf">getProjectionMatrixWithCorr</span><span class="p">(</span><span class="n">QRhiEx</span><span class="o">*</span><span class="w"> </span><span class="n">inRhi</span><span class="p">);</span>
+<a id="__codelineno-11-49" name="__codelineno-11-49" href="#__codelineno-11-49"></a><span class="w">    </span><span class="n">QMatrix4x4</span><span class="w"> </span><span class="nf">getProjectionMatrix</span><span class="p">();</span>
+<a id="__codelineno-11-50" name="__codelineno-11-50" href="#__codelineno-11-50"></a><span class="w">    </span><span class="n">QMatrix4x4</span><span class="w"> </span><span class="nf">getViewMatrix</span><span class="p">();</span>
+<a id="__codelineno-11-51" name="__codelineno-11-51" href="#__codelineno-11-51"></a><span class="p">};</span>
+</code></pre></div>
+<p>要想使用它，只需使用创建一个QCamera，并调用<code>void QCamera::setupWindow(QWindow* window)</code> 就能将窗口的输入事件跟Camera进行绑定，之后我们可以通过以下函数来获取模型矩阵和投影矩阵：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="nf">getProjectionMatrixWithCorr</span><span class="p">(</span><span class="n">QRhiEx</span><span class="o">*</span><span class="w"> </span><span class="n">inRhi</span><span class="p">);</span><span class="w">  </span><span class="c1">//获取带裁剪空间矫正的透视矩阵</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="nf">getProjectionMatrix</span><span class="p">();</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="nf">getViewMatrix</span><span class="p">();</span>
+</code></pre></div>
+<p>如果你想封装自己的Camera类，这里有一个很好的文章：</p>
+<ul>
+<li><a href="https://learnopengl-cn.github.io/01%20Getting%20started/09%20Camera/">https://learnopengl-cn.github.io/01%20Getting%20started/09%20Camera/</a></li>
+</ul>
+<h3 id="mipmap">Mipmap<a class="headerlink" href="#mipmap" title="Permanent link">&para;</a></h3>
+<p>在上一节中 <a href="https://zhuanlan.zhihu.com/p/630886324">缓冲区与纹理</a> 中，通过 <strong>minFilter</strong> 可以确定在图像被缩小显示时，使用何种策略来根据纹理坐标的 <strong>邻近像素</strong> 确定当前的像素值，使用线性（Linear）采样会根据像素周边四个的邻近像素来确定当前颜色，可是当图像的缩放比例非常大的时候，比如将一张图像的寸尺从<code>1000*1000</code>，缩放到<code>10*10</code>，使用Linear采样的时候，只会根据四个邻近像素点来确定颜色，明显会导致采样不足，出现 <a href="https://baike.baidu.com/item/%E6%91%A9%E5%B0%94%E7%BA%B9">摩尔纹</a> 现象，就像这样：</p>
+<p><a class="glightbox" href="../Resources/14568.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="14568" src="../Resources/14568.gif" /></a></p>
+<p>为了解决这个问题，现代图形API引入了另一个概念 — <strong>多级渐远纹理（Mipmap）</strong></p>
+<p>开启Mipmap会比原纹理多约三分之一的空间大小，，它的原理可以看作是将图像每次缩放到原先图像一半的新图像作为一个 <strong>Mip Level</strong> ，就像是这样：</p>
+<p><a class="glightbox" href="../Resources/mipmaps.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/mipmaps.png" /></a></p>
+<p>图形渲染管线在执行时，会根据uv和texture尺寸，选用合适的 Mip Level 进行采样</p>
+<p>在QRhi中，我们只需要在创建纹理使用<code>QRhiTexture::Flag::MipMapped | QRhiTexture::UsedWithGenerateMips</code>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">mTexture</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newTexture</span><span class="p">(</span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">RGBA8</span><span class="p">,</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">                                </span><span class="n">mImage</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span><span class="w"> </span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="w">                                </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="w">                                </span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">Flag</span><span class="o">::</span><span class="n">MipMapped</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">UsedWithGenerateMips</span><span class="w"> </span><span class="p">));</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="n">mTexture</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<p>并在采样器创建时，指定 Mip Level 之间的过滤模式：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">mSampler</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newSampler</span><span class="p">(</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="o">::</span><span class="n">Linear</span><span class="p">,</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="o">::</span><span class="n">Nearest</span><span class="p">,</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="o">::</span><span class="n">Linear</span><span class="p">,</span><span class="w">            </span><span class="c1">//使用线性过滤</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="o">::</span><span class="n">Repeat</span><span class="p">,</span><span class="w">   </span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="o">::</span><span class="n">Repeat</span><span class="p">,</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="o">::</span><span class="n">Repeat</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="p">));</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="n">mSampler</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<p>最后在录制 图像资源的上传指令 后，使用<code>QRhiResourceUpdateBatch::generateMips(QRhiTexture *tex)</code>录制mips的生成指令：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">uploadTexture</span><span class="p">(</span><span class="n">mTexture</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="n">mImage</span><span class="p">);</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">generateMips</span><span class="p">(</span><span class="n">mTexture</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+</code></pre></div>
+<p>再执行程序一看，可以看到摩尔纹已经消失了：</p>
+<p><a class="glightbox" href="../Resources/1468.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="1468" src="../Resources/1468.gif" /></a></p>
+<p>示例代码位于该教程的 ：</p>
+<ul>
+<li><a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/1-GraphicsAPI/06-3DWithCamera/Source/main.cpp">06-3DWithCamera</a></li>
+</ul>
+<p>关于 Mipmap，这里有一篇很好的文章：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/143377682">Clawko - 图形学底层探秘 - 纹理采样、环绕、过滤与Mipmap的那些事</a></li>
+</ul>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      最后更新:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-01 17:12:52</span>
+      
+        <br>
+        创建日期:
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-01 17:12:52</span>
+      
+    
+  </small>
+</div>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js"
+    data-repo="Italink/ModernGraphicsEngineGuide"
+    data-repo-id="R_kgDOIPtbiQ"
+    data-category-id="DIC_kwDOIPtbic4CTxOk"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin="anonymous"
+    async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 4 - 缓冲区与纹理">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                4 - 缓冲区与纹理
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-footer__link md-footer__link--next" aria-label="下一页: 6 - 图形API进阶">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                6 - 图形API进阶
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078c-.271.73-.5 1.434-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58.104 58.104 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.223 9.223 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125zM13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.cd18aaf1.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

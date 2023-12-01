@@ -1,0 +1,2955 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/">
+      
+      
+        <link rel="next" href="../4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.14">
+    
+    
+      
+        <title>3 - 粒子系统 - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fad675c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-S1J8MN27P8",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
+
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#particle-system" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76Z"/></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var content,el=document.querySelector("[data-md-component=announce]");el&&(content=el.querySelector(".md-typeset"),__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0))</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3 - 粒子系统
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label=""  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-GraphicsTechnology/Waitting/" class="md-tabs__link">
+          
+  
+    
+  
+  图形技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-Other/0.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%9D%82%E8%B0%88/" class="md-tabs__link">
+          
+  
+    
+  
+  Other
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    开篇
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    C++
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            C++
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 计算机发展史
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - C++基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 工具链
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 宏、模板、反射
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 内存管理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - GUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    图形API
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            图形API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 图形渲染管线
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 着色器
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 缓冲区与纹理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - 3D空间
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 图形API进阶
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    引擎技术
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            引擎技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 渲染架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 编辑器架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - DebugDraw
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - GPU调试
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    图形技术
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            图形技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 网格体渲染
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 天空盒
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - GPU粒子
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 后期滤镜
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 光照
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - 体积雾
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 天空大气
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7 - 地形
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Unreal Engine
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Unreal Engine
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 基础编程
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - Slate 开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 插件开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    3 - 粒子系统
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    3 - 粒子系统
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      原理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      粒子池
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      生成阶段
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      更新回收阶段
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      绘制阶段
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu-vs-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      CPU VS GPU
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU VS GPU">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      优缺点
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      粒子系统架构示例
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#niagara" class="md-nav__link">
+    <span class="md-ellipsis">
+      Niagara
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Niagara">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      作用域
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fniagaradataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      底层核心—FNiagaraDataSet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据接口—Data Interface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      事件机制
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="事件机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      事件数据的持有者
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      事件的处理时机
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用建议
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      相关文章
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - Niagara 性能优化
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - Fluid Ninja 流体插件
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 开放世界制作
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Other
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Other
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-Other/0.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 开放世界杂谈
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-Other/1.%E5%85%83%E5%AE%87%E5%AE%99%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 元宇宙杂谈
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      原理
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="原理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      粒子池
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      生成阶段
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      更新回收阶段
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      绘制阶段
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpu-vs-gpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      CPU VS GPU
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CPU VS GPU">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      优缺点
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      粒子系统架构示例
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#niagara" class="md-nav__link">
+    <span class="md-ellipsis">
+      Niagara
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Niagara">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      作用域
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fniagaradataset" class="md-nav__link">
+    <span class="md-ellipsis">
+      底层核心—FNiagaraDataSet
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      数据接口—Data Interface
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      事件机制
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="事件机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      事件数据的持有者
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      事件的处理时机
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用建议
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      相关文章
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="particle-system">粒子系统（Particle System）<a class="headerlink" href="#particle-system" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>粒子系统（Particle System）表示三维计算机图形学中模拟一些特定的模糊现象的技术，而这些现象用其它传统的渲染技术难以实现真实感的物理运动规律。经常使用粒子系统模拟的现象有火、爆炸、烟、水流、火花、落叶、云、雾、雪、尘、流星尾迹或者象发光轨迹这样的抽象视觉效果等等。</p>
+<p><a href="https://baike.baidu.com/item/%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F">《百度百科》— 粒子系统</a></p>
+</blockquote>
+<h2 id="_1">原理<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>粒子系统主要适用于渲染 <strong>大量运动的</strong> 物体，它的核心工作流程并不复杂，熟悉图形API的小伙伴都知道，使用GPU去绘制一个物体，需要调用<code>DrawCall</code>，因为粒子系统中存在非常多的微小粒子，常规的做法可能是这样：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">particles</span><span class="p">.</span><span class="n">num</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="n">drawParticle</span><span class="p">(</span><span class="n">particles</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="p">}</span>
+</code></pre></div>
+<p>这样做确实能达到效果，但由于大量的<code>DrawCall</code>调用，且粒子间存在许多重复数据，会导致粒子系统的渲染消耗非常高，因此所能渲染的粒子数量十分有限。</p>
+<p>为了能够极大程度的复用粒子数据和减少<code>DrawCall</code>，小伙伴们应该都想到了—— <strong>实例化（Instancing）</strong></p>
+<p>关于实例化的概念和使用，详见：</p>
+<ul>
+<li><a href="https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/10%20Instancing/">Learn OpenGL - Instancing</a></li>
+</ul>
+<p>通过实例化可以将粒子系统的<code>DrawCall</code>进行合并，并且能复用粒子间相同的数据。</p>
+<p>搞清楚如上概念，可以明白粒子系统只是一个 使用 实例化渲染 的工作流程，从这一维度去思考怎么制作粒子效果，我们考虑的是：</p>
+<ul>
+<li>如何构建粒子系统所需的实例化数据（Instance Data）。</li>
+<li>如何利用实例化数据去渲染出粒子效果。</li>
+</ul>
+<p>从这两个角度出发，应该很容易就能搭建出粒子系统的工作管线，下文主要会从架构上去阐述一些粒子系统的细节：</p>
+<p>对于一个简单的粒子，它可能会使用这样的数据结构：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Particle</span><span class="p">{</span><span class="w">        </span><span class="c1">//粒子的属性结构 </span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="n">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="n">vec3</span><span class="w"> </span><span class="n">rotation</span><span class="p">;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">size</span><span class="p">;</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">age</span><span class="p">;</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="c1">//...</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
+</code></pre></div>
+<p>大多数粒子系统的架构中，会使用一个名为 <strong>粒子发射器（Particle Emitter）</strong> 的结构，它维护着一个存放数据的 <strong>粒子池（Particle Pool）</strong> ，并且负责 <strong>生成（Spawn）</strong> ， <strong>更新（Update）</strong> 和 <strong>回收（Recycle）</strong> 粒子，使用 <strong>粒子渲染器（Particle Renderer）</strong> 将粒子池中的数据渲染出来，也就得到了粒子效果，这个过程可以看作是：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">ParticleEmitter</span><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">protected</span><span class="o">:</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">Tick</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">        </span><span class="n">Spawn</span><span class="p">();</span><span class="w">                </span><span class="c1">//生成阶段:创建新粒子</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="n">UpdateAndRecycle</span><span class="p">();</span><span class="w">     </span><span class="c1">//更新阶段:更新每个粒子的状态数据并回收已死亡的粒子</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">        </span><span class="n">Render</span><span class="p">();</span><span class="w">               </span><span class="c1">//渲染阶段:使用粒子渲染器将粒子效果渲染出来</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mParticlePool</span><span class="p">;</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="n">ParticleRenderer</span><span class="w"> </span><span class="n">mParticleRenderer</span><span class="p">;</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="p">};</span>
+</code></pre></div>
+<h3 id="_2">粒子池<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>因为计算机的内存资源是有限的，所以粒子系统需要保证 <strong>粒子池的占用内存不会随程序运行一直膨胀</strong> ，为此粒子系统往往会通过以下手段避免这个问题：</p>
+<ul>
+<li>限制粒子的发射数量。</li>
+<li>粒子具备生命周期，对于超出生命周期的粒子，及时进行回收。</li>
+</ul>
+<p>这也为粒子池提供了内存优化的基础：</p>
+<ul>
+<li>已知粒子的发射数量和生命周期，结合当前电脑的最大帧数，很容易估算出该发射器的最大粒子数量，而这个数量的内存往往会一开始就分配给粒子池，从而避免粒子池的内存重分配产生的开销.</li>
+<li>为了让粒子池能够并行回收（避免当从数组中移除一个元素时，需要挪动后方元素填充到之前的位置），往往会使用两个相同大小的粒子池交替迭代。</li>
+</ul>
+<p>假如我们想要更新和回收粒子，可能会写出这样的代码：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">vector</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;</span><span class="w"> </span><span class="n">ParticlePool</span><span class="p">;</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">ParticlePool</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="mi">10000</span><span class="p">);</span><span class="w">            </span><span class="c1">//预分配能存放10000个粒子数据的内存</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">ParticlePool</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">ParticlePool</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">isAlive</span><span class="p">()){</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">        </span><span class="n">index</span><span class="o">++</span><span class="p">;</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">        </span><span class="n">ParticlePool</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParticlePool</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">        </span><span class="n">ParticlePool</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="w">        </span><span class="n">ParticlePool</span><span class="p">[</span><span class="n">index</span><span class="p">].</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">...;</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="w">        </span><span class="p">...;</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="p">}</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="n">ParticlePool</span><span class="p">.</span><span class="n">reseize</span><span class="p">(</span><span class="n">index</span><span class="p">);</span>
+</code></pre></div>
+<p>它的逻辑复杂度是O(n)，如果还要优化，我们可以并行处理for循环，但上面的代码结构却做不到，是因为：</p>
+<ul>
+<li>内部的循环逻辑会对外部共有变量<code>index</code>进行读写。</li>
+<li>对<code>ParticlePool</code>的不同区域同时进行读和写，并行会出现乱序执行导致数据混乱。</li>
+</ul>
+<p>为了解决这个问题，我们一般会用两个<code>ParticlePool</code>交替处理，在局部线程中通过原子操作对<code>index</code>读写，因此ParticleEmitter的结构代码可能会变成了这样：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">ParticleEmitter</span><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">protected</span><span class="o">:</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">InitPool</span><span class="p">(){</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="n">mParticlePool</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">reserve</span><span class="p">(...);</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">        </span><span class="n">mParticlePool</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">reserve</span><span class="p">(...);</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="n">mCurrentPoolIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">        </span><span class="n">mNextPoolIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">        </span><span class="n">mCurrentNumOfParticle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">Tick</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="p">{</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="w">        </span><span class="n">Spawn</span><span class="p">();</span><span class="w">                </span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="w">        </span><span class="n">UpdateAndRecycle</span><span class="p">();</span><span class="w">     </span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">        </span><span class="n">Render</span><span class="p">();</span><span class="w">               </span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="w">    </span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mParticlePool</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mCurrentPoolIndex</span><span class="p">;</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mNextPoolIndex</span><span class="p">;</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">mCurrentNumOfParticle</span><span class="p">;</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">    </span><span class="n">ParticleRenderer</span><span class="w"> </span><span class="n">mParticleRenderer</span><span class="p">;</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="p">};</span>
+</code></pre></div>
+<h3 id="_3">生成阶段<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>粒子的生成阶段主要是生成新的粒子存放到粒子池中并初始化，这个过程可以看做是：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">Spwan</span><span class="p">(){</span><span class="w"> </span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="n">SpwanPerFrame</span><span class="p">(</span><span class="n">mParticlePool</span><span class="p">[</span><span class="n">mCurrentPoolIndex</span><span class="p">],</span><span class="n">mCurrentNumOfParticle</span><span class="p">,</span><span class="mi">100</span><span class="p">);</span><span class="w">          </span><span class="c1">//每帧生成100个粒子</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="p">}</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1">// 发射机制 可自定义</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">SpwanPerFrame</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Particle</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">ParticlePool</span><span class="p">,</span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">NumOfParticle</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">NumOfNewParticle</span><span class="p">){</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">    </span><span class="k">for</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NumOfNewParticle</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="w"> </span><span class="p">){</span><span class="w">            </span><span class="c1">//NumOfNewParticle为新增粒子的数量</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span><span class="n">Particle</span><span class="o">&amp;</span><span class="w"> </span><span class="n">NewParticle</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="n">ParticlePool</span><span class="p">[</span><span class="n">NumOfParticle</span><span class="p">];</span><span class="w">   </span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">        </span><span class="n">NumOfParticle</span><span class="o">++</span><span class="p">;</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">        </span><span class="n">InitializeParticle</span><span class="p">(</span><span class="n">NewParticle</span><span class="p">);</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="p">}</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="c1">// 初始化机制 可自定义</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="kt">void</span><span class="w"> </span><span class="nf">InitializeParticle</span><span class="p">(</span><span class="n">Particle</span><span class="o">&amp;</span><span class="w"> </span><span class="n">particle</span><span class="p">){</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="w">    </span><span class="n">particle</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="mf">0.0f</span><span class="p">,</span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="w">    </span><span class="c1">//particle...</span>
+<a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>这里需要注意的是，<code>Spawn</code>函数是每帧调用，发射器除了有 <strong>每帧</strong> 发射固定数量的发射机制，还可能是 <strong>每秒</strong> 发射“固定”数量，但由于不同系统的环境下，游戏中每秒的帧数不可预知，因此，对于这类 <strong>根据时段确定发射数量的发射机制</strong> ，其粒子数量是很难精确可控制的。</p>
+</blockquote>
+<h3 id="_4">更新回收阶段<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>此阶段的伪代码可以看做是：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">UpdateAndRecycle</span><span class="p">(){</span><span class="w">    </span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">IndexOfNextBuffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span><span class="w">             </span><span class="c1">//初始索引</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">for_each_thread</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">mCurrentNumOfParticle</span><span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">){</span><span class="w">       </span><span class="c1">//并行for</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">Particle</span><span class="o">&amp;</span><span class="w"> </span><span class="n">CurrentParticle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mParticlePool</span><span class="p">[</span><span class="n">mCurrentPoolIndex</span><span class="p">][</span><span class="n">i</span><span class="p">];</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">CurrentParticle</span><span class="p">.</span><span class="n">isActive</span><span class="p">()){</span><span class="w"> </span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">            </span><span class="kt">int</span><span class="w"> </span><span class="n">CurrentIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atomicAdd</span><span class="p">(</span><span class="n">IndexOfNextPool</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w">            </span><span class="c1">//使用原子操作读写外部公共变量</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">            </span><span class="n">Particle</span><span class="o">&amp;</span><span class="w"> </span><span class="n">NextParticle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mParticlePool</span><span class="p">[</span><span class="n">mNextPoolIndex</span><span class="p">][</span><span class="n">CurrentIndex</span><span class="p">];</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">            </span><span class="n">UpdateParticleStatus</span><span class="p">(</span><span class="n">CurrentParticle</span><span class="p">,</span><span class="n">NextParticle</span><span class="p">);</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">    </span><span class="n">CurrentParticlesBufferSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">IndexOfNextBuffer</span><span class="p">;</span><span class="w"> </span><span class="c1">//更新当前存活的粒子数量</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">    </span><span class="n">swap</span><span class="p">(</span><span class="n">mCurrentPoolIndex</span><span class="p">,</span><span class="n">mNextPoolIndex</span><span class="p">);</span><span class="w">         </span><span class="c1">//交换当前粒子池的索引</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="p">}</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="c1">// 粒子状态更新机制 可自定义</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="kt">void</span><span class="w"> </span><span class="nf">UpdateParticleStatus</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">Particle</span><span class="o">&amp;</span><span class="w"> </span><span class="n">CurrentParticle</span><span class="p">,</span><span class="w"> </span><span class="n">Particle</span><span class="o">&amp;</span><span class="w"> </span><span class="n">NextParticle</span><span class="p">){</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">    </span><span class="n">NextParticle</span><span class="p">.</span><span class="n">position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CurrentParticle</span><span class="p">.</span><span class="n">position</span><span class="p">;</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">    </span><span class="c1">//NextParticle...</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="_5">绘制阶段<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>绘制本身只是利用粒子的数据进行渲染，它的基本过程可以看做是：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">Render</span><span class="p">(){</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="n">mParticleRenderer</span><span class="p">.</span><span class="n">BindAttribute</span><span class="p">(</span><span class="s">&quot;position&quot;</span><span class="p">,</span><span class="n">mParticlePool</span><span class="p">[</span><span class="n">mCurrentPoolIndex</span><span class="p">],</span><span class="n">offset0</span><span class="p">,</span><span class="n">stride0</span><span class="p">);</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="n">mParticleRenderer</span><span class="p">.</span><span class="n">BindAttribute</span><span class="p">(</span><span class="s">&quot;color&quot;</span><span class="p">,</span><span class="n">mParticlePool</span><span class="p">[</span><span class="n">mCurrentPoolIndex</span><span class="p">],</span><span class="n">offset1</span><span class="p">,</span><span class="n">stride1</span><span class="p">);</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="p">...;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="n">mParticleRenderer</span><span class="p">.</span><span class="n">drawInstancing</span><span class="p">();</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="p">}</span>
+</code></pre></div>
+<p>该阶段体现了粒子的本质：粒子只是一堆数据，粒子系统（发射器）只不过是批量处理这些数据，将这些数据绑定到粒子渲染器的 <strong>属性插槽</strong> 上，从而完成粒子效果的渲染。</p>
+<h3 id="cpu-vs-gpu">CPU VS GPU<a class="headerlink" href="#cpu-vs-gpu" title="Permanent link">&para;</a></h3>
+<p>上面提到粒子系统本质上都是围绕着一堆粒子数据进行处理，主要可划分为：</p>
+<ul>
+<li><strong>生成阶段</strong> 和 <strong>更新回收阶段</strong> ：这两个阶段主要是在处理粒子数据，而Niagara提供了 <strong>可视化脚本</strong> 来为这两个阶段提供自定义操作，最终脚本将会：</li>
+<li>CPU：通过节点拼接的C++代码，会在Niagara的虚拟机中执行。</li>
+<li>GPU：Niagara会根据节点图，通过 <strong>NiagaraHlslTranslator</strong> 将之翻译为对应的 <strong>HLSL</strong> 代码供 <strong>ComputerShader</strong> 调用。</li>
+<li><strong>绘制阶段</strong> ：无论是CPU粒子还是GPU粒子，它们都可以使用相同的渲染器，区别在于： <strong>CPU粒子需要将数据上传到GPU上， 而GPU粒子的数据本身就在GPU，无需传输</strong> 。</li>
+</ul>
+<p>上述过程在逻辑上大同小异，其中需要注意的是GPU粒子的回收，GPU粒子调用ComputeShader <strong>并行</strong> 处理每个粒子，但是在更新会回收阶段，就涉及到数据的重定位，GPU之所以可以能够高效的并行，正是因为每一条分支上的数据互不相通且互不影响，而我们要实现GPU粒子的回收，就必须“打破”这一规定，当下而言，要达到这样的效果主要有两条途径：</p>
+<ul>
+<li>图形渲染管线：禁用光栅化，使用TransformFeedback（OpenGL）/ Stream Output（DX），Geometry Shader中回收（不提交）死亡粒子</li>
+</ul>
+<blockquote>
+<p>Geometry Shader本身就带有线性操作，因为这个过程会生成不定数量的新顶点，GPU在执行它写入数据到内存时肯定会加锁重定位，这也是上面为什么会有人使用TransformFeedback和Stream Output制作GPU粒子的原因，当然这也是游戏中需要尽量避免GS的原因。顺带提一下，Stream Output属于DX的正统特性，TransformFeedback在Khronos的待遇就不咋滴了，Vulkan中甚至没有提供官方支持，Metal更是对应功能的API都没有。</p>
+</blockquote>
+<ul>
+<li>通用计算管线：SSBO Atomic：随着硬件的更新，目前较高版本的渲染驱动都会支持SSBO（Shader Storage Buffer Object），这里我们的关注点主要是：SSBO支持Atomic操作。有了它的加持，就可以在CS中并行的处理粒子，并使用Atomic操作对粒子数据重定位（即上面伪代码中的NewIndex），对于新的粒子数据，则可以通过另一个特性——间接渲染（Indirect Draw）：直接利用GPU上的数据调用DrawCall，这样全程都避免了CPU与GPU的粒子传输，下面提供一个简易的GLSL 代码：</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">layout</span><span class="w"> </span><span class="p">(</span><span class="n">local_size_x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LOCAL_SIZE</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="p">;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">struct</span><span class="w"> </span><span class="n">Particle</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">rotation</span><span class="p">;</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">scaling</span><span class="p">;</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="kt">vec3</span><span class="w"> </span><span class="n">velocity</span><span class="p">;</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">life</span><span class="p">;</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="p">};</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="k">layout</span><span class="p">(</span><span class="n">std140</span><span class="p">,</span><span class="n">binding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">buffer</span><span class="w"> </span><span class="n">InputParticlesBuffer</span><span class="p">{</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="n">Particle</span><span class="w"> </span><span class="n">inputParticles</span><span class="p">[</span><span class="n">PARTICLE_MAX_SIZE</span><span class="p">];</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="p">};</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="k">layout</span><span class="p">(</span><span class="n">std140</span><span class="p">,</span><span class="n">binding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">buffer</span><span class="w"> </span><span class="n">OutputParticlesBuffer</span><span class="p">{</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="n">Particle</span><span class="w"> </span><span class="n">outputParticles</span><span class="p">[</span><span class="n">PARTICLE_MAX_SIZE</span><span class="p">];</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="p">};</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="k">layout</span><span class="p">(</span><span class="n">std140</span><span class="p">,</span><span class="n">binding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">buffer</span><span class="w"> </span><span class="n">ParticleRunContext</span><span class="p">{</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">inputCounter</span><span class="p">;</span><span class="w">           </span><span class="c1">//初始值为当前粒子数</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">outputCounter</span><span class="p">;</span><span class="w">          </span><span class="c1">//初始化为-1</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">duration</span><span class="p">;</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">  </span><span class="kt">float</span><span class="w"> </span><span class="n">lifetime</span><span class="p">;</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="p">};</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="cp">#define inID  gl_GlobalInvocationID.x</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="cp">#define inParticle inputParticles[inID]</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">(){</span><span class="w">                                              </span><span class="c1">//注意：GPU的并行是无序的</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">inID</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">inputCounter</span><span class="o">||</span><span class="n">inParticle</span><span class="p">.</span><span class="n">life</span><span class="o">&gt;</span><span class="n">lifetime</span><span class="p">)</span><span class="w">        </span><span class="c1">//此处可使用阶跃函数step优化</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="w">    </span><span class="kt">uint</span><span class="w"> </span><span class="n">outID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">atomicAdd</span><span class="p">(</span><span class="n">outputCounter</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w">              </span><span class="c1">//atomicAdd是GLSL的原生函数，但需要操作对象来源于SSBO</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="w">    </span><span class="n">outputParticles</span><span class="p">[</span><span class="n">outID</span><span class="p">].</span><span class="n">life</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">inParticle</span><span class="p">.</span><span class="n">life</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">duration</span><span class="p">;</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p><strong>着色器存储缓冲区对象（<a href="https://www.khronos.org/opengl/wiki/Shader_Storage_Buffer_Object"> Shader Storage Buffer Object </a>）</strong> 用于提供可读可写的缓冲区数据。</p>
+<p>它的用法与UniformBuffer几乎一模一样，它们之间的主要区别是：</p>
+<ul>
+<li><strong>Storage Buffer 可以申请非常大的显存</strong> ： OpenGL 规范保证 Uniform Buffer 的大小可以达到 <strong>16KB</strong> ，而 Storage Buffer 可以达到  <strong>128 MB</strong> 。</li>
+<li><strong>Storage Buffer 是可写的，甚至支持原子（Atomic）操作</strong> ：Storage Buffer 的读写可能是乱序的，因此它们往往需要增加一些内存屏障来保证同步。</li>
+<li><strong>Storage Buffer 支持可变存储</strong> ：这意味着在Storage Buffer中的块（Block），可以定义一个无界数组，就像是 <code>int arr[];</code>， 在着色器中可以使用<code>arr.length</code>得到数组长度，而在 Uniform Buffer 中的块，在定义数组时需要明确指定数组大小。</li>
+<li><strong>相同条件下，SSBO的访问会比Uniform Buffer要慢</strong> ：Storage Buffer 通常像缓冲区纹理一样访问，而 Uniform Buffer 数据是通过内部着色器可访问的内存进行读取。</li>
+</ul>
+<p>从功能上讲，当通过<a href="https://www.khronos.org/opengl/wiki/Image_Load_Store">Image Load Store</a>访问时，SSBO 可以被认为是<a href="https://www.khronos.org/opengl/wiki/Buffer_Texture">缓冲区纹理</a>的更好接口。</p>
+<p>OpenGL提供了一个AtomicCounter的功能，其本质上就是该特性</p>
+</blockquote>
+<p>上述完成了GPU粒子的回收，但它其实还带来了一个比较严重的问题——每次回收，粒子的数量会发生变化，但由于数据位于GPU中，CPU中调用<code>DrawCall</code>又必须知道这个参数。</p>
+<p>从GPU上回读数据肯定是不行的，因为现代图形API都是通过指令缓存的方式来加速渲染的，简单点说，就是在某一刻，GPU的指令缓存中可能存在着两帧甚至以上的指令还没处理，如果我们要回读数据的话，就必须保证当前指令被立即执行，也就是说得阻塞渲染线程，等待数据返回，这个操作对整个引擎而言简直就是致命打击，不过好在有解决方法。</p>
+<p>在OpenGL4.0的更新中，提供了一个新特性——<a href="https://www.khronos.org/opengl/wiki/Vertex_Rendering#Indirect_rendering">Indirect Rendering</a>（间接渲染，也叫 <strong>Indirect Draw</strong> ），它允许我们使用GPU上的数据调用<code>DrawCall</code>，以下是官方对它的定义：</p>
+<blockquote>
+<p><a href="https://www.khronos.org/opengl/wiki/Vertex_Rendering#Indirect_rendering"> <strong>Indirect Rendering</strong> </a></p>
+<p>间接渲染允许直接使用GPU上的数据作为DrawCall参数，例如，<a href="https://www.khronos.org/opengl/wiki/GLAPI/glDrawArrays">glDrawArrays</a>的参数有原始类型、顶点数和起始顶点，当使用间接绘制命令<a href="https://www.khronos.org/opengl/wiki/GLAPI/glDrawArraysIndirect">glDrawArraysIndirect</a>时，会从缓冲区对象中获取相应参数。</p>
+<p>这个功能是为了避免 GPU-&gt;CPU-&gt;GPU 往返，通过 GPU 决定要渲染的参数，而 CPU 所做的只是决定何时发出绘图命令，以及该命令使用哪个<a href="https://www.khronos.org/opengl/wiki/Primitive">Primitive</a>。</p>
+<p>在Niagara源码中搜索Indirect，可以找到相关用法的定义，其主要的结构位于：</p>
+<ul>
+<li><code>NiagaraVertexFactories\Public\NiagaraDrawIndirect.h</code></li>
+<li><code>Niagara\Private\NiagaraGPUInstanceCountManager.cpp</code></li>
+</ul>
+</blockquote>
+<h4 id="_6">优缺点<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>CPU</strong> 粒子</li>
+<li>
+<p>优点</p>
+<ul>
+<li>CPU端可访问完整的游戏环境，可以跟其他粒子或游戏逻辑进行互动。</li>
+<li>无需较高的硬件配置，显卡支持可编程管线和实例化渲染即可。</li>
+</ul>
+</li>
+<li>
+<p>缺点</p>
+<ul>
+<li>只能在CPU端线性地迭代粒子数据，对CPU的性能损耗严重。</li>
+<li>粒子数据位于CPU端内存中，渲染时需要统一将粒子数据上传到GPU中，这一传输过程的损耗极其严重。</li>
+</ul>
+</li>
+<li>
+<p><strong>GPU</strong> 粒子</p>
+</li>
+<li>
+<p>优点</p>
+<ul>
+<li>粒子数据全程在GPU端生成和处理，避免了CPU和GPU之间的数据传输。</li>
+<li>依靠GPU中的并行单元处理粒子数据，大大降低了粒子处理所需的耗时。</li>
+</ul>
+</li>
+<li>
+<p>缺点</p>
+<ul>
+<li>GPU粒子的数据位于显存中，无法实时计算包围盒边界，因此我们需要为GPU粒子手动指定固定边界。</li>
+<li>不能很好地跟游戏环境交互，但可以通过深度，Scene Capture，距离场去逼近效果。</li>
+<li>对硬件配置有一定要求，需支持CS、SSBO Atomic、Indirect Draw（PC端有独显基本没问题，移动端的支持不是特别完善）</li>
+</ul>
+</li>
+</ul>
+<h2 id="_7">粒子系统架构示例<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>在本教程的代码中，也搭建了较为简单的粒子架构，具体请参考：</p>
+<blockquote>
+<p>目前代码示例中还存在一些问题，QRhi并没有直接支持 <strong>Indirect Rendering</strong> ，笔者在此处嵌入了部分原生Vulkan代码，目前还没有改成内存屏障去做同步，而是直接提交次级指令缓冲区，阻塞等待：<code>mRhi-&gt;finish()</code></p>
+</blockquote>
+<ul>
+<li>代码：<a href="https://github.com/Italink/QEngineUtilities/blob/main/Source/Core/Source/Public/Asset/QParticleEmitter.h">https://github.com/Italink/QEngineUtilities/blob/main/Source/Core/Source/Public/Asset/QParticleEmitter.h</a></li>
+<li>示例1——<a href="https://github.com/Italink/ModernGraphicsEngineGuide/tree/main/Source/3-GraphicsTechnology/05-GPUParticles/Source/main.cpp">CPU和GPU粒子</a></li>
+</ul>
+<p><a class="glightbox" href="../Resources/148.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="148" src="../Resources/148.gif" /></a></p>
+<ul>
+<li>示例2——<a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/3-GraphicsTechnology/07-PostEffect/10-DepthOfField/Source/main.cpp">景深</a></li>
+</ul>
+<p><a class="glightbox" href="../Resources/18.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="18" src="../Resources/18.gif" /></a></p>
+<h2 id="niagara">Niagara<a class="headerlink" href="#niagara" title="Permanent link">&para;</a></h2>
+<p>Unreal Engine 的 Niagara 系统非常强大，它本质上是提供了一个 <strong>可编程的数据处理器（CPU or GPU） 和 实例化渲染器</strong> ，从这一层面去思考它，我们可以实现非常多惊艳的效果。</p>
+<h3 id="_8">作用域<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>大多数文章中称此处的作用域为“命名空间”，虽然它确实起着区分变量命名的作用，但对于开发者而言，更为重要的是这些变量作用域所代表的生命周期。</p>
+<p>以下是UE中Niagara的大体结构，其中 <strong>黄色部分</strong> 代表Niagara中可管理变量的作用域：</p>
+<p><a class="glightbox" href="../Resources/image-20220704180132630.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220704180132630" src="../Resources/image-20220704180132630.png" /></a></p>
+<p>在Niagara编辑器中，你可以通过参数面板来对这些作用域的变量进行增删改</p>
+<p><a class="glightbox" href="../Resources/image-20220704181940868.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220704181940868" src="../Resources/image-20220704181940868.png" /></a></p>
+<ul>
+<li><strong>EngineProvided</strong> ：使用该作用域主要是为了从引擎中读取变量，常见的有DeltaTime</li>
+</ul>
+<p><a class="glightbox" href="Resources/image-20220704182345504.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="Resources/image-20220704182345504.png" alt="image-20220704182345504" style="zoom:67%;" /></a></p>
+<ul>
+<li><strong>System Attribute</strong> ：单个粒子系统持有的属性变量</li>
+</ul>
+<p><a class="glightbox" href="../Resources/image-20220704183127690.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220704183127690" src="../Resources/image-20220704183127690.png" /></a></p>
+<ul>
+<li>
+<p><strong>Emitter Attribute</strong> ：单个粒子发射器持有的属性变量</p>
+</li>
+<li>
+<p><strong>Particle Attribute</strong> ：单个粒子持有的属性变量</p>
+</li>
+<li>
+<p><strong>Module Inputs</strong> ：模块输入变量，即模块公开给外部设置的变量，它将显示在模块的设置面板：</p>
+</li>
+</ul>
+<p><a class="glightbox" href="../Resources/image-20220705114115160.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705114115160" src="../Resources/image-20220705114115160.png" /></a></p>
+<ul>
+<li>
+<p><strong>Static Switch Inputs</strong> ：模块静态分支输入变量，用作编译期优化脚本的逻辑分支。</p>
+</li>
+<li>
+<p><strong>Module Locals</strong> ：模块本地变量</p>
+</li>
+<li>
+<p><strong>Module Outputs</strong> ：模块输出变量</p>
+</li>
+<li>
+<p><strong>Stage Transients</strong> ：阶段临时变量</p>
+</li>
+<li>
+<p><strong>User Expose</strong> ：用户公开变量，这里里的变量主要是为了公开给Niagara外部的模块（C++或蓝图）调用，在底层上，它与其他变量有着本质上的不同，下文细说。</p>
+</li>
+</ul>
+<blockquote>
+<p>关于这些作用域所代表的详细意义，可参阅：<a href="https://zhuanlan.zhihu.com/p/342315125">UE4：Niagara的变量与HLSL - 知乎 (zhihu.com)</a></p>
+</blockquote>
+<h3 id="fniagaradataset">底层核心—FNiagaraDataSet<a class="headerlink" href="#fniagaradataset" title="Permanent link">&para;</a></h3>
+<p>Niagara属性本身就是一堆数据，它在代码上对应的结构为 <strong>FNiagaraDataSet</strong> （除了 <strong>User Expose</strong> ），其简要结构如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">FNiagaraDataSet</span><span class="p">{</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span><span class="cm">/** Table of free IDs available to allocate next tick. */</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">int32</span><span class="o">&gt;</span><span class="w"> </span><span class="n">FreeIDsTable</span><span class="p">;</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="cm">/** Number of free IDs in FreeIDTable. */</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="n">int32</span><span class="w"> </span><span class="n">NumFreeIDs</span><span class="p">;</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="cm">/** Max ID seen in last execution. Allows us to shrink the IDTable. */</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="n">int32</span><span class="w"> </span><span class="n">MaxUsedID</span><span class="p">;</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="cm">/** Tag to use when new IDs are acquired. Should be unique per tick. */</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="n">int32</span><span class="w"> </span><span class="n">IDAcquireTag</span><span class="p">;</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="cm">/** Table of IDs spawned in the last tick (just the index part, the acquire tag is IDAcquireTag for all of them). */</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">int32</span><span class="o">&gt;</span><span class="w"> </span><span class="n">SpawnedIDsTable</span><span class="p">;</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">    </span><span class="cm">/** GPU buffer of free IDs available on the next tick. */</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">    </span><span class="n">FRWBuffer</span><span class="w"> </span><span class="n">GPUFreeIDs</span><span class="p">;</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">    </span><span class="cm">/** NUmber of IDs allocated for the GPU simulation. */</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">GPUNumAllocatedIDs</span><span class="p">;</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">    </span><span class="cm">/**</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="cm">    Actual data storage. These are passed to and read directly by the RT.</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="cm">    This is effectively a pool of buffers for this simulation.</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="cm">    Typically this should only be two or three entries and we search for a free buffer to write into on BeginSimulate();</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a><span class="cm">    We keep track of the Current and Previous buffers which move with each simulate.</span>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="cm">    Additional buffers may be in here if they are currently being used by the render thread.</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="cm">    */</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FNiagaraDataBuffer</span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">TInlineAllocator</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">Data</span><span class="p">;</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a><span class="w">        </span><span class="cm">/** Buffer containing the current simulation state. */</span>
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a><span class="w">    </span><span class="n">FNiagaraDataBuffer</span><span class="o">*</span><span class="w"> </span><span class="n">CurrentData</span><span class="p">;</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a>
+<a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a><span class="w">    </span><span class="cm">/** Buffer we&#39;re currently simulating into. Only valid while we&#39;re simulating i.e between PrepareForSimulate and EndSimulate calls.*/</span>
+<a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a><span class="w">    </span><span class="n">FNiagaraDataBuffer</span><span class="o">*</span><span class="w"> </span><span class="n">DestinationData</span><span class="p">;</span>
+<a id="__codelineno-9-37" name="__codelineno-9-37" href="#__codelineno-9-37"></a>
+<a id="__codelineno-9-38" name="__codelineno-9-38" href="#__codelineno-9-38"></a><span class="w">    </span><span class="cm">/* Max instance count is the maximum number of instances we allow. */</span>
+<a id="__codelineno-9-39" name="__codelineno-9-39" href="#__codelineno-9-39"></a><span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">MaxInstanceCount</span><span class="p">;</span>
+<a id="__codelineno-9-40" name="__codelineno-9-40" href="#__codelineno-9-40"></a><span class="w">    </span><span class="cm">/* Max allocation couns it eh maximum number of instances we can allocate which can be &gt; MaxInstanceCount due to rounding. */</span>
+<a id="__codelineno-9-41" name="__codelineno-9-41" href="#__codelineno-9-41"></a><span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">MaxAllocationCount</span><span class="p">;</span>
+<a id="__codelineno-9-42" name="__codelineno-9-42" href="#__codelineno-9-42"></a><span class="p">}</span>
+</code></pre></div>
+<p>从上面的结构来看， <strong>FNiagaraDataSet</strong> 提供了开篇提到 粒子发射器 基本过程 中所需要的数据结构：</p>
+<ul>
+<li>存储分配的最大值（容量，ID）</li>
+<li><code>TArray&lt;FNiagaraDataBuffer*, TInlineAllocator&lt;2&gt;&gt; Data</code>为两个交替迭代的缓冲区，<code>FNiagaraDataBuffer* CurrentData</code>，<code>FNiagaraDataBuffer* DestinationData</code>则是指向缓冲器的两个指针，用于快速的Swap</li>
+</ul>
+<p>其中核心的存储结构为 <strong>FNiagaraDataBuffer</strong> ，它的 <strong>关注层面仅仅只是内存数据</strong> ，其简要结构如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">FNiagaraDataBuffer</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">FNiagaraSharedObject</span><span class="p">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="c1">//////////////////////////////////////////////////////////////////////////</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="c1">//CPU Data</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="cm">/** Float components of simulation data. */</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">uint8</span><span class="o">&gt;</span><span class="w"> </span><span class="n">FloatData</span><span class="p">;</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="cm">/** Int32 components of simulation data. */</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">uint8</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Int32Data</span><span class="p">;</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="cm">/** Half components of simulation data. */</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">uint8</span><span class="o">&gt;</span><span class="w"> </span><span class="n">HalfData</span><span class="p">;</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">    </span><span class="cm">/** Table of IDs to real buffer indices. */</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">int32</span><span class="o">&gt;</span><span class="w"> </span><span class="n">IDToIndexTable</span><span class="p">;</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">    </span><span class="c1">//////////////////////////////////////////////////////////////////////////</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">    </span><span class="c1">//////////////////////////////////////////////////////////////////////////</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">    </span><span class="c1">// GPU Data</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="w">    </span><span class="cm">/** Location in the frame where GPU data will be ready, for CPU this is always the first group, for GPU is depends on the features used as to which phase. */</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="w">    </span><span class="n">ENiagaraGpuComputeTickStage</span><span class="o">::</span><span class="n">Type</span><span class="w"> </span><span class="n">GPUDataReadyStage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ENiagaraGpuComputeTickStage</span><span class="o">::</span><span class="n">First</span><span class="p">;</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="w">    </span><span class="cm">/** The buffer offset where the instance count is accumulated. */</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">GPUInstanceCountBufferOffset</span><span class="p">;</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="w">    </span><span class="cm">/** GPU Buffer containing floating point values for GPU simulations. */</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="w">    </span><span class="n">FRWBuffer</span><span class="w"> </span><span class="n">GPUBufferFloat</span><span class="p">;</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="w">    </span><span class="cm">/** GPU Buffer containing integer values for GPU simulations. */</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="w">    </span><span class="n">FRWBuffer</span><span class="w"> </span><span class="n">GPUBufferInt</span><span class="p">;</span>
+<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="w">    </span><span class="cm">/** GPU table which maps particle ID to index. */</span>
+<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="w">    </span><span class="n">FRWBuffer</span><span class="w"> </span><span class="n">GPUIDToIndexTable</span><span class="p">;</span>
+<a id="__codelineno-10-27" name="__codelineno-10-27" href="#__codelineno-10-27"></a><span class="w">    </span><span class="cm">/** GPU Buffer containing half values for GPU simulations. */</span>
+<a id="__codelineno-10-28" name="__codelineno-10-28" href="#__codelineno-10-28"></a><span class="w">    </span><span class="n">FRWBuffer</span><span class="w"> </span><span class="n">GPUBufferHalf</span><span class="p">;</span>
+<a id="__codelineno-10-29" name="__codelineno-10-29" href="#__codelineno-10-29"></a><span class="cp">#if NIAGARA_MEMORY_TRACKING</span>
+<a id="__codelineno-10-30" name="__codelineno-10-30" href="#__codelineno-10-30"></a><span class="w">    </span><span class="n">int32</span><span class="w"> </span><span class="n">AllocationSizeBytes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-10-31" name="__codelineno-10-31" href="#__codelineno-10-31"></a><span class="cp">#endif</span>
+<a id="__codelineno-10-32" name="__codelineno-10-32" href="#__codelineno-10-32"></a><span class="w">    </span><span class="c1">//////////////////////////////////////////////////////////////////////////</span>
+<a id="__codelineno-10-33" name="__codelineno-10-33" href="#__codelineno-10-33"></a>
+<a id="__codelineno-10-34" name="__codelineno-10-34" href="#__codelineno-10-34"></a><span class="w">    </span><span class="cm">/** Number of instances in data. */</span>
+<a id="__codelineno-10-35" name="__codelineno-10-35" href="#__codelineno-10-35"></a><span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">NumInstances</span><span class="p">;</span>
+<a id="__codelineno-10-36" name="__codelineno-10-36" href="#__codelineno-10-36"></a><span class="w">    </span><span class="cm">/** Number of instances the buffer has been allocated for. */</span>
+<a id="__codelineno-10-37" name="__codelineno-10-37" href="#__codelineno-10-37"></a><span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">NumInstancesAllocated</span><span class="p">;</span>
+<a id="__codelineno-10-38" name="__codelineno-10-38" href="#__codelineno-10-38"></a><span class="w">    </span><span class="cm">/** Stride between components in the float buffer. */</span>
+<a id="__codelineno-10-39" name="__codelineno-10-39" href="#__codelineno-10-39"></a><span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">FloatStride</span><span class="p">;</span>
+<a id="__codelineno-10-40" name="__codelineno-10-40" href="#__codelineno-10-40"></a><span class="w">    </span><span class="cm">/** Stride between components in the int32 buffer. */</span>
+<a id="__codelineno-10-41" name="__codelineno-10-41" href="#__codelineno-10-41"></a><span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">Int32Stride</span><span class="p">;</span>
+<a id="__codelineno-10-42" name="__codelineno-10-42" href="#__codelineno-10-42"></a><span class="w">    </span><span class="cm">/** Stride between components in the half buffer. */</span>
+<a id="__codelineno-10-43" name="__codelineno-10-43" href="#__codelineno-10-43"></a><span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">HalfStride</span><span class="p">;</span>
+<a id="__codelineno-10-44" name="__codelineno-10-44" href="#__codelineno-10-44"></a><span class="w">    </span><span class="cm">/** Number of instances spawned in the last tick. */</span>
+<a id="__codelineno-10-45" name="__codelineno-10-45" href="#__codelineno-10-45"></a><span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">NumSpawnedInstances</span><span class="p">;</span>
+<a id="__codelineno-10-46" name="__codelineno-10-46" href="#__codelineno-10-46"></a><span class="w">    </span><span class="cm">/** ID acquire tag used in the last tick. */</span>
+<a id="__codelineno-10-47" name="__codelineno-10-47" href="#__codelineno-10-47"></a><span class="w">    </span><span class="n">uint32</span><span class="w"> </span><span class="n">IDAcquireTag</span><span class="p">;</span>
+<a id="__codelineno-10-48" name="__codelineno-10-48" href="#__codelineno-10-48"></a>
+<a id="__codelineno-10-49" name="__codelineno-10-49" href="#__codelineno-10-49"></a><span class="w">    </span><span class="cm">/** Table containing current base locations for all registers in this dataset. */</span>
+<a id="__codelineno-10-50" name="__codelineno-10-50" href="#__codelineno-10-50"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">uint8</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">RegisterTable</span><span class="p">;</span><span class="c1">//TODO: Should make inline? Feels like a useful size to keep local would be too big.</span>
+<a id="__codelineno-10-51" name="__codelineno-10-51" href="#__codelineno-10-51"></a><span class="w">    </span><span class="n">RegisterTypeOffsetType</span><span class="w"> </span><span class="n">RegisterTypeOffsets</span><span class="p">;</span>
+<a id="__codelineno-10-52" name="__codelineno-10-52" href="#__codelineno-10-52"></a><span class="p">};</span>
+</code></pre></div>
+<p>Niagara中持有FNiagaraDataSet的类有：</p>
+<ul>
+<li><strong>FNiagaraEmitterInstance</strong> ：Niagara发射器实例</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">FNiagaraEmitterInstance</span><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="k">struct</span><span class="w"> </span><span class="nc">FEventInstanceData</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">      </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FNiagaraScriptExecutionContext</span><span class="o">&gt;</span><span class="w"> </span><span class="n">EventExecContexts</span><span class="p">;</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">      </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FNiagaraParameterDirectBinding</span><span class="o">&lt;</span><span class="n">int32</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">EventExecCountBindings</span><span class="p">;</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">      </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FNiagaraDataSet</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">UpdateScriptEventDataSets</span><span class="p">;</span><span class="w">         </span><span class="c1">//更新阶段的数据集</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">      </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FNiagaraDataSet</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">SpawnScriptEventDataSets</span><span class="p">;</span><span class="w">          </span><span class="c1">//生成阶段的数据集</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">      </span><span class="n">TArray</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">UpdateEventGeneratorIsSharedByIndex</span><span class="p">;</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">      </span><span class="n">TArray</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="w"> </span><span class="n">SpawnEventGeneratorIsSharedByIndex</span><span class="p">;</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">      </span><span class="cm">/** Data required for handling events. */</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">      </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FNiagaraEventHandlingInfo</span><span class="o">&gt;</span><span class="w"> </span><span class="n">EventHandlingInfo</span><span class="p">;</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">      </span><span class="n">int32</span><span class="w"> </span><span class="n">EventSpawnTotal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">  </span><span class="p">};</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">    </span><span class="cm">/** particle simulation data. Must be a shared ref as various things on the RT can have direct ref to it. */</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">  </span><span class="n">FNiagaraDataSet</span><span class="o">*</span><span class="w"> </span><span class="n">ParticleDataSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span><span class="w">                     </span><span class="c1">//粒子数据</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="p">};</span>
+</code></pre></div>
+<ul>
+<li><strong>FNiagaraSystemInstance</strong> ：Niagara系统实例</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">FNiagaraSystemInstance</span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">  </span><span class="c1">// registered events for each of the emitters</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">  </span><span class="k">typedef</span><span class="w"> </span><span class="n">TPair</span><span class="o">&lt;</span><span class="n">FName</span><span class="p">,</span><span class="w"> </span><span class="n">FName</span><span class="o">&gt;</span><span class="w"> </span><span class="n">EmitterEventKey</span><span class="p">;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">  </span><span class="k">typedef</span><span class="w"> </span><span class="n">TMap</span><span class="o">&lt;</span><span class="n">EmitterEventKey</span><span class="p">,</span><span class="w"> </span><span class="n">FNiagaraDataSet</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">EventDataSetMap</span><span class="p">;</span><span class="w">    </span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">  </span><span class="n">EventDataSetMap</span><span class="w"> </span><span class="n">EmitterEventDataSetMap</span><span class="p">;</span><span class="w">                         </span><span class="c1">//Niagara系统事件集</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="p">};</span>
+</code></pre></div>
+<ul>
+<li><strong>FNiagaraDICollisionQueryBatch</strong> ：包含碰撞事件</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">FNiagaraDICollisionQueryBatch</span><span class="p">{</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="w">    </span><span class="n">FNiagaraDataSet</span><span class="w"> </span><span class="o">*</span><span class="n">CollisionEventDataSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">;</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="p">};</span>
+</code></pre></div>
+<ul>
+<li><strong>FNiagaraScriptExecutionContextBase</strong> ：Niagara脚本（Module）执行上下文</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">FNiagaraDataSetExecutionInfo</span><span class="p">{</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="n">FNiagaraDataSet</span><span class="o">*</span><span class="w"> </span><span class="n">DataSet</span><span class="p">;</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">  </span><span class="n">FNiagaraDataBuffer</span><span class="o">*</span><span class="w"> </span><span class="n">Input</span><span class="p">;</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">  </span><span class="n">FNiagaraDataBuffer</span><span class="o">*</span><span class="w"> </span><span class="n">Output</span><span class="p">;</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="p">}</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="k">struct</span><span class="w"> </span><span class="nc">FNiagaraScriptExecutionContextBase</span><span class="p">{</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="n">UNiagaraScript</span><span class="o">*</span><span class="w"> </span><span class="n">Script</span><span class="p">;</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FNiagaraDataSetExecutionInfo</span><span class="p">,</span><span class="w"> </span><span class="n">TInlineAllocator</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">DataSetInfo</span><span class="p">;</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="p">}</span>
+</code></pre></div>
+<p>由此可以看出，Niagara中的 <strong>粒子数据</strong> 和 <strong>事件</strong> 都是基于 <strong>FNiagaraDataSet</strong> ，当然这里有个特例就是前面提到的 <strong>User Expose</strong> ，它被存储在 <strong>FNiagaraParameterStore</strong> ，对模块不可见，在Niagara系统中只可以被读取，即通过 <strong>FNiagaraParameterStoreBinding</strong> 绑定到其他属性，使用它主要是为了提供一种Niagara与外部数据的交互手段。</p>
+<p>在<code>Niagara\Classes\NiagaraDataSetAccessor.h</code>，提供了很多内部读写FNiagaraDataSet的模板函数，以Int32为例：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">TType</span><span class="o">&gt;</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">struct</span><span class="w"> </span><span class="nc">FNiagaraDataSetAccessorInt32</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="p">{</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">FNiagaraDataSetReaderInt32</span><span class="o">&lt;</span><span class="n">TType</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CreateReader</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FNiagaraDataSet</span><span class="o">&amp;</span><span class="w"> </span><span class="n">DataSet</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">VariableName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">FNiagaraDataSetWriterInt32</span><span class="o">&lt;</span><span class="n">TType</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CreateWriter</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FNiagaraDataSet</span><span class="o">&amp;</span><span class="w"> </span><span class="n">DataSet</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">VariableName</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="p">};</span>
+</code></pre></div>
+<p>而Niagara的编辑器层面，并没有直接处理 <strong>FNiagaraDataSet</strong> ，而是对 <strong>FNiagaraVariable</strong> 进行管理编辑，存储到 <strong>FNiagaraDataSetCompiledData</strong> 中，最后进行编译：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">FNiagaraDataSetCompiledData</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="p">{</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="n">GENERATED_BODY</span><span class="p">()</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">    </span><span class="cm">/** Variables in the data set. */</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="w">    </span><span class="n">UPROPERTY</span><span class="p">()</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FNiagaraVariable</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Variables</span><span class="p">;</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">    </span><span class="cm">/** Data describing the layout of variable data. */</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">    </span><span class="n">UPROPERTY</span><span class="p">()</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FNiagaraVariableLayoutInfo</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VariableLayouts</span><span class="p">;</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="w">    </span><span class="c1">//...</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="p">};</span>
+</code></pre></div>
+<p>至此，Niagara的底层核心就告一段落了，对于细节无需过多深入。</p>
+<h3 id="data-interface">数据接口—Data Interface<a class="headerlink" href="#data-interface" title="Permanent link">&para;</a></h3>
+<p>基本数据类型（数值，向量...）不足以满足所有的应用场景，在有些情况下，粒子系统可能需要访问到很多复杂的数据结构，比如骨骼、纹理、距离场、音频...</p>
+<p>对此，Niagara提供了一种名为 <strong>Data Interface</strong> 的机制专门用来处理复杂的数据结构，在新建任意作用域的属性时，可以在 <strong>DateInterface</strong> 下看到以下条目：</p>
+<p><a class="glightbox" href="../Resources/image-20220705142208404.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705142208404" src="../Resources/image-20220705142208404.png" /></a></p>
+<p>它在代码底层上对应结构— <strong>UNiagaraDataInterface</strong></p>
+<p>上面的所有接口均派生自它，这里提它的主要原因是：我们也 <strong>可以在插件派生这个类，进行自定义</strong> 。</p>
+<p>Niagara源码中有大量的派生示例：</p>
+<p><a class="glightbox" href="../Resources/image-20220705142910309.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705142910309" src="../Resources/image-20220705142910309.png" /></a></p>
+<h3 id="_9">事件机制<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>Niagara的事件机制同样基于上文提到的 <strong>FNiagaraDataSet</strong></p>
+<p>以 <strong>GenerateLocationEvent</strong> 为例</p>
+<p><a class="glightbox" href="../Resources/image-20220705144750986.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705144750986" src="../Resources/image-20220705144750986.png" /></a></p>
+<p>打开它的脚本，你能看到：</p>
+<p><a class="glightbox" href="../Resources/image-20220705143831980.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705143831980" src="../Resources/image-20220705143831980.png" /></a></p>
+<p>该脚本的核心就是调用了 <strong>LocationEvent_V2 Wirte</strong> 这个节点，这个节点无法被创建，因为它是由引擎序列化产生的，它的节点原型是 <strong>UNiagaraNodeWriteDataSet</strong> ，其结构如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">UNiagaraNodeDataSetBase</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">UNiagaraNode</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="p">{</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">    </span><span class="n">FNiagaraDataSetID</span><span class="w"> </span><span class="n">DataSet</span><span class="p">;</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FNiagaraVariable</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Variables</span><span class="p">;</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="w">    </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FString</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VariableFriendlyNames</span><span class="p">;</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="p">};</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="k">class</span><span class="w"> </span><span class="nc">UNiagaraNodeWriteDataSet</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">UNiagaraNodeDataSetBase</span><span class="p">{</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">    </span><span class="n">FName</span><span class="w"> </span><span class="n">EventName</span><span class="p">;</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="p">};</span>
+</code></pre></div>
+<p>再来看它的事件处理器 <strong>Receive Location Event</strong></p>
+<p><a class="glightbox" href="../Resources/image-20220705145222454.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705145222454" src="../Resources/image-20220705145222454.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220705145342871.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705145342871" src="../Resources/image-20220705145342871.png" /></a></p>
+<p>可以看到 <strong>LocationEvent_V2_Read</strong> 与之前的 <strong>LocationEvent_V2 Wirte</strong> 对应，节点原型为 <strong>UNiagaraNodeWriteDataSet</strong></p>
+<p>其中，Niagara中可自行创建的事件有：</p>
+<p><a class="glightbox" href="../Resources/image-20220705150245240.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705150245240" src="../Resources/image-20220705150245240.png" /></a></p>
+<p>它们也是通过 <strong>UNiagaraNodeDataSetRead ** / **UNiagaraNodeDataSetWrite ** 对 **FNiagaraDataSet</strong> 进行读写，其执行逻辑很简单，但我们只需要搞清楚：</p>
+<ul>
+<li>这两个节点对什么地方的FNiagaraDataSet进行读写？</li>
+<li>事件什么时候进行处理？</li>
+</ul>
+<h4 id="_10">事件数据的持有者<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
+<p>在 <strong>FNiagaraSystemInstance</strong> 的定义中有如下函数：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">FNiagaraSystemInstance</span><span class="p">{</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="w"> </span><span class="c1">//...</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="n">TPair</span><span class="o">&lt;</span><span class="n">FName</span><span class="p">,</span><span class="w"> </span><span class="n">FName</span><span class="o">&gt;</span><span class="w"> </span><span class="n">EmitterEventKey</span><span class="p">;</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">    </span><span class="k">typedef</span><span class="w"> </span><span class="n">TMap</span><span class="o">&lt;</span><span class="n">EmitterEventKey</span><span class="p">,</span><span class="w"> </span><span class="n">FNiagaraDataSet</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">EventDataSetMap</span><span class="p">;</span><span class="w">    </span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="n">EventDataSetMap</span><span class="w"> </span><span class="n">EmitterEventDataSetMap</span><span class="p">;</span><span class="w">                         </span><span class="c1">//Niagara系统事件集</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="p">};</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="n">FNiagaraDataSet</span><span class="o">*</span><span class="w"> </span><span class="nf">FNiagaraSystemInstance::CreateEventDataSet</span><span class="p">(</span><span class="n">FName</span><span class="w"> </span><span class="n">EmitterName</span><span class="p">,</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">EventName</span><span class="p">)</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="p">{</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="w">    </span><span class="n">FNiagaraDataSet</span><span class="o">*&amp;</span><span class="w"> </span><span class="n">OutSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EmitterEventDataSetMap</span><span class="p">.</span><span class="n">FindOrAdd</span><span class="p">(</span><span class="n">EmitterEventKey</span><span class="p">(</span><span class="n">EmitterName</span><span class="p">,</span><span class="w"> </span><span class="n">EventName</span><span class="p">));</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">OutSet</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="w">        </span><span class="n">OutSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FNiagaraDataSet</span><span class="p">();</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">OutSet</span><span class="p">;</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="p">}</span>
+</code></pre></div>
+<p>Niagara发射器在初始化（可能由重置或重编译导致），会调用如下函数：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">FNiagaraEmitterInstance::Init</span><span class="p">(</span><span class="n">int32</span><span class="w"> </span><span class="n">InEmitterIdx</span><span class="p">,</span><span class="w"> </span><span class="n">FNiagaraSystemInstanceID</span><span class="w"> </span><span class="n">InSystemInstanceID</span><span class="p">){</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">int32</span><span class="w"> </span><span class="n">UpdateEventGeneratorCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CachedEmitter</span><span class="o">-&gt;</span><span class="n">UpdateScriptProps</span><span class="p">.</span><span class="n">EventGenerators</span><span class="p">.</span><span class="n">Num</span><span class="p">();</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">int32</span><span class="w"> </span><span class="n">SpawnEventGeneratorCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CachedEmitter</span><span class="o">-&gt;</span><span class="n">SpawnScriptProps</span><span class="p">.</span><span class="n">EventGenerators</span><span class="p">.</span><span class="n">Num</span><span class="p">();</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">int32</span><span class="w"> </span><span class="n">NumEvents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CachedEmitter</span><span class="o">-&gt;</span><span class="n">GetEventHandlers</span><span class="p">().</span><span class="n">Num</span><span class="p">();</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">UpdateEventGeneratorCount</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">SpawnEventGeneratorCount</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">NumEvents</span><span class="p">)</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="w">        </span><span class="n">EventInstanceData</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MakeUnique</span><span class="o">&lt;</span><span class="n">FEventInstanceData</span><span class="o">&gt;</span><span class="p">();</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">        </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">UpdateScriptEventDataSets</span><span class="p">.</span><span class="n">Empty</span><span class="p">(</span><span class="n">UpdateEventGeneratorCount</span><span class="p">);</span>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="w">        </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">UpdateEventGeneratorIsSharedByIndex</span><span class="p">.</span><span class="n">SetNumZeroed</span><span class="p">(</span><span class="n">UpdateEventGeneratorCount</span><span class="p">);</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="w">        </span><span class="n">int32</span><span class="w"> </span><span class="n">UpdateEventGeneratorIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FNiagaraEventGeneratorProperties</span><span class="w"> </span><span class="o">&amp;</span><span class="n">GeneratorProps</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">CachedEmitter</span><span class="o">-&gt;</span><span class="n">UpdateScriptProps</span><span class="p">.</span><span class="n">EventGenerators</span><span class="p">)</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="w">            </span><span class="n">FNiagaraDataSet</span><span class="w"> </span><span class="o">*</span><span class="n">Set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParentSystemInstance</span><span class="o">-&gt;</span><span class="n">CreateEventDataSet</span><span class="p">(</span><span class="n">EmitterHandle</span><span class="p">.</span><span class="n">GetIdName</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorProps</span><span class="p">.</span><span class="n">ID</span><span class="p">);</span>
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="w">            </span><span class="n">Set</span><span class="o">-&gt;</span><span class="n">Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">GeneratorProps</span><span class="p">.</span><span class="n">DataSetCompiledData</span><span class="p">);</span>
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a><span class="w">            </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">UpdateScriptEventDataSets</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">Set</span><span class="p">);</span>
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="w">            </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">UpdateEventGeneratorIsSharedByIndex</span><span class="p">[</span><span class="n">UpdateEventGeneratorIndex</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CachedEmitter</span><span class="o">-&gt;</span><span class="n">IsEventGeneratorShared</span><span class="p">(</span><span class="n">GeneratorProps</span><span class="p">.</span><span class="n">ID</span><span class="p">);</span>
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="w">            </span><span class="o">++</span><span class="n">UpdateEventGeneratorIndex</span><span class="p">;</span>
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="w">        </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">SpawnScriptEventDataSets</span><span class="p">.</span><span class="n">Empty</span><span class="p">(</span><span class="n">SpawnEventGeneratorCount</span><span class="p">);</span>
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="w">        </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">SpawnEventGeneratorIsSharedByIndex</span><span class="p">.</span><span class="n">SetNumZeroed</span><span class="p">(</span><span class="n">SpawnEventGeneratorCount</span><span class="p">);</span>
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="w">        </span><span class="n">int32</span><span class="w"> </span><span class="n">SpawnEventGeneratorIndex</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FNiagaraEventGeneratorProperties</span><span class="w"> </span><span class="o">&amp;</span><span class="n">GeneratorProps</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">CachedEmitter</span><span class="o">-&gt;</span><span class="n">SpawnScriptProps</span><span class="p">.</span><span class="n">EventGenerators</span><span class="p">)</span>
+<a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="w">            </span><span class="n">FNiagaraDataSet</span><span class="w"> </span><span class="o">*</span><span class="n">Set</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParentSystemInstance</span><span class="o">-&gt;</span><span class="n">CreateEventDataSet</span><span class="p">(</span><span class="n">EmitterHandle</span><span class="p">.</span><span class="n">GetIdName</span><span class="p">(),</span><span class="w"> </span><span class="n">GeneratorProps</span><span class="p">.</span><span class="n">ID</span><span class="p">);</span>
+<a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a><span class="w">            </span><span class="n">Set</span><span class="o">-&gt;</span><span class="n">Init</span><span class="p">(</span><span class="o">&amp;</span><span class="n">GeneratorProps</span><span class="p">.</span><span class="n">DataSetCompiledData</span><span class="p">);</span>
+<a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a>
+<a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a><span class="w">            </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">SpawnScriptEventDataSets</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">Set</span><span class="p">);</span>
+<a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a><span class="w">            </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">SpawnEventGeneratorIsSharedByIndex</span><span class="p">[</span><span class="n">SpawnEventGeneratorIndex</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CachedEmitter</span><span class="o">-&gt;</span><span class="n">IsEventGeneratorShared</span><span class="p">(</span><span class="n">GeneratorProps</span><span class="p">.</span><span class="n">ID</span><span class="p">);</span>
+<a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a><span class="w">            </span><span class="o">++</span><span class="n">SpawnEventGeneratorIndex</span><span class="p">;</span>
+<a id="__codelineno-19-33" name="__codelineno-19-33" href="#__codelineno-19-33"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-19-34" name="__codelineno-19-34" href="#__codelineno-19-34"></a>
+<a id="__codelineno-19-35" name="__codelineno-19-35" href="#__codelineno-19-35"></a><span class="w">        </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">EventExecContexts</span><span class="p">.</span><span class="n">SetNum</span><span class="p">(</span><span class="n">NumEvents</span><span class="p">);</span>
+<a id="__codelineno-19-36" name="__codelineno-19-36" href="#__codelineno-19-36"></a><span class="w">        </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">EventExecCountBindings</span><span class="p">.</span><span class="n">SetNum</span><span class="p">(</span><span class="n">NumEvents</span><span class="p">);</span>
+<a id="__codelineno-19-37" name="__codelineno-19-37" href="#__codelineno-19-37"></a>
+<a id="__codelineno-19-38" name="__codelineno-19-38" href="#__codelineno-19-38"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">int32</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NumEvents</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a id="__codelineno-19-39" name="__codelineno-19-39" href="#__codelineno-19-39"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-19-40" name="__codelineno-19-40" href="#__codelineno-19-40"></a><span class="w">            </span><span class="n">ensure</span><span class="p">(</span><span class="n">CachedEmitter</span><span class="o">-&gt;</span><span class="n">GetEventHandlers</span><span class="p">()[</span><span class="n">i</span><span class="p">].</span><span class="n">DataSetAccessSynchronized</span><span class="p">());</span>
+<a id="__codelineno-19-41" name="__codelineno-19-41" href="#__codelineno-19-41"></a>
+<a id="__codelineno-19-42" name="__codelineno-19-42" href="#__codelineno-19-42"></a><span class="w">            </span><span class="n">UNiagaraScript</span><span class="o">*</span><span class="w"> </span><span class="n">EventScript</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CachedEmitter</span><span class="o">-&gt;</span><span class="n">GetEventHandlers</span><span class="p">()[</span><span class="n">i</span><span class="p">].</span><span class="n">Script</span><span class="p">;</span>
+<a id="__codelineno-19-43" name="__codelineno-19-43" href="#__codelineno-19-43"></a>
+<a id="__codelineno-19-44" name="__codelineno-19-44" href="#__codelineno-19-44"></a><span class="w">            </span><span class="c1">//This is cpu explicitly? Are we doing event handlers on GPU?</span>
+<a id="__codelineno-19-45" name="__codelineno-19-45" href="#__codelineno-19-45"></a><span class="w">            </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">EventExecContexts</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Init</span><span class="p">(</span><span class="n">EventScript</span><span class="p">,</span><span class="w"> </span><span class="n">ENiagaraSimTarget</span><span class="o">::</span><span class="n">CPUSim</span><span class="p">);</span>
+<a id="__codelineno-19-46" name="__codelineno-19-46" href="#__codelineno-19-46"></a><span class="w">            </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">EventExecCountBindings</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Init</span><span class="p">(</span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">EventExecContexts</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">Parameters</span><span class="p">,</span><span class="w"> </span><span class="n">SYS_PARAM_ENGINE_EXEC_COUNT</span><span class="p">);</span>
+<a id="__codelineno-19-47" name="__codelineno-19-47" href="#__codelineno-19-47"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-19-48" name="__codelineno-19-48" href="#__codelineno-19-48"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-19-49" name="__codelineno-19-49" href="#__codelineno-19-49"></a><span class="p">}</span>
+</code></pre></div>
+<p>在这个函数里主要的操作有：</p>
+<ul>
+<li>
+<p>如果发射器中存在事件生成器，则会创建 <strong>FEventInstanceData</strong></p>
+</li>
+<li>
+<p>末尾会对所有的事件处理器进行初始化</p>
+</li>
+<li>
+<p>代码中将遍历 <strong>CachedEmitter-&gt;UpdateScriptProps.EventGenerators</strong> 、 <strong>CachedEmitter-&gt;SpawnScriptProps.EventGenerators</strong> 来生成 <strong>EventDataSet</strong> ，追踪它的定义可找到如下代码：</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">FNiagaraEmitterScriptProperties::InitDataSetAccess</span><span class="p">()</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="p">{</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">  </span><span class="n">EventReceivers</span><span class="p">.</span><span class="n">Empty</span><span class="p">();</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">  </span><span class="n">EventGenerators</span><span class="p">.</span><span class="n">Empty</span><span class="p">();</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Script</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">Script</span><span class="o">-&gt;</span><span class="n">IsReadyToRun</span><span class="p">(</span><span class="n">ENiagaraSimTarget</span><span class="o">::</span><span class="n">CPUSim</span><span class="p">))</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">  </span><span class="p">{</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="w">      </span><span class="c1">//UE_LOG(LogNiagara, Log, TEXT(&quot;InitDataSetAccess: %s %d %d&quot;), *Script-&gt;GetPathName(), Script-&gt;ReadDataSets.Num(), Script-&gt;WriteDataSets.Num());</span>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="w">      </span><span class="c1">// TODO: add event receiver and generator lists to the script properties here</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="w">      </span><span class="c1">//</span>
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">FNiagaraDataSetID</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ReadID</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Script</span><span class="o">-&gt;</span><span class="n">GetVMExecutableData</span><span class="p">().</span><span class="n">ReadDataSets</span><span class="p">)</span>
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="w">          </span><span class="n">EventReceivers</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="w"> </span><span class="n">FNiagaraEventReceiverProperties</span><span class="p">(</span><span class="n">ReadID</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span><span class="w"> </span><span class="n">NAME_None</span><span class="p">,</span><span class="w"> </span><span class="n">NAME_None</span><span class="p">)</span><span class="w"> </span><span class="p">);</span>
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">FNiagaraDataSetProperties</span><span class="w"> </span><span class="o">&amp;</span><span class="n">WriteID</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">Script</span><span class="o">-&gt;</span><span class="n">GetVMExecutableData</span><span class="p">().</span><span class="n">WriteDataSets</span><span class="p">)</span>
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="w">      </span><span class="p">{</span>
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="w">          </span><span class="n">FNiagaraEventGeneratorProperties</span><span class="w"> </span><span class="n">Props</span><span class="p">(</span><span class="n">WriteID</span><span class="p">,</span><span class="w"> </span><span class="n">NAME_None</span><span class="p">);</span>
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a><span class="w">          </span><span class="n">EventGenerators</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">Props</span><span class="p">);</span>
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a><span class="w">      </span><span class="p">}</span>
+<a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a><span class="p">}</span>
+</code></pre></div>
+<p>而它的定义如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">FNiagaraVMExecutableData</span><span class="p">{</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="n">UPROPERTY</span><span class="p">()</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">  </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FNiagaraDataSetProperties</span><span class="o">&gt;</span><span class="w"> </span><span class="n">WriteDataSets</span><span class="p">;</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="p">};</span>
+</code></pre></div>
+<p>其中 <strong>WriteDataSets</strong> 又是由 <strong>FHlslNiagaraTranslator</strong> 通过脚本节点编译时生成的，调用堆栈如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">UNiagaraNodeWriteDataSet::Compile</span><span class="p">(...)</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="p">{</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">    </span><span class="c1">//...</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="w">  </span><span class="n">Translator</span><span class="o">-&gt;</span><span class="n">WriteDataSet</span><span class="p">(</span><span class="n">AlteredDataSet</span><span class="p">,</span><span class="w"> </span><span class="n">Variables</span><span class="p">,</span><span class="w"> </span><span class="n">ENiagaraDataSetAccessMode</span><span class="o">::</span><span class="n">AppendConsume</span><span class="p">,</span><span class="w"> </span><span class="n">Inputs</span><span class="p">,</span><span class="w"> </span><span class="n">Outputs</span><span class="p">);</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="p">}</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">FHlslNiagaraTranslator::WriteDataSet</span><span class="p">(...)</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="p">{</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="w">    </span><span class="c1">//...</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a><span class="w">  </span><span class="n">TMap</span><span class="o">&lt;</span><span class="n">int32</span><span class="p">,</span><span class="w"> </span><span class="n">FDataSetAccessInfo</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">Writes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">DataSetWriteInfo</span><span class="p">[(</span><span class="n">int32</span><span class="p">)</span><span class="n">AccessMode</span><span class="p">].</span><span class="n">FindOrAdd</span><span class="p">(</span><span class="n">DataSet</span><span class="p">);</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a><span class="p">}</span>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="w"> </span><span class="n">FNiagaraTranslateResults</span><span class="w"> </span><span class="nf">FHlslNiagaraTranslator::Translate</span><span class="p">(...){</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">TPair</span><span class="w"> </span><span class="o">&lt;</span><span class="n">FNiagaraDataSetID</span><span class="p">,</span><span class="w"> </span><span class="n">TMap</span><span class="o">&lt;</span><span class="n">int32</span><span class="p">,</span><span class="w"> </span><span class="n">FDataSetAccessInfo</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">InfoPair</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">DataSetWriteInfo</span><span class="p">[</span><span class="mi">0</span><span class="p">]){</span>
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a><span class="w">        </span><span class="n">CompilationOutput</span><span class="p">.</span><span class="n">ScriptData</span><span class="p">.</span><span class="n">WriteDataSets</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">SetProps</span><span class="p">);</span>
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a><span class="p">}</span>
+</code></pre></div>
+<p>至此我们可以得出：</p>
+<ul>
+<li>在Niagara Module Script中，只要包含 <strong>UNiagaraNodeWriteDataSet</strong> 就会被定义为事件生成器</li>
+<li>事件数据的持有者为 <strong>FNiagaraSystemInstance</strong></li>
+</ul>
+<h4 id="_11">事件的处理时机<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
+<p>在<code>FNiagaraEmitterInstance::Tick</code>中，有如下代码：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">FNiagaraEmitterInstance::Tick</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">DeltaSeconds</span><span class="p">)</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="p">{</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="c1">//...</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">EventInstanceData</span><span class="p">.</span><span class="n">IsValid</span><span class="p">())</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="w">        </span><span class="c1">// Set up the spawn counts and source datasets for the events. The system ensures that we will run after any emitters</span>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="w">        </span><span class="c1">// we&#39;re receiving from, so we can use the data buffers that our sources have computed this tick.</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">int32</span><span class="w"> </span><span class="n">NumEventHandlers</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CachedEmitter</span><span class="o">-&gt;</span><span class="n">GetEventHandlers</span><span class="p">().</span><span class="n">Num</span><span class="p">();</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">        </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">EventSpawnTotal</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">int32</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">NumEventHandlers</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<a id="__codelineno-23-11" name="__codelineno-23-11" href="#__codelineno-23-11"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-23-12" name="__codelineno-23-12" href="#__codelineno-23-12"></a><span class="w">            </span><span class="k">const</span><span class="w"> </span><span class="n">FNiagaraEventScriptProperties</span><span class="o">&amp;</span><span class="w"> </span><span class="n">EventHandlerProps</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CachedEmitter</span><span class="o">-&gt;</span><span class="n">GetEventHandlers</span><span class="p">()[</span><span class="n">i</span><span class="p">];</span>
+<a id="__codelineno-23-13" name="__codelineno-23-13" href="#__codelineno-23-13"></a><span class="w">            </span><span class="n">FNiagaraEventHandlingInfo</span><span class="o">&amp;</span><span class="w"> </span><span class="n">Info</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">EventHandlingInfo</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<a id="__codelineno-23-14" name="__codelineno-23-14" href="#__codelineno-23-14"></a>
+<a id="__codelineno-23-15" name="__codelineno-23-15" href="#__codelineno-23-15"></a><span class="w">            </span><span class="n">Info</span><span class="p">.</span><span class="n">TotalSpawnCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="c1">//This was being done every frame but should be done in init?</span>
+<a id="__codelineno-23-16" name="__codelineno-23-16" href="#__codelineno-23-16"></a><span class="w">            </span><span class="n">Info</span><span class="p">.</span><span class="n">SpawnCounts</span><span class="p">.</span><span class="n">Reset</span><span class="p">();</span>
+<a id="__codelineno-23-17" name="__codelineno-23-17" href="#__codelineno-23-17"></a>
+<a id="__codelineno-23-18" name="__codelineno-23-18" href="#__codelineno-23-18"></a><span class="w">            </span><span class="c1">//TODO: We can move this lookup into the init and just store a ptr to the other set?</span>
+<a id="__codelineno-23-19" name="__codelineno-23-19" href="#__codelineno-23-19"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">FNiagaraDataSet</span><span class="o">*</span><span class="w"> </span><span class="n">EventSet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ParentSystemInstance</span><span class="o">-&gt;</span><span class="n">GetEventDataSet</span><span class="p">(</span><span class="n">Info</span><span class="p">.</span><span class="n">SourceEmitterName</span><span class="p">,</span><span class="w"> </span><span class="n">EventHandlerProps</span><span class="p">.</span><span class="n">SourceEventName</span><span class="p">))</span>
+<a id="__codelineno-23-20" name="__codelineno-23-20" href="#__codelineno-23-20"></a><span class="w">            </span><span class="p">{</span>
+<a id="__codelineno-23-21" name="__codelineno-23-21" href="#__codelineno-23-21"></a><span class="w">                </span><span class="n">Info</span><span class="p">.</span><span class="n">SetEventData</span><span class="p">(</span><span class="o">&amp;</span><span class="n">EventSet</span><span class="o">-&gt;</span><span class="n">GetCurrentDataChecked</span><span class="p">());</span>
+<a id="__codelineno-23-22" name="__codelineno-23-22" href="#__codelineno-23-22"></a><span class="w">                </span><span class="n">uint32</span><span class="w"> </span><span class="n">EventSpawnNum</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CalculateEventSpawnCount</span><span class="p">(</span><span class="n">EventHandlerProps</span><span class="p">,</span><span class="w"> </span><span class="n">Info</span><span class="p">.</span><span class="n">SpawnCounts</span><span class="p">,</span><span class="w"> </span><span class="n">EventSet</span><span class="p">);</span>
+<a id="__codelineno-23-23" name="__codelineno-23-23" href="#__codelineno-23-23"></a><span class="w">                </span><span class="n">Info</span><span class="p">.</span><span class="n">TotalSpawnCount</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">EventSpawnNum</span><span class="p">;</span>
+<a id="__codelineno-23-24" name="__codelineno-23-24" href="#__codelineno-23-24"></a><span class="w">                </span><span class="n">EventInstanceData</span><span class="o">-&gt;</span><span class="n">EventSpawnTotal</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">EventSpawnNum</span><span class="p">;</span>
+<a id="__codelineno-23-25" name="__codelineno-23-25" href="#__codelineno-23-25"></a><span class="w">            </span><span class="p">}</span>
+<a id="__codelineno-23-26" name="__codelineno-23-26" href="#__codelineno-23-26"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-23-27" name="__codelineno-23-27" href="#__codelineno-23-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-23-28" name="__codelineno-23-28" href="#__codelineno-23-28"></a><span class="p">}</span>
+</code></pre></div>
+<p>上述代码表面了事件处理的逻辑：</p>
+<ul>
+<li>发射器在Tick时，遍历所有事件处理器，从 <strong>系统实例ParentSystemInstance</strong> 读取事件的DataSet，并写入到 <strong>FNiagaraEventHandlingInfo</strong> 中，供脚本读取。</li>
+</ul>
+<h3 id="_12">使用建议<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p>特效在中追求艺术效果的同时，还必须保证：</p>
+<ul>
+<li>粒子系统设置正确的包围盒和可延展性，否则在场景中可能就会出现 <strong>粒子莫名其妙消失</strong> 的问题</li>
+<li>严格管控Spawn特效的生命周期，避免<code>Pool Method</code> 与生命周期处理操作（预裁剪，可延展性剔除，AutoDestroy）出现冲突。</li>
+</ul>
+<p>关于优化，需要了解：</p>
+<ul>
+<li>如何缩减粒子发射器的数量？</li>
+</ul>
+<blockquote>
+<p>理想的情况是：只要两个发射器所使用的渲染器参数是完全一致的，那么它们就应该使用同一个发射器</p>
+<p>因为发射器中的一个渲染器对应一条图形渲染管线，粒子系统本质上是处理图形渲染管线所需的实例化数据</p>
+<p>多一个发射器就会多一份渲染数据，并且要多维护一个粒子缓冲区</p>
+<p>如果只是想调整粒子的运动机制，可以通过自定义Module的方式进行扩展</p>
+</blockquote>
+<ul>
+<li>如何界定该使用CPU粒子还是GPU粒子？</li>
+</ul>
+<blockquote>
+<p>CPU粒子可以动态地计算包围盒边界，但它只适用于少量的粒子渲染，</p>
+<p>GPU粒子可用来渲染大量的粒子数据，但必须为其设置 <strong>准确的包围盒边界</strong> </p>
+<p>界定的分割线主要是粒子数量，如果在千、万级别的粒子数量，必须使用GPU粒子</p>
+<p>少量粒子，比如几个，建议使用CPU粒子</p>
+</blockquote>
+<ul>
+<li>
+<p>为了追求效果，不得以使用CPU粒子时，主要需要考虑两点：</p>
+</li>
+<li>
+<p>CPU粒子的执行是串行的，随着粒子系统复杂度的增加，其性能损耗会成倍增加。</p>
+</li>
+<li>
+<p>CPU粒子在渲染线程中的性能瓶颈，主要是粒子数据的传输（带宽有限），这也是为什么它并不适用于大量粒子的绘制。</p>
+</li>
+<li>
+<p>粒子系统的工作方式不同于常规的Pipeline，如果是放置在场景中的单个物件，你需要考虑使用Actor（Game Object），而不是粒子系统。</p>
+</li>
+<li>除了控制粒子系统的复杂度和数量，还可以通过其他手段来降低粒子的性能消耗：</li>
+<li>避免粒子拥挤，减少Overdraw</li>
+<li>限制透明度</li>
+<li>
+<p>...</p>
+</li>
+<li>
+<p>离线（编辑器时）生成Niagara模拟所需的数据。</p>
+</li>
+<li>善用 Niagara 调试器 和 Insight </li>
+</ul>
+<h2 id="_13">相关文章<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<ul>
+<li>UE4Niagara系列教程 - <a href="https://www.zhihu.com/column/c_1323697556422369280">https://www.zhihu.com/column/c_1323697556422369280</a></li>
+</ul>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      最后更新:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-01 17:12:52</span>
+      
+        <br>
+        创建日期:
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-01 17:12:52</span>
+      
+    
+  </small>
+</div>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js"
+    data-repo="Italink/ModernGraphicsEngineGuide"
+    data-repo-id="R_kgDOIPtbiQ"
+    data-category-id="DIC_kwDOIPtbic4CTxOk"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin="anonymous"
+    async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 2 - 插件开发">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                2 - 插件开发
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-footer__link md-footer__link--next" aria-label="下一页: 4 - Niagara 性能优化">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                4 - Niagara 性能优化
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078c-.271.73-.5 1.434-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58.104 58.104 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.223 9.223 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125zM13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.cd18aaf1.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

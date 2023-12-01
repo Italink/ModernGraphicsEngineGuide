@@ -1,0 +1,2694 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/">
+      
+      
+        <link rel="next" href="../5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.14">
+    
+    
+      
+        <title>4 - Niagara 性能优化 - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fad675c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-S1J8MN27P8",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
+
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#niagara" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76Z"/></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var content,el=document.querySelector("[data-md-component=announce]");el&&(content=el.querySelector(".md-typeset"),__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0))</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4 - Niagara 性能优化
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label=""  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-GraphicsTechnology/Waitting/" class="md-tabs__link">
+          
+  
+    
+  
+  图形技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-Other/0.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%9D%82%E8%B0%88/" class="md-tabs__link">
+          
+  
+    
+  
+  Other
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    开篇
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    C++
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            C++
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 计算机发展史
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - C++基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 工具链
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 宏、模板、反射
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 内存管理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - GUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    图形API
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            图形API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 图形渲染管线
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 着色器
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 缓冲区与纹理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - 3D空间
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 图形API进阶
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    引擎技术
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            引擎技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 渲染架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 编辑器架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - DebugDraw
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - GPU调试
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    图形技术
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            图形技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 网格体渲染
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 天空盒
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - GPU粒子
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 后期滤镜
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 光照
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - 体积雾
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 天空大气
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7 - 地形
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Unreal Engine
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Unreal Engine
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 基础编程
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - Slate 开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 插件开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 粒子系统
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    4 - Niagara 性能优化
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    4 - Niagara 性能优化
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      包围盒
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      生命周期
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="生命周期">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      特效池
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="特效池">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      缓存机制
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      清理方式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      坑点
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      可延展性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lod" class="md-nav__link">
+    <span class="md-ellipsis">
+      LOD
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      暖场时间
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      管控发射器数量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpugpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      界定CPU粒子和GPU粒子
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      优化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      性能定位
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="性能定位">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hud" class="md-nav__link">
+    <span class="md-ellipsis">
+      调试Hud
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      视效大纲视图
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      性能
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      调试生成
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      模块性能
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      资源占用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      问题及建议
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      制作优化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="制作优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      算力认知
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      底层原理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      序列帧烘培
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      程序化内容生成
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - Fluid Ninja 流体插件
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 开放世界制作
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Other
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Other
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-Other/0.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 开放世界杂谈
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-Other/1.%E5%85%83%E5%AE%87%E5%AE%99%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 元宇宙杂谈
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      包围盒
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      生命周期
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="生命周期">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      特效池
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="特效池">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      缓存机制
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      清理方式
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      坑点
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      可延展性
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lod" class="md-nav__link">
+    <span class="md-ellipsis">
+      LOD
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      暖场时间
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      管控发射器数量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cpugpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      界定CPU粒子和GPU粒子
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      优化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      性能定位
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="性能定位">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#hud" class="md-nav__link">
+    <span class="md-ellipsis">
+      调试Hud
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      视效大纲视图
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      性能
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      调试生成
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      模块性能
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      资源占用
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      问题及建议
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      制作优化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="制作优化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      算力认知
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      底层原理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      序列帧烘培
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      程序化内容生成
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="niagara">Niagara 性能优化<a class="headerlink" href="#niagara" title="Permanent link">&para;</a></h1>
+<p><strong>Niagara</strong> 是 <strong>Unreal Engine</strong> 提供的一个几乎无所不能的粒子系统，网上有非常多关于如何使用它来制作某些效果的优质教程，但Niagara的使用管理和性能优化往往会被特效制作人员给忽视。</p>
+<p>由于笔者长期以来一直被蹂躏，因此本节会对相关内容做一些补充，希望小伙伴在了解之后可以尽可能避免这类问题的发生=.=。</p>
+<h2 id="_1">使用<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>粒子系统（Particle System）</strong> 是三维场景中用来丰富效果的重要手段，它不同于场景中的 <strong>网格（Mesh）</strong> ，其显著特征在于：</p>
+<ul>
+<li>粒子的 <strong>数量</strong> 会比较多</li>
+<li>粒子会随着时间 <strong>运动</strong></li>
+</ul>
+<p>如果不满足这两个特征（即<code>数量少</code>且<code>静态</code>），那么就需要制作人员考虑是使用 <strong>MeshActor</strong> ，还是粒子。</p>
+<p>在 UE 中的特效，我们主要可以划分为两大类：</p>
+<ul>
+<li><strong>生成特效</strong> ：使用<code>SpawnSystemAtLocation</code>和<code>SpawnSystemAttached</code>在场景中 <strong>动态生成</strong> 的特效。</li>
+<li><strong>场景特效</strong> ：以 <strong>Actor的形式布置在场景</strong> 中的特效。</li>
+</ul>
+<p>关于这两类特效，有着不同的关注重点，以及相应的管理措施。</p>
+<h3 id="_2">包围盒<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>在游戏引擎中，为了减少每一帧图像的渲染开销，引擎会将一些不可见的物体给剔除掉，让这些物体不参与 GPU 的渲染 ，如下图所示：</p>
+<p><a class="glightbox" href="../Resources/CameraCulling.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/CameraCulling.gif" /></a></p>
+<blockquote>
+<p>该图像来自于：<a href="https://optus23.github.io/">马克·加尔维斯 - 主页 (optus23.github.io)</a></p>
+</blockquote>
+<p>如果你了解 <a href="https://zhuanlan.zhihu.com/p/597152918">3D视图变换</a> 的话，应该会知道：可以通过相机矩阵计算一遍物件的所有顶点，就能确定物件有没有在相机范围之内.</p>
+<p><a class="glightbox" href="../Resources/viewing-frustum-_frustum.fit_lim.size_768x.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/viewing-frustum-_frustum.fit_lim.size_768x.gif" /></a></p>
+<p>但显然，一个物体可能具有成千上万的顶点，如果为每个顶点就做一遍计算的话，游戏引擎可能就变成PPT播放器了~</p>
+<p>为了简化这个过程，游戏引擎都会采用一种取巧的手段，使用一个能够包围物件的简单盒子来代替物件的顶点进行相机剔除的计算，虽然盒子顶点比较少，可视性判断不够精准，但它带来的性能提升是非常可观的。</p>
+<blockquote>
+<p>在逻辑上可以认定为：只要能看到这个盒子，就一定能证明这个物件是可见的</p>
+</blockquote>
+<p><a class="glightbox" href="../Resources/image-20231007172724563.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007172724563" src="../Resources/image-20231007172724563.png" /></a></p>
+<blockquote>
+<p>显示物体包围盒：<code>ShowFlag.Bounds 1</code></p>
+</blockquote>
+<p>所以大家要明白一点： <strong>引擎中确定一个物体是否在相机范围内，或者是被遮挡，一般情况下，参考的并不是它本身的顶点信息，而是物体的包围盒。</strong></p>
+<p>对于 <strong>静态网格体（StaticMesh）</strong> ，它的顶点都是静态的，在创建资产时，引擎就已经为其自动生成了包围盒信息</p>
+<p>但对于特效而言，由于粒子是动态的，它的包围盒就无法静态生成。</p>
+<p>在UE中，对于 <strong>CPU粒子</strong> ，引擎在每帧都会重新计算Niagara的包围盒边界：</p>
+<p><a class="glightbox" href="Resources/cpasd.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="Resources/cpasd.gif" alt="cpasd" style="zoom: 67%;" /></a></p>
+<p>但  <strong>GPU粒子</strong> 由于其实现的特殊性（所有粒子的数据均在GPU中，且粒子数量往往非常多），从而导致CPU侧无法实时计算粒子的包围盒，开发者 <strong>必须</strong> 为其设置一个 <strong>固定边界</strong> ，即手动设置包围盒的大小</p>
+<blockquote>
+<p>GPU粒子是GPU驱动的渲染管线，整个过程几乎没有跟CPU的交互，而图形渲染管线的数据往往可以看做是单向的：CPU-&gt;GPU，虽然也能从GPU上回读数据，但这个过程会存在一定延迟，且性能代价非常高昂）</p>
+</blockquote>
+<p>在Niagara中，可以在这里设置 <strong>粒子发射器</strong> 的包围盒：</p>
+<p><a class="glightbox" href="../Resources/image-20231007175720103.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007175720103" src="../Resources/image-20231007175720103.png" /></a></p>
+<p>最简单的方式是为 <strong>整个粒子系统</strong> 设置包围盒：</p>
+<p><a class="glightbox" href="../Resources/image-20231007180002716.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007180002716" src="../Resources/image-20231007180002716.png" /></a></p>
+<p><strong>制作人员必须保证包围盒的正确性</strong> （包围盒尽可能以最小的区域涵盖整个特效的运动空间），否则会造成以下后果：</p>
+<ul>
+<li>如果特效的包围盒与实际的运动空间不匹配，则会导致错误的视觉裁剪：</li>
+</ul>
+<p><a class="glightbox" href="Resources/cpsadasd.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="Resources/cpsadasd.gif" alt="cpsadasd" style="zoom: 50%;" /></a></p>
+<ul>
+<li>如果特效的包围盒太大，将导致明明没有在视野范围内的特效，无法被剔除，依旧会执行渲染，造成不必要的损耗。</li>
+</ul>
+<p><a class="glightbox" href="Resources/image-20231007181531935.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="Resources/image-20231007181531935.png" alt="image-20231007181531935" style="zoom: 67%;" /></a></p>
+<h3 id="_3">生命周期<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>对于 <strong>场景特效</strong> ，它的生命周期由场景从Actor层面进行管控，一般情况下无需我们关心，而 <strong>生成特效</strong> 的生命周期管控，有一些我们必须要了解的细节：</p>
+<p><strong>生成特效</strong> 是指使用 <strong>UNiagaraFunctionLibrary</strong> 下的几个函数生成的特效：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">UNiagaraComponent</span><span class="o">*</span><span class="w"> </span><span class="nf">SpawnSystemAtLocation</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">WorldContextObject</span><span class="p">,</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">                                         </span><span class="k">class</span><span class="w"> </span><span class="nc">UNiagaraSystem</span><span class="o">*</span><span class="w"> </span><span class="n">SystemTemplate</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">                                         </span><span class="n">FVector</span><span class="w"> </span><span class="n">Location</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">                                         </span><span class="n">FRotator</span><span class="w"> </span><span class="n">Rotation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FRotator</span><span class="o">::</span><span class="n">ZeroRotator</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">                                         </span><span class="n">FVector</span><span class="w"> </span><span class="n">Scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector</span><span class="p">(</span><span class="mf">1.f</span><span class="p">),</span><span class="w"> </span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">                                         </span><span class="kt">bool</span><span class="w"> </span><span class="n">bAutoDestroy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">                                         </span><span class="kt">bool</span><span class="w"> </span><span class="n">bAutoActivate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">                                         </span><span class="n">ENCPoolMethod</span><span class="w"> </span><span class="n">PoolingMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ENCPoolMethod</span><span class="o">::</span><span class="n">None</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">                                         </span><span class="kt">bool</span><span class="w"> </span><span class="n">bPreCullCheck</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">UNiagaraComponent</span><span class="o">*</span><span class="w"> </span><span class="nf">SpawnSystemAttached</span><span class="p">(</span><span class="n">UNiagaraSystem</span><span class="o">*</span><span class="w"> </span><span class="n">SystemTemplate</span><span class="p">,</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">                                       </span><span class="n">USceneComponent</span><span class="o">*</span><span class="w"> </span><span class="n">AttachToComponent</span><span class="p">,</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">                                       </span><span class="n">FName</span><span class="w"> </span><span class="n">AttachPointName</span><span class="p">,</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">                                       </span><span class="n">FVector</span><span class="w"> </span><span class="n">Location</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">                                       </span><span class="n">FRotator</span><span class="w"> </span><span class="n">Rotation</span><span class="p">,</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">                                       </span><span class="n">FVector</span><span class="w"> </span><span class="n">Scale</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">                                       </span><span class="n">EAttachLocation</span><span class="o">::</span><span class="n">Type</span><span class="w"> </span><span class="n">LocationType</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">                                       </span><span class="kt">bool</span><span class="w"> </span><span class="n">bAutoDestroy</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">                                       </span><span class="n">ENCPoolMethod</span><span class="w"> </span><span class="n">PoolingMethod</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">                                       </span><span class="kt">bool</span><span class="w"> </span><span class="n">bAutoActivate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">                                       </span><span class="kt">bool</span><span class="w"> </span><span class="n">bPreCullCheck</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>SpawnSystemAtLocation</strong> 用于在指定位置生成粒子组件，而 <strong>SpawnSystemAttached</strong> 用于附着在另一场景组件中，对于生命周期，我们主要需要关注几个参数：</p>
+<ul>
+<li><strong>bAutoActivate</strong> ：是否自动激活，true表示随后立即播放粒子效果</li>
+<li><strong>bAutoDestroy</strong> ：是否自动销毁，true会在粒子播放完成后销毁组件</li>
+<li><strong>bPreCullCheck</strong> ：预剔除，如果为true，生成粒子系统的包围盒不在视椎体范围内，那么将不会生成粒子组件，即返回为null</li>
+<li><strong>PoolingMethod</strong> ：池操作，复用粒子组件的机制，它的值可以是：</li>
+<li><strong>None</strong></li>
+<li><strong>AutoRelease</strong> ：自动释放，播放结束之后，自动将之存放到特效池中以供复用</li>
+<li><strong>ManualRelease</strong> ：手动释放，需要手动调用 <strong>ReleaseToPool</strong> 才能使该粒子组件被复用</li>
+<li>ManualRelease_OnComplete：非公开选项，用于Niagara内部的状态控制，请不要使用它。</li>
+<li>FreeInPool：非公开选项，用于Niagara内部的状态控制，请不要使用它。</li>
+</ul>
+<h4 id="_4">特效池<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<blockquote>
+<p>详细机制请参阅文章：<a href="https://zhuanlan.zhihu.com/p/394772587">【UE4】特效池 - 知乎 (zhihu.com)</a></p>
+</blockquote>
+<h5 id="_5">缓存机制<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h5>
+<p>特效池的目的主要是为了能够复用粒子组件，它的缓存机制可以看做是：</p>
+<ul>
+<li>如果生成参数带有池操作（即<code>PoolingMethod != ENCPoolMethod::None</code>），那么Niagara会到特效池中去搜索是否有可复用的同类型组件，如果有，则使用它，否则就会新建粒子组件，并记录它的使用时间。</li>
+<li>新建的粒子组件不会被释放（ <strong>意味着bAutoDestroy会失效</strong> ），它会被存到特效池中进行管理。</li>
+<li>对于 <strong>AutoRelease</strong> 的粒子组件，当播放结束时，特效池会标记它为可复用的。</li>
+<li>对于 <strong>ManualRelease</strong> 的粒子组件，调用 <strong>ReleaseToPool</strong> 时，如果该粒子已经播放完成，会立即标记为可复用，否则修改池操作为 <strong>ManualRelease_OnComplete</strong> ，在播放完成时，也会标记复用。</li>
+</ul>
+<h5 id="_6">清理方式<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h5>
+<p><strong>UNiagaraComponentPool</strong> 拥有定时清理的机制，两个主要关键参数为：</p>
+<ul>
+<li><strong>GNiagaraSystemPoolKillUnusedTime</strong> ：默认为180</li>
+<li><strong>GNiagaraSystemPoolingCleanTime</strong> ：默认为30</li>
+</ul>
+<p>上述配置对应的自动清理的机制可以大致当做是：UNiagaraComponentPool每30秒会去清理一下超过180s未被复用的粒子组件</p>
+<blockquote>
+<p>实际上并不是Tick清理，而是在每一次复用的时候进行清理，所以未必是30s，可能偏差会比较大。</p>
+</blockquote>
+<p>在切换World时， <strong>UNiagaraComponentPool</strong> 会执行Cleanup</p>
+<p>也可手动调用 <strong>UNiagaraComponentPool::ClearPool(UNiagaraSystem* System)</strong> 进行清理。</p>
+<h4 id="_7">坑点<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<ul>
+<li>如果有池操作（ <strong>PoolingMethod</strong> ），那么 <strong>bAutoDestroy</strong> 将会失效</li>
+<li>池机制正常工作的前提是粒子系统能够播放结束，请注意：</li>
+<li>确保粒子系统中没有生命周期无限的发射器</li>
+<li>调用了ResetParticles(true)，会走不到 Complete </li>
+<li>如果可延展性剔除的 <strong>剔除反应为休眠</strong> ，被 <strong>剔除的特效不会被复用</strong> ，且 <strong>OnSystemFinished不会触发</strong> （从严格意义上并不算完成）</li>
+<li>对于有池操作的粒子组件，请 <strong>不要调用DestoryComponent</strong> ，池中的粒子组件会在切换World时清理，或者定时清理。</li>
+<li>如果 <strong>SpawnSystemAttached</strong> 带有池操作，那么新生成的粒子组件的 <strong>真实持有者为World，而非附着的组件</strong> ，粒子组件将 <strong>不会随附着组件销毁而销毁</strong></li>
+<li>对 <strong>AutoRelease</strong> 的粒子组件调用 <strong>ReleaseToPool</strong> 会有报错</li>
+<li>对于即没有开启 <strong>AutoRelease</strong> ，也没有池操作的粒子，需要严格管控它的生命周期</li>
+</ul>
+<h3 id="_8">可延展性<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>通过设置包围盒，可以在 <strong>在视觉上</strong> 将粒子剔除，但需要注意的是：粒子系统不同于普通的场景物体，它还有 <strong>模拟的成本</strong> ！</p>
+<p>这是目前非常多特效师在使用Niagara容易忽略的问题，很多小伙伴以为看不到粒子时，粒子就会停止，但实际并不是这样的，它依旧在执行：</p>
+<p><a class="glightbox" href="../Resources/dasd.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="dasd" src="../Resources/dasd.gif" /></a></p>
+<p>对于生成特效，由于它具备一定的生命周期，因此在大多数情况下，它的模拟消耗都无关痛痒。</p>
+<p>但对于场景特效，如果布置在场景中的NiagaraActor数量过多，对整个程序的影响都非常大。</p>
+<p>为了解决这个问题，UE提供了一个名为 <strong>效果类型（NiagaraEffectType）</strong> 的资产，用于控制 Niagara System <strong>在模拟上的优化策略</strong> 。</p>
+<p><a class="glightbox" href="../Resources/image-20231007193640734.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007193640734" src="../Resources/image-20231007193640734.png" /></a></p>
+<p>我们可以在此处指定NiagaraSystem所使用的效果类型：</p>
+<p><a class="glightbox" href="../Resources/image-20231007193928904.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007193928904" src="../Resources/image-20231007193928904.png" /></a></p>
+<p>使用它能完成以下需求：</p>
+<ul>
+<li>限定粒子系统的最远显示距离</li>
+<li>限制当前视口内显示的最大粒子系统的数量</li>
+<li>根据性能预算来调整粒子的效果</li>
+<li>调整发射器发射数量的缩放系数</li>
+</ul>
+<p>它的配置面板如下：</p>
+<p><a class="glightbox" href="../Resources/image-20231007194409696.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007194409696" src="../Resources/image-20231007194409696.png" /></a></p>
+<p>我们可以添加 系统和发射器可延展性配置，每一个配置对应不同性能级别下，所采取的可延展性策略：</p>
+<p><a class="glightbox" href="../Resources/image-20231007194552208.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007194552208" src="../Resources/image-20231007194552208.png" /></a></p>
+<p>它的参数意义如下：</p>
+<ul>
+<li>
+<p>运行针对本地玩家进行剔除：是否允许剔除由本地玩家生成，附加，创建的特效</p>
+</li>
+<li>
+<p>更新频率：<code>仅生成</code>、<code>低</code>、<code>中</code>、<code>高</code>、<code>连续</code></p>
+</li>
+</ul>
+<p><strong>NiagaraEffectType</strong> 和 <strong>NiagaraComponent</strong> 一样，都是由 <strong>NiagaraWorldManager</strong> 进行管理， <strong>NiagaraEffectType</strong> 会单独进行Tick，这里的更新频率是指它去检测 <strong>NiagaraSystem</strong> 当前状态的频率，频率越高，剔除反应越及时，但性能开销也越大。</p>
+<ul>
+<li>剔除反应：<code>摧毁</code>、<code>摧毁并清除</code>、<code>休眠</code>、<code>休眠并清除</code></li>
+</ul>
+<p>清除会立刻被杀死所有粒子，然后剔除NiagaraSystem，如果不清除，则不会生成新粒子，等待已存在粒子生命周期全部结束之后，再进行剔除</p>
+<p>摧毁与休眠的区别在于，摧毁是直接将粒子销毁，而休眠可以当作只是把粒子隐藏等待激活。</p>
+<p>对于场景特效，由于它是放置在场景中的Actor，销毁之后不会再生成，所以一般设置为休眠，具体的销毁和加载由大世界进行管理。</p>
+<p>而对于生成特效，他一般是一次性生成的，如果设置为休眠，它会一直占用内存，所以一般会将其销毁。</p>
+<p>在UE 5.3中，增加了 <code>暂停</code> 机制， 它与休眠的区别在于，暂停不会重新激活，将会保留粒子的当前数据（占用内存）</p>
+<ul>
+<li>重要性处理器：<code>年龄</code>、<code>距离</code></li>
+</ul>
+<p>重要性处理器主要跟下方的 <strong>最大系统实例</strong> 有关，最大系统代理决定了当前只允许多少个同类型粒子系统的实例存在，而重要性处理器，则是确定粒子排序的优先级，假如以距离为目标，有十个粒子系统，最大系统实例为五，那么 <strong>NiagaraEffectType</strong> 就只会保留最近的五个粒子效果。</p>
+<ul>
+<li>系统延展性设置</li>
+</ul>
+<p><strong>设置列表</strong> ，每添加一个设置项，可以配置该项在哪些环境下才生效</p>
+<p><a class="glightbox" href="../Resources/image-20231007194731440.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007194731440" src="../Resources/image-20231007194731440.png" /></a></p>
+<ul>
+<li>
+<p>最大距离：根据特效与当前玩家的距离来剔除粒子</p>
+</li>
+<li>
+<p>剔除代理模式：<code>已实例化渲染</code>，如果开启了 <strong>已实例化渲染</strong> ，将会创建一个不可见的粒子系统，其他所有被剔除的同类型粒子系统将使用它进行渲染，这样可以避免大量的模拟成本</p>
+</li>
+<li>
+<p>最大系统代理：最大的系统代理数</p>
+</li>
+<li>
+<p>预算调整：根据一定预算来调整粒子系统的可延展性策略</p>
+</li>
+<li>可视性剔除：根据可见性来进行剔除。</li>
+</ul>
+<blockquote>
+<p>具体的说明详见编辑器面板的Tooltip</p>
+</blockquote>
+<p>对于场景特效，笔者非常建议大家统一对所有场景特效都统一设置这样的效果类型：</p>
+<p><a class="glightbox" href="../Resources/image-20231007195927854.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007195927854" src="../Resources/image-20231007195927854.png" /></a></p>
+<p>该配置达到的效果是：当粒子系统不可见时，既会停止渲染，也会停止模拟</p>
+<p><a class="glightbox" href="../Resources/dasssd.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="dasssd" src="../Resources/dasssd.gif" /></a></p>
+<p>它能满足绝大多数的需求。</p>
+<p>当某些特效需要专门配置剔除策略时，Niagara支持对单独的 NiagaraSystem 和 NiagaraEmitter 进行 <strong>可延展性重载</strong> ，它能 <strong>覆盖</strong> NiagaraEffectType 的配置：</p>
+<p><a class="glightbox" href="../Resources/image-20231007200945698.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007200945698" src="../Resources/image-20231007200945698.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231007201137432.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007201137432" src="../Resources/image-20231007201137432.png" /></a></p>
+<p>关于 <strong>Niagara Effect Type</strong> 详细配置的示例，可以参考：<a href="https://www.youtube.com/watch?v=-P3yaZNgeg0">https://www.youtube.com/watch?v=-P3yaZNgeg0</a></p>
+<h3 id="lod">LOD<a class="headerlink" href="#lod" title="Permanent link">&para;</a></h3>
+<p>Niagara提供了LODDistance的内置变量，我们可以依据它的数值，对Niagara的性能参数进行一些距离上的适配</p>
+<p><a class="glightbox" href="../Resources/image-20231008160522818.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008160522818" src="../Resources/image-20231008160522818.png" /></a></p>
+<p>比如，通常会对生成数量制作LOD：</p>
+<p><a class="glightbox" href="../Resources/image-20231008145838367.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008145838367" src="../Resources/image-20231008145838367.png" /></a></p>
+<p><a class="glightbox" href="../Resources/sdsssd.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="sdsssd" src="../Resources/sdsssd.gif" /></a></p>
+<h3 id="_9">暖场时间<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>对于放置在场景中的循环特效 ，它往往会有一段<code>”预热“</code>的时间，在Niagara中，我们可以设置系统的暖场时间来把这段预热过程给掐掉：</p>
+<p><a class="glightbox" href="../Resources/image-20231008150524786.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008150524786" src="../Resources/image-20231008150524786.png" /></a></p>
+<p>对于具有 可视性裁剪 的场景特效，休眠裁剪 会重新激活粒子，这个时候会重新播放预热过程：</p>
+<p><a class="glightbox" href="../Resources/dfgdasdd.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="dfgdasdd" src="../Resources/dfgdasdd.gif" /></a></p>
+<p>但设置 暖场时间 把 预热过程 裁剪掉之后，效果是这样的：</p>
+<p><a class="glightbox" href="../Resources/dfgdasdd1.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="dfgdasdd1" src="../Resources/dfgdasdd1.gif" /></a></p>
+<h3 id="_10">管控发射器数量<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>理想的情况是：只要两个发射器所使用的渲染器参数是完全一致的，那么它们就应该使用同一个发射器</p>
+<p>因为发射器中的一个渲染器对应一条图形渲染管线，粒子系统本质上是处理图形渲染管线所需的实例化数据</p>
+<p>多一个发射器就会多一份渲染数据，并且要多维护一个粒子缓冲区</p>
+<p>如果只是想调整粒子的运动机制，可以通过自定义Module的方式进行扩展</p>
+<h3 id="cpugpu">界定CPU粒子和GPU粒子<a class="headerlink" href="#cpugpu" title="Permanent link">&para;</a></h3>
+<p>CPU粒子：适用于少量的粒子渲染，由于数据位于CPU中，因此能获取到整个场景的信息，可以很方便地跟游戏逻辑进行交互，支持粒子间的事件通信，精准的物理碰撞，还可以动态地计算包围盒边界。</p>
+<p>GPU粒子：有着非常低的性能损耗，适合用来渲染大量（十万级别）的粒子。</p>
+<p>在界定时，首先思考的维度是粒子数量，如果是粒子数量非常少（比如几个或几十个），那么最好使用CPU粒子（因为没必要为了几个粒子增加GPU的调度开销）</p>
+<p>当数量超过一千时，我们考虑的是：功能需求是否需要用到CPU粒子的特性，如果不需要，那么优先使用GPU粒子。</p>
+<p>当粒子数非常多，但又需要使用CPU粒子特性时，需要在较低级别的代码维度去扩展GPU粒子的功能。</p>
+<h2 id="_11">优化<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>关于性能优化，我们大多数时候追求的是：在满足美术需求的同时，不造成性能上的卡顿。</p>
+<p>整个指标非常模糊，对于大多数初学者而言，我们能做的，只有亡羊补牢。</p>
+<p>所以第一点至关重要，我们需要能够发现性能问题，才能进一步去制定优化计划。</p>
+<h3 id="_12">性能定位<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p>UE提供了非常多的指令和工具来检测场景的执行性能，以下视频可作为参考：</p>
+<ul>
+<li>[<a href="https://www.bilibili.com/video/BV1FT411x7hU/?spm_id_from=333.337.search-card.all.click">官方培训]22-UE资产优化 | Epic 肖月_哔哩哔哩_bilibili</a></li>
+<li>[<a href="https://www.bilibili.com/video/BV1FV411G72Q/?vd_source=e173296de020f10e8476ed443bbdfaed">UnrealCircle苏州]UE4性能优化 | 周华 苏州谜匣数娱_哔哩哔哩_bilibili</a></li>
+<li><a href="https://www.bilibili.com/video/BV1Yj41147dh/?vd_source=e173296de020f10e8476ed443bbdfaed">【搬运】UnrealFest2023 UE5性能优化_哔哩哔哩_bilibili</a></li>
+</ul>
+<p>对于引擎人员，一般需要能够熟练使用 <strong>RenderDoc</strong> ， <strong>Unreal Insight</strong> ，各类Stat指令，从这些地方，我们可以获取到非常精细的性能数据。</p>
+<p>而对于Niagara，UE中提供了专门的工具来监控Niagara的执行情况 —— <strong>Niagara调试器（Niagara Debugger）</strong></p>
+<p>我们可以在此处打开NiagaraDebugger：</p>
+<p><a class="glightbox" href="../Resources/image-20231007203244212.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007203244212" src="../Resources/image-20231007203244212.png" /></a></p>
+<p>也可以在NiagaraSystem的细节面板中启动调试器：</p>
+<p><a class="glightbox" href="../Resources/image-20231007211256346.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007211256346" src="../Resources/image-20231007211256346.png" /></a></p>
+<h4 id="hud">调试Hud<a class="headerlink" href="#hud" title="Permanent link">&para;</a></h4>
+<p>在<code>调试Hud</code>页面中，提供了许多可供配置的Niagara调试视图。</p>
+<p>勾选 <code>调试视图已启用</code>，我们能看到当前场景中正在执行的所有粒子系统的粒子数量和内存</p>
+<p><a class="glightbox" href="../Resources/image-20231007203838084.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007203838084" src="../Resources/image-20231007203838084.png" /></a></p>
+<p>可以勾选 <code>系统显示边界</code> 来显示NiagaraSystem的包围盒：</p>
+<p><a class="glightbox" href="../Resources/image-20231007204141184.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007204141184" src="../Resources/image-20231007204141184.png" /></a></p>
+<p>勾选 <code>显示系统属性</code>，并添加 属性匹配字符串 ，来增加粒子系统的调试预览视图：</p>
+<p><a class="glightbox" href="../Resources/image-20231007204536387.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007204536387" src="../Resources/image-20231007204536387.png" /></a></p>
+<p>同样也可以预览粒子属性：</p>
+<p><a class="glightbox" href="../Resources/image-20231007204851243.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007204851243" src="../Resources/image-20231007204851243.png" /></a></p>
+<p>当场景中粒子系统比较多时，为了排除其他粒子调试视图的干扰，我们可以设置 命名过滤 来选择调试器需要关注的粒子系统：</p>
+<p><a class="glightbox" href="../Resources/image-20231007205104536.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007205104536" src="../Resources/image-20231007205104536.png" /></a></p>
+<blockquote>
+<p>该配置只关注命名以<code>New</code>开头的粒子系统</p>
+</blockquote>
+<h4 id="_13">视效大纲视图<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
+<p>视效大纲用于对场景中的Niagara进行 <strong>截帧</strong> ，它支持三种视图模式：</p>
+<p><a class="glightbox" href="../Resources/image-20231007205814852.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007205814852" src="../Resources/image-20231007205814852.png" /></a></p>
+<p>点击 捕获（Capture） 就能截取 Niagara 的执行情况（可配置截取的延迟时间和帧的数量）：</p>
+<p><a class="glightbox" href="../Resources/image-20231007210218516.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007210218516" src="../Resources/image-20231007210218516.png" /></a></p>
+<p>状态模式下，我们可查看场景中所有粒子系统的激活情况，模拟类型（CPU/GPU），粒子数量：</p>
+<p><a class="glightbox" href="../Resources/image-20231007210228693.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007210228693" src="../Resources/image-20231007210228693.png" /></a></p>
+<p>性能模式下，可进一步查看粒子系统在游戏线程和渲染线程的执行消耗</p>
+<p><a class="glightbox" href="../Resources/image-20231007210313044.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007210313044" src="../Resources/image-20231007210313044.png" /></a></p>
+<p>调试模式下，我们可以获取到粒子系统执行时的具体粒子数据：</p>
+<p><a class="glightbox" href="../Resources/image-20231007210419151.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007210419151" src="../Resources/image-20231007210419151.png" /></a></p>
+<h4 id="_14">性能<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h4>
+<p>性能视图提供了一些测试手段：</p>
+<p><a class="glightbox" href="../Resources/image-20231007210636923.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007210636923" src="../Resources/image-20231007210636923.png" /></a></p>
+<h4 id="_15">调试生成<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h4>
+<p>调试生成 就是提供了一个界面去Spawn特效粒子，只需配置完粒子系统之后点击<code>生成系统</code>（需要在PIE模式下）</p>
+<p><a class="glightbox" href="../Resources/image-20231007211058328.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007211058328" src="../Resources/image-20231007211058328.png" /></a></p>
+<h4 id="_16">模块性能<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h4>
+<p>Niagara的编辑器中可以获取到每个模块的耗时情况：</p>
+<p><a class="glightbox" href="../Resources/image-20231007211513307.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231007211513307" src="../Resources/image-20231007211513307.png" /></a></p>
+<h4 id="_17">资源占用<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h4>
+<p>可以在资产的内容菜单中，点击<code>尺寸贴图</code>查看引用贴图的大小：</p>
+<p><a class="glightbox" href="../Resources/image-20231008101627932.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008101627932" src="../Resources/image-20231008101627932.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231008101743881.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008101743881" src="../Resources/image-20231008101743881.png" /></a></p>
+<h4 id="_18">问题及建议<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h4>
+<ul>
+<li>在 Unreal Engine 5.1版本之前，Niagara System存在 <strong>重编译BUG</strong> ，它的表现效果是：首次在游戏中生成粒子时，会触发整个粒子系统的重编译，这是由于在 Niagara System Editor 中进行资源保存，存储了与游戏模式下 不同的一些配置，导致粒子系统的HashID不一致，从而引起编译缓存的失效，因此如果需要评估粒子系统在游戏环境中的执行性能，笔者建议在打包环境下进行测试。</li>
+<li>Unreal Engine 为 Niagara 提供了非常完善的配套工具，但对于一个大型团队而言，它是易于使用，但不易于管理的，笔者非常建议在上述工具集的基础上，进行进一步的扩展，增加自动化流程，来完成宏观的粒子系统管理。</li>
+<li>对于一些常规的渲染优化，如优化材质，简化模型，降低Overdraw，对Niagara同样适用。</li>
+</ul>
+<h3 id="_19">制作优化<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h3>
+<p>在亡羊补牢的过程中总结出来的优化经验是弥足珍贵的，它能让制作人员逐渐地了解怎样才能制作出性能卓越的粒子特效。</p>
+<p>以下是一些能够帮助特效师优化制作的心得（主要针对GPU粒子）</p>
+<h4 id="_20">算力认知<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h4>
+<p><code>1920 x 1080</code>是当下电脑显示器常见的分辨率，这代表了屏幕上有将近 <strong>两百万</strong> 个像素点，也意味着电脑绘制一帧图像至少需要做两百万次像素级别的数值处理，而目前一些中端硬件设备上，可以轻易在一秒内绘制成百上千张图像，这惊人的算力得益于 图形处理单元（GPU）的高速发展，与 中央处理单元（CPU）不同的是，CPU是电脑的调度中心，它的架构需要兼顾系统的方方面面，而GPU则是一种剑走偏锋的做法，它的架构中塞入了大量的计算单元以满足图形运算的需求。</p>
+<blockquote>
+<p>以当下尖端的消费级显卡 <code>GeForce RTX 4090</code> 为例，它具有七百六十多亿个晶体管、一万六千多个计算核心。</p>
+</blockquote>
+<p><a class="glightbox" href="../Resources/format%2Cpng.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="GPU VS CPU" src="../Resources/format%2Cpng.png" /></a></p>
+<p>在清楚这个上限之后，我们可以简单将 <code>单个GPU粒子</code> 跟 <code>像素点</code> 进行对应，也就是通常情况下，中端显卡也能轻松模拟百万级别数量的粒子效果。</p>
+<p>但需要注意的是，百万级别往往是整个系统的上限，我们通常不可能将所有性能预算都留给粒子系统，所以在一般情况下，如果整体的粒子数量超过十万，就可能会对整个渲染系统造成性能压力。</p>
+<p>如果将这十万粒子转换为对应数量的<code>1x1</code>的像素点进行平铺，它大约对应了<code>300x300</code>尺寸大小的图像：</p>
+<p><a class="glightbox" href="../Resources/image-20231008104748978.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008104748978" src="../Resources/image-20231008104748978.png" /></a></p>
+<p>粒子系统的 <strong>占屏面积</strong> 越接近它的 <strong>平铺面积</strong> ，则意味着它的性能越好（因为有更少的OverDraw）</p>
+<p>以下是一个平平无奇，但却具有14万粒子数量的NiagaraSystem，它辜负了这么大数量所应匹配的表现效果：</p>
+<p><a class="glightbox" href="../Resources/image-20231008105515353.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008105515353" src="../Resources/image-20231008105515353.png" /></a></p>
+<p>并且随着视野的远离，它的OverDraw越来越严重：</p>
+<p><a class="glightbox" href="../Resources/dasssssd.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="dasssssd" src="../Resources/dasssssd.gif" /></a></p>
+<blockquote>
+<p>这个问题可以使用LOD曲线根据距离来优化粒子数量。</p>
+</blockquote>
+<h4 id="_21">底层原理<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h4>
+<p>Niagara本身是UE提供的一个可编程的数据处理器，在NiagaraEditor中，我们可以自由管控这个处理器的处理结构：</p>
+<p><a class="glightbox" href="../Resources/image-20231008110203395.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008110203395" src="../Resources/image-20231008110203395.png" /></a></p>
+<p>并在各个 <strong>阶段（Stage）</strong> 中，使用引擎提供的 可视化节点 编写相应的 <strong>模块（Module）</strong> ，来制定数据的处理逻辑：</p>
+<p><a class="glightbox" href="../Resources/image-20231008110433919.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008110433919" src="../Resources/image-20231008110433919.png" /></a></p>
+<p>这些可视化的节点逻辑将会被翻译为ComputerShader的代码：</p>
+<p><a class="glightbox" href="../Resources/image-20231008111218076.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008111218076" src="../Resources/image-20231008111218076.png" /></a></p>
+<p>而数据处理的结果，将绑定到渲染器对应的属性插槽，供给渲染器来完成粒子效果的最终表达：</p>
+<p><a class="glightbox" href="../Resources/image-20231008110706037.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008110706037" src="../Resources/image-20231008110706037.png" /></a></p>
+<p>从数据处理层面来进行思考，我们的关键目标是怎样制作一个高效的数据处理器，因此掌握Niagara底层模块的原理，对整体性能和效果的把控，至关重要。</p>
+<p>这里有一个非常优秀的教程：</p>
+<ul>
+<li>[<a href="https://www.bilibili.com/video/BV1ea411V76f/?vd_source=e173296de020f10e8476ed443bbdfaed">官方培训]09-UE粒子基础 | 肖月 Epic bilibili</a></li>
+</ul>
+<h4 id="_22">序列帧烘培<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h4>
+<p>Niagara Editor 支持将粒子特效烘培为序列帧，对于一些固定视角的特效，我们可以采取此方案来获得极大程度的优化。</p>
+<p><a class="glightbox" href="../Resources/image-20231008151631152.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008151631152" src="../Resources/image-20231008151631152.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231008151748551.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008151748551" src="../Resources/image-20231008151748551.png" /></a></p>
+<h4 id="_23">程序化内容生成<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h4>
+<p>粒子系统主要 <strong>适用</strong> 于模拟 <strong>大量</strong> <strong>动态</strong> 的物体，但只有一些特定需求下，我们才不得不使用粒子系统来进行 <strong>实时的模拟</strong> ：</p>
+<ul>
+<li>制作可交互的动态效果</li>
+<li>需要营造无视觉死角的立体效果</li>
+<li>非常大数量的大范围集群</li>
+</ul>
+<p>排除以上的使用场景，我们通常可以通过 <strong>烘培静态材质</strong> 来达到想要的表现效果。</p>
+<p>所以我们在制作粒子效果时，需要认真审视：是否需要用粒子系统来进行实时的模拟？</p>
+<p>如果要，那么我们再思考：是否可以将，粒子系统中某些实时计算的阶段，换成已经预制的静态数据。</p>
+<p>比如在制作跟场景相关的特效时，粒子的模拟可能会需要一些场景信息作为输入，而这些场景数据绝大多数情况下都是静态的，我们没必要在运行时去实时计算场景的相关信息，在编辑器中就能静态生成这些数据，这样就可以以较少的性能成本制作出跟场景高度融合的特效，这在粒子系统数量比较多的情况下，提升尤为明显。</p>
+<p>我们也可以在Niagara上制作  <strong>程序化内容生成（PCG）</strong> 的资产：</p>
+<ul>
+<li>在 <strong>Niagara System</strong> 的 <strong>用户参数（User Parameters）</strong> 中，添加粒子系统所需要的场景数据（这里添加了一个名为<code>SpawnPositionArray</code>的变量）：</li>
+</ul>
+<p><a class="glightbox" href="../Resources/image-20231008115550644.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008115550644" src="../Resources/image-20231008115550644.png" /></a></p>
+<ul>
+<li>
+<p>创建一个新的 <strong>Actor 蓝图</strong> ，添加 <strong>NiagaraComponent</strong> ，并指定 <strong>Niagara System</strong></p>
+</li>
+<li>
+<p>在蓝图的 <strong>BeginPlay</strong> 事件中去设置我们在Niagara中添加的参数，并将参数输入 <code>提升为变量</code> （<code>Partcile Spawn Position Array</code>）：</p>
+</li>
+</ul>
+<p><a class="glightbox" href="../Resources/image-20231008114722968.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008114722968" src="../Resources/image-20231008114722968.png" /></a></p>
+<ul>
+<li>在 蓝图中 添加一个函数（例如叫 <code>CalcParticleSpawnPositionArray</code>），并勾选 <strong>Call In Editor</strong> ，在这个函数中获取场景信息（无需关心性能，可以扫描Actor，打射线...），填充蓝图变量值（<code>Partcile Spawn Position Array</code>）：</li>
+</ul>
+<p><a class="glightbox" href="../Resources/image-20231008115241436.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008115241436" src="../Resources/image-20231008115241436.png" /></a></p>
+<ul>
+<li>将Actor蓝图放到场景中，可以发现它的细节面板中，之前创建的函数变成了一个可点击的按钮：</li>
+</ul>
+<p><a class="glightbox" href="../Resources/image-20231008115733236.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231008115733236" src="../Resources/image-20231008115733236.png" /></a></p>
+<ul>
+<li>
+<p>点击按钮将执行对应的函数逻辑，它将会将执行并填充蓝图属性，这些属性值将会在保存时被序列化，当正常启动游戏时，执行BeginPlay，将会把这些数据提交给Niagara</p>
+</li>
+<li>
+<p>之后可以在Niagara中编写相应的Module来使用这部分数据。</p>
+</li>
+</ul>
+<blockquote>
+<p>需要注意的是，我们不能直接在<code>CalcParticleSpawnPositionArray</code>去设置Niagara的参数值，而是借助蓝图的变量属性序列化来存储场景数据。</p>
+<p>这是因为 设置Niagara参数的函数（以<code>NiagaraSet...</code>开头），是直接将数据上传给Niagara的数据处理器，而不会进行存储，因此通过函数来设置Niagara参数，在NiagaraSystem的细节面板上不一定能看到参数发生变化（有一部分属性类型是做了编辑器数据的返回同步，所以能在细节面板看到变更）</p>
+</blockquote>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      最后更新:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-01 17:12:52</span>
+      
+        <br>
+        创建日期:
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-01 17:12:52</span>
+      
+    
+  </small>
+</div>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 3 - 粒子系统">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                3 - 粒子系统
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-footer__link md-footer__link--next" aria-label="下一页: 5 - Fluid Ninja 流体插件">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                5 - Fluid Ninja 流体插件
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078c-.271.73-.5 1.434-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58.104 58.104 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.223 9.223 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125zM13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.cd18aaf1.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

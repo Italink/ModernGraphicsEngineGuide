@@ -1,0 +1,2736 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/">
+      
+      
+        <link rel="next" href="../4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.14">
+    
+    
+      
+        <title>3 - 着色器 - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fad675c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-S1J8MN27P8",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
+
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76Z"/></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var content,el=document.querySelector("[data-md-component=announce]");el&&(content=el.querySelector(".md-typeset"),__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0))</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3 - 着色器
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label=""  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-GraphicsTechnology/Waitting/" class="md-tabs__link">
+          
+  
+    
+  
+  图形技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-Other/0.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%9D%82%E8%B0%88/" class="md-tabs__link">
+          
+  
+    
+  
+  Other
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    开篇
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    C++
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            C++
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 计算机发展史
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - C++基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 工具链
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 宏、模板、反射
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 内存管理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - GUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    图形API
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            图形API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 图形渲染管线
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    3 - 着色器
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    3 - 着色器
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      历史
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      着色器转译
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      着色器编写
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="着色器编写">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本类型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基本类型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      向量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      矩阵
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      限定符
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      基础阶段
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基础阶段">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vertex-shader" class="md-nav__link">
+    <span class="md-ellipsis">
+      顶点着色器（Vertex Shader）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fragment-shader" class="md-nav__link">
+    <span class="md-ellipsis">
+      片段着色器（Fragment Shader）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      内置变量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      内置函数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      逻辑分支
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      流水线缓存（Pipeline Cache）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      学习平台
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 缓冲区与纹理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - 3D空间
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 图形API进阶
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    引擎技术
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            引擎技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 渲染架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 编辑器架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - DebugDraw
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - GPU调试
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    图形技术
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            图形技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 网格体渲染
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 天空盒
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - GPU粒子
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 后期滤镜
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 光照
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - 体积雾
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 天空大气
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7 - 地形
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Unreal Engine
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Unreal Engine
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 基础编程
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - Slate 开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 插件开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 粒子系统
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - Niagara 性能优化
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - Fluid Ninja 流体插件
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 开放世界制作
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Other
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Other
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-Other/0.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 开放世界杂谈
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-Other/1.%E5%85%83%E5%AE%87%E5%AE%99%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 元宇宙杂谈
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      历史
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      着色器转译
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      着色器编写
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="着色器编写">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      基本类型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基本类型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      向量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      矩阵
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      限定符
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      基础阶段
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="基础阶段">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vertex-shader" class="md-nav__link">
+    <span class="md-ellipsis">
+      顶点着色器（Vertex Shader）
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fragment-shader" class="md-nav__link">
+    <span class="md-ellipsis">
+      片段着色器（Fragment Shader）
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      内置变量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      内置函数
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      逻辑分支
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pipeline-cache" class="md-nav__link">
+    <span class="md-ellipsis">
+      流水线缓存（Pipeline Cache）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      学习平台
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1">着色器基础<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<p>上一节中，主要讲述了如何使用QRhi搭建基础的图形渲染管线，你或许没有发现，你其实已经能用GPU绘制任何图形了！要做的不过是填充顶点数据而已~</p>
+<p>那按这样来说，后面的东西都不用学了</p>
+<p>在现代图形API中，我们追求的不仅仅是把某些事情给做出来，还在于把能做的事情变得更多，把不可能的事情变得可能。</p>
+<p>所以在图形API系列接下来的文章中，主要是围绕着如何使用符合硬件特性的操作来加速图形的绘制。</p>
+<h2 id="_2">历史<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>GPU的出现是为了给当时的图形渲染体系提供一个可靠的硬件加速设备，所以在GPU发展的初期，图形API旨在提供一些简单通用的接口，将原先在CPU上的固定渲染流程转移到GPU上。</p>
+<p>如果你接触过早期的OpenGL，对这样的代码应该并不陌生：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">init</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="n">glMatrixMode</span><span class="p">(</span><span class="n">GL_MODELVIEW</span><span class="p">);</span><span class="w">                             </span><span class="c1">//设置模型视图矩阵为单位矩阵</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="n">glLoadIdentity</span><span class="p">();</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kt">void</span><span class="w"> </span><span class="nf">display</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">{</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="n">glClear</span><span class="p">(</span><span class="n">GL_COLOR_BUFFER_BIT</span><span class="p">);</span><span class="w">                           </span><span class="c1">//清屏</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="n">glBegin</span><span class="p">(</span><span class="n">GL_TRIANGLES</span><span class="p">);</span><span class="w">                                  </span><span class="c1">//开始写入 三角形图元</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="n">glColor3f</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w"> </span><span class="n">glVertex3f</span><span class="p">(</span><span class="mf">-1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w">  </span><span class="c1">//写入顶点数据0</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="n">glColor3f</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w"> </span><span class="n">glVertex3f</span><span class="p">(</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w">  </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w">  </span><span class="c1">//写入顶点数据1</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="n">glColor3f</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0</span><span class="p">);</span><span class="w"> </span><span class="n">glVertex3f</span><span class="p">(</span><span class="w"> </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">-1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0</span><span class="p">);</span><span class="w">  </span><span class="c1">//写入顶点数据2</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="n">glEnd</span><span class="p">();</span><span class="w">                                                </span><span class="c1">//结束    </span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="n">glutSwapBuffers</span><span class="p">();</span><span class="w">                                      </span><span class="c1">//刷新交换链</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="p">}</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="kt">void</span><span class="w"> </span><span class="nf">reshape</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">h</span><span class="p">)</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="p">{</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">    </span><span class="n">glViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">GLsizei</span><span class="p">)</span><span class="w"> </span><span class="n">w</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">GLsizei</span><span class="p">)</span><span class="w"> </span><span class="n">h</span><span class="p">);</span><span class="w">             </span><span class="c1">//调整视口大小</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">    </span><span class="n">glMatrixMode</span><span class="p">(</span><span class="n">GL_PROJECTION</span><span class="p">);</span><span class="w">                            </span><span class="c1">//设置裁剪矩阵为单位矩阵</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">    </span><span class="n">glLoadIdentity</span><span class="p">();</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="p">}</span>
+</code></pre></div>
+<p>在这一阶段的图形API，渲染管线各个流程的处理逻辑都是固定的，开发者只需要向图形API提供顶点数据，纹理，矩阵，光源等信息，就能通过GPU加速完成一个3D场景的渲染。</p>
+<p>虽然图形API允许通过少量参数和标识对进行图形渲染管线中的流程进行配置，但随着图形学的快速发展，各种渲染理论层出不穷，很显然，官方提供的接口已经跟不上学术界和工业界的发展，甚至还制约了开发者和研究人员的进一步探索，因此， <strong>可编程的流水线 (<a href="https://www.khronos.org/opengl/wiki/Rendering_Pipeline_Overview">Programmable Pipeline</a>)</strong> 应运而生。</p>
+<p>而现在，我们称旧时代的使用方式为 <strong>固定功能的流水线(<a href="https://www.khronos.org/opengl/wiki/Fixed_Function_Pipeline">Fixed Function Pipeline</a>)</strong> 。</p>
+<p>可编程管线允许开发者编写 <strong>着色器 （Shader）</strong> 来定制流水线某一阶段的处理逻辑。</p>
+<p>而各个图形API都有自己的 <strong>着色器语言（Shader Language）</strong> ，比如：</p>
+<ul>
+<li>OpenGL、Vulkan 使用 <a href="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/OpenGL_Shading_Language">GLSL</a></li>
+<li>Direct3D使用 <a href="https://learn.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl">HLSL</a></li>
+<li>Metal使用 <a href="https://link.zhihu.com/?target=https%3A//en.wikipedia.org/wiki/Metal_(API)">MSL</a></li>
+</ul>
+<p>这些着色器语言的整体工作流程都差不多，比较大的区别就是符合自己API风格（标新立异）的语法。</p>
+<p>这里有一个功能相同的片段着色器（Fragment Shader）在不同着色器语言下的实现：</p>
+<p><a class="glightbox" href="../Resources/image-20230503163338306.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503163338306" src="../Resources/image-20230503163338306.png" /></a></p>
+<p>早期的游戏开发商，往往会使用一种图形API来作为自己游戏引擎的渲染后端，但随着各个操作平台的用户数量逐渐上升，跨平台也吸引了各大厂商的注意，毕竟多支持一个平台，也就意味着多一个市场。</p>
+<p>因此，现今大多的游戏引擎都会将这些图形API封装成统一的接口，可以在不同的平台上切换，来追求更好的图形性能，我们一般称这套接口为 <strong>RHI</strong> （Rendering Hardware Interface）</p>
+<p>而在封装过程中，除了要注意图形API的指令和资源，跨平台的着色器也是一个非常头疼的问题。</p>
+<p>目前，大多数引擎都会在一种着色器语言下进行开发，再转译成其他图形API可用的着色器语言，比如：</p>
+<ul>
+<li>UE使用 HLSL 进行开发 ，借助开源库 <a href="https://github.com/KhronosGroup/glslang">Glslang</a> 和 <a href="https://github.com/KhronosGroup/SPIRV-Cross">Spirv-Cross</a> 来实现跨平台的着色器转译</li>
+<li>Unity，O3DE，Godot，Bgfx等引擎自定义了一种新的着色器语言来进行开发，通过内置编译器再搭配开源库来实现跨平台的着色器转译</li>
+</ul>
+<p>这里有一些相关的阅读：</p>
+<ul>
+<li>
+<p><a href="https://zhuanlan.zhihu.com/p/56510874">[知乎-unwind] 跨平台引擎Shader编译流程分析</a></p>
+</li>
+<li>
+<p><a href="https://zhuanlan.zhihu.com/p/599456569">[知乎-网页游戏雷火事业群] 游戏着色器（Shader）基础介绍</a></p>
+</li>
+</ul>
+<h2 id="_3">着色器转译<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>QRhi的跨平台着色器方案跟UE相似，只不过QRhi使用Vulkan风格的GLSL开发而非HLSL，它的转译流程如下：</p>
+<p><a class="glightbox" href="../Resources/v2-b8badd685b39f310d5420e95c1283995_1440w.webp" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/v2-b8badd685b39f310d5420e95c1283995_1440w.webp" /></a></p>
+<p>在上一节中，我们使用了这样的代码来创建着色器：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">VertexStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s">#version 440</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="s">    layout(location = 0) in vec2 position;      //这里需要与上面的inputLayout 对应</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="s">    layout(location = 1) in vec4 color;</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="s">    layout (location = 0) out vec4 vColor;      //输出变量，这里的location是out的，而不是in</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="s">    out gl_PerVertex {                          //Vulkan GLSL中固定的定义</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="s">        vec4 gl_Position;                       </span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="s">    };</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="s">    void main(){</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="s">        gl_Position = vec4(position,0.0f,1.0f); //根据输入的position，设置实际的顶点输出</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="s">        vColor = color;                         //将输入的color传递给fragment shader</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="s">    }</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="dl">)</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="n">Q_ASSERT</span><span class="p">(</span><span class="n">vs</span><span class="p">.</span><span class="n">isValid</span><span class="p">());</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="n">QShader</span><span class="w"> </span><span class="n">fs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s">#version 440</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="s">    layout (location = 0) in vec4 vColor;       //上一阶段的out变成了这一阶段的in</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="s">    layout (location = 0) out vec4 fragColor;   //片段着色器输出，location 为 0 表示输出到 render target 的第一个颜色附件上</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="s">    void main(){</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="s">        fragColor = vColor;</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="s">    }</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="dl">)</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="n">Q_ASSERT</span><span class="p">(</span><span class="n">fs</span><span class="p">.</span><span class="n">isValid</span><span class="p">());</span>
+</code></pre></div>
+<p>其中<code>newShaderFromCode()</code>并非是QRhi提供的原生函数，而是笔者调用 <strong>QtShaderTools</strong> 模块中接口进行了一些简单封装，它的真实逻辑如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;private/qshaderbaker_p.h&quot;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">QShader</span><span class="w"> </span><span class="nf">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">Stage</span><span class="w"> </span><span class="n">stage</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">code</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="n">QShaderBaker</span><span class="w"> </span><span class="n">baker</span><span class="p">;</span><span class="w">                     </span><span class="c1">//着色器烘培器</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="n">baker</span><span class="p">.</span><span class="n">setGeneratedShaderVariants</span><span class="p">({</span><span class="w"> </span><span class="n">QShader</span><span class="o">::</span><span class="n">StandardShader</span><span class="w"> </span><span class="p">});</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="n">baker</span><span class="p">.</span><span class="n">setGeneratedShaders</span><span class="p">({</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">        </span><span class="n">QShaderBaker</span><span class="o">::</span><span class="n">GeneratedShader</span><span class="p">{</span><span class="n">QShader</span><span class="o">::</span><span class="n">Source</span><span class="o">::</span><span class="n">SpirvShader</span><span class="p">,</span><span class="n">QShaderVersion</span><span class="p">(</span><span class="mi">100</span><span class="p">)},</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="n">QShaderBaker</span><span class="o">::</span><span class="n">GeneratedShader</span><span class="p">{</span><span class="n">QShader</span><span class="o">::</span><span class="n">Source</span><span class="o">::</span><span class="n">GlslShader</span><span class="p">,</span><span class="n">QShaderVersion</span><span class="p">(</span><span class="mi">430</span><span class="p">)},</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">        </span><span class="n">QShaderBaker</span><span class="o">::</span><span class="n">GeneratedShader</span><span class="p">{</span><span class="n">QShader</span><span class="o">::</span><span class="n">Source</span><span class="o">::</span><span class="n">MslShader</span><span class="p">,</span><span class="n">QShaderVersion</span><span class="p">(</span><span class="mi">12</span><span class="p">)},</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">        </span><span class="n">QShaderBaker</span><span class="o">::</span><span class="n">GeneratedShader</span><span class="p">{</span><span class="n">QShader</span><span class="o">::</span><span class="n">Source</span><span class="o">::</span><span class="n">HlslShader</span><span class="p">,</span><span class="n">QShaderVersion</span><span class="p">(</span><span class="mi">60</span><span class="p">)},</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="p">});</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="n">baker</span><span class="p">.</span><span class="n">setSourceString</span><span class="p">(</span><span class="n">code</span><span class="p">,</span><span class="w"> </span><span class="n">stage</span><span class="p">);</span><span class="w">     </span><span class="c1">//装配GLSL源码</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">    </span><span class="n">QShader</span><span class="w"> </span><span class="n">shader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">baker</span><span class="p">.</span><span class="n">bake</span><span class="p">();</span><span class="w">          </span><span class="c1">//执行烘培，将之转译成各个图形API的着色器代码</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">shader</span><span class="p">.</span><span class="n">isValid</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">                </span><span class="c1">//打印编译报错</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">        </span><span class="n">QStringList</span><span class="w"> </span><span class="n">codelist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QString</span><span class="p">(</span><span class="n">code</span><span class="p">).</span><span class="n">split</span><span class="p">(</span><span class="sc">&#39;\n&#39;</span><span class="p">);</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">codelist</span><span class="p">.</span><span class="n">size</span><span class="p">();</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">            </span><span class="n">qWarning</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="n">codelist</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">toLocal8Bit</span><span class="p">().</span><span class="n">data</span><span class="p">();</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">        </span><span class="n">qWarning</span><span class="p">(</span><span class="n">baker</span><span class="p">.</span><span class="n">errorMessage</span><span class="p">().</span><span class="n">toLocal8Bit</span><span class="p">());</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">shader</span><span class="p">;</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="p">}</span>
+</code></pre></div>
+<p>QShaderBaker 来自于 <strong>Qt Shader Tools</strong> 的私有模块，在使用CMake构建的时候，需要为自己的构建目标链接<code>Qt::ShaderToolsPrivate</code>，使用它可以将Vulkan风格的GLSL编译成一个QShader对象（里面包含了各个版本图形API的着色器代码），这是一种在 <strong>运行时转译</strong> 着色器代码的方法。</p>
+<p>此外，我们还可以利用Qt提供的 <strong>qsb</strong> 命令行工具 <strong>离线转译</strong> 着色器代码，该工具位于如下的目录中：</p>
+<p><a class="glightbox" href="../Resources/image-20230503153613484.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503153613484" src="../Resources/image-20230503153613484.png" /></a></p>
+<blockquote>
+<p>你可以给该目录添加到系统环境变量中，这样就能在全局访问qsb工具</p>
+</blockquote>
+<p>在窗口地址栏中输入 <code>cmd</code>， 按下回车，可以打开命令行窗口，在其中输入 <code>qsb.exe -h</code> 可以看到该命令行工具的使用说明：</p>
+<p><a class="glightbox" href="../Resources/image-20230503153838795.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503153838795" src="../Resources/image-20230503153838795.png" /></a></p>
+<p>比如使用指令<code>qsb.exe -c color.frag -o color.frag.qsb --glsl 430 --msl 12 --hlsl 60</code> 可以将当前目录的<code>color.frag</code>文件转译生成一个 <code>color.frag.qsb</code>文件，该文件包含了 430版本的GLSL，12版本的MSL，60版本的HLSL。</p>
+<p>在Qt中，可以通过如下方式来使用<code>*.qsb</code>文件：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">QShader</span><span class="w"> </span><span class="nf">newShaderFromQSBFile</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">filename</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="n">QFile</span><span class="w"> </span><span class="n">file</span><span class="p">(</span><span class="n">filename</span><span class="p">);</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="n">QIODevice</span><span class="o">::</span><span class="n">ReadOnly</span><span class="p">))</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="n">QShader</span><span class="o">::</span><span class="n">fromSerialized</span><span class="p">(</span><span class="n">file</span><span class="p">.</span><span class="n">readAll</span><span class="p">());</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">QShader</span><span class="p">();</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">}</span>
+</code></pre></div>
+<p>在CMake中，还提供了一个有用的功能：当某些文件发生变动时，执行一些操作。</p>
+<p>通过这个功能，我们还可以实现 <strong>编译时</strong> 的着色器转译。</p>
+<p>该功能通过CMake指令 <a href="https://cmake.org/cmake/help/latest/command/add_custom_command.html">add_custom_command</a> 来实现，我们可以在CMake中增加以下函数来添加Shader</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">function</span><span class="p">(</span><span class="s">add_shader</span><span class="w"> </span><span class="s">TARGET_NAME</span><span class="w"> </span><span class="s">SHADER_PATH</span><span class="p">)</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">OUTPUT_SHADER_PATH</span><span class="w"> </span><span class="o">${</span><span class="nv">SHADER_PATH</span><span class="o">}</span><span class="s">.qsb</span><span class="p">)</span><span class="w">  </span><span class="c">#输出文件路径</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="nb">add_custom_command</span><span class="p">(</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">        </span><span class="s">OUTPUT</span><span class="w"> </span><span class="o">${</span><span class="nv">OUTPUT_SHADER_PATH</span><span class="o">}</span><span class="w">        </span><span class="c">#指定输出文件</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">        </span><span class="s">COMMAND</span><span class="w"> </span><span class="s">qsb.exe</span><span class="w"> </span><span class="s">-c</span><span class="w"> </span><span class="o">${</span><span class="nv">SHADER_PATH</span><span class="o">}</span><span class="w"> </span><span class="s">-o</span><span class="w"> </span><span class="o">${</span><span class="nv">OUTPUT_SHADER_PATH</span><span class="o">}</span><span class="w"> </span><span class="s">--glsl</span><span class="w"> </span><span class="s">430</span><span class="w"> </span><span class="s">--msl</span><span class="w"> </span><span class="s">12</span><span class="w"> </span><span class="s">--hlsl</span><span class="w"> </span><span class="s">60</span><span class="w">    </span><span class="c">#执行QSB工具</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">        </span><span class="s">MAIN_DEPENDENCY</span><span class="w"> </span><span class="o">${</span><span class="nv">SHADER_PATH</span><span class="o">}</span><span class="w">      </span><span class="c">#指定依赖文件，即该文件变动时，触发上述命令</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">    </span><span class="p">)</span><span class="w">  </span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">    </span><span class="nb">set_property</span><span class="p">(</span><span class="s">TARGET</span><span class="w"> </span><span class="o">${</span><span class="nv">TARGET_NAME</span><span class="o">}</span><span class="w"> </span><span class="s">APPEND</span><span class="w"> </span><span class="s">PROPERTY</span><span class="w"> </span><span class="s">SOURCES</span><span class="w"> </span><span class="o">${</span><span class="nv">OUTPUT_SHADER_PATH</span><span class="o">}</span><span class="p">)</span><span class="w">               </span><span class="c">#需要把输出文件添加到一个构建目标中，才会触发CustomCommand</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="nb">source_group</span><span class="p">(</span><span class="s2">&quot;Shader Files&quot;</span><span class="w"> </span><span class="s">FILES</span><span class="w"> </span><span class="o">${</span><span class="nv">SHADER_PATH</span><span class="o">}</span><span class="w"> </span><span class="o">${</span><span class="nv">OUTPUT_SHADER_PATH</span><span class="o">}</span><span class="p">)</span><span class="w">                         </span><span class="c">#将着色器文件分类</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="nb">endfunction</span><span class="p">()</span>
+</code></pre></div>
+<p>这样的话，在构建每次<code>TARGET_NAME</code> 时，CMake都会检测<code>SHADER_PATH</code>有没有发生改变，如果发生改变，则会调用自定义指令，这里也就是调用<code>QSB</code>工具生成<code>*.qsb</code>文件，报错信息也会出现在IDE的错误面板上：</p>
+<p><a class="glightbox" href="../Resources/image-20230503162819180.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503162819180" src="../Resources/image-20230503162819180.png" /></a></p>
+<p>关于Qt的着色器工具，可以在这里发现一些测试示例：</p>
+<ul>
+<li><a href="https://github.com/qt/qtshadertools/blob/dev/tests/auto/qshaderbaker/tst_qshaderbaker.cpp">https://github.com/qt/qtshadertools/blob/dev/tests/auto/qshaderbaker/tst_qshaderbaker.cpp</a></li>
+</ul>
+<p>在该教程仓库中有一个示例演示了QRhi中编译着色器的各种方式：</p>
+<ul>
+<li><a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/1-GraphicsAPI/03-Shader/Source/main.cpp">https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/1-GraphicsAPI/03-Shader/Source/main.cpp</a></li>
+</ul>
+<h2 id="_4">着色器编写<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="_5">基本类型<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>GLSL中一些常见的基础类型如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>void</strong></td>
+<td style="text-align: left;">for functions that do not return a value</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>bool</strong></td>
+<td style="text-align: left;">a conditional type, taking on values of true or false</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>int</strong></td>
+<td style="text-align: left;">a signed integer</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>uint</strong></td>
+<td style="text-align: left;">an unsigned integer</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>float</strong></td>
+<td style="text-align: left;">a single-precision floating-point scalar</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>double</strong></td>
+<td style="text-align: left;">a double-precision floating-point scalar</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>vec2</strong></td>
+<td style="text-align: left;">a two-component single-precision floating-point vector</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>vec3</strong></td>
+<td style="text-align: left;">a three-component single-precision floating-point vector</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>vec4</strong></td>
+<td style="text-align: left;">a four-component single-precision floating-point vector</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>mat2</strong></td>
+<td style="text-align: left;">a 2 × 2 single-precision floating-point matrix</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>mat3</strong></td>
+<td style="text-align: left;">a 3 × 3 single-precision floating-point matrix</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>mat4</strong></td>
+<td style="text-align: left;">a 4 × 4 single-precision floating-point matrix</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>sampler1D</strong> <strong>texture1D</strong> <strong>image1D</strong></td>
+<td style="text-align: left;">a handle for accessing a 1D texture</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>sampler1DArray</strong> <strong>texture1DArray</strong> <strong>image1DArray</strong></td>
+<td style="text-align: left;">a handle for accessing a 1D array texture</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>sampler2D</strong> <strong>texture2D</strong> <strong>image2D</strong></td>
+<td style="text-align: left;">a handle for accessing a 2D texture</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>sampler2DArray</strong> <strong>texture2DArray</strong> <strong>image2DArray</strong></td>
+<td style="text-align: left;">a handle for accessing a 2D array texture</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>sampler2DRect</strong> <strong>texture2DRect</strong> <strong>image2DRect</strong></td>
+<td style="text-align: left;">a handle for accessing a rectangle texture</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>sampler3D</strong> <strong>texture3D</strong> <strong>image3D</strong></td>
+<td style="text-align: left;">a handle for accessing a 3D texture</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>samplerCube</strong> <strong>textureCube</strong> <strong>imageCube</strong></td>
+<td style="text-align: left;">a handle for accessing a cube mapped texture</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>samplerCubeArray</strong> <strong>textureCubeArray</strong> <strong>imageCubeArray</strong></td>
+<td style="text-align: left;">a handle for accessing a cube map array texture</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>samplerBuffer</strong> <strong>textureBuffer</strong> <strong>imageBuffer</strong></td>
+<td style="text-align: left;">a handle for accessing a buffer texture</td>
+</tr>
+</tbody>
+</table>
+<p>完整的类型名单可以参阅：</p>
+<ul>
+<li><a href="https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html#basic-types">https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html#basic-types</a></li>
+</ul>
+<p>其中主要需要注意的是 <strong>vec（向量</strong> ）和 <strong>mat（矩阵）</strong> ，这里我们并不讨论它们的几何意义，如果对这些不熟，笔者推荐可以看一下《3D数学基础：图形和游戏开发》</p>
+<h4 id="_6">向量<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<p>在数学中，向量（也称为欧几里得向量、几何向量、矢量），指具有大小（magnitude）和方向的量。而在计算机中，向量只是几个连续的数字。GLSL支持二维（vec2），三维（vec3），四维（vec4）向量。</p>
+<p>关于向量的一些基础使用方式，以vec4为例：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">vec4</span><span class="w"> </span><span class="n">mVector</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">);</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kt">float</span><span class="w"> </span><span class="n">x</span><span class="w">   </span><span class="o">=</span><span class="w"> </span><span class="n">mVector</span><span class="p">.</span><span class="n">x</span><span class="p">;</span><span class="w">      </span><span class="c1">//1</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">vec2</span><span class="w">  </span><span class="n">xy</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">mVector</span><span class="p">.</span><span class="n">xy</span><span class="p">;</span><span class="w">     </span><span class="c1">//[1,2]</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">vec3</span><span class="w">  </span><span class="n">xzy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mVector</span><span class="p">.</span><span class="n">xzy</span><span class="p">;</span><span class="w">    </span><span class="c1">//[1,3,2]</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">vec2</span><span class="w">  </span><span class="n">xxw</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mVector</span><span class="p">.</span><span class="n">xxw</span><span class="p">;</span><span class="w">    </span><span class="c1">//[1,1,4]</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">vec4</span><span class="w">  </span><span class="n">newVecotr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">mVector</span><span class="p">.</span><span class="n">xx</span><span class="p">,</span><span class="mi">-1</span><span class="p">,</span><span class="mi">-2</span><span class="p">);</span><span class="w">   </span><span class="c1">//[1,1,-1,-2]</span>
+</code></pre></div>
+<p>这里我们使用<code>xyzw</code>访问向量的分量，GLSL还支持使用其他几组关键字<code>rgba</code>和<code>pqst</code>，使用哪组关键字取决于使用场景以及个人喜好。</p>
+<p>GLSL当然也支持向量的加，减，乘，除，点乘等。</p>
+<h4 id="_7">矩阵<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<p>在数学中，矩阵（Matrix）是一个按照长方阵列排列的复数或实数集合。在计算机中，它同样只是一堆连续的数字。GLSL支持的最大矩阵尺寸为4x4，也就是mat4x4（这里用字母x代指乘号），因为是方阵所以可以简写为mat4</p>
+<p>需要特别注意的是：GLSL使用的矩阵是按列存储的</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">mat3</span><span class="w"> </span><span class="n">mMatrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mat4</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">                    </span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">                    </span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">8</span><span class="p">);</span>
+</code></pre></div>
+<p>如果换成按行存储，它的表示就变成了：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">}</span>
+</code></pre></div>
+<p>存储方式的不同不仅仅影响矩阵的访问方式，更为重要的是它将影响矩阵的运算顺序，下图描述了不同存储方式下，三维矩阵与三维向量相乘的结果是什么类型：</p>
+<p><a class="glightbox" href="../Resources/96997598049549ea6f3691dd3f71d92b0c4646dd.png%40942w_711h_progressive.webp" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/96997598049549ea6f3691dd3f71d92b0c4646dd.png%40942w_711h_progressive.webp" /></a></p>
+<p>我们在GLSL中使用矩阵一般是对向量进行变换，因此我们运算是一般是从右往左进行计算。如下所示：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">vec3</span><span class="w"> </span><span class="n">pos</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">mat3</span><span class="w"> </span><span class="n">model</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">mat3</span><span class="p">(...);</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">vec3</span><span class="w"> </span><span class="n">newPos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mat</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">pos</span><span class="p">;</span><span class="w"> </span>
+</code></pre></div>
+<p>另外，我们还需要注意的是，除了矩阵和向量的运算要反过来，矩阵的一些内部运算也得反着来。比如我们在客户端中使用QMatrix4x4想对一个图形先进行旋转，再进行平移，应该这么来使用：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">QMatrix4x4</span><span class="w"> </span><span class="n">mat4</span><span class="p">;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">mat4</span><span class="p">.</span><span class="n">translate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w">                    </span><span class="c1">//先执行的操作后调用</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">mat4</span><span class="p">.</span><span class="n">rotate</span><span class="p">(</span><span class="mi">60</span><span class="p">,</span><span class="n">QVector3D</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">));</span><span class="w">       </span><span class="c1">//所以这里是先旋转后平移</span>
+</code></pre></div>
+<blockquote>
+<p>还需要注意的是 QMatrix4x4 的内存大小并不是 <code>16 * sizeof(float)</code>，它还带有一个四字节的标识位，当需要将QMatrix4x4上传到GPU时，请调用<code>mat.toGenericMatrix&lt;4,4&gt;()</code>转换为 <strong>QGenericMatrix</strong> 类型</p>
+</blockquote>
+<h3 id="_8">限定符<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>GLSL中，我们会使用一些限定符来描述变量的一些相关信息，常见的限定符类型有：</p>
+<ul>
+<li>存储限定符：描述变量的存储位置</li>
+<li>布局限定符：描述变量的布局</li>
+</ul>
+<p>常见的存储限定符有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Storage Qualifier</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;">可读写的本地变量</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>const</strong></td>
+<td style="text-align: left;">常量</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>in</strong></td>
+<td style="text-align: left;">说明该变量为输入变量，来自于前一阶段的输出</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>out</strong></td>
+<td style="text-align: left;">说明该变量为输出变量，将作为下一阶段的输入</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>uniform</strong></td>
+<td style="text-align: left;">说明该变量为Uniform数据</td>
+</tr>
+</tbody>
+</table>
+<p>需要注意的就是<code>in</code>，<code>out</code>和<code>uniform</code>之间的区别：</p>
+<p><a class="glightbox" href="../Resources/image-20230503191610995.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503191610995" src="../Resources/image-20230503191610995.png" /></a></p>
+<p>布局限定符的格式为：</p>
+<ul>
+<li><code>layout( layout-qualifier-id-list )</code></li>
+</ul>
+<p>其中<code>layout-qualifier-id-list</code> 是一个特征数组，它的元素可以是一个标识，也可以是一个键值对（Key-Value），其他常见的布局限定符特征有：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">布局限定符特征</th>
+<th style="text-align: left;">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>binding</strong> =</td>
+<td style="text-align: left;">用于对应uniform数据在 描述符集绑定布局 中的index</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>location</strong> =</td>
+<td style="text-align: left;">用于确定 所有 输入 输出变量 的 位置，着色器前一阶段的输入变量和后一阶段的输出变量是通过location来确定连接的，而不是变量名</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>shared</strong> , <strong>packed</strong> , <strong>std140</strong> , <strong>std430</strong></td>
+<td style="text-align: left;">用于声明 Block 所采用的结构体内存对齐方式</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>local_size_x</strong> = , <strong>local_size_y</strong> = , <strong>local_size_z</strong> =</td>
+<td style="text-align: left;">在计算着色器中，说明计算单元的大小</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>max_vertices</strong> =</td>
+<td style="text-align: left;">在几何着色器中，定义最大的顶点数量</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>rgba32f</strong> <strong>rgba16f</strong> <strong>rg32f</strong> <strong>rg16f</strong> <strong>r11f_g11f_b10f</strong> <strong>r32f</strong> <strong>r16f</strong> <strong>rgba16</strong> <strong>rgb10_a2</strong> <strong>rgba8</strong> <strong>rg16</strong> <strong>rg8</strong> <strong>r16</strong> <strong>r8</strong> <strong>rgba16_snorm</strong> <strong>rgba8_snorm</strong> <strong>rg16_snorm</strong> <strong>rg8_snorm</strong> <strong>r16_snorm</strong> <strong>r8_snorm</strong> <strong>rgba32i</strong> <strong>rgba16i</strong> <strong>rgba8i</strong> <strong>rg32i</strong> <strong>rg16i</strong> <strong>rg8i</strong> <strong>r32i</strong> <strong>r16i</strong> <strong>r8i</strong> <strong>rgba32ui</strong> <strong>rgba16ui</strong> <strong>rgb10_a2ui</strong> <strong>rgba8ui</strong> <strong>rg32ui</strong> <strong>rg16ui</strong> <strong>rg8ui</strong> <strong>r32ui</strong> <strong>r16ui</strong> <strong>r8ui</strong></td>
+<td style="text-align: left;">在计算着色器中，说明Image变量的图像格式</td>
+</tr>
+</tbody>
+</table>
+<p>在Vulkan风格的GLSL中，我们需要注意的是：</p>
+<ul>
+<li>任意的<code>in</code>或<code>out</code>变量都需要使用 <code>layout(location = ${index})</code>  去修饰，因为这一阶段的<code>in变量</code>会根据<code>Location Index</code> 去找上一阶段对应的<code>out变量</code></li>
+<li>对于顶点着色器，它的in变量会根据<code>Location Index</code>是去从流水线的顶点输入布局去找</li>
+<li>对于片段着色器，它的out变量会<code>Location Index</code> 输出到渲染目标对应索引的颜色附件中</li>
+<li>任意的 <code>uniform</code> 变量都需要使用 <code>layout(binding = ${index})</code>去修饰，<code>Binding Index</code>需要与流水线中所使用的描述符集布局（QRhiShaderResourceBindings）对应</li>
+</ul>
+<p>限定符完整的文档，请查阅：</p>
+<ul>
+<li><a href="https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#storage-qualifiers">https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#storage-qualifiers</a></li>
+</ul>
+<h3 id="_9">基础阶段<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>一个完整的图形渲染管线执行流程如下：</p>
+<p><a class="glightbox" href="../Resources/GL-Pipeline.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/GL-Pipeline.jpg" /></a></p>
+<ul>
+<li>
+<p>红色部分的 <strong>Vertex Shader</strong> 和 <strong>Fragment Shader</strong> 是图形渲染管线中的 <strong>必填项</strong></p>
+</li>
+<li>
+<p>黄色部分的 <strong>Tesselation Control Shader</strong> ， <strong>Tesselation Evaluation Shader</strong> 和 <strong>Geometry Shader</strong> 是图形渲染管线中的 <strong>可填项</strong></p>
+</li>
+<li>
+<p>绿色部分的  <strong>Primitive Setup</strong> ，  <strong>Clipping</strong> 和 <strong>Rasterization</strong>  是 <strong>不可编程阶段</strong> ，但图形API提供了一些参数可以调整它们的行为</p>
+</li>
+</ul>
+<p>想要编写着色器，我们首先要了解图形渲染管线中各个阶段的工作职责，这里笔者主要对顶点着色器和片段着色器进行说明，图形API中还有其他的处理阶段和流水线，提前展开会给读者带来大量的认知负担，如果觉得感兴趣，可以先尝试了解，这些内容也会在后续的文章进一步深入。</p>
+<h4 id="vertex-shader">顶点着色器（Vertex Shader）<a class="headerlink" href="#vertex-shader" title="Permanent link">&para;</a></h4>
+<p><strong>顶点着色器 （Vertex Shader ）</strong> 的职责在于：根据 <code>输入的顶点数据</code>  和  <code>Uniform数据（如果有）</code> ，来填写当前顶点 <strong>内置的输出变量</strong>  ，并将一些有用数据传递给下一阶段。</p>
+<p>一个核心的顶点着色器模板如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">position</span><span class="p">;</span><span class="w">      </span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">out</span><span class="w"> </span><span class="n">gl_PerVertex</span><span class="w"> </span><span class="p">{</span><span class="w">                          </span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="n">vec4</span><span class="w"> </span><span class="n">gl_Position</span><span class="p">;</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="p">};</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="n">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span><span class="mf">0.0f</span><span class="p">,</span><span class="mf">1.0f</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="p">}</span>
+</code></pre></div>
+<p>解读：</p>
+<ul>
+<li><code>layout(location = 0)</code> 代表了值对应流水线创建时顶点输入布局中 索引为0 的顶点属性</li>
+<li><code>in</code> 代表是输入变量</li>
+<li><code>vec2</code>表示该变量类型是二维向量，它需要与顶点输入布局中的格式（Float2）对应</li>
+<li><code>position</code>是输入变量的名称，它可以是任意的</li>
+<li><code>out gl_PerVertex { vec4 gl_Position; };</code> 是顶点着色器中固定输出定义</li>
+<li><code>gl_Position = vec4(position,0.0f,1.0f);</code>就是根据输入的顶点位置，填充顶点着色器实际的顶点数据输出</li>
+</ul>
+<p>需要注意的是：千万不用受定式思维的影响， 以为这里必须要输入一个position，实际上，我们可以输入任意的顶点数据，甚至不包括顶点位置，只需要在顶点着色器中，确定<code>gl_PerVertex</code>中<code>gl_Position</code>的值即可，比如可以是这样：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">anyVertexData</span><span class="p">;</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">out</span><span class="w"> </span><span class="n">gl_PerVertex</span><span class="w"> </span><span class="p">{</span><span class="w">              </span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="n">vec4</span><span class="w"> </span><span class="n">gl_Position</span><span class="p">;</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="p">};</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="n">vec1</span><span class="w"> </span><span class="nf">calcPosition</span><span class="p">(</span><span class="n">vec2</span><span class="w"> </span><span class="n">vertexData</span><span class="p">){</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="c1">// do something</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="p">}</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="n">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">calcPosition</span><span class="p">(</span><span class="n">anyVertexData</span><span class="p">)</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="p">}</span>
+</code></pre></div>
+<p>如果我们想要让该阶段的一些数据传递到下一阶段，那么只需要定义 <code>out</code> 修饰且带有<code>布局(layout)描述</code>的变量：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">position</span><span class="p">;</span><span class="w">      </span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="n">vec4</span><span class="w"> </span><span class="n">color</span><span class="p">;</span><span class="w">        </span><span class="c1">//定义输出变量，in和out的location是分离的</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">out</span><span class="w"> </span><span class="n">gl_PerVertex</span><span class="w"> </span><span class="p">{</span><span class="w">                          </span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="w">    </span><span class="n">vec4</span><span class="w"> </span><span class="n">gl_Position</span><span class="p">;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="p">};</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span><span class="n">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span><span class="mf">0.0f</span><span class="p">,</span><span class="mf">1.0f</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">.</span><span class="n">xy</span><span class="p">,</span><span class="mf">0.0f</span><span class="p">,</span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="p">}</span>
+</code></pre></div>
+<p>如果流水线中有顶点着色器的 Uniform数据 ，只需要定义用<code>uniform</code>修饰且带有<code>绑定(binding)描述</code>的变量：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">position</span><span class="p">;</span><span class="w">      </span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="n">vec4</span><span class="w"> </span><span class="n">color</span><span class="p">;</span><span class="w">    </span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="n">layout</span><span class="p">(</span><span class="n">binding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">uniform</span><span class="w"> </span><span class="n">UniformBlock</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">//这里的binding=0对应流水线创建时，描述符集布局绑定的设置</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="n">vec4</span><span class="w"> </span><span class="n">color</span><span class="p">;</span><span class="w">                             </span><span class="c1">//UniformBlock是该数据结构块的名称，它可以是任意的</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="p">}</span><span class="w"> </span><span class="n">ubo</span><span class="p">;</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="n">out</span><span class="w"> </span><span class="n">gl_PerVertex</span><span class="w"> </span><span class="p">{</span><span class="w">                          </span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">    </span><span class="n">vec4</span><span class="w"> </span><span class="n">gl_Position</span><span class="p">;</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="p">};</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="w">    </span><span class="n">gl_Position</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="n">position</span><span class="p">,</span><span class="mf">0.0f</span><span class="p">,</span><span class="mf">1.0f</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a><span class="w">    </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ubo</span><span class="p">.</span><span class="n">Color</span><span class="p">;</span><span class="w">                      </span><span class="c1">// 通过Uniform数据设置颜色</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="p">}</span>
+</code></pre></div>
+<h4 id="fragment-shader">片段着色器（Fragment Shader）<a class="headerlink" href="#fragment-shader" title="Permanent link">&para;</a></h4>
+<p><strong>顶点着色器 （Vertex Shader ）</strong> 的职责在于：根据 <code>前一阶段的输入数据</code> 和  <code>Uniform数据（如果有）</code> ，写入到渲染目标（Render Target）的<code>颜色附件</code>上。</p>
+<p>一个核心的片段着色器模板如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">out</span><span class="w"> </span><span class="n">vec4</span><span class="w"> </span><span class="n">fragColor</span><span class="p">;</span><span class="w">    </span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="w">    </span><span class="n">fragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">vec4</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="p">}</span>
+</code></pre></div>
+<p>解读：</p>
+<ul>
+<li><code>layout(location = 0) out</code>  表明该片段将输出到 渲染目标 <code>索引为0的颜色附件</code> 上，一个渲染目标往往至少包含一个颜色附件，交换链的渲染目标上就只有一个四通道的颜色附件 。</li>
+<li><code>vec4</code>代表着颜色附件具有四个颜色通道，例如<code>RGBA8888</code></li>
+<li>
+<p><code>fragColor</code> 是输出变量的名称，它可以是任意的</p>
+</li>
+<li>
+<p><code>fragColor = vec4(1,1,1,1)</code>说明了最终的片段为不透明的白色（R=1，G=1，B=1，A=1）</p>
+</li>
+</ul>
+<p>片段着色器也能像顶点着色器那样增加一些Uniform输入。</p>
+<p>在笔者学习的初期，因为顶点着色器的输出变量和片段着色器中的输入变量是一一对应的，就把顶点着色器和顶点着色器也当成是一一对应的，但实际上这是错误的，还记得上一节的程序吗？</p>
+<p>我们通过 <code>3</code> 个顶点数据：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">VertexData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">                                       </span><span class="c1">//顶点数据</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="w">    </span><span class="c1">//position(xy)      color(rgba)</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="w">     </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">     </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="p">};</span>
+</code></pre></div>
+<p>绘制出了这样的图像：</p>
+<p><a class="glightbox" href="../Resources/image-20230503194533809.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503194533809" src="../Resources/image-20230503194533809.png" /></a></p>
+<p>仔细查看，明明只输入3个顶点的颜色，但最终的图像中有多少种颜色？</p>
+<p>很显然，不是3种，那这是怎么做到呢？</p>
+<p>通过下图，我们很容易发现，顶点着色器和片段着色器并不是一一对应的，顶点在被装配成几何图元之后，经由光栅化阶段，会生成很多片段：</p>
+<p><a class="glightbox" href="../Resources/image-20230503194825627.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503194825627" src="../Resources/image-20230503194825627.png" /></a></p>
+<p>而这个过程在着色器层面可以看做是：顶点着色器的输出变量，在经过光栅化之后，变成了很多片段的输入变量。</p>
+<p>而输出变量到输入变量之间多对多的转换，是通过 <strong>光栅化插值</strong> 完成的，关于它的细节，请查阅：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/370059588">[知乎-木头骨头石头] 图形渲染基础：光栅化算法</a></li>
+</ul>
+<h3 id="_10">内置变量<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<p>在流水线中，往往还会提供一些内置变量，用于给着色器程序传递一些上下文信息。</p>
+<p>比如在顶点着色器中：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">in</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gl_VertexIndex</span><span class="p">;</span><span class="w">      </span><span class="c1">// 当前顶点的索引</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">in</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gl_InstanceIndex</span><span class="p">;</span><span class="w">    </span><span class="c1">// 当前实例的索引</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="n">in</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gl_DrawID</span><span class="p">;</span><span class="w">           </span><span class="c1">// Requires GLSL 4.60 or ARB_shader_draw_parameters</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">in</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gl_BaseVertex</span><span class="p">;</span><span class="w">       </span><span class="c1">// Requires GLSL 4.60 or ARB_shader_draw_parameters</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="n">in</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gl_BaseInstance</span><span class="p">;</span><span class="w">     </span><span class="c1">// Requires GLSL 4.60 or ARB_shader_draw_parameters</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">out</span><span class="w"> </span><span class="n">gl_PerVertex</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="w">    </span><span class="n">vec4</span><span class="w"> </span><span class="n">gl_Position</span><span class="p">;</span><span class="w">       </span><span class="c1">// gl_Position是必要的，可以了解一下其他变量的作用    </span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">gl_PointSize</span><span class="p">;</span><span class="w">     </span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">gl_ClipDistance</span><span class="p">[];</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">gl_CullDistance</span><span class="p">[];</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="p">};</span>
+</code></pre></div>
+<p>片段着色器中也有：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">in</span><span class="w"> </span><span class="n">vec4</span><span class="w"> </span><span class="n">gl_FragCoord</span><span class="p">;</span><span class="w">       </span><span class="c1">//当前片段的坐标</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="n">in</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">gl_FrontFacing</span><span class="p">;</span><span class="w">     </span><span class="c1">//当前片段是否是正面</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="n">in</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">gl_ClipDistance</span><span class="p">[];</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="n">in</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">gl_CullDistance</span><span class="p">[];</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">gl_PointCoord</span><span class="p">;</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="n">in</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gl_PrimitiveID</span><span class="p">;</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="n">in</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gl_SampleID</span><span class="p">;</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="n">in</span><span class="w"> </span><span class="n">vec2</span><span class="w"> </span><span class="n">gl_SamplePosition</span><span class="p">;</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="n">in</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gl_SampleMaskIn</span><span class="p">[];</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="n">in</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gl_Layer</span><span class="p">;</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="n">in</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gl_ViewportIndex</span><span class="p">;</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="n">in</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">gl_HelperInvocation</span><span class="p">;</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="n">out</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">gl_FragDepth</span><span class="p">;</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="n">out</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">gl_SampleMask</span><span class="p">[];</span>
+</code></pre></div>
+<p>关于内置变量，详见：</p>
+<ul>
+<li><a href="https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#built-in-language-variables">https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html#built-in-language-variables</a></li>
+</ul>
+<h3 id="_11">内置函数<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p>GLSL基本上内置了所有在图形开发中所使用的函数，比如：</p>
+<p>数学函数，向量运算（点乘，叉乘），矩阵转置，求逆，混合函数，插值函数等等的，基本你能想到的，需要的，基本都会有。</p>
+<p>关于这些函数使用细节，请查阅下面的官方文档：</p>
+<ul>
+<li><a href="https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html#built-in-functions">https://www.khronos.org/registry/OpenGL/specs/gl/GLSLangSpec.4.60.html#built-in-functions</a> </li>
+</ul>
+<h3 id="_12">逻辑分支<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p>着色器语言相对于开发者来说，不能将简单地将它看做是一个不同语法的编程语言，它最特殊点就在于它是在GPU上执行的，它的内置函数实现都是基于 GPU 硬件特性的。</p>
+<p>由于GPU是通过大量计算单元堆叠而成，从而也造就了它对逻辑的执行并不友好的缺点。</p>
+<p>在编写GLSL的时候，我们需要尽可能地避免在GLSL中出现 <strong>分支指令</strong> ，而是从另一种策略去思考问题：</p>
+<ul>
+<li>首先可以明确：在着色器中调用<code>return</code>，并不会影响后续的阶段，如果必要的参数没有填写，则可能会使用默认值</li>
+<li>我们想要实现逻辑分支的主要目标，一般是为了让一部分情况输出A，另一个部分情况输出B，其他情况输出...</li>
+</ul>
+<p>GPU是对数学运算友好的，如果我们能确定 逻辑条件 到 输出结果 的函数式，通过数值计算的方式，就能避开逻辑分支，这里涉及到了一个关键函数：</p>
+<ul>
+<li><code>step</code> （阶跃）函数</li>
+</ul>
+<p>一般情况下，数学函数的图像都是连续平缓的，阶跃函数特殊的点就在于，它存在值的跳变，它的函数图像是这样的：</p>
+<p><a class="glightbox" href="../Resources/image-20230503201624943.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503201624943" src="../Resources/image-20230503201624943.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503201733475.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503201733475" src="../Resources/image-20230503201733475.png" /></a></p>
+<p>这个跳变的特征非常适用于数值上的逻辑分支，但它的使用却不太符合人的直觉，所以在GLSL中，允许我们使用条件运算符来完成相关的逻辑，就比如：<code>(a &lt; b) ? a : b</code></p>
+<p>GLSL中的一些内置函数，比如min，max等，它是特定于GPU的实现，所以我们无需关心逻辑分支的问题。我们只需要注意<code>if</code>的使用，而<code>if</code> 并不等价于分支，真正重要的是编译器是否生成了 <strong>分支指令</strong> 。</p>
+<p>关于这些问题细节和注意事项，这里有一个非常好的说明：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/122467342">[知乎-YAO] Shader中的 if 和分支</a></li>
+</ul>
+<h2 id="pipeline-cache">流水线缓存（Pipeline Cache）<a class="headerlink" href="#pipeline-cache" title="Permanent link">&para;</a></h2>
+<p>上文我们提到，游戏引擎中，通常会在一种着色器语言下开发，再转译成各个图形API的着色器代码，这种转译我们一般得到的是具体图形API的<code>源代码</code> 或者 <code>字节码（中间）文件</code>。</p>
+<p>在GPU使用着色器的时候，其实还需要将<code>源代码</code> 或者 <code>字节码（中间）文件</code>编译成机器可执行的二进制码，而这个编译过程是依赖于图形驱动的，而由于每个用户的图形驱动版本可能是不同的，开发商很难覆盖所有的图形驱动，这也就意味着我们必须在用户的电脑上去编译着色器的二进制码。</p>
+<p>为了避免在程序执行过程中，着色器编译导致出现卡顿，现代图形API都提供了流水线缓存（Pipeline Cache）的功能，这个功能可以让程序在首次启动时，编译完所有的流水线，并将它存储到磁盘上，这样程序在运行时或者下次启动时就不会因为编译着色器出现卡顿。</p>
+<p>在Unreal Engine中，称这个技术为 <a href="https://docs.unrealengine.com/5.1/zh-CN/optimizing-rendering-with-pso-caches-in-unreal-engine/">PSO缓存（Pipeline State Object Cache）</a></p>
+<p>这里有一个很好的文章说明了PSO缓存相关知识：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/572503905">[知乎-mike] UE4 PSO缓存</a></li>
+</ul>
+<p>在QRhi中，我们可以在创建QRhi的时候，开启流水线缓存的功能：</p>
+<p><a class="glightbox" href="../Resources/image-20230503205925995.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503205925995" src="../Resources/image-20230503205925995.png" /></a></p>
+<p>使用函数 <code>QByteArray QRhi::pipelineCacheData()</code>可以获取到当前程序已经编译好的流水线缓存数据</p>
+<p>使用函数 <code>void QRhi::setPipelineCacheData(const QByteArray &amp;data)</code>可以设置流水线缓存数据</p>
+<p>在程序调用<code>QRhiGraphicsPipeline::create()</code>时，会根据当前的流水线参数状态，去查询是否存在流式线状态，如果有，则直接复用，而不会重新编译。</p>
+<h2 id="_13">学习平台<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<p>外网有两个非常有意思的平台，它们通过固定流程的流水线，在仅提供一些外部输入变量和修改片段着色器代码的前提下，就能制作出很多非常炫酷的图形效果：</p>
+<ul>
+<li>Shadertoy：<a href="https://www.shadertoy.com/">https://www.shadertoy.com/</a></li>
+</ul>
+<p><a class="glightbox" href="../Resources/image-20230503214715725.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503214715725" src="../Resources/image-20230503214715725.png" /></a></p>
+<ul>
+<li>Glsl Sandbox：<a href="http://glslsandbox.com/">http://glslsandbox.com/</a> </li>
+</ul>
+<p><a class="glightbox" href="../Resources/image-20230503214831931.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503214831931" src="../Resources/image-20230503214831931.png" /></a></p>
+<p>这两个平台都搭配了完善的在线Shader编辑器，你可以在上面尝试模仿一些简单的效果，并熟悉着色器的基本语法。</p>
+<p>祝你好运！</p>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      最后更新:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-01 17:12:52</span>
+      
+        <br>
+        创建日期:
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-01 17:12:52</span>
+      
+    
+  </small>
+</div>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js"
+    data-repo="Italink/ModernGraphicsEngineGuide"
+    data-repo-id="R_kgDOIPtbiQ"
+    data-category-id="DIC_kwDOIPtbic4CTxOk"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin="anonymous"
+    async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 2 - 图形渲染管线">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                2 - 图形渲染管线
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-footer__link md-footer__link--next" aria-label="下一页: 4 - 缓冲区与纹理">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                4 - 缓冲区与纹理
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078c-.271.73-.5 1.434-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58.104 58.104 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.223 9.223 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125zM13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.cd18aaf1.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>

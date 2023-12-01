@@ -1,0 +1,2448 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../3.%E7%9D%80%E8%89%B2%E5%99%A8/">
+      
+      
+        <link rel="next" href="../5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.14">
+    
+    
+      
+        <title>4 - 缓冲区与纹理 - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fad675c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.356b1318.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-S1J8MN27P8",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
+
+   <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+        html.glightbox-open { overflow: initial; height: 100%; }
+        .gslide-title { margin-top: 0px; user-select: text; }
+        .gslide-desc { color: #666; user-select: text; }
+        .gslide-image img { background: white; }
+        
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
+            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76Z"/></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var content,el=document.querySelector("[data-md-component=announce]");el&&(content=el.querySelector(".md-typeset"),__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0))</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4 - 缓冲区与纹理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label=""  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12c0-2.42-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../03-GraphicsTechnology/Waitting/" class="md-tabs__link">
+          
+  
+    
+  
+  图形技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../05-Other/0.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%9D%82%E8%B0%88/" class="md-tabs__link">
+          
+  
+    
+  
+  Other
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    开篇
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    C++
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            C++
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 计算机发展史
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - C++基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 工具链
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 宏、模板、反射
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 内存管理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - GUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    图形API
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            图形API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 图形渲染管线
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 着色器
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    4 - 缓冲区与纹理
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    4 - 缓冲区与纹理
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      缓冲区
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="缓冲区">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      顶点缓冲区
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      索引缓冲区
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uniform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uniform 缓冲区
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage 缓冲区
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      纹理
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      示例
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      内存管理
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - 3D空间
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 图形API进阶
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    引擎技术
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            引擎技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 渲染架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 编辑器架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - DebugDraw
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - GPU调试
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    图形技术
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            图形技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 网格体渲染
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 天空盒
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - GPU粒子
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 后期滤镜
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 光照
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - 体积雾
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 天空大气
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-GraphicsTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7 - 地形
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Unreal Engine
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Unreal Engine
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 基础编程
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - Slate 开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 插件开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 粒子系统
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - Niagara 性能优化
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - Fluid Ninja 流体插件
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 开放世界制作
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Other
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Other
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-Other/0.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 开放世界杂谈
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-Other/1.%E5%85%83%E5%AE%87%E5%AE%99%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 元宇宙杂谈
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      缓冲区
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="缓冲区">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      顶点缓冲区
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      索引缓冲区
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uniform" class="md-nav__link">
+    <span class="md-ellipsis">
+      Uniform 缓冲区
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Storage 缓冲区
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      纹理
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      示例
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      内存管理
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="_1">缓冲区与纹理<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="_2">缓冲区<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><strong>缓冲区（Buffer）</strong> 持有一段GPU上的内存（Memory）以及一些相关特征—— <strong>类型（Type）</strong> 和 <strong>用途（Usage）</strong></p>
+<p><strong>类型（Type）</strong> 决定的Buffer的存储特性，图形API一般将其划分为：</p>
+<ul>
+<li><strong>Host Local Memory</strong> ：只对Host可见的内存，通常称之为普通内存</li>
+<li><strong>Device Local Memory</strong> ：只对Device可见的内存，通常称之为显存</li>
+<li><strong>Host Local Device Memory</strong> ：由Host管理的，对Device看见的内存</li>
+<li><strong>Device Local Host Memory</strong> ：由Device管理的，对Host可见的内存</li>
+</ul>
+<blockquote>
+<p>Host 往往是 CPU端， Device 指 GPU 端</p>
+</blockquote>
+<p>关于细节，请查阅：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/166387973">Vulkan 内存管理</a></li>
+</ul>
+<p>使用合适的内存类型能大幅提升内存的读写效率，在现代图形引擎中的流水线中，会尽可能地使用 <strong>Device Memory</strong> ，当我们要从CPU中提交数据给它时，由于Host无法访问，一般会将数据上传到一个 <strong>Host可见的Memroy</strong> 上，再通过指令拷贝到对应的 <strong>Device Memory</strong> 上，我们一般称这个持有主机可见内存的Buffer为 <a href="https://link.zhihu.com/?target=https%3A//vulkan-tutorial.com/Vertex_buffers/Staging_buffer">Staging Buffer</a></p>
+<p>在 <strong>用途（Usage）</strong> 上，Buffer 通常可具备以下 <strong>标识（Flag）</strong> ：</p>
+<ul>
+<li><strong>VertexBuffer</strong> ：用于存放顶点数据</li>
+<li><strong>IndexBuffer</strong> ：用于存放索引数据</li>
+<li><strong>UniformBuffer</strong> ：用于存储常量数据</li>
+<li><strong>StorageBuffer</strong> ：用于Compute管线中的数据计算</li>
+<li><strong>IndirectDrawBuffer</strong> ：用于间接渲染提供渲染参数</li>
+</ul>
+<p>在图形渲染管线章节中，我们使用QRhi很轻松地创建了一个用于存储顶点数据的缓冲区（ <strong>VertexBuffer</strong> ）：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mVertexBuffer</span><span class="p">;</span><span class="w">   </span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Immutable</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">VertexBuffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">VertexData</span><span class="p">)));</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">mVertexBuffer</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span><span class="w"> </span><span class="c1">//在QRhi中，调用渲染资源对象的create函数才实际创建对应的GPU资源，在这之前，我们都是调整参数状态机而已</span>
+</code></pre></div>
+<p>使用函数<code>newBuffer</code>就能申请一个新的缓冲区：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">QRhiBuffer</span><span class="o">*</span><span class="w"> </span><span class="nf">QRhi::newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Type</span><span class="w"> </span><span class="n">type</span><span class="p">,</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">                            </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">UsageFlags</span><span class="w"> </span><span class="n">usage</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">                            </span><span class="n">quint32</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+</code></pre></div>
+<p>函数参数所代表的意义如下：</p>
+<ul>
+<li>
+<p><strong>Type</strong> ：Buffer的类型，决定了Buffer的存储特性。</p>
+</li>
+<li>
+<p><strong>Immutable</strong> ：用于存放希望永远不会发生改变的数据，具有非常高效的GPU读写性能，它通常放置在 <strong>Devices Local</strong> 的 GPU 内存上，无法被CPU直接读写，但QRhi却支持它的上传，其原理是：每次上传数据新建一个 <strong>Host Local</strong> 的 <strong>Staging Buffer</strong> 作为中转来上传新数据，这样操作的代价是非常高昂的。</p>
+</li>
+<li>
+<p><strong>Static</strong> ：同样存储在 <strong>Devices Local</strong> 的 GPU 内存上，与 Immutable 不同的是，首次上传数据创建的 <strong>Staging Buffer</strong> 会一直保留。</p>
+</li>
+<li>
+<p><strong>Dynamic</strong> ：用于存放频繁发生变化的数据，它放置 <strong>Host Local</strong> 的GPU内存中，为了不拖延图形渲染管线，它通常会使用双缓冲机制。</p>
+</li>
+<li>
+<p><strong>Usage</strong> ：Buffer的用途，<code>Flags</code>说明是可以使用运算符<code>|</code>让多个<code>Flag</code>共存</p>
+</li>
+<li>
+<p><strong>VertexBuffer</strong> ：表明该Buffer可作为顶点缓冲区，存储顶点数据，作为图形渲染管线的输入</p>
+</li>
+<li><strong>IndexBuffer</strong> ：表明该Buffer可作为索引缓冲区，存储索引数据，用于挑选顶点数据</li>
+<li><strong>UniformBuffer</strong> ：表明该Buffer可作为Uniform缓冲区，存储Uniform数据，作为着色器的公共输入</li>
+<li>
+<p><strong>StorageBuffer</strong> ：表明该Buffer可作为Storage缓冲区，该缓冲区可被计算着色器读写</p>
+</li>
+<li>
+<p><strong>Size</strong> ：Buffer的事情大小（单位为字节）</p>
+</li>
+</ul>
+<h3 id="_3">顶点缓冲区<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p><strong>顶点缓冲区（VertexBuffer）</strong> 用作流水线的输入</p>
+<p>在QRhi中，体现在录制渲染指令时必须为图形渲染管线指定顶点输入：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setGraphicsPipeline</span><span class="p">(</span><span class="n">mPipeline</span><span class="p">.</span><span class="n">get</span><span class="p">());</span><span class="w">                            </span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setViewport</span><span class="p">(</span><span class="n">QRhiViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">mSwapChain</span><span class="o">-&gt;</span><span class="n">currentPixelSize</span><span class="p">().</span><span class="n">width</span><span class="p">(),</span><span class="w"> </span><span class="n">mSwapChain</span><span class="o">-&gt;</span><span class="n">currentPixelSize</span><span class="p">().</span><span class="n">height</span><span class="p">()));</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setShaderResources</span><span class="p">();</span><span class="w">                                        </span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">const</span><span class="w"> </span><span class="n">QRhiCommandBuffer</span><span class="o">::</span><span class="n">VertexInput</span><span class="w"> </span><span class="nf">vertexInput</span><span class="p">(</span><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w">   </span><span class="c1">//将 mVertexBuffer 绑定到Buffer0，内存偏移值为0</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setVertexInput</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">vertexInput</span><span class="p">);</span><span class="w">                              </span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w">                                                         </span>
+</code></pre></div>
+<p>而在创建流水线的时候，必须为流水线设置 <strong>顶点输入布局（VertexInputLayout）</strong> ，它用于制定缓冲区的解析规则，在之前的章节中，我们使用了这样的顶点数据：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">VertexData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">                                       </span><span class="c1">//顶点数据</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="c1">//position(xy)      color(rgba)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">     </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">     </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">};</span>
+</code></pre></div>
+<p>为了让顶点数据能够被下面的 顶点着色器输入 使用：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">position</span><span class="p">;</span><span class="w">  </span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">color</span><span class="p">;</span>
+</code></pre></div>
+<p>我们可以定义这样的顶点输入布局：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">QRhiVertexInputLayout</span><span class="w"> </span><span class="n">inputLayout</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">inputLayout</span><span class="p">.</span><span class="n">setBindings</span><span class="p">({</span><span class="w">        </span><span class="c1">//定义每个VertexBuffer单组顶点数据的跨度，这里只使用了一个VertexBuffer</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="c1">//这里是6*sizeof(float)，可以当作是GPU会从索引为0的Buffer中读取24字节数据作为单组顶点数据传给VertexShader</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">QRhiVertexInputBinding</span><span class="p">(</span><span class="mi">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">))</span><span class="w"> </span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">});</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">inputLayout</span><span class="p">.</span><span class="n">setAttributes</span><span class="p">({</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="c1">//在从Buffer 0得到的单组顶点数据中，以偏移值为0，读取Float2大小的数据作为 location 0 的输入</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="n">QRhiVertexInputAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">QRhiVertexInputAttribute</span><span class="o">::</span><span class="n">Float2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="c1">//在从Buffer 0得到的单组顶点数据中，以偏移值为sizeof(float)*2，读取Float4大小的数据作为 location 1 的输入</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="n">QRhiVertexInputAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">QRhiVertexInputAttribute</span><span class="o">::</span><span class="n">Float4</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w">   </span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">});</span>
+</code></pre></div>
+<p>在图形渲染的处理过程中，计算机关注的只是内存上的数据，并不在意这些数据的象征意义，正因为顶点输入布局的存在，使得我们可以编程时自行组织顶点的存储结构。</p>
+<p>上面我们将所有的数据都放在了一个<code>float数组</code>中，现在我们可以使用一个更直观的结构：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Vertex</span><span class="p">{</span><span class="w">                  </span><span class="c1">//顶点的结构</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">QVector4D</span><span class="w"> </span><span class="n">color</span><span class="p">;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">};</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">QVector</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">    </span><span class="c1">//顶点数据</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-0.5f</span><span class="p">},</span><span class="w">  </span><span class="p">{</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="w"> </span><span class="p">}},</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">},</span><span class="w">  </span><span class="p">{</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="w"> </span><span class="p">}},</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">},</span><span class="w">  </span><span class="p">{</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="w"> </span><span class="p">}},</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>我们只需填充顶点数据，使用<code>sizeof(Vertex) * vertices.size()</code>创建顶点缓冲区：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mVertexBuffer</span><span class="p">;</span><span class="w">   </span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Immutable</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">VertexBuffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vertex</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vertices</span><span class="p">.</span><span class="n">size</span><span class="p">()));</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">mVertexBuffer</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span><span class="w"> </span>
+</code></pre></div>
+<p>并使用这样的顶点输入布局：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">QRhiVertexInputLayout</span><span class="w"> </span><span class="n">inputLayout</span><span class="p">;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">inputLayout</span><span class="p">.</span><span class="n">setBindings</span><span class="p">({</span><span class="w">   </span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="n">QRhiVertexInputBinding</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vertex</span><span class="p">))</span><span class="w">      </span><span class="c1">//单个顶点数据的跨度也就是Vertex结构的大小</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">});</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">inputLayout</span><span class="p">.</span><span class="n">setAttributes</span><span class="p">({</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="n">QRhiVertexInputAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">QRhiVertexInputAttribute</span><span class="o">::</span><span class="n">Float2</span><span class="p">,</span><span class="w"> </span><span class="n">offsetof</span><span class="p">(</span><span class="n">Vertex</span><span class="p">,</span><span class="n">position</span><span class="p">)),</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="n">QRhiVertexInputAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">QRhiVertexInputAttribute</span><span class="o">::</span><span class="n">Float4</span><span class="p">,</span><span class="w"> </span><span class="n">offsetof</span><span class="p">(</span><span class="n">Vertex</span><span class="p">,</span><span class="n">color</span><span class="p">)),</span><span class="w">  </span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="p">});</span>
+</code></pre></div>
+<blockquote>
+<p><strong>offsetof</strong> 运算符可用于获取成员变量在结构体或类中的内存偏移</p>
+</blockquote>
+<p>上传时使用数组的裸数据即可：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">uploadStaticBuffer</span><span class="p">(</span><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="n">mVertices</span><span class="p">.</span><span class="n">data</span><span class="p">());</span>
+</code></pre></div>
+<h3 id="_4">索引缓冲区<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p><strong>索引缓冲区（IndexBuffer）</strong> 用于挑选输入到流水线中的顶点数据</p>
+<p>一个通用的应用场景是：</p>
+<ul>
+<li>由于图形API支持的基础图元只有点，线和三角形，在绘制多边形的时候，会使用多个三角形进行拼接，以四边形为例，一个四边形可划分为两个三角形，而两个三角形有六个顶点，但实际上四边形只有四个顶点，如果使用三角形拼接，会需要浪费两个顶点数据的空间大小来存储重叠的顶点，所有我们需要一种策略，来复用顶点缓冲区中的顶点数据，以完成 使用四个顶点就能绘制出由两个三角形组成的四边形。</li>
+</ul>
+<p>流水线处理顶点输入时，会根据顶点输入布局，将顶点缓冲区中的数据划分成一组组有序的顶点数据，在 <strong>默认情况</strong> 下，会将这些顶点数据都交给VertexShader进行处理。</p>
+<p>而索引缓冲区的作用，就是在划分成一组组有序的顶点数据之后，通过一系列索引（Index），在原先的顶点数据上进行挑选，组装出新的顶点数据交给VertexShader处理。</p>
+<p>假如我们使用这样的顶点数据：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">VertexData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="c1">//position(xy)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">     </span><span class="mf">1.0f</span><span class="p">,</span><span class="w">   </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">     </span><span class="mf">1.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-1.0f</span><span class="p">,</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="mf">-1.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-1.0f</span><span class="p">,</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="mf">-1.0f</span><span class="p">,</span><span class="w">   </span><span class="mf">1.0f</span><span class="p">,</span><span class="w">  </span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="p">};</span>
+</code></pre></div>
+<p>可以使用这样的索引数据，从上述顶点中，使用6个索引来组装新的顶点数据：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">IndexData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="p">};</span>
+</code></pre></div>
+<p>与VertexBuffer一样，我们只需创建一个IndexBuffer：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mIndexBuffer</span><span class="p">;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">mIndexBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Immutable</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">IndexBuffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">IndexData</span><span class="p">)));</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">mIndexBuffer</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<p>并在首次录制渲染指令时提交索引数据：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">uploadStaticBuffer</span><span class="p">(</span><span class="n">mIndexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="n">IndexData</span><span class="p">);</span>
+</code></pre></div>
+<p>渲染指令变成了：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setGraphicsPipeline</span><span class="p">(</span><span class="n">mPipeline</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setViewport</span><span class="p">(</span><span class="n">QRhiViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">mSwapChain</span><span class="o">-&gt;</span><span class="n">currentPixelSize</span><span class="p">().</span><span class="n">width</span><span class="p">(),</span><span class="w"> </span><span class="n">mSwapChain</span><span class="o">-&gt;</span><span class="n">currentPixelSize</span><span class="p">().</span><span class="n">height</span><span class="p">()));</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setShaderResources</span><span class="p">();</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="k">const</span><span class="w"> </span><span class="n">QRhiCommandBuffer</span><span class="o">::</span><span class="n">VertexInput</span><span class="w"> </span><span class="nf">vertexBindings</span><span class="p">(</span><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1">//指定IndexBuffer，并明确IndexBuffer使用UInt32格式的索引数据</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setVertexInput</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">vertexBindings</span><span class="p">,</span><span class="w"> </span><span class="n">mIndexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiCommandBuffer</span><span class="o">::</span><span class="n">IndexUInt32</span><span class="p">);</span><span class="w">  </span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="c1">//使用drawIndexed而不是draw，这样渲染会从IndexBuffer中，读取6个索引，利用顶点缓冲区中数据组装出6个顶点，来绘制三角形</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">drawIndexed</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="uniform">Uniform 缓冲区<a class="headerlink" href="#uniform" title="Permanent link">&para;</a></h3>
+<p><strong>Uniform 缓冲区（Uniform Buffer）</strong> 用于给流水线提供一些着色器公共的只读数据。</p>
+<p>在QRhi中，可以使用如下代码来创建一个UniformBuffer：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mUniformBuffer</span><span class="p">;</span><span class="w">   </span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Dynamic</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">UniformBuffer</span><span class="p">,</span><span class="w"> </span><span class="n">mUniformBuffer</span><span class="p">));</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">mUniformBuffer</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<ul>
+<li>UniformBuffer 的类型必须是  <code>QRhiBuffer::Dynamic</code></li>
+<li><code>UniformBufferSize</code> 表示所需缓冲区的字节大小</li>
+</ul>
+<p>通常在创建UniformBuffer的时候，我们不会直接使用<code>UniformBufferSize</code> 来创建一块内存，而是通过一个辅助的结构体定义，比如：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="p">};</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1">//...</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Dynamic</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">UniformBuffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">UniformBlock</span><span class="p">)));</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="c1">//...</span>
+</code></pre></div>
+<p>这样做的好处是：可以通过结构体定义来给这段内存一些直观的结构</p>
+<p>比如上述结构体中，一共申请了<code>12字节</code>的内存，其中<code>前8字节</code>存储了一个二维向量，<code>后4字节</code>存储了一个浮点。</p>
+<p>Uniform Buffer 属于 <strong>着色器资源（Shader Resource）</strong> ，要使用它，需要在流水线的 着色器资源绑定（即描述符集布局）中，添加一个绑定项：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">mShaderBindings</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderResourceBindings</span><span class="p">());</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="n">mShaderBindings</span><span class="o">-&gt;</span><span class="n">setBindings</span><span class="p">({</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="n">QRhiShaderResourceBinding</span><span class="o">::</span><span class="n">uniformBuffer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiShaderResourceBinding</span><span class="o">::</span><span class="n">StageFlag</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w"> </span><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">())</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="p">});</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="n">mShaderBindings</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<ul>
+<li>QRhiShaderResourceBinding中提供了一些静态方法添加着色器资源绑定项，这里我们使用静态函数<code>QRhiShaderResourceBinding::uniformBuffer()</code></li>
+<li><code>0</code>代表绑定的索引</li>
+<li><code>QRhiShaderResourceBinding::StageFlag::VertexStage</code>表示该UniformBlock可以在片段着色阶段使用，<code>Flag</code>表明这是一个可组合的标识。</li>
+</ul>
+<p>在C++代码中有了上述结构的支撑，就可以这样在顶点着色器中使用UniformBuffer数据：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s">#version 440</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="s">    layout(binding = 0) uniform UniformBlock{   // 0 与 ShaderResourceBinding 的定义对应</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="s">        vec2 mousePos;</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="s">        float time;</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="s">    }UBO;</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="s">    //...</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="dl">)</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="n">Q_ASSERT</span><span class="p">(</span><span class="n">vs</span><span class="p">.</span><span class="n">isValid</span><span class="p">());</span>
+</code></pre></div>
+<p>为了能够正确解析UniformBuffer中的内存结构，我们在Shader中定义了一个与C++结构体内存布局一样的 <a href="https://www.khronos.org/opengl/wiki/Interface_Block_(GLSL)">接口块 （Interface Block）</a>，上面的是一种简化的写法，下面的写法对大家来说可能会更亲切一些：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s">#version 440    </span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="s">    struct UniformBlock{</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="s">        vec2 mousePos;</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="s">        float time;</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="s">    };</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="s">    layout(binding = 0) uniform UniformBlock UBO;</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="s">    //...</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="dl">)</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="n">Q_ASSERT</span><span class="p">(</span><span class="n">vs</span><span class="p">.</span><span class="n">isValid</span><span class="p">());</span>
+</code></pre></div>
+<p>提交UniformBlock数据的方式跟其他Buffer大同小异：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">UniformBlock</span><span class="w"> </span><span class="n">ubo</span><span class="p">;</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">ubo</span><span class="p">.</span><span class="n">mousePos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QVector2D</span><span class="p">(</span><span class="n">mapFromGlobal</span><span class="p">(</span><span class="n">QCursor</span><span class="o">::</span><span class="n">pos</span><span class="p">()))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">qApp</span><span class="o">-&gt;</span><span class="n">devicePixelRatio</span><span class="p">();</span><span class="w">     </span><span class="c1">//获取鼠标位置</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">ubo</span><span class="p">.</span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QTime</span><span class="o">::</span><span class="n">currentTime</span><span class="p">().</span><span class="n">msecsSinceStartOfDay</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1000.0f</span><span class="p">;</span><span class="w">                       </span><span class="c1">//获取当前时间</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">updateDynamicBuffer</span><span class="p">(</span><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">UniformBlock</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ubo</span><span class="p">);</span>
+</code></pre></div>
+<p>在上述代码中，我们使用了这样的结构体定义：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">//c++</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="p">};</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// shader</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">    </span><span class="n">vec2</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>需要注意的是，在Shader中定义的块结构，图形API可能会在块成员之间做一些填充来保持硬件对齐，还可能优化掉未使用的成员。</p>
+<p>在上述结构中，假如我们更换<code>vec2 mousePos;</code>和 <code>float time;</code>位置，</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">//c++</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="p">};</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// shader</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">    </span><span class="n">vec2</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>虽然在结构定义上看上去他们是一样的，但在内存布局上，却有着严重的差异。</p>
+<p>以OpneGL为例，OpenGL中要求<code>vec2</code>遵循<code>8字节</code>对齐，这就导致shader中UniformBlock的结构定义，<code>time</code>和<code>mousePos</code>之间会填充<code>4字节</code>以保证<code>mousePos</code>是<code>8字节</code>对齐，这也意味着shader端的结构体，实际大小并非<code>12字节</code>，而是<code>16字节</code>，如果此时C++还当成是<code>12字节</code>进行处理，就会导致C++端上传的Uniform数据，跟Shader这边收到的数据对不上。</p>
+<p>要解决这个问题，比较粗暴的方式是在C++侧去手动填充数据来保证对齐：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">//c++</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">__padding</span><span class="p">;</span><span class="w">     </span><span class="c1">//该变量用于填充对齐,保证跟Shader中内存结构的一致</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="p">};</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// shader</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">    </span><span class="n">vec2</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="p">};</span>
+</code></pre></div>
+<p>在C++11中，提供了更优雅的方式—— <a href="https://en.cppreference.com/w/cpp/language/alignas">alignas</a></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">//c++</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="k">alignas</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span><span class="w">      </span><span class="c1">//使用alignas指定该成员使用8字节对齐</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="p">};</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// shader</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="w">    </span><span class="n">vec2</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>关于缓冲区对齐，这里有一些更详细的资料：</p>
+<ul>
+<li><a href="https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/08%20Advanced%20GLSL/#uniform_1">Learn OpenGL Uniform Block Layout</a></li>
+<li><a href="https://www.khronos.org/opengl/wiki/Interface_Block_(GLSL)#Memory_layout">OpenGL Wiki - Interface_Block </a></li>
+</ul>
+<h3 id="storage">Storage 缓冲区<a class="headerlink" href="#storage" title="Permanent link">&para;</a></h3>
+<p><strong>Storage 缓冲区（Storage Buffer）</strong> 用于在计算管线（Compute Pipelines）中提供可读可写的数据。</p>
+<p>它的用法与UniformBuffer几乎一模一样，它们之间的主要区别是：</p>
+<ul>
+<li><strong>Storage Buffer 可以申请非常大的显存</strong> ： OpenGL 规范保证 Uniform Buffer 的大小可以达到 <strong>16KB</strong> ，而 Storage Buffer 可以达到  <strong>128 MB</strong> 。</li>
+<li><strong>Storage Buffer 是可写的，甚至支持原子（Atomic）操作</strong> ：Storage Buffer 的读写可能是乱序的，因此它们往往需要增加一些内存屏障来保证同步。</li>
+<li><strong>Storage Buffer 支持可变存储</strong> ：这意味着在Storage Buffer中的块（Block），可以定义一个无界数组，就像是 <code>int arr[];</code>， 在着色器中可以使用<code>arr.length</code>得到数组长度，而在 Uniform Buffer 中的块，在定义数组时需要明确指定数组大小。</li>
+<li><strong>相同条件下，SSBO的访问会比Uniform Buffer要慢</strong> ：Storage Buffer 通常像缓冲区纹理一样访问，而 Uniform Buffer 数据是通过内部着色器可访问的内存进行读取。</li>
+</ul>
+<p>在后面的计算着色器章节，会讲解它的使用，这里有一个完善的文档：</p>
+<ul>
+<li><a href="https://www.khronos.org/opengl/wiki/Shader_Storage_Buffer_Object">https://www.khronos.org/opengl/wiki/Shader_Storage_Buffer_Object</a></li>
+</ul>
+<h2 id="_5">纹理<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>在之前的章节中，我们通过三个顶点特征，借助光栅化插值，来生成了一个彩色的三角形图像：</p>
+<p><a class="glightbox" href="../Resources/image-20230503194533809.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503194533809" src="../Resources/image-20230503194533809.png" /></a></p>
+<p>而在计算机中，如果我们想绘制一张图片，由于图片中往往具有非常多的特征，而这些特征往往不是线性渐变的，如果继续采用顶点的方式来传递图片的颜色特征，一张图片可能会有上百上千万个三角形，虽然这点数据量对GPU来说不在话下，但这么多数量的三角形，无疑会给几何和光栅化阶段带来巨大的压力</p>
+<p>例如这是一张大小仅<code>500*500</code>的噪声图：</p>
+<p><a class="glightbox" href="../Resources/image-20230520124250341.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230520124250341" src="../Resources/image-20230520124250341.png" /></a></p>
+<p>它的每个颜色都不是线性渐变的，如果以顶点的方式来描述这些特征，那么将需要两百五十万的顶点，这也就意味着图形渲染管线如果想渲染这张图片，将需要处理近百万数量的三角形，很显然，这个操作的性能消耗是非常昂贵的。</p>
+<p>为了解决图片渲染的难题，图形API提出了另一个概念 —— <strong>纹理（Texture）</strong></p>
+<p>它以 <strong>着色器资源（Shader Resource）</strong> 的形式存在于图形渲染管线中，与缓冲区相似，它也持有一段GPU上的内存，并且还包含一些特征—— <strong>图像格式（Format），采样数（Sample Count），类型标识（Flags）</strong></p>
+<p>在QRhi中，可以使用如下接口来创建纹理：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">QRhiTexture</span><span class="o">*</span><span class="w"> </span><span class="nf">QRhi::newTexture</span><span class="p">(</span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">Format</span><span class="w"> </span><span class="n">format</span><span class="p">,</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">                        </span><span class="k">const</span><span class="w"> </span><span class="n">QSize</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pixelSize</span><span class="p">,</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">                        </span><span class="kt">int</span><span class="w"> </span><span class="n">sampleCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">                        </span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">Flags</span><span class="w"> </span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{});</span>
+</code></pre></div>
+<ul>
+<li><strong>format</strong> ：图像格式，常见的图像格式有：</li>
+<li><code>RGBA8</code>：拥有红<code>R</code>，绿<code>G</code>，蓝<code>B</code>和透明度<code>A</code>四个通道，<code>8</code>表示每个通道占<code>8 bit</code>，也就是一字节，它能表示256个特征值</li>
+<li><code>R8</code>：拥有红色（R）单通道，<code>8</code>表示每个通道占<code>8 bit</code></li>
+<li><code>RGBA32F</code>：浮点格式的纹理，拥有红<code>R</code>，绿<code>G</code>，蓝<code>B</code>和透明度<code>A</code>四个通道，<code>32</code>表示每个通道占<code>32 bit</code>，也就是四字节，非浮点纹理只能存储[0,1]之间的值，超出部分会被丢弃，浮点纹理就允许图像上的数值可以越界。</li>
+<li><code>D24S8</code>：表示用<code>24 bit</code>作为深度通道，<code>8 bit</code> 作为模板通道</li>
+<li>...</li>
+<li><strong>pixelSize</strong> ：想要创建的图像的尺寸。</li>
+<li><strong>sampleCount</strong> ：采样数，默认为1，不进行多重采样（用于抗锯齿，反走样），一般情况下，电脑会支持设置采样数为{1，2，4，8}</li>
+<li><strong>flags</strong> ：纹理标识，默认情况下，QRhi创建的是一个2维纹理，可以通过这个标识来指定是其他类型，比如一维纹理，三维纹理，立方体纹理，纹理数组等，还能指定纹理的一些行为特征，比如是否生成Mipmap，是否可作为传输源，是否可用于计算着色器读写，是否可用做RenderTarget的附件等。</li>
+</ul>
+<p>我们可以用这样的代码来创建一张纹理：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">QImgae</span><span class="w"> </span><span class="n">mImage</span><span class="p">;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiTexture</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mTexture</span><span class="p">;</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="n">mImage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QImage</span><span class="p">(</span><span class="s">&quot;{Your Image Path}&quot;</span><span class="p">).</span><span class="n">convertedTo</span><span class="p">(</span><span class="n">QImage</span><span class="o">::</span><span class="n">Format_RGBA8888</span><span class="p">);</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="n">mTexture</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newTexture</span><span class="p">(</span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">RGBA8</span><span class="p">,</span><span class="w"> </span><span class="n">mImage</span><span class="p">.</span><span class="n">size</span><span class="p">()));</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="n">mTexture</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<p>为了将图像隐射到几何图形上面，我们会给几何图形的顶点增加一个属性—— <strong>纹理坐标(Texture Coordinate)</strong></p>
+<blockquote>
+<p>纹理坐标在x和y轴上，范围为0到1之间。使用纹理坐标获取纹理颜色叫做采样(Sampling)。纹理坐标起始于(0, 0)，也就是纹理图片的左下角，终始于(1, 1)，即纹理图片的右上角。下面的图片展示了如何把纹理坐标映射到三角形上的。</p>
+<p><a class="glightbox" href="../Resources/tex_coords.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/tex_coords.png" /></a></p>
+<p>为了跟空间位置的坐标分量进行区分，纹理坐标一般不使用x，y，z，而是使用u，v，w，又因为二维纹理比较常用，所以也经常将 纹理坐标 称作 <strong>UV</strong></p>
+</blockquote>
+<p>另外，还有一些我们需要考虑的问题：</p>
+<ul>
+<li>假如一张存储在磁盘上尺寸为<code>100*100</code>的图像，在我们预览的时候放大到了<code>1000*1000</code>，那么原本只有一万像素数据的图像，却要在屏幕上显示出一百万像素的效果，这你可能会想到之前的光栅化插值，可现在我们并不是以顶点的方式来绘制图像，而是以着色器纹理资源的方式，插值肯定是要做的，但以什么插值方式进行呢？</li>
+<li>假如我们要对一个图像上的每个点都执行这样的操作：每个像素点都算一遍跟邻近8个像素的平均值。这看似简单的操作却有一个非常麻烦的问题，边界的一圈像素周边并没有8个像素点，所以就意味着要对他们做特殊处理，而特殊处理就意味着存在逻辑分支，还记得上一章节所说的吗？ GPU 对逻辑处理并不友好。那有没有其他办法呢，如果可以在采样边界部分空缺像素的时候，也能正常采样，返回一个值（比如说是0），那就可以不用对边界做特殊处理了。这个操作就意味着我们可能会超出纹理坐标的范围[0,1]去对图像进行采样，那这种情况的采样，该返回什么值合适呢？</li>
+</ul>
+<p>这就是 <strong>采样器（Sampler）</strong> 的职责所在 —— 定义 <strong>插值过滤行为</strong> 和 <strong>越界处理策略</strong></p>
+<p>这里有一个非常好的文章介绍了这些行为，请读者务必查看：</p>
+<ul>
+<li><a href="https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/#_3">https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/#_3</a></li>
+</ul>
+<p>在QRhi中，可以使用下方函数来创建采样器：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">Filter</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">    </span><span class="n">None</span><span class="p">,</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">    </span><span class="n">Nearest</span><span class="p">,</span><span class="w">        </span><span class="c1">//邻近过滤（Nearest Neighbor Filtering），取距离纹理坐标最近的像素值</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">    </span><span class="n">Linear</span><span class="w">          </span><span class="c1">//线性过滤（Linear Filtering），根据纹理坐标周边的像素进行插值            </span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="p">};</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="k">enum</span><span class="w"> </span><span class="nc">AddressMode</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="w">    </span><span class="n">Repeat</span><span class="p">,</span><span class="w">         </span><span class="c1">//重复，越界部分会使用重复的图像</span>
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="w">    </span><span class="n">ClampToEdge</span><span class="p">,</span><span class="w">    </span><span class="c1">//约束到边界：越界部分会使用图形边界的像素值</span>
+<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="w">    </span><span class="n">Mirror</span><span class="p">,</span><span class="w">         </span><span class="c1">//镜像：越界部分会使用图像的镜像</span>
+<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="p">};</span>
+<a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="n">QRhiSampler</span><span class="o">*</span><span class="nf">QRhi::newSampler</span><span class="p">(</span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="w"> </span><span class="n">magFilter</span><span class="p">,</span>
+<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="w"> </span><span class="n">minFilter</span><span class="p">,</span>
+<a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="w"> </span><span class="n">mipmapMode</span><span class="p">,</span>
+<a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="w"> </span><span class="n">addressU</span><span class="p">,</span>
+<a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="w"> </span><span class="n">addressV</span><span class="p">,</span>
+<a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="w"> </span><span class="n">addressW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Repeat</span><span class="p">);</span>
+</code></pre></div>
+<ul>
+<li><strong>magFilter</strong> ：放大（Magnify）过滤，即图像放大时采样何种方式进行采样过滤</li>
+<li><strong>minFilter</strong> ：缩小（Minify）过滤，即图像缩小时采样何种方式进行采样过滤</li>
+<li><strong>mipmapMode</strong> ：多级渐远纹理的采样模式，下一篇文章会细说。</li>
+<li><strong>addressU</strong> ：在水平方向的越界处理策略</li>
+<li><strong>addressV</strong> ：在竖直方向的越界处理处理</li>
+<li><strong>addressW</strong> ：3D空间中，垂直于屏幕方向的越界处理策略，二维纹理可无视这个参数。</li>
+</ul>
+<p>可以使用这样的方式来创建采样器：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiSampler</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mSapmler</span><span class="p">;</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="n">mSapmler</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newSampler</span><span class="p">(</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="o">::</span><span class="n">Linear</span><span class="p">,</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="o">::</span><span class="n">Linear</span><span class="p">,</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="o">::</span><span class="n">Nearest</span><span class="p">,</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="o">::</span><span class="n">Repeat</span><span class="p">,</span>
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="o">::</span><span class="n">Repeat</span><span class="p">,</span>
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="o">::</span><span class="n">Repeat</span>
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="p">));</span>
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="n">mSapmler</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<p>而纹理跟 UniformBuffer 一样，都属于 <strong>着色器资源（Shader Resource）</strong> ，使用它也需要在 <strong>着色器资源绑定（ShaderResourceBinding）</strong> 中进行绑定：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="n">mShaderBindings</span><span class="o">-&gt;</span><span class="n">setBindings</span><span class="p">({</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">    </span><span class="n">QRhiShaderResourceBinding</span><span class="o">::</span><span class="n">sampledTexture</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w">                                                    </span><span class="c1">//流水线中绑定的索引</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">                                              </span><span class="n">QRhiShaderResourceBinding</span><span class="o">::</span><span class="n">StageFlag</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w">  </span><span class="c1">//可在片段着色器中使用</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">                                              </span><span class="n">mTexture</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w">                                       </span><span class="c1">//纹理对象</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">                                              </span><span class="n">mSapmler</span><span class="p">.</span><span class="n">get</span><span class="p">())</span><span class="w">                                       </span><span class="c1">//采样器对象</span>
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="p">});</span>
+</code></pre></div>
+<p>有了上述代码的支撑，我们可以在片段着色器中使用如下代码去采样纹理：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">vUV</span><span class="p">;</span><span class="w">           </span><span class="c1">//从顶点着色阶段经光栅化传递过来的纹理坐标</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">outFragColor</span><span class="p">;</span><span class="w"> </span><span class="c1">//片段颜色输出</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="k">layout</span><span class="p">(</span><span class="n">binding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">inTexture</span><span class="p">;</span><span class="w">    </span><span class="c1">//着色器纹理资源</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">(){</span>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">    </span><span class="n">outFragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">inTexture</span><span class="p">,</span><span class="n">vUV</span><span class="p">);</span><span class="w">  </span><span class="c1">//通过texture函数根据UV坐标对图像采样，得到值的类型是vec4</span>
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>这里有几个有用小Tips：</p>
+<ul>
+<li>GLSL中可以使用函数<code>textureSize(inTexture, 0)</code>获取纹理的尺寸</li>
+<li>在一些章节中测试一些Pass的效果可能会经常要到全屏纹理的绘制，有一个简单的方法，在不使用任何顶点输入的情况下，根据顶点着色器的内置变量<code>gl_VertexIndex</code>去生成一个矩形的顶点和纹理坐标，只需要用一个空的 <strong>InputVertexLayout</strong> ，并调用<code>cmdBuffer-&gt;draw(4)</code>就能绘制矩形纹理，其中顶点着色器的创建如下：</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">VertexStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s">#version 450</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="s">    layout (location = 0) out vec2 vUV;</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="s">    out gl_PerVertex{</span>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="s">        vec4 gl_Position;</span>
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="s">    };</span>
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="s">    void main() {</span>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="s">        vUV = vec2((gl_VertexIndex &lt;&lt; 1) &amp; 2, gl_VertexIndex &amp; 2);      /</span>
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="s">        gl_Position = vec4(vUV * 2.0f - 1.0f, 0.0f, 1.0f);</span>
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="s">#if Y_UP_IN_NDC              //因为DX和GL，VK的NDC坐标不一致，因此这里需要做一些兼容处理</span>
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="s">        vUV.y = 1 - vUV.y;</span>
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a><span class="s">#endif </span>
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a><span class="s">    }</span><span class="dl">)</span><span class="s">&quot;</span>
+<a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a><span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">QShaderDefinitions</span><span class="p">()</span><span class="w">   </span><span class="c1">//该参数只是简单的在代码开头添加 #define Y_UP_IN_NDC 1        </span>
+<a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a><span class="w">    </span><span class="p">.</span><span class="n">addDefinition</span><span class="p">(</span><span class="s">&quot;Y_UP_IN_NDC&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">isYUpInNDC</span><span class="p">())</span>
+<a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>详见：<a href="https://stackoverflow.com/questions/2588875/whats-the-best-way-to-draw-a-fullscreen-quad-in-opengl-3-2">https://stackoverflow.com/questions/2588875/whats-the-best-way-to-draw-a-fullscreen-quad-in-opengl-3-2</a></p>
+</blockquote>
+<h2 id="_6">示例<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>在该教程的<a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/1-GraphicsAPI/04-BufferAndTexture/Source/main.cpp">04-BufferAndTexture</a>示例中，演示了如何使用 <strong>Uniform Buffer</strong> ， <strong>Index Buffer</strong> 和 <strong>Texture</strong> ，你可以以它为参考，去实现一些有意思的东西：</p>
+<p><a class="glightbox" href="../Resources/418.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="418" src="../Resources/418.gif" /></a></p>
+<h2 id="_7">内存管理<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>在 <a href="https://zhuanlan.zhihu.com/p/603325037">C++内存管理</a> 的章节中，我们介绍了一些C++中管理CPU内存的方法，而在GPU中，它的内存使用同样也有一些黑话，这里有一些详细的文档：</p>
+<ul>
+<li><strong>Vulkan中该做和不该做的事情</strong> ：<a href="https://developer.nvidia.com/blog/vulkan-dos-donts/">https://developer.nvidia.com/blog/vulkan-dos-donts/</a></li>
+<li>
+<p><strong>DX12中该做和不该做的事情</strong> ：<a href="https://developer.nvidia.com/dx12-dos-and-donts">https://developer.nvidia.com/dx12-dos-and-donts</a></p>
+</li>
+<li>
+<p><strong>Vulkan 内存管理</strong> ：<a href="https://www.youtube.com/watch?v=rXSdDE7NWmA">https://www.youtube.com/watch?v=rXSdDE7NWmA</a></p>
+</li>
+<li>B站转载：<a href="https://www.bilibili.com/video/BV17W411S7a1/?p=3">https://www.bilibili.com/video/BV17W411S7a1/?p=3</a></li>
+<li>演讲PPT：<a href="https://www.khronos.org/assets/uploads/developers/library/2018-vulkan-devday/03-Memory.pdf">https://www.khronos.org/assets/uploads/developers/library/2018-vulkan-devday/03-Memory.pdf</a></li>
+</ul>
+<p>同样也有一些我们可以依赖的三方库：</p>
+<ul>
+<li><strong>Vulkan 内存分配器</strong> ：<a href="https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator">https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator</a></li>
+<li><strong>D3D12 内存分配器</strong> ：<a href="https://github.com/GPUOpen-LibrariesAndSDKs/D3D12MemoryAllocator">https://github.com/GPUOpen-LibrariesAndSDKs/D3D12MemoryAllocator</a></li>
+</ul>
+<blockquote>
+<p>幸运的是，QRhi已经在内部装载了这两个内存分配器：<a href="https://github.com/qt/qtbase/tree/dev/src/gui/rhi">https://github.com/qt/qtbase/tree/dev/src/gui/rhi</a></p>
+</blockquote>
+
+  <hr>
+<div class="md-source-file">
+  <small>
+    
+      最后更新:
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-01 17:12:52</span>
+      
+        <br>
+        创建日期:
+        <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-01 17:12:52</span>
+      
+    
+  </small>
+</div>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js"
+    data-repo="Italink/ModernGraphicsEngineGuide"
+    data-repo-id="R_kgDOIPtbiQ"
+    data-category-id="DIC_kwDOIPtbic4CTxOk"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin="anonymous"
+    async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 3 - 着色器">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                3 - 着色器
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-footer__link md-footer__link--next" aria-label="下一页: 5 - 3D空间">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                5 - 3D空间
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078c-.271.73-.5 1.434-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58.104 58.104 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.223 9.223 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125zM13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.cd18aaf1.min.js"></script>
+      
+    
+  <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
+</html>
