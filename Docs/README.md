@@ -94,4 +94,5 @@ comments: true
   - [ ] [插件开发](04-UnrealEngine/2.插件开发.md)
   - [x] [粒子系统](04-UnrealEngine/3.粒子系统.md)
   - [x] [Niagara 性能优化 ](04-UnrealEngine/4.Niagra性能优化.md)
-  - [ ] 开发世界项目管理
+  - [ ] [Fluid Ninja 流体插件 ](04-UnrealEngine/5.FluidNinja流体插件.md)
+  - [x] [开发世界项目管理](04-UnrealEngine/6.开放世界制作.md)
