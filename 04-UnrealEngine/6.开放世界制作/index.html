@@ -2518,7 +2518,7 @@
 <p>流送的逻辑主要位于：</p>
 <p><a class="glightbox" href="../Resources/image-20231129161940907.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129161940907" src="../Resources/image-20231129161940907.png" /></a></p>
 <h3 id="_11">关键问题<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
-<p>世界分区（World Partition）可以让我们轻易实现无缝加载的大世界，但流送的特性也带来了很多限制和注意事项。</p>
+<p>世界分区（World Partition）可以让我们轻易实现无缝加载的大世界，但流送的特性也带来了很多限制，这往往需要开发商具有更加成熟的制作团队，并配备专业的引擎团队，在设计时充分考虑到世界分区的特性，并且 <strong>需要一名专业人员来监管世界分区的流送策略</strong> 。</p>
 <h4 id="_12">跨边界<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
 <p>观察之前的物体划分和流送情况：</p>
 <p><a class="glightbox" href="../Resources/image-20231129094519448.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129094519448" src="../Resources/image-20231129094519448.png" /></a></p>
@@ -2748,10 +2748,7 @@
 <p>UE只是引擎技术的供应商，它提供了许多优秀的技术能力和通用编辑器，但并不存在一套标准的场景制作解决方案，这是需要研发团队耗费大量的试错成本去做技术的积累和选型。</p>
 </li>
 <li>
-<p>开放世界项目需要配备专业的引擎团队，以及更专业的制作人员（地编，策划，Gameplay...），在设计时充分考虑到世界分区的特性，甚至 <strong>需要一名专业人员来监管世界分区的流送配置</strong> 。</p>
-</li>
-<li>
-<p>需要明白人的力量是有限的，因此在制作资产时尽可能采用程序化，在管控流程上尽可能使用自动化，寻找到合适的量化指标，来让制作流程变得可追溯，可迭代：</p>
+<p>需要明白人的力量是有限的，因此在制作资产时最好尽可能地采用程序化，在管控流程上尽可能使用自动化，寻找到合适的量化指标，来让制作流程变得可追溯，可迭代：</p>
 <ul>
 <li>Houdini和UE5的PCG框架：<ul>
 <li><a href="https://link.zhihu.com/?target=https%3A//www.bilibili.com/video/BV1y8411U7Hs">[UE5 PCG] 官方公开课：深入研究Electric Dreams环境项目</a></li>
@@ -2824,7 +2821,7 @@
   <small>
     
       最后更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-04 10:20:09</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-04 10:25:18</span>
       
         <br>
         创建日期:
