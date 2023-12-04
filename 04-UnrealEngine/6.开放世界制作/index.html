@@ -2253,7 +2253,7 @@
 </ul>
 <p>这篇文章会更详细地说明使用UE5制作开放世界是需要注意什么，以及将会面临什么。</p>
 <h2 id="_1">世界分区<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>在UE5中制作开放世界地图，要明确 <strong>分区（Partition）</strong> 和 <strong>流送（Streaming）</strong> 的概念，这里有一些 **必看！ 必看！ 必看！ ** 的内容：</p>
+<p>在UE5中制作开放世界地图，要明确 <strong>分区（Partition）</strong> 和 <strong>流送（Streaming）</strong> 的概念，这里有一些 <strong>必看！ 必看！ 必看！</strong> 的内容：</p>
 <ul>
 <li><a href="https://docs.unrealengine.com/5.3/zh-CN/building-virtual-worlds-in-unreal-engine/">在虚幻引擎中构建虚拟世界 | 虚幻引擎5.3文档 (unrealengine.com)</a></li>
 <li><a href="https://www.bilibili.com/video/BV1UC4y1V7jt">Unreal Fest 2023 - Building Bigger</a></li>
@@ -2282,8 +2282,8 @@
 <p>场景中新建的Actor默认都会参与流送，也就是会被卸载，在Actor的细节面板上可以做相关调整：</p>
 <p><a class="glightbox" href="../Resources/image-20231201112501518.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231201112501518" src="../Resources/image-20231201112501518.png" /></a></p>
 <ul>
-<li><strong>运行时网格</strong>：该Actor归属于哪个世界分区网格，如果为None会被指定到 <strong>MainGrid</strong> 中。</li>
-<li><strong>已空间加载</strong>：勾选后该Actor会参与世界分区的流送，取消勾选会让该Actor在场景中永远被加载，不参加流送。</li>
+<li><strong>运行时网格</strong> ：该Actor归属于哪个世界分区网格，如果为None会被指定到 <strong>MainGrid</strong> 中。</li>
+<li><strong>已空间加载</strong> ：勾选后该Actor会参与世界分区的流送，取消勾选会让该Actor在场景中永远被加载，不参加流送。</li>
 </ul>
 <p>世界分区的流送由 <strong>流送源（Streaming Source）</strong> 来触发。</p>
 <p>流送源对应的C++接口为： <strong>IWorldPartitionStreamingSourceProvider</strong></p>
@@ -2590,7 +2590,7 @@
 <li>让这部分数据不要参与流送，即数据存储在一个合理的作用域，而不是存到Actor中。</li>
 </ul>
 <p>UE5.3中提供了一个实验性插件 <strong>LevelStreamingPersistence</strong> 可以帮助开发者解决该问题。</p>
-<p><a class="glightbox" href="Resources/image-20231204160944855.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231204160944855" src="Resources/image-20231204160944855.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231204160944855.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231204160944855" src="../Resources/image-20231204160944855.png" /></a></p>
 <p>其核心结构如下：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">ULevelStreamingPersistenceManager</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">UWorldSubsystem</span>
 <a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="p">{</span>
@@ -2772,7 +2772,7 @@
 <p>场景制作流程不会混乱的前提是每个参与者都严格遵守场景的制作规范，因此需要研发团队建立公共的文档仓库用于公布和迭代场景规范， 尽可能依靠工具而非人工进行校验，这样可以很大程度地减少人为介入产生错误的概率，如果非要增加相关人员的手动工作量，也需要尽可能地评估出最精简的数据和流程。</p>
 </li>
 <li>
-<p>开放世界的场景规范极度依赖于游戏的玩法设计，只有在明确核心角色玩法之后，开发团队才能制定与之对应的 <strong>场景规范</strong> ，确立 <strong>性能优化指标</strong> ，并制作相应的 <strong>工具链</strong>。以王国之泪为例：</p>
+<p>开放世界的场景规范极度依赖于游戏的玩法设计，只有在明确核心角色玩法之后，开发团队才能制定与之对应的 <strong>场景规范</strong> ，确立 <strong>性能优化指标</strong> ，并制作相应的 <strong>工具链</strong> 。以王国之泪为例：</p>
 <ul>
 <li>根据角色的精力（游泳，攀爬，滑翔）机制，去定制地形高度，坡度和水体的规范。</li>
 <li>根据通天术的技能要求，去定制地形规范。</li>
@@ -2824,7 +2824,7 @@
   <small>
     
       最后更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-04 10:16:26</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-04 10:20:09</span>
       
         <br>
         创建日期:
