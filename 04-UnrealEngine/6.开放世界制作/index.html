@@ -2694,7 +2694,7 @@
 </ul>
 <p>注意事项：</p>
 <ul>
-<li>黑客帝国的场景物体多是棱角分明的建筑，它统一使用了 定制的 近似网格 策略，当场景具有更复杂的物体种类时（比如树木，水体，植被），则需要定制更加细化的处理策略，深入了解HLOD相关代码流程和UE所提供的网格处理算法对开放世界项目的性能优化是非常有价值的。</li>
+<li>黑客帝国的场景物体多是棱角分明的建筑，它统一使用了 定制的 近似网格 策略，当场景具有更复杂的物体种类时（比如树木，水体，植被），则需要定制更加细化的处理策略，这往往需要非常严格的资产管理策略作为支撑，此外，深入了解HLOD相关代码流程和UE所提供的网格处理算法对开放世界项目的性能优化是非常有价值的。</li>
 <li>HLOD是将一个网格的单元合并为一个简模，但如果一块区域存在多个网格，那么该区域就会生成多个简模，且不同网格之间的模型不会合并，因此，在通常情况下，所有场景物体都应该该放在MainGrid中，只需要对MainGrid中的物体生成HLOD，对于小型物件，可以放到一个加载范围更小的网格中，不参与HLOD的生成。</li>
 </ul>
 <h3 id="_22">数据层<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h3>
@@ -2821,7 +2821,7 @@
   <small>
     
       最后更新:
-      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-04 10:25:18</span>
+      <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-04 10:29:50</span>
       
         <br>
         创建日期:
