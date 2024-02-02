@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -2074,9 +2072,9 @@
 <p>珠玉在前，本节内容就做一些补充。</p>
 <h2 id="_2">基础概念<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>计算机上的各种数据，一般都是 <strong>存储</strong> 在 <strong>磁盘</strong> 上面，<code>鼠标右键</code> 点击桌面图标 <code>此电脑</code> — <code>管理</code> — <code>存储</code> — <code>磁盘管理</code>，可以浏览和操作磁盘：</p>
-<p><a class="glightbox" href="../Resources/image-20230203202305032.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230203202305032" src="../Resources/image-20230203202305032.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230203202305032.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230203202305032" src="../Resources/image-20230203202305032.png" /></a></p>
 <p>在 <strong>任务管理器</strong> 和 <strong>资源监视器</strong> 中，还能看到磁盘当前的运行情况：</p>
-<p><a class="glightbox" href="../Resources/image-20230203202516951.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230203202516951" src="../Resources/image-20230203202516951.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230203202516951.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230203202516951" src="../Resources/image-20230203202516951.png" /></a></p>
 <p>当磁盘中的数据被使用时，操作系统会将其加载到内存之中，关于内存，<a href="https://baike.baidu.com/item/%E5%86%85%E5%AD%98/103614">百度百科</a>中有如下说明：</p>
 <blockquote>
 <p>内存是<a href="https://baike.baidu.com/item/计算机/140338?fromModule=lemma_inlink">计算机</a>的重要部件，也称<a href="https://baike.baidu.com/item/内存储器/834392?fromModule=lemma_inlink">内存储器</a>和<a href="https://baike.baidu.com/item/主存储器/10635399?fromModule=lemma_inlink">主存储器</a>，它用于暂时存放CPU中的运算数据，以及与<a href="https://baike.baidu.com/item/硬盘/159825?fromModule=lemma_inlink">硬盘</a>等<a href="https://baike.baidu.com/item/外部存储器/4843180?fromModule=lemma_inlink">外部存储器</a>交换的数据。它是<a href="https://baike.baidu.com/item/外存/2445612?fromModule=lemma_inlink">外存</a>与<a href="https://baike.baidu.com/item/CPU/120556?fromModule=lemma_inlink">CPU</a>进行沟通的桥梁，计算机中所有程序的运行都在内存中进行，内存性能的强弱影响计算机整体发挥的水平。只要计算机开始运行，<a href="https://baike.baidu.com/item/操作系统/192?fromModule=lemma_inlink">操作系统</a>就会把需要运算的数据从内存调到CPU中进行运算，当运算完成，CPU将结果传送出来。</p>
@@ -2097,7 +2095,7 @@
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">}</span>
 </code></pre></div>
 <p>由于我们在栈中创建或使用了超出程序预分配大小的内存，此时会报 Stack Overflow：</p>
-<p><a class="glightbox" href="../Resources/image-20230203205039824.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230203205039824" src="../Resources/image-20230203205039824.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230203205039824.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230203205039824" src="../Resources/image-20230203205039824.png" /></a></p>
 <p>再执行下面的程序：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100000000</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -2107,9 +2105,9 @@
 <a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="p">}</span>
 </code></pre></div>
 <p>当没有相应的空闲内存块时，动态分配会失败</p>
-<p><a class="glightbox" href="../Resources/image-20230203210759623.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230203210759623" src="../Resources/image-20230203210759623.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230203210759623.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230203210759623" src="../Resources/image-20230203210759623.png" /></a></p>
 <p>可以通过编译器来手动设置程序预分配的栈和堆的空间大小，在 Visual Studio中，你可以在项目配置中进行修改：</p>
-<p><a class="glightbox" href="../Resources/image-20230203211347087.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230203211347087" src="../Resources/image-20230203211347087.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230203211347087.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230203211347087" src="../Resources/image-20230203211347087.png" /></a></p>
 <blockquote>
 <p>笔者使用的VS2022有 <strong>汉化异常</strong> ，Stack 被错误翻译为了 堆栈</p>
 </blockquote>
@@ -2170,7 +2168,7 @@
 <p>在处理器看来，缓存是一个透明部件。因此，程序员通常无法直接干预对缓存的操作。但是，确实可以根据缓存的特点对程序代码实施特定优化，从而更好地利用缓存。</p>
 </blockquote>
 <p>在Windows下，你可以打开任务管理器，查看电脑的Cache信息：</p>
-<p><a class="glightbox" href="../Resources/image-20230203213134642.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230203213134642" src="../Resources/image-20230203213134642.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230203213134642.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230203213134642" src="../Resources/image-20230203213134642.png" /></a></p>
 <p>当程序访问一块内存的时候，可能会把它的周边区域一起给加载到缓存中（因为额外加载一部分内容并没有太多开销），如果我们下次需要访问的内存已经被加载到缓存中（称作缓存命中），CPU就不用再到内存中访问，从而提升速度</p>
 <p>这个示例代码可以让你了解到缓存的重要性：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
@@ -3286,10 +3284,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

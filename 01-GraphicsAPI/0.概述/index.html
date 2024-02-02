@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -1849,7 +1847,7 @@
 <a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="p">}</span>
 </code></pre></div>
 <p>这里通过一个二维的<code>vector</code>来表示屏幕上的像素数据，一般称这个结构为<a href="https://zhuanlan.zhihu.com/p/381766140">FrameBuffer</a>，运行它你能看到：</p>
-<p><a class="glightbox" href="../Resources/image-20230225141528556.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230225141528556" src="../Resources/image-20230225141528556.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230225141528556.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230225141528556" src="../Resources/image-20230225141528556.png" /></a></p>
 <p>我们要做的就是在这张二维的表上绘制我们的图形</p>
 <h3 id="_2">光栅化<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <p>什么是图形？</p>
@@ -1921,7 +1919,7 @@
 <a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="p">}</span>
 </code></pre></div>
-<p><a class="glightbox" href="../Resources/image-20230225151936599.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230225151936599" src="../Resources/image-20230225151936599.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230225151936599.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230225151936599" src="../Resources/image-20230225151936599.png" /></a></p>
 <p>而三角形的光栅化相对来说复杂一些，这里有几种算法：</p>
 <ul>
 <li>分割法</li>
@@ -1929,7 +1927,7 @@
 <li>Barycentric 算法</li>
 </ul>
 <p>其中分割法比较常见，它的核心思想也很简单，就是将一个三角形划分成两个底边与X抽并行的三角形，然后在纵向上逐步的填充线条：</p>
-<p><a class="glightbox" href="../Resources/generalTriangle.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/generalTriangle.png" /></a></p>
+<p><a class="glightbox" href="../Resources/generalTriangle.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/generalTriangle.png" /></a></p>
 <p>思路细节请阅读：</p>
 <ul>
 <li><a href="http://www.sunshine2k.de/coding/java/TriangleRasterization/TriangleRasterization.html">http://www.sunshine2k.de/coding/java/TriangleRasterization/TriangleRasterization.html</a></li>
@@ -2008,7 +2006,7 @@
 <a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="p">}</span>
 <a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="p">}</span>
 </code></pre></div>
-<p><a class="glightbox" href="../Resources/image-20230225153623298.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230225153623298" src="../Resources/image-20230225153623298.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230225153623298.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230225153623298" src="../Resources/image-20230225153623298.png" /></a></p>
 <p>关于相关细节，可阅读：</p>
 <ul>
 <li><a href="https://zhuanlan.zhihu.com/p/370059588">图形渲染基础：光栅化算法</a></li>
@@ -2021,7 +2019,7 @@
 <li>可以对FrameBuffe上的像素进行一些额外的加工，比如上色，加各种滤镜等</li>
 </ul>
 <p>结合上一节的<code>SwapChain</code>，可以实现这样的小程序：</p>
-<p><a class="glightbox" href="../Resources/18.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="18" src="../Resources/18.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/18.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="18" src="../Resources/18.gif" /></a></p>
 <p>上图中动态地缩放三角形的大小，并为其添加了一层 * 边框，完整代码如下：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;vector&gt;</span>
@@ -2336,17 +2334,17 @@
 </ul>
 <p>目前在 Unreal Engine 5 中开发</p>
 <p>在这个过程中，笔者学到了很多东西，并且迫切地想要把它们给记录下来，复刻一遍来加深理解，然而，却受尽苦难 —— 废弃的OpenGL，繁琐的Vulkan，魔改的bgfx，错综复杂的O3DE、UE...都不是我想要的，直到，笔者无意间发现了 Qt 的 RHI，它的源码就是一件艺术品，它有着高度简化的现代图形API架构：</p>
-<p><a class="glightbox" href="../Resources/image-20230223222138230.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230223222138230" src="../Resources/image-20230223222138230.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230223222138230.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230223222138230" src="../Resources/image-20230223222138230.png" /></a></p>
 <h3 id="qrhi">QRhi<a class="headerlink" href="#qrhi" title="Permanent link">&para;</a></h3>
 <p>Qt6 的主要目标之一是让 Qt 摆脱直接使用 OpenGL，并且通过适当的抽象，允许在更广泛的图形上进行操作API，例如<a href="https://www.khronos.org/vulkan/">Vulkan</a>、<a href="https://developer.apple.com/metal/">Metal</a>和<a href="https://docs.microsoft.com/en-us/windows/win32/direct3d">Direct3D</a>。<a href="https://www.khronos.org/opengl/">OpenGL</a>（和<a href="https://www.khronos.org/opengles/">OpenGL ES</a>），这背后的主要动机不是获得性能，而是在 OpenGL 不可用或不再需要的平台和设备上，仍能确保 <strong>Qt无处不在</strong> ，将来也会如此。同时，能够在现代的、较低级别的、显式 API 上进行构建也可以在提高性能（例如，由于 API 开销较少而降低 CPU 使用率），它是<a href="https://doc.qt.io/qt-5/qtquick-index.html#">Qt Quick</a>和其他模块背后的渲染引擎，它的架构如下：</p>
-<p><a class="glightbox" href="../Resources/68747470733a2f2f7777772e71742e696f2f68732d66732f68756266732f726869617263682d332e706e673f77696474683d383030266e616d653d726869617263682d332e706e67.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="rhiarch-3" src="../Resources/68747470733a2f2f7777772e71742e696f2f68732d66732f68756266732f726869617263682d332e706e673f77696474683d383030266e616d653d726869617263682d332e706e67.png" /></a></p>
+<p><a class="glightbox" href="../Resources/68747470733a2f2f7777772e71742e696f2f68732d66732f68756266732f726869617263682d332e706e673f77696474683d383030266e616d653d726869617263682d332e706e67.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="rhiarch-3" src="../Resources/68747470733a2f2f7777772e71742e696f2f68732d66732f68756266732f726869617263682d332e706e673f77696474683d383030266e616d653d726869617263682d332e706e67.png" /></a></p>
 <blockquote>
 <p>在官方目前的开发者分支上，QRhi已经支持DX12，预计会在Qt6.6上线</p>
 </blockquote>
 <p>而在Qt6中，它也不再使用与OpenGL兼容的GLSL着色器代码，而是使用Vulkan风格的GLSL编写，然后反射并翻译成其他着色器语言（HLSL，MSL），最后打包成一个可序列化的QShader对象，供QRhi使用，它的工作流程如下：</p>
-<p><a class="glightbox" href="../Resources/shaderconditioning.pngwidth%3D1280%26name%3Dshaderconditioning.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="着色器调节" src="../Resources/shaderconditioning.pngwidth%3D1280%26name%3Dshaderconditioning.png" /></a></p>
+<p><a class="glightbox" href="../Resources/shaderconditioning.pngwidth%3D1280%26name%3Dshaderconditioning.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="着色器调节" src="../Resources/shaderconditioning.pngwidth%3D1280%26name%3Dshaderconditioning.png" /></a></p>
 <p>你能在如下位置，找到它的源码：</p>
-<p><a class="glightbox" href="../Resources/image-20230224200924150.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230224200924150" src="../Resources/image-20230224200924150.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230224200924150.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230224200924150" src="../Resources/image-20230224200924150.png" /></a></p>
 <p>其中关键文件为：</p>
 <ul>
 <li>qrhi_p.h：定义了各种图形资源的结构和操作</li>
@@ -2356,7 +2354,7 @@
 <p>其他以<code>qrhi</code>开头的文件是特定图形API的具体实现</p>
 <h3 id="_4">示例<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <p>在如下目录有很多QRhi的测试工程：</p>
-<p><a class="glightbox" href="../Resources/image-20230224201720128.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230224201720128" src="../Resources/image-20230224201720128.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230224201720128.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230224201720128" src="../Resources/image-20230224201720128.png" /></a></p>
 <p>只需修改当前目录下的CMakeLists.txt，在内容开头增加：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.12</span><span class="p">)</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">project</span><span class="p">(</span><span class="s">QRhiTests</span><span class="w"> </span><span class="s">VERSION</span><span class="w"> </span><span class="s">0.0.1</span><span class="p">)</span>
@@ -2367,70 +2365,70 @@
 </code></pre></div>
 <p>就能使用Cmake对该目录生成工程文件</p>
 <p>在这些工程示例中，可以在的<code>项目属性</code> - <code>调试</code> - <code>命令参数</code>中调整Rhi的配置，可配置项可参考<code>examplefw.h</code>中的<a href="https://doc.qt.io/qt-6/qcommandlineparser.html">QCommandLineParser</a>：</p>
-<p><a class="glightbox" href="../Resources/image-20230225102515433.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230225102515433" src="../Resources/image-20230225102515433.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230225102515433.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230225102515433" src="../Resources/image-20230225102515433.png" /></a></p>
 <blockquote>
 <p>例如追加 <code>-v</code>，能使用vulkan作为渲染后端，部分示例在DX11中无法运行</p>
 </blockquote>
 <p>如果有一定图形API基础，通过这些工程示例能快速上手QRhi</p>
 <p><strong>helloinimalcrossgfxtriangle</strong> ：简单的三角形绘制程序</p>
-<p><a class="glightbox" href="../Resources/c11.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="c11" src="../Resources/c11.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/c11.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="c11" src="../Resources/c11.gif" /></a></p>
 <p><strong>multiwindow</strong> ：多个Rhi窗口</p>
-<p><a class="glightbox" href="../Resources/image-20230224220345498.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230224220345498" src="../Resources/image-20230224220345498.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230224220345498.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230224220345498" src="../Resources/image-20230224220345498.png" /></a></p>
 <p><strong>multiwindow_threaded</strong> ：多窗口，多线程</p>
-<p><a class="glightbox" href="../Resources/image-20230224220052699.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230224220052699" src="../Resources/image-20230224220052699.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230224220052699.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230224220052699" src="../Resources/image-20230224220052699.png" /></a></p>
 <p><strong>rhiwidget</strong> ：在QWidget上使用Rhi</p>
-<p><a class="glightbox" href="../Resources/image-20230224215435887.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230224215435887" src="../Resources/image-20230224215435887.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230224215435887.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230224215435887" src="../Resources/image-20230224215435887.png" /></a></p>
 <p><strong>offscreen</strong> ：离屏（无窗口）渲染</p>
-<p><a class="glightbox" href="../Resources/image-20230224215743281.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230224215743281" src="../Resources/image-20230224215743281.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230224215743281.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230224215743281" src="../Resources/image-20230224215743281.png" /></a></p>
 <p><strong>triquadcube</strong> ：绘制一些简单的几何图形</p>
-<p><a class="glightbox" href="../Resources/ct3.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="ct3" src="../Resources/ct3.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/ct3.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="ct3" src="../Resources/ct3.gif" /></a></p>
 <p><strong>polygonmode</strong> ：线框模式</p>
-<p><a class="glightbox" href="../Resources/ct8.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="ct8" src="../Resources/ct8.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/ct8.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="ct8" src="../Resources/ct8.gif" /></a></p>
 <p><strong>msaatexture</strong> ：使用 <a href="https://baike.baidu.com/item/MSAA/2793968">MSAA</a> 的纹理</p>
-<p><a class="glightbox" href="../Resources/ct9.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="ct9" src="../Resources/ct9.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/ct9.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="ct9" src="../Resources/ct9.gif" /></a></p>
 <p><strong>msaarenderbuffer</strong> ：使用 <a href="https://baike.baidu.com/item/MSAA/2793968">MSAA</a> 的RenderBuffer</p>
-<p><a class="glightbox" href="../Resources/c01.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="c01" src="../Resources/c01.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/c01.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="c01" src="../Resources/c01.gif" /></a></p>
 <p><strong>tst_manual_instancing</strong> ：实例化渲染</p>
-<p><a class="glightbox" href="../Resources/image-20230224214029806.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230224214029806" src="../Resources/image-20230224214029806.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230224214029806.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230224214029806" src="../Resources/image-20230224214029806.png" /></a></p>
 <p><strong>noninstanced</strong> ：非实例化渲染，使用Buffer来达到与实例化相同的目的</p>
-<p><a class="glightbox" href="../Resources/image-20230224215914744.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230224215914744" src="../Resources/image-20230224215914744.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230224215914744.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230224215914744" src="../Resources/image-20230224215914744.png" /></a></p>
 <p><strong>mrt</strong> ：多渲染目标（Multiple Render Target）：一条流水线有多个输出 </p>
-<p><a class="glightbox" href="../Resources/mrt.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="mrt" src="../Resources/mrt.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/mrt.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="mrt" src="../Resources/mrt.gif" /></a></p>
 <p><strong>texuploads</strong> ：上传纹理</p>
-<p><a class="glightbox" href="../Resources/ct3-167724624677815.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="ct3" src="../Resources/ct3-167724624677815.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/ct3-167724624677815.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="ct3" src="../Resources/ct3-167724624677815.gif" /></a></p>
 <p><strong>floattexture</strong> ：浮点纹理：原本纹理的数值存储范围为[0,1]</p>
-<p><a class="glightbox" href="../Resources/image-20230224220816896.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230224220816896" src="../Resources/image-20230224220816896.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230224220816896.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230224220816896" src="../Resources/image-20230224220816896.png" /></a></p>
 <p><strong>texturearray</strong> ：纹理数组</p>
-<p><a class="glightbox" href="../Resources/ct4.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="ct4" src="../Resources/ct4.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/ct4.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="ct4" src="../Resources/ct4.gif" /></a></p>
 <p><strong>tex3d</strong> ：3D纹理</p>
-<p><a class="glightbox" href="../Resources/ct5.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="ct5" src="../Resources/ct5.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/ct5.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="ct5" src="../Resources/ct5.gif" /></a></p>
 <p><strong>cubemap</strong> ：立方体纹理</p>
-<p><a class="glightbox" href="../Resources/c16.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="c16" src="../Resources/c16.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/c16.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="c16" src="../Resources/c16.gif" /></a></p>
 <p><strong>cubemap_scissor</strong> ：裁剪</p>
-<p><a class="glightbox" href="../Resources/c14.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="c14" src="../Resources/c14.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/c14.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="c14" src="../Resources/c14.gif" /></a></p>
 <p><strong>cubemap_render</strong> ：渲染输出到立方体纹理</p>
-<p><a class="glightbox" href="../Resources/c15.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="c15" src="../Resources/c15.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/c15.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="c15" src="../Resources/c15.gif" /></a></p>
 <p><strong>compressedtexture_bc1</strong> ：压缩纹理</p>
-<p><a class="glightbox" href="../Resources/ct.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="ct" src="../Resources/ct.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/ct.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="ct" src="../Resources/ct.gif" /></a></p>
 <p><strong>compressedtexture_bc1_subupload</strong> ：上传部分压缩纹理</p>
-<p><a class="glightbox" href="../Resources/ct2.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="ct2" src="../Resources/ct2.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/ct2.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="ct2" src="../Resources/ct2.gif" /></a></p>
 <p><strong>computebuffer</strong> ：使用 <strong>Compute Shader</strong> 制作简易的GPU粒子</p>
-<p><a class="glightbox" href="../Resources/c18.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="c18" src="../Resources/c18.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/c18.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="c18" src="../Resources/c18.gif" /></a></p>
 <p><strong>computeimage</strong> ：使用 <strong>Compute Shader</strong> 动态生成图像</p>
-<p><a class="glightbox" href="../Resources/c17.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="c17" src="../Resources/c17.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/c17.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="c17" src="../Resources/c17.gif" /></a></p>
 <p><strong>float16texture_with_compute</strong> ：计算生成16位的浮点纹理</p>
-<p><a class="glightbox" href="../Resources/c13.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="c13" src="../Resources/c13.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/c13.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="c13" src="../Resources/c13.gif" /></a></p>
 <p><strong>geometryshader</strong> ：使用几何着色器</p>
-<p><a class="glightbox" href="../Resources/c12.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="c12" src="../Resources/c12.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/c12.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="c12" src="../Resources/c12.gif" /></a></p>
 <p><strong>tessellation</strong> ：使用镶嵌着色器</p>
-<p><a class="glightbox" href="../Resources/ct6.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="ct6" src="../Resources/ct6.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/ct6.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="ct6" src="../Resources/ct6.gif" /></a></p>
 <p><strong>shadowmap</strong> ：绘制阴影</p>
-<p><a class="glightbox" href="../Resources/ct7.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="ct7" src="../Resources/ct7.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/ct7.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="ct7" src="../Resources/ct7.gif" /></a></p>
 <h2 id="_5">学习资源<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <p>该教程的主要目的是为了让一些小伙伴能够入门，并培养良好的代码习惯。</p>
 <p>对于深层次的技术，不要指望有太多的文章和教程来阐述它们的原理，主流引擎中的代码绝对是最好的参考，不过想要阅读它们，不仅需要足够的理论知识，还需要过硬的工程能力。</p>
 <p>对于图形开发中的常用数学知识，强烈推荐《3D数学基础》，以及其他几册书籍：</p>
-<p><a class="glightbox" href="../Resources/0.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../Resources/0.png" /></a></p>
+<p><a class="glightbox" href="../Resources/0.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../Resources/0.png" /></a></p>
 <p>关于实时渲染，这里有一个比较完整的资源合集：</p>
 <ul>
 <li><a href="http://www.realtimerendering.com">http://www.realtimerendering.com</a></li>
@@ -2681,10 +2679,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -1988,7 +1986,7 @@
 </ul>
 <p>这些着色器语言的整体工作流程都差不多，比较大的区别就是符合自己API风格（标新立异）的语法。</p>
 <p>这里有一个功能相同的片段着色器（Fragment Shader）在不同着色器语言下的实现：</p>
-<p><a class="glightbox" href="../Resources/image-20230503163338306.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503163338306" src="../Resources/image-20230503163338306.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503163338306.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503163338306" src="../Resources/image-20230503163338306.png" /></a></p>
 <p>早期的游戏开发商，往往会使用一种图形API来作为自己游戏引擎的渲染后端，但随着各个操作平台的用户数量逐渐上升，跨平台也吸引了各大厂商的注意，毕竟多支持一个平台，也就意味着多一个市场。</p>
 <p>因此，现今大多的游戏引擎都会将这些图形API封装成统一的接口，可以在不同的平台上切换，来追求更好的图形性能，我们一般称这套接口为 <strong>RHI</strong> （Rendering Hardware Interface）</p>
 <p>而在封装过程中，除了要注意图形API的指令和资源，跨平台的着色器也是一个非常头疼的问题。</p>
@@ -2008,7 +2006,7 @@
 </ul>
 <h2 id="_3">着色器转译<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>QRhi的跨平台着色器方案跟UE相似，只不过QRhi使用Vulkan风格的GLSL开发而非HLSL，它的转译流程如下：</p>
-<p><a class="glightbox" href="../Resources/v2-b8badd685b39f310d5420e95c1283995_1440w.webp" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/v2-b8badd685b39f310d5420e95c1283995_1440w.webp" /></a></p>
+<p><a class="glightbox" href="../Resources/v2-b8badd685b39f310d5420e95c1283995_1440w.webp" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/v2-b8badd685b39f310d5420e95c1283995_1440w.webp" /></a></p>
 <p>在上一节中，我们使用了这样的代码来创建着色器：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">VertexStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s">#version 440</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="s">    layout(location = 0) in vec2 position;      //这里需要与上面的inputLayout 对应</span>
@@ -2063,12 +2061,12 @@
 </code></pre></div>
 <p>QShaderBaker 来自于 <strong>Qt Shader Tools</strong> 的私有模块，在使用CMake构建的时候，需要为自己的构建目标链接<code>Qt::ShaderToolsPrivate</code>，使用它可以将Vulkan风格的GLSL编译成一个QShader对象（里面包含了各个版本图形API的着色器代码），这是一种在 <strong>运行时转译</strong> 着色器代码的方法。</p>
 <p>此外，我们还可以利用Qt提供的 <strong>qsb</strong> 命令行工具 <strong>离线转译</strong> 着色器代码，该工具位于如下的目录中：</p>
-<p><a class="glightbox" href="../Resources/image-20230503153613484.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503153613484" src="../Resources/image-20230503153613484.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503153613484.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503153613484" src="../Resources/image-20230503153613484.png" /></a></p>
 <blockquote>
 <p>你可以给该目录添加到系统环境变量中，这样就能在全局访问qsb工具</p>
 </blockquote>
 <p>在窗口地址栏中输入 <code>cmd</code>， 按下回车，可以打开命令行窗口，在其中输入 <code>qsb.exe -h</code> 可以看到该命令行工具的使用说明：</p>
-<p><a class="glightbox" href="../Resources/image-20230503153838795.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503153838795" src="../Resources/image-20230503153838795.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503153838795.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503153838795" src="../Resources/image-20230503153838795.png" /></a></p>
 <p>比如使用指令<code>qsb.exe -c color.frag -o color.frag.qsb --glsl 430 --msl 12 --hlsl 60</code> 可以将当前目录的<code>color.frag</code>文件转译生成一个 <code>color.frag.qsb</code>文件，该文件包含了 430版本的GLSL，12版本的MSL，60版本的HLSL。</p>
 <p>在Qt中，可以通过如下方式来使用<code>*.qsb</code>文件：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">QShader</span><span class="w"> </span><span class="nf">newShaderFromQSBFile</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">filename</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
@@ -2093,7 +2091,7 @@
 <a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="nb">endfunction</span><span class="p">()</span>
 </code></pre></div>
 <p>这样的话，在构建每次<code>TARGET_NAME</code> 时，CMake都会检测<code>SHADER_PATH</code>有没有发生改变，如果发生改变，则会调用自定义指令，这里也就是调用<code>QSB</code>工具生成<code>*.qsb</code>文件，报错信息也会出现在IDE的错误面板上：</p>
-<p><a class="glightbox" href="../Resources/image-20230503162819180.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503162819180" src="../Resources/image-20230503162819180.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503162819180.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503162819180" src="../Resources/image-20230503162819180.png" /></a></p>
 <p>关于Qt的着色器工具，可以在这里发现一些测试示例：</p>
 <ul>
 <li><a href="https://github.com/qt/qtshadertools/blob/dev/tests/auto/qshaderbaker/tst_qshaderbaker.cpp">https://github.com/qt/qtshadertools/blob/dev/tests/auto/qshaderbaker/tst_qshaderbaker.cpp</a></li>
@@ -2231,7 +2229,7 @@
 <a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">}</span>
 </code></pre></div>
 <p>存储方式的不同不仅仅影响矩阵的访问方式，更为重要的是它将影响矩阵的运算顺序，下图描述了不同存储方式下，三维矩阵与三维向量相乘的结果是什么类型：</p>
-<p><a class="glightbox" href="../Resources/96997598049549ea6f3691dd3f71d92b0c4646dd.png%40942w_711h_progressive.webp" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/96997598049549ea6f3691dd3f71d92b0c4646dd.png%40942w_711h_progressive.webp" /></a></p>
+<p><a class="glightbox" href="../Resources/96997598049549ea6f3691dd3f71d92b0c4646dd.png%40942w_711h_progressive.webp" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/96997598049549ea6f3691dd3f71d92b0c4646dd.png%40942w_711h_progressive.webp" /></a></p>
 <p>我们在GLSL中使用矩阵一般是对向量进行变换，因此我们运算是一般是从右往左进行计算。如下所示：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">vec3</span><span class="w"> </span><span class="n">pos</span><span class="w">    </span><span class="o">=</span><span class="w"> </span><span class="n">vec3</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">mat3</span><span class="w"> </span><span class="n">model</span><span class="w">  </span><span class="o">=</span><span class="w"> </span><span class="n">mat3</span><span class="p">(...);</span>
@@ -2283,7 +2281,7 @@
 </tbody>
 </table>
 <p>需要注意的就是<code>in</code>，<code>out</code>和<code>uniform</code>之间的区别：</p>
-<p><a class="glightbox" href="../Resources/image-20230503191610995.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503191610995" src="../Resources/image-20230503191610995.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503191610995.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503191610995" src="../Resources/image-20230503191610995.png" /></a></p>
 <p>布局限定符的格式为：</p>
 <ul>
 <li><code>layout( layout-qualifier-id-list )</code></li>
@@ -2336,7 +2334,7 @@
 </ul>
 <h3 id="_9">基础阶段<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
 <p>一个完整的图形渲染管线执行流程如下：</p>
-<p><a class="glightbox" href="../Resources/GL-Pipeline.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/GL-Pipeline.jpg" /></a></p>
+<p><a class="glightbox" href="../Resources/GL-Pipeline.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/GL-Pipeline.jpg" /></a></p>
 <ul>
 <li>
 <p>红色部分的 <strong>Vertex Shader</strong> 和 <strong>Fragment Shader</strong> 是图形渲染管线中的 <strong>必填项</strong></p>
@@ -2448,11 +2446,11 @@
 <a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="p">};</span>
 </code></pre></div>
 <p>绘制出了这样的图像：</p>
-<p><a class="glightbox" href="../Resources/image-20230503194533809.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503194533809" src="../Resources/image-20230503194533809.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503194533809.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503194533809" src="../Resources/image-20230503194533809.png" /></a></p>
 <p>仔细查看，明明只输入3个顶点的颜色，但最终的图像中有多少种颜色？</p>
 <p>很显然，不是3种，那这是怎么做到呢？</p>
 <p>通过下图，我们很容易发现，顶点着色器和片段着色器并不是一一对应的，顶点在被装配成几何图元之后，经由光栅化阶段，会生成很多片段：</p>
-<p><a class="glightbox" href="../Resources/image-20230503194825627.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503194825627" src="../Resources/image-20230503194825627.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503194825627.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503194825627" src="../Resources/image-20230503194825627.png" /></a></p>
 <p>而这个过程在着色器层面可以看做是：顶点着色器的输出变量，在经过光栅化之后，变成了很多片段的输入变量。</p>
 <p>而输出变量到输入变量之间多对多的转换，是通过 <strong>光栅化插值</strong> 完成的，关于它的细节，请查阅：</p>
 <ul>
@@ -2515,8 +2513,8 @@
 <li><code>step</code> （阶跃）函数</li>
 </ul>
 <p>一般情况下，数学函数的图像都是连续平缓的，阶跃函数特殊的点就在于，它存在值的跳变，它的函数图像是这样的：</p>
-<p><a class="glightbox" href="../Resources/image-20230503201624943.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503201624943" src="../Resources/image-20230503201624943.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20230503201733475.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503201733475" src="../Resources/image-20230503201733475.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503201624943.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503201624943" src="../Resources/image-20230503201624943.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503201733475.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503201733475" src="../Resources/image-20230503201733475.png" /></a></p>
 <p>这个跳变的特征非常适用于数值上的逻辑分支，但它的使用却不太符合人的直觉，所以在GLSL中，允许我们使用条件运算符来完成相关的逻辑，就比如：<code>(a &lt; b) ? a : b</code></p>
 <p>GLSL中的一些内置函数，比如min，max等，它是特定于GPU的实现，所以我们无需关心逻辑分支的问题。我们只需要注意<code>if</code>的使用，而<code>if</code> 并不等价于分支，真正重要的是编译器是否生成了 <strong>分支指令</strong> 。</p>
 <p>关于这些问题细节和注意事项，这里有一个非常好的说明：</p>
@@ -2533,7 +2531,7 @@
 <li><a href="https://zhuanlan.zhihu.com/p/572503905">[知乎-mike] UE4 PSO缓存</a></li>
 </ul>
 <p>在QRhi中，我们可以在创建QRhi的时候，开启流水线缓存的功能：</p>
-<p><a class="glightbox" href="../Resources/image-20230503205925995.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503205925995" src="../Resources/image-20230503205925995.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503205925995.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503205925995" src="../Resources/image-20230503205925995.png" /></a></p>
 <p>使用函数 <code>QByteArray QRhi::pipelineCacheData()</code>可以获取到当前程序已经编译好的流水线缓存数据</p>
 <p>使用函数 <code>void QRhi::setPipelineCacheData(const QByteArray &amp;data)</code>可以设置流水线缓存数据</p>
 <p>在程序调用<code>QRhiGraphicsPipeline::create()</code>时，会根据当前的流水线参数状态，去查询是否存在流式线状态，如果有，则直接复用，而不会重新编译。</p>
@@ -2542,11 +2540,11 @@
 <ul>
 <li>Shadertoy：<a href="https://www.shadertoy.com/">https://www.shadertoy.com/</a></li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20230503214715725.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503214715725" src="../Resources/image-20230503214715725.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503214715725.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503214715725" src="../Resources/image-20230503214715725.png" /></a></p>
 <ul>
 <li>Glsl Sandbox：<a href="http://glslsandbox.com/">http://glslsandbox.com/</a> </li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20230503214831931.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503214831931" src="../Resources/image-20230503214831931.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503214831931.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503214831931" src="../Resources/image-20230503214831931.png" /></a></p>
 <p>这两个平台都搭配了完善的在线Shader编辑器，你可以在上面尝试模仿一些简单的效果，并熟悉着色器的基本语法。</p>
 <p>祝你好运！</p>
 
@@ -2751,10 +2749,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

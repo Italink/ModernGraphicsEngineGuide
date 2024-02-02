@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -1827,19 +1825,19 @@
 <ul>
 <li>近大远小的空间透视感</li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20230527223242963.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230527223242963" src="../Resources/image-20230527223242963.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230527223242963.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230527223242963" src="../Resources/image-20230527223242963.png" /></a></p>
 <ul>
 <li>光影产生的立体感</li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20230528152235000.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230528152235000" src="../Resources/image-20230528152235000.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230528152235000.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230528152235000" src="../Resources/image-20230528152235000.png" /></a></p>
 <p>除了单帧图像所携带的信息，人眼还会根据图像的运动情况来还原空间的信息，就比如运动视差：</p>
-<p><a class="glightbox" href="../Resources/Parallax_scroll.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="undefined" src="../Resources/Parallax_scroll.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/Parallax_scroll.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="undefined" src="../Resources/Parallax_scroll.gif" /></a></p>
 <p>当然，还有一些其他因素，这里暂不展开讨论，感兴趣的小伙伴可以查阅：</p>
 <ul>
 <li>Wiki Depth Perception：<a href="https://en.wikipedia.org/wiki/Depth_perception">https://en.wikipedia.org/wiki/Depth_perception</a></li>
 </ul>
 <p>计算机的成像过程如下：</p>
-<p><a class="glightbox" href="../Resources/viewing-frustum-_frustum.fit_lim.size_768x.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/viewing-frustum-_frustum.fit_lim.size_768x.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/viewing-frustum-_frustum.fit_lim.size_768x.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/viewing-frustum-_frustum.fit_lim.size_768x.gif" /></a></p>
 <p>我们可以简单看作是，把3D空间的物体，拍扁贴到<code>近平面（Near Plane）</code>上</p>
 <p>在理论层面，3D空间中的物体在计算机中不过是一堆数据，贴到 近平面 的图像又是另一堆数据，而我们要做的，无非是将一堆数据转换成另一堆数据</p>
 <p>回顾一下我们初高中在学校所学习过的知识，思考以下场景：</p>
@@ -1859,15 +1857,15 @@
 <p>所有我们可以再想想，能不能上面的流程能不能再简化一下？使用一个模板就能执行所有可能的操作，这样计算机就能针对这一模板，进行极致的优化。</p>
 <p>答案肯定是有的，而这套模板就建立在 <a href="https://baike.baidu.com/item/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0">线性代数</a> 的体系之上</p>
 <p>对于一个三维坐标<code>(X,Y,Z)</code>，如果我们想让它平移<code>(Tx,Ty,Tz)</code>个单位，会给该坐标补上一个<a href="https://en.wikipedia.org/wiki/Homogeneous_coordinates">齐次坐标（Homogeneous_Coordinates）</a>，然后乘上一个 <strong>平移矩阵(Translation Matrix)</strong> ：</p>
-<p><a class="glightbox" href="../Resources/5e8862ed2174022bee08dd884f4300cf.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20210521111108645" src="../Resources/5e8862ed2174022bee08dd884f4300cf.png" /></a></p>
+<p><a class="glightbox" href="../Resources/5e8862ed2174022bee08dd884f4300cf.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20210521111108645" src="../Resources/5e8862ed2174022bee08dd884f4300cf.png" /></a></p>
 <p>如果想让它在不同坐标分量上，缩放<code>(S1,S2,S3)</code>个大小，会给它乘上一个 <strong>缩放矩阵（Scale Matrix）</strong> ：</p>
-<p><a class="glightbox" href="../Resources/1df7ad4e15915530a451f053bbcfeea8.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20210521105821765" src="../Resources/1df7ad4e15915530a451f053bbcfeea8.png" /></a></p>
+<p><a class="glightbox" href="../Resources/1df7ad4e15915530a451f053bbcfeea8.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20210521105821765" src="../Resources/1df7ad4e15915530a451f053bbcfeea8.png" /></a></p>
 <p>如果想绕它绕X轴旋转θ角度，会给它乘上一个 <strong>旋转矩阵（Rotate Matrix）</strong> ：</p>
-<p><a class="glightbox" href="../Resources/21ae934529205b73ae6d048c89898edb.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20210521111545555" src="../Resources/21ae934529205b73ae6d048c89898edb.png" /></a></p>
+<p><a class="glightbox" href="../Resources/21ae934529205b73ae6d048c89898edb.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20210521111545555" src="../Resources/21ae934529205b73ae6d048c89898edb.png" /></a></p>
 <p>如果是Y轴：</p>
-<p><a class="glightbox" href="../Resources/aa579998d7db8ba46a9a96fe4c292232.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20210521111559180" src="../Resources/aa579998d7db8ba46a9a96fe4c292232.png" /></a></p>
+<p><a class="glightbox" href="../Resources/aa579998d7db8ba46a9a96fe4c292232.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20210521111559180" src="../Resources/aa579998d7db8ba46a9a96fe4c292232.png" /></a></p>
 <p>Z轴：</p>
-<p><a class="glightbox" href="../Resources/9ef98d9520af66ac686cd86f70e85803.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20210521111610922" src="../Resources/9ef98d9520af66ac686cd86f70e85803.png" /></a></p>
+<p><a class="glightbox" href="../Resources/9ef98d9520af66ac686cd86f70e85803.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20210521111610922" src="../Resources/9ef98d9520af66ac686cd86f70e85803.png" /></a></p>
 <p>在C++中，大多数数学库都提供了向量和矩阵的各类便捷函数，在Qt中，就提供了以下数据结构：</p>
 <ul>
 <li><a href="https://doc.qt.io/qt-6/qvector2d.html">QVector2D</a></li>
@@ -1893,10 +1891,10 @@
 <p>还记得矩阵的乘法口诀吗？—— <strong>前行乘后列</strong></p>
 <p>根据这一特性，我们实际想要的是：一个<code>向量</code>乘以一个<code>矩阵</code>，得到的是一个变换后的<code>向量</code></p>
 <p>下图从 乘法计算 结果 的 类型 说明了为什么对于 <strong>按列存储的向量需要使用左乘</strong> ：</p>
-<p><a class="glightbox" href="../Resources/image-20230528104226972.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230528104226972" src="../Resources/image-20230528104226972.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230528104226972.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230528104226972" src="../Resources/image-20230528104226972.png" /></a></p>
 <p>虽然说对3D空间的变换是通过矩阵进行的，但如果把所有变换都糅合到一个矩阵里面，就回导致变换的二次处理加工变得非常困难。</p>
 <p>因此，现代图形学中，3D空间的变换还划分为几个阶段，这几个阶段有着不同的处理职责：</p>
-<p><a class="glightbox" href="../Resources/coordinate_systems.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="coordinate_systems" src="../Resources/coordinate_systems.png" /></a></p>
+<p><a class="glightbox" href="../Resources/coordinate_systems.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="coordinate_systems" src="../Resources/coordinate_systems.png" /></a></p>
 <ul>
 <li>图形原先所处的空间，我们称作 <strong>局部空间（Local Space）</strong> ，我们可以通过 <strong>模型矩阵（Model Matrix）</strong> 将它的坐标转换到 <strong>世界空间（World Space）</strong> ， <strong>模型矩阵的职责是处理物体的平移，旋转，缩放</strong> 。</li>
 <li>通过 <strong>视图矩阵（View Matrix）</strong> ， 我们可以将 <strong>世界坐标（World Coordinate）</strong> 转换到 <strong>视图空间（View Space）</strong> 中的坐标， <strong>视图矩阵的职责是确立视点所在的位置和视野的朝向</strong></li>
@@ -1963,22 +1961,22 @@
 <a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="dl">)</span><span class="s">&quot;</span><span class="p">);</span>
 </code></pre></div>
 <p>绘制出了一个三角形：</p>
-<p><a class="glightbox" href="../Resources/image-20230503194533809.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503194533809" src="../Resources/image-20230503194533809.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503194533809.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503194533809" src="../Resources/image-20230503194533809.png" /></a></p>
 <p>大家可能已经猜到了顶点位置里面 <code>0.0f</code>，-<code>0.5f</code>，<code>0.5f</code>所代表的意义，仿佛这些顶点坐标的取值范围是[-1,1]？这是因为图形API为了让坐标运算不受显示器分辨率的影响，都使用了 <strong>标准化设备坐标(Normalized Device Coordinates, 简称NDC)</strong> 的概念。</p>
 <p>以OpenGL为例，它遵循右手坐标系：</p>
-<p><a class="glightbox" href="../Resources/image-20230521094519474.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230521094519474" src="../Resources/image-20230521094519474.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230521094519474.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230521094519474" src="../Resources/image-20230521094519474.png" /></a></p>
 <p>任一轴向的取值范围为[-1,1]，就像这样：</p>
-<p><a class="glightbox" href="../Resources/image-20230521093725199.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230521093725199" src="../Resources/image-20230521093725199.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230521093725199.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230521093725199" src="../Resources/image-20230521093725199.png" /></a></p>
 <p>任何落在范围外的 <strong>顶点</strong> 会按一些策略进行图元裁剪，而不会显示在屏幕上 ：</p>
-<p><a class="glightbox" href="Resources/Screenshot_2022-04-27_092223_wjz58k.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="Resources/Screenshot_2022-04-27_092223_wjz58k.png" alt="被剪裁的三角形" style="zoom:50%;" /></a></p>
+<p><a class="glightbox" href="Resources/Screenshot_2022-04-27_092223_wjz58k.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="Resources/Screenshot_2022-04-27_092223_wjz58k.png" alt="被剪裁的三角形" style="zoom:50%;" /></a></p>
 <p>该过程详见：</p>
 <ul>
 <li><a href="https://registry.khronos.org/vulkan/specs/1.3/html/chap24.html">https://registry.khronos.org/vulkan/specs/1.3/html/chap24.html</a></li>
 </ul>
 <p>Vulkan也使用右手坐标系，因为Vulkan声称是下一代的OpenGL，跟OpenGL一样怎么好意思叫Vulkan，它总要跟OpenGL有一些标新立异的点，因此， <strong>Vulkan的Y轴是朝下的</strong> ，为了跟其他现代图形API保持一致， <strong>它的Z轴（深度) 取值范围变成了[0,1]</strong> ，就是这个样子：</p>
-<p><a class="glightbox" href="../Resources/image-20230527105811415.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230527105811415" src="../Resources/image-20230527105811415.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230527105811415.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230527105811415" src="../Resources/image-20230527105811415.png" /></a></p>
 <p>而 DirectX 和 Metal 又与它们不同， <strong>DirectX 和 Metal的NDC使用的是左手坐标系，且深度值范围是[0,1]</strong> ：</p>
-<p><a class="glightbox" href="../Resources/image-20230521100350075.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230521100350075" src="../Resources/image-20230521100350075.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230521100350075.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230521100350075" src="../Resources/image-20230521100350075.png" /></a></p>
 <p>关于它们的差异和细节，详见：</p>
 <ul>
 <li><a href="https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/coordinate-systems.html">https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/coordinate-systems.html</a></li>
@@ -2071,10 +2069,10 @@
 </code></pre></div>
 <h3 id="frame-buffer">Frame Buffer 坐标 差异<a class="headerlink" href="#frame-buffer" title="Permanent link">&para;</a></h3>
 <p>此外，我们还需要注意图形API之间不仅仅有NDC的差异，FrameBuffer的坐标空间也有不同，由于<a href="https://gamedev.stackexchange.com/questions/83570/why-is-the-origin-in-computer-graphics-coordinates-at-the-top-left">历史原因</a>，早期的计算机阴极射线管（CRT）从左上角到右上角绘制图像，所以在大多数传统图形API，通常 <strong>以左上角为帧图像的坐标原点</strong> ，OpenGL成立之初想要改变这一点，让坐标系的使用更符合人类的通识（即二维平面上，使用左下角作为坐标原点，Y轴朝上，X轴朝右），但可惜的是，已经有太多的框架已经适应并普遍遵循原先的规定，这反倒导致了我们在 <strong>使用 OpenGL 的时候还需要对纹理进行上下翻转（Flip Y）</strong> ，在现代图形API （DirectX、Metal、Vulkan）， 都已经向历史妥协，所以大家在使用时注意遵循 ”传统“：</p>
-<p><a class="glightbox" href="../Resources/image-20230521104752631.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230521104752631" src="../Resources/image-20230521104752631.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230521104752631.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230521104752631" src="../Resources/image-20230521104752631.png" /></a></p>
 <h3 id="_2">示例<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <p>根据上面的一些描述，我们可以制作一些简单的小程序，比如一个随时间变换的立方体：</p>
-<p><a class="glightbox" href="../Resources/118.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="118" src="../Resources/118.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/118.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="118" src="../Resources/118.gif" /></a></p>
 <p>示例代码位于 <a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/1-GraphicsAPI/05-3D/Source/main.cpp">05-3D</a></p>
 <p>核心代码只是：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">VertexStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">&quot;</span><span class="dl">(</span><span class="s">#version 440</span>
@@ -2216,10 +2214,10 @@
 </ul>
 <h3 id="mipmap">Mipmap<a class="headerlink" href="#mipmap" title="Permanent link">&para;</a></h3>
 <p>在上一节中 <a href="https://zhuanlan.zhihu.com/p/630886324">缓冲区与纹理</a> 中，通过 <strong>minFilter</strong> 可以确定在图像被缩小显示时，使用何种策略来根据纹理坐标的 <strong>邻近像素</strong> 确定当前的像素值，使用线性（Linear）采样会根据像素周边四个的邻近像素来确定当前颜色，可是当图像的缩放比例非常大的时候，比如将一张图像的寸尺从<code>1000*1000</code>，缩放到<code>10*10</code>，使用Linear采样的时候，只会根据四个邻近像素点来确定颜色，明显会导致采样不足，出现 <a href="https://baike.baidu.com/item/%E6%91%A9%E5%B0%94%E7%BA%B9">摩尔纹</a> 现象，就像这样：</p>
-<p><a class="glightbox" href="../Resources/14568.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="14568" src="../Resources/14568.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/14568.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="14568" src="../Resources/14568.gif" /></a></p>
 <p>为了解决这个问题，现代图形API引入了另一个概念 — <strong>多级渐远纹理（Mipmap）</strong></p>
 <p>开启Mipmap会比原纹理多约三分之一的空间大小，，它的原理可以看作是将图像每次缩放到原先图像一半的新图像作为一个 <strong>Mip Level</strong> ，就像是这样：</p>
-<p><a class="glightbox" href="../Resources/mipmaps.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/mipmaps.png" /></a></p>
+<p><a class="glightbox" href="../Resources/mipmaps.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/mipmaps.png" /></a></p>
 <p>图形渲染管线在执行时，会根据uv和texture尺寸，选用合适的 Mip Level 进行采样</p>
 <p>在QRhi中，我们只需要在创建纹理使用<code>QRhiTexture::Flag::MipMapped | QRhiTexture::UsedWithGenerateMips</code>：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">mTexture</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newTexture</span><span class="p">(</span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">RGBA8</span><span class="p">,</span>
@@ -2244,7 +2242,7 @@
 <a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">generateMips</span><span class="p">(</span><span class="n">mTexture</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
 </code></pre></div>
 <p>再执行程序一看，可以看到摩尔纹已经消失了：</p>
-<p><a class="glightbox" href="../Resources/1468.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="1468" src="../Resources/1468.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/1468.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="1468" src="../Resources/1468.gif" /></a></p>
 <p>示例代码位于该教程的 ：</p>
 <ul>
 <li><a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/1-GraphicsAPI/06-3DWithCamera/Source/main.cpp">06-3DWithCamera</a></li>
@@ -2455,10 +2453,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -1907,16 +1905,16 @@
 </blockquote>
 <p>如果你还没用过C++的编译器？那就跟UP一起来用一遍吧~</p>
 <p>如果你有 <strong>Visual Stuidio</strong> ，可以在如下目录找到 <strong>cl.exe</strong> </p>
-<p><a class="glightbox" href="../Resources/image-20220727130655227.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220727130655227" src="../Resources/image-20220727130655227.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220727130655227.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220727130655227" src="../Resources/image-20220727130655227.png" /></a></p>
 <p>在 <strong>地址栏</strong> 输入<code>cmd</code>，按下<code>回车键</code>，可以在当前目录创建一个控制台窗口：</p>
-<p><a class="glightbox" href="../Resources/image-20220727130839307.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220727130839307" src="../Resources/image-20220727130839307.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220727130839307.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220727130839307" src="../Resources/image-20220727130839307.png" /></a></p>
 <p>在控制台中输入<code>cl.exe /help</code>，按下<code>回车键</code>，你能看到它的帮助文档：</p>
 <blockquote>
 <p>输入过程中按<code>Tab键</code>可自动补全</p>
 </blockquote>
-<p><a class="glightbox" href="../Resources/image-20220727131102311.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220727131102311" src="../Resources/image-20220727131102311.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220727131102311.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220727131102311" src="../Resources/image-20220727131102311.png" /></a></p>
 <p>看着这些参数，是否有点眼熟？哟，这不是VS的项目配置吗？</p>
-<p><a class="glightbox" href="../Resources/image-20220727132407575.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220727132407575" src="../Resources/image-20220727132407575.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220727132407575.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220727132407575" src="../Resources/image-20220727132407575.png" /></a></p>
 <p>cl.exe是一个命令行程序，下面我们将用这个命令行程序去生成我们自己的命令行程序。</p>
 <p>首先，在任意路径下，新建一个新文件，名为 <strong>main.cpp</strong> ，其代码如下：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
@@ -1935,17 +1933,17 @@
 <a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p">}</span>
 </code></pre></div>
 <p>在windows文件浏览器的地址栏中输入<code>cmd</code>+<code>回车</code>，打开控制台创建，先输入指令<code>cl.exe+回车</code>，进行测试：</p>
-<p><a class="glightbox" href="../Resources/image-20220816111923729.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220816111923729" src="../Resources/image-20220816111923729.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220816111923729.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220816111923729" src="../Resources/image-20220816111923729.png" /></a></p>
 <blockquote>
 <p>如果出现错误： <strong>cl.exe 不是内部或外部命令，也不是可执行的程序</strong> </p>
 <p>是因为控制台程序在当前的工作目录下没有找到该文件，为了解决这个问题，操作系统往往会提供 <strong>环境变量</strong> 的设置，它允许一些特定目录下的文件可以被全局访问，关于环境变量，请查阅 <a href="https://baike.baidu.com/item/%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/1730949?fr=aladdin">此处</a></p>
 </blockquote>
 <p>接下来我们还需要初始化控制台的运行环境，以便cl.exe能正确地搜索到C++的标准库路径，在VS的如下目录可以找到文件 <strong>vcvars64.bat</strong> ：</p>
-<p><a class="glightbox" href="../Resources/image-20220816122114849.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220816122114849" src="../Resources/image-20220816122114849.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220816122114849.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220816122114849" src="../Resources/image-20220816122114849.png" /></a></p>
 <p>将之拖拽到我们刚刚的控制台窗口中，按下<code>回车</code>，就能成功初始化环境：</p>
-<p><a class="glightbox" href="../Resources/image-20220816122459694.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220816122459694" src="../Resources/image-20220816122459694.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220816122459694.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220816122459694" src="../Resources/image-20220816122459694.png" /></a></p>
 <p>接下来再输入指令<code>cl.exe main.cpp</code>，编译该文件：</p>
-<p><a class="glightbox" href="../Resources/image-20220816122538888.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220816122538888" src="../Resources/image-20220816122538888.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220816122538888.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220816122538888" src="../Resources/image-20220816122538888.png" /></a></p>
 <p>编译成功将生成两个文件：</p>
 <ul>
 <li>
@@ -1955,7 +1953,7 @@
 <p><strong>main.exe</strong> ：windows下的可执行文件</p>
 </li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20220816122621807.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220816122621807" src="../Resources/image-20220816122621807.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220816122621807.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220816122621807" src="../Resources/image-20220816122621807.png" /></a></p>
 <blockquote>
 <p>这里实际上cl.exe进行了多个步骤：</p>
 <ul>
@@ -1966,7 +1964,7 @@
 </ul>
 </blockquote>
 <p>再在控制台中输入指令<code>main.exe A B C</code>，将看到如下打印：</p>
-<p><a class="glightbox" href="../Resources/image-20220816122902753.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220816122902753" src="../Resources/image-20220816122902753.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220816122902753.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220816122902753" src="../Resources/image-20220816122902753.png" /></a></p>
 <p>其中参数0为程序的启动路径，后面的A、B、C则是我们的附加参数。</p>
 <p>在之后的开发过程中，你可能会碰到大量类似这样的命令行程序：</p>
 <ul>
@@ -1976,10 +1974,10 @@
 </ul>
 <blockquote>
 <p>在Visual Studio中，也可手动设置该参数，用于开发时的调试：</p>
-<p><a class="glightbox" href="../Resources/image-20220727134703679.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220727134703679" src="../Resources/image-20220727134703679.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220727134703679.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220727134703679" src="../Resources/image-20220727134703679.png" /></a></p>
 </blockquote>
 <p>如果你有Qt的话，同样能在如下目录找到 <strong>MinGW</strong> 的编译套件：（关于它的使用，跟上面的步骤大同小异）</p>
-<p><a class="glightbox" href="../Resources/image-20220816123837856.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220816123837856" src="../Resources/image-20220816123837856.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220816123837856.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220816123837856" src="../Resources/image-20220816123837856.png" /></a></p>
 <p>关于C++的编译流水线，读者可以查看这个文章：</p>
 <ul>
 <li><a href="https://github.com/green7ea/cpp-compilation">https://github.com/green7ea/cpp-compilation</a></li>
@@ -2217,10 +2215,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

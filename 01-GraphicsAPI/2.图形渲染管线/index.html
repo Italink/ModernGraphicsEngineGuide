@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -1810,7 +1808,7 @@
 
 <h1 id="_1">图形渲染管线<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <p>上一节中，我们简单了解了图形渲染管线的概念，它的基本流程如下：</p>
-<p><a class="glightbox" href="../Resources/graphics-pipeline.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="graphics-pipeline" src="../Resources/graphics-pipeline.png" /></a></p>
+<p><a class="glightbox" href="../Resources/graphics-pipeline.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="graphics-pipeline" src="../Resources/graphics-pipeline.png" /></a></p>
 <p>眼过千遍，不如手过一遍，确保你已经克隆了 <a href="https://github.com/Italink/QEngineUtilities">QEngineUtilities</a> ，并将其链接到了自己的工程里面，由于我们的学习目标是图形渲染，而不是 UI ，所以 QRhiWindow 是一个更好的起点，它的核心结构如下：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">QRhiWindow</span><span class="w"> </span><span class="o">:</span><span class="k">public</span><span class="w"> </span><span class="n">QWindow</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">protected</span><span class="o">:</span>
@@ -1910,7 +1908,7 @@
 <li><strong>offset（quint32）</strong> ：用于描述该顶点属性在单个<code>顶点数据</code>中内存的偏移</li>
 </ul>
 <p>综上，我们创建了这样的顶点输入的布局描述：</p>
-<p><a class="glightbox" href="../Resources/image-20230501111914434.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230501111914434" src="../Resources/image-20230501111914434.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230501111914434.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230501111914434" src="../Resources/image-20230501111914434.png" /></a></p>
 <p>如果在顶点着色器中使用它，它的结构定义必须是：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">position</span><span class="p">;</span><span class="w">      </span><span class="c1">//这里需要与上面的inputLayout对应，变量名可以是任意的</span>
 <a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">color</span><span class="p">;</span>
@@ -1992,7 +1990,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">QRhiResourceUpdateBatch</span><span class="o">*</span><span class="w"> </span><span class="n">batch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">nextResourceUpdateBatch</span><span class="p">();</span>
 </code></pre></div>
 <p>它提供了以下操作：</p>
-<p><a class="glightbox" href="../Resources/image-20230501112954761.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230501112954761" src="../Resources/image-20230501112954761.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230501112954761.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230501112954761" src="../Resources/image-20230501112954761.png" /></a></p>
 <p>由于我们的 VertexBuffer 是 <code>QRhiBuffer::Immutable</code> 类型（即静态不可变）的，所以可以这样来上传：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">uploadStaticBuffer</span><span class="p">(</span><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="n">VertexData</span><span class="p">);</span><span class="w">     </span><span class="c1">//上传顶点数据</span>
 </code></pre></div>
@@ -2067,13 +2065,13 @@
 </code></pre></div>
 <p>在创建图形渲染管线的时候，我们创建了顶点缓冲区和顶点输入布局，但并没有构建顶点缓冲区和图形渲染管线的连接，直到录制渲染指令的时候，才做了实际的绑定。</p>
 <p>在绑定之后，流水线会从对应 Binding Index 的Buffer中，按之前定义好的布局去读取数据，就像是这样：</p>
-<p><a class="glightbox" href="../Resources/image-20230501131107153.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230501131107153" src="../Resources/image-20230501131107153.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230501131107153.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230501131107153" src="../Resources/image-20230501131107153.png" /></a></p>
 <p>由于我们draw的参数为3，所以流水线只会读取前三个顶点数据，交由 顶点着色器 进行处理：</p>
-<p><a class="glightbox" href="../Resources/image-20230501131226503.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230501131226503" src="../Resources/image-20230501131226503.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230501131226503.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230501131226503" src="../Resources/image-20230501131226503.png" /></a></p>
 <p>在几何装配阶段，会按不同的策略来挑选顶点，组装成一个基础图元（Point，Line，Triangle），流水线默认的策略是 <code>QRhiGraphicsPipeline::Topology::Triangles</code>，该策略会依次读取三个顶点数据组装成三角形：</p>
-<p><a class="glightbox" href="../Resources/image-20230501131250421.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230501131250421" src="../Resources/image-20230501131250421.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230501131250421.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230501131250421" src="../Resources/image-20230501131250421.png" /></a></p>
 <p>再经由光栅化阶段后，几何图形上的每个片段（像素）都会被片段处理器进行处理：</p>
-<p><a class="glightbox" href="../Resources/image-20230501131443750.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230501131443750" src="../Resources/image-20230501131443750.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230501131443750.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230501131443750" src="../Resources/image-20230501131443750.png" /></a></p>
 <h3 id="primitive-topology">图元拓扑（Primitive Topology）<a class="headerlink" href="#primitive-topology" title="Permanent link">&para;</a></h3>
 <p>在上面创建流水线的代码中，我们并没有设置流水线的图元拓扑，如果想要设置，可以调用：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="n">mPipeline</span><span class="o">-&gt;</span><span class="n">setTopology</span><span class="p">(</span><span class="n">QRhiGraphicsPipeline</span><span class="o">::</span><span class="n">Topology</span><span class="o">::</span><span class="n">Triangles</span><span class="p">);</span>
@@ -2099,10 +2097,10 @@
 <li><strong>Points</strong> ：组装得到6个点<code>{0},{1},{2},{3},{4},{5}</code></li>
 </ul>
 <p>这里有一个Vulkan中的图示：</p>
-<p><a class="glightbox" href="../Resources/905430d6d8ca6d241f51eab02af3be71232a0517.png%40942w_683h_progressive.webp" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/905430d6d8ca6d241f51eab02af3be71232a0517.png%40942w_683h_progressive.webp" /></a></p>
+<p><a class="glightbox" href="../Resources/905430d6d8ca6d241f51eab02af3be71232a0517.png%40942w_683h_progressive.webp" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/905430d6d8ca6d241f51eab02af3be71232a0517.png%40942w_683h_progressive.webp" /></a></p>
 <h2 id="_8">大功告成<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
 <p>执行程序，如果可以看到下方图像，说明我们成功了！！！</p>
-<p><a class="glightbox" href="../Resources/image-20230501131634427.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230501131634427" src="../Resources/image-20230501131634427.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230501131634427.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230501131634427" src="../Resources/image-20230501131634427.png" /></a></p>
 <p>可以此处找到完整的代码：</p>
 <ul>
 <li><a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/1-GraphicsAPI/02-GraphicRenderingPipeline/Source/main.cpp">https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/1-GraphicsAPI/02-GraphicRenderingPipeline/Source/main.cpp</a></li>
@@ -2319,10 +2317,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

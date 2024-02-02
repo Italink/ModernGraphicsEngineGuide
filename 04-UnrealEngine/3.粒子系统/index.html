@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -2271,27 +2269,27 @@
 <li>代码：<a href="https://github.com/Italink/QEngineUtilities/blob/main/Source/Core/Source/Public/Asset/QParticleEmitter.h">https://github.com/Italink/QEngineUtilities/blob/main/Source/Core/Source/Public/Asset/QParticleEmitter.h</a></li>
 <li>示例1——<a href="https://github.com/Italink/ModernGraphicsEngineGuide/tree/main/Source/3-GraphicsTechnology/05-GPUParticles/Source/main.cpp">CPU和GPU粒子</a></li>
 </ul>
-<p><a class="glightbox" href="../Resources/148.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="148" src="../Resources/148.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/148.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="148" src="../Resources/148.gif" /></a></p>
 <ul>
 <li>示例2——<a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/3-GraphicsTechnology/07-PostEffect/10-DepthOfField/Source/main.cpp">景深</a></li>
 </ul>
-<p><a class="glightbox" href="../Resources/18.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="18" src="../Resources/18.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/18.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="18" src="../Resources/18.gif" /></a></p>
 <h2 id="niagara">Niagara<a class="headerlink" href="#niagara" title="Permanent link">&para;</a></h2>
 <p>Unreal Engine 的 Niagara 系统非常强大，它本质上是提供了一个 <strong>可编程的数据处理器（CPU or GPU） 和 实例化渲染器</strong> ，从这一层面去思考它，我们可以实现非常多惊艳的效果。</p>
 <h3 id="_8">作用域<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <p>大多数文章中称此处的作用域为“命名空间”，虽然它确实起着区分变量命名的作用，但对于开发者而言，更为重要的是这些变量作用域所代表的生命周期。</p>
 <p>以下是UE中Niagara的大体结构，其中 <strong>黄色部分</strong> 代表Niagara中可管理变量的作用域：</p>
-<p><a class="glightbox" href="../Resources/image-20220704180132630.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220704180132630" src="../Resources/image-20220704180132630.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220704180132630.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220704180132630" src="../Resources/image-20220704180132630.png" /></a></p>
 <p>在Niagara编辑器中，你可以通过参数面板来对这些作用域的变量进行增删改</p>
-<p><a class="glightbox" href="../Resources/image-20220704181940868.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220704181940868" src="../Resources/image-20220704181940868.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220704181940868.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220704181940868" src="../Resources/image-20220704181940868.png" /></a></p>
 <ul>
 <li><strong>EngineProvided</strong> ：使用该作用域主要是为了从引擎中读取变量，常见的有DeltaTime</li>
 </ul>
-<p><a class="glightbox" href="Resources/image-20220704182345504.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="Resources/image-20220704182345504.png" alt="image-20220704182345504" style="zoom:67%;" /></a></p>
+<p><a class="glightbox" href="Resources/image-20220704182345504.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="Resources/image-20220704182345504.png" alt="image-20220704182345504" style="zoom:67%;" /></a></p>
 <ul>
 <li><strong>System Attribute</strong> ：单个粒子系统持有的属性变量</li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20220704183127690.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220704183127690" src="../Resources/image-20220704183127690.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220704183127690.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220704183127690" src="../Resources/image-20220704183127690.png" /></a></p>
 <ul>
 <li>
 <p><strong>Emitter Attribute</strong> ：单个粒子发射器持有的属性变量</p>
@@ -2303,7 +2301,7 @@
 <p><strong>Module Inputs</strong> ：模块输入变量，即模块公开给外部设置的变量，它将显示在模块的设置面板：</p>
 </li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20220705114115160.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705114115160" src="../Resources/image-20220705114115160.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220705114115160.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220705114115160" src="../Resources/image-20220705114115160.png" /></a></p>
 <ul>
 <li>
 <p><strong>Static Switch Inputs</strong> ：模块静态分支输入变量，用作编译期优化脚本的逻辑分支。</p>
@@ -2511,17 +2509,17 @@
 <h3 id="data-interface">数据接口—Data Interface<a class="headerlink" href="#data-interface" title="Permanent link">&para;</a></h3>
 <p>基本数据类型（数值，向量...）不足以满足所有的应用场景，在有些情况下，粒子系统可能需要访问到很多复杂的数据结构，比如骨骼、纹理、距离场、音频...</p>
 <p>对此，Niagara提供了一种名为 <strong>Data Interface</strong> 的机制专门用来处理复杂的数据结构，在新建任意作用域的属性时，可以在 <strong>DateInterface</strong> 下看到以下条目：</p>
-<p><a class="glightbox" href="../Resources/image-20220705142208404.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705142208404" src="../Resources/image-20220705142208404.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220705142208404.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220705142208404" src="../Resources/image-20220705142208404.png" /></a></p>
 <p>它在代码底层上对应结构— <strong>UNiagaraDataInterface</strong></p>
 <p>上面的所有接口均派生自它，这里提它的主要原因是：我们也 <strong>可以在插件派生这个类，进行自定义</strong> 。</p>
 <p>Niagara源码中有大量的派生示例：</p>
-<p><a class="glightbox" href="../Resources/image-20220705142910309.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705142910309" src="../Resources/image-20220705142910309.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220705142910309.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220705142910309" src="../Resources/image-20220705142910309.png" /></a></p>
 <h3 id="_9">事件机制<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
 <p>Niagara的事件机制同样基于上文提到的 <strong>FNiagaraDataSet</strong></p>
 <p>以 <strong>GenerateLocationEvent</strong> 为例</p>
-<p><a class="glightbox" href="../Resources/image-20220705144750986.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705144750986" src="../Resources/image-20220705144750986.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220705144750986.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220705144750986" src="../Resources/image-20220705144750986.png" /></a></p>
 <p>打开它的脚本，你能看到：</p>
-<p><a class="glightbox" href="../Resources/image-20220705143831980.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705143831980" src="../Resources/image-20220705143831980.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220705143831980.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220705143831980" src="../Resources/image-20220705143831980.png" /></a></p>
 <p>该脚本的核心就是调用了 <strong>LocationEvent_V2 Wirte</strong> 这个节点，这个节点无法被创建，因为它是由引擎序列化产生的，它的节点原型是 <strong>UNiagaraNodeWriteDataSet</strong> ，其结构如下：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">UNiagaraNodeDataSetBase</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">UNiagaraNode</span>
 <a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="p">{</span>
@@ -2536,11 +2534,11 @@
 <a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="p">};</span>
 </code></pre></div>
 <p>再来看它的事件处理器 <strong>Receive Location Event</strong></p>
-<p><a class="glightbox" href="../Resources/image-20220705145222454.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705145222454" src="../Resources/image-20220705145222454.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20220705145342871.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705145342871" src="../Resources/image-20220705145342871.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220705145222454.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220705145222454" src="../Resources/image-20220705145222454.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220705145342871.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220705145342871" src="../Resources/image-20220705145342871.png" /></a></p>
 <p>可以看到 <strong>LocationEvent_V2_Read</strong> 与之前的 <strong>LocationEvent_V2 Wirte</strong> 对应，节点原型为 <strong>UNiagaraNodeWriteDataSet</strong></p>
 <p>其中，Niagara中可自行创建的事件有：</p>
-<p><a class="glightbox" href="../Resources/image-20220705150245240.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220705150245240" src="../Resources/image-20220705150245240.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220705150245240.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220705150245240" src="../Resources/image-20220705150245240.png" /></a></p>
 <p>它们也是通过 <strong>UNiagaraNodeDataSetRead ** / **UNiagaraNodeDataSetWrite ** 对 **FNiagaraDataSet</strong> 进行读写，其执行逻辑很简单，但我们只需要搞清楚：</p>
 <ul>
 <li>这两个节点对什么地方的FNiagaraDataSet进行读写？</li>
@@ -2970,10 +2968,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

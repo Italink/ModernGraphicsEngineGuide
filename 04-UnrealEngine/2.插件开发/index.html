@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -2557,7 +2555,7 @@
 <p>插件 游离在 引擎和工程代码 之外，它是UE中用来扩展 程序功能 的主要方式，</p>
 <p>插件本质上是一种模块化的代码设计，遵循这一设计能减少代码间的依赖，使后续更易于迭代和维护。</p>
 <p>在UE中，一个插件的标准文件结构如下：</p>
-<p><a class="glightbox" href="../Resources/image-20230525143413268.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230525143413268" src="../Resources/image-20230525143413268.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230525143413268.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230525143413268" src="../Resources/image-20230525143413268.png" /></a></p>
 <ul>
 <li><code>Binaries</code>：存放编译的生成文件</li>
 <li><code>Content</code>：存放插件的资产内容</li>
@@ -2608,15 +2606,15 @@
 <ul>
 <li>
 <p>点击 <code>编辑</code> - <code>插件</code> - 打开插件面板</p>
-<p><a class="glightbox" href="../Resources/image-20230525145122582.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230525145122582" src="../Resources/image-20230525145122582.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230525145122582.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230525145122582" src="../Resources/image-20230525145122582.png" /></a></p>
 </li>
 <li>
 <p>添加新插件</p>
-<p><a class="glightbox" href="../Resources/image-20230525145306629.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230525145306629" src="../Resources/image-20230525145306629.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230525145306629.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230525145306629" src="../Resources/image-20230525145306629.png" /></a></p>
 </li>
 <li>
 <p>创建空白插件</p>
-<p><a class="glightbox" href="../Resources/image-20230525145357430.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230525145357430" src="../Resources/image-20230525145357430.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230525145357430.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230525145357430" src="../Resources/image-20230525145357430.png" /></a></p>
 </li>
 <li>
 <p>由于项目结构发生变化，此时需要重新生成IDE的工程文件</p>
@@ -2719,7 +2717,7 @@
 <li>...</li>
 </ul>
 <p>在编写完插件，执行编译时，会在插件的<code>Binaries</code>目录下生成以下文件：</p>
-<p><a class="glightbox" href="../Resources/image-20230525162605340.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230525162605340" src="../Resources/image-20230525162605340.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230525162605340.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230525162605340" src="../Resources/image-20230525162605340.png" /></a></p>
 <ul>
 <li><code>*.module</code>：定义模块库的基本信息</li>
 <li><code>*.dll</code>：动态库</li>
@@ -2735,14 +2733,14 @@
 <a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">}</span>
 </code></pre></div>
 <p>这里需要注意的参数是<code>BuildID</code>，它是由引擎生成的，当插件的<code>BuildID</code>与引擎的<code>BuildID</code>不一致时，使用编辑器启动项目会报错：</p>
-<p><a class="glightbox" href="../Resources/image-20230525165851860.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230525165851860" src="../Resources/image-20230525165851860.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230525165851860.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230525165851860" src="../Resources/image-20230525165851860.png" /></a></p>
 <p>引擎的<code>BuildID</code>可以查看：</p>
-<p><a class="glightbox" href="../Resources/image-20230525170207274.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230525170207274" src="../Resources/image-20230525170207274.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230525170207274.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230525170207274" src="../Resources/image-20230525170207274.png" /></a></p>
 <h2 id="_1">基础<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <h2 id="_2">菜单栏工具栏扩展<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>引擎开发过程中，经常会有一些需求，去扩展引擎编辑器的菜单栏，工具栏，增加一个按钮，去执行一些便捷的操作，就像是这样：</p>
-<p><a class="glightbox" href="../Resources/image-20220526100322912.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220526100322912" src="../Resources/image-20220526100322912.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20220526115630692.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220526115630692" src="../Resources/image-20220526115630692.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220526100322912.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220526100322912" src="../Resources/image-20220526100322912.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220526115630692.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220526115630692" src="../Resources/image-20220526115630692.png" /></a></p>
 <p>在UE4中，扩展菜单的主要方式是通过 <strong>FExtender</strong> ，到了UE5中，有了新的更易于使用的方式 — <strong>UToolMenus</strong></p>
 <p>**UToolMenus ** 是一个单例类，可以通过以下代码获取单例实例：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">UToolMenus</span><span class="o">*</span><span class="w"> </span><span class="n">ToolMenus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UToolMenus</span><span class="o">::</span><span class="n">Get</span><span class="p">();</span>
@@ -2753,7 +2751,7 @@
 <a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">                                    </span><span class="n">EMultiBoxType</span><span class="w"> </span><span class="n">InType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EMultiBoxType</span><span class="o">::</span><span class="n">Menu</span><span class="p">,</span>
 <a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">                                    </span><span class="kt">bool</span><span class="w"> </span><span class="n">bWarnIfAlreadyRegistered</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span>
 </code></pre></div>
-<p><a class="glightbox" href="../Resources/image-20230524155859423.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230524155859423" src="../Resources/image-20230524155859423.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230524155859423.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230524155859423" src="../Resources/image-20230524155859423.png" /></a></p>
 <p>该函数用于注册一个可被扩展的<code>ToolMenu</code>，函数的各个参数意义如下：</p>
 <ul>
 <li><code>InName</code>：注册所用的链式字段，形如<code>LevelEditor.LevelEditorToolBar.User</code>，之后可以使用该字段作为Key可以得到<code>UToolMenu</code></li>
@@ -2773,11 +2771,11 @@
 <p>当需要 <code>预览菜单的时刻</code> ，则会调用函数<code>UToolMenus::GenerateWidget</code>来生成<code>ToolMenu</code>的控件：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">TSharedRef</span><span class="o">&lt;</span><span class="n">SWidget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">UToolMenus</span><span class="o">::</span><span class="n">GenerateWidget</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">Name</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FToolMenuContext</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InMenuContext</span><span class="p">)</span>
 </code></pre></div>
-<p><a class="glightbox" href="../Resources/image-20230524154628869.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230524154628869" src="../Resources/image-20230524154628869.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230524154628869.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230524154628869" src="../Resources/image-20230524154628869.png" /></a></p>
 <p>在<code>ToolMenu</code>被Register之后，预览之前的任一时机，我们都可以通过函数<code>UToolMenus::ExtendMenu</code>来扩展菜单栏的内容。</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">UToolMenu</span><span class="o">*</span><span class="w"> </span><span class="n">UToolMenus</span><span class="o">::</span><span class="n">ExtendMenu</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InName</span><span class="p">)</span>
 </code></pre></div>
-<p><a class="glightbox" href="../Resources/image-20230524160554125.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230524160554125" src="../Resources/image-20230524160554125.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230524160554125.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230524160554125" src="../Resources/image-20230524160554125.png" /></a></p>
 <p>上方代码中有大量的扩展参考，而这里也有一个简单的插件扩展实例：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#pragma once</span>
 <a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
@@ -2817,9 +2815,9 @@
 <a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a><span class="p">};</span>
 </code></pre></div>
 <p>该代码在关卡编辑器主面板的工具栏上添加了一个按钮，在点击时会弹出<code>Hello World</code>的对话框：</p>
-<p><a class="glightbox" href="../Resources/image-20230524163937497.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230524163937497" src="../Resources/image-20230524163937497.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230524163937497.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230524163937497" src="../Resources/image-20230524163937497.png" /></a></p>
 <p>我们可以在<code>UToolMenus::Get()</code>添加断点，通过VS的调试窗口来获取到所有可扩展的字段列表：</p>
-<p><a class="glightbox" href="../Resources/image-20230524164244564.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230524164244564" src="../Resources/image-20230524164244564.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230524164244564.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230524164244564" src="../Resources/image-20230524164244564.png" /></a></p>
 <h2 id="_3">资产扩展<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <h2 id="_4">视口扩展<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>扩展视口需要使用以下几个结构</p>
@@ -2869,14 +2867,14 @@
 </code></pre></div>
 <h3 id="_9">反馈交互<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
 <h4 id="_10">通知<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
-<p><a class="glightbox" href="../Resources/image-20220927175435715-16735895166583-168492054713617.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220927175435715" src="../Resources/image-20220927175435715-16735895166583-168492054713617.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220927175435715-16735895166583-168492054713617.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220927175435715" src="../Resources/image-20220927175435715-16735895166583-168492054713617.png" /></a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">FNotificationInfo</span><span class="w"> </span><span class="n">Info</span><span class="p">(</span><span class="n">FText</span><span class="o">::</span><span class="n">FromString</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;This is notification&quot;</span><span class="p">)));</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">Info</span><span class="p">.</span><span class="n">FadeInDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">;</span>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">Info</span><span class="p">.</span><span class="n">ExpireDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">;</span>
 <a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">Info</span><span class="p">.</span><span class="n">FadeOutDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">;</span>
 <a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">FSlateNotificationManager</span><span class="o">::</span><span class="n">Get</span><span class="p">().</span><span class="n">AddNotification</span><span class="p">(</span><span class="n">Info</span><span class="p">);</span>
 </code></pre></div>
-<p><a class="glightbox" href="../Resources/image-20220927141254086-16735895184905-168492056446620.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220927141254086" src="../Resources/image-20220927141254086-16735895184905-168492056446620.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220927141254086-16735895184905-168492056446620.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220927141254086" src="../Resources/image-20220927141254086-16735895184905-168492056446620.png" /></a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">static</span><span class="w"> </span><span class="n">TWeakPtr</span><span class="o">&lt;</span><span class="n">SNotificationItem</span><span class="o">&gt;</span><span class="w"> </span><span class="n">NotificationPtr</span><span class="p">;</span>
 <a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">FNotificationInfo</span><span class="w"> </span><span class="n">Info</span><span class="p">(</span><span class="n">FText</span><span class="o">::</span><span class="n">FromString</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;This is notification&quot;</span><span class="p">)));</span>
 <a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">Info</span><span class="p">.</span><span class="n">FadeInDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">;</span>
@@ -2902,7 +2900,7 @@
 <a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="n">NotificationPtr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FSlateNotificationManager</span><span class="o">::</span><span class="n">Get</span><span class="p">().</span><span class="n">AddNotification</span><span class="p">(</span><span class="n">Info</span><span class="p">);</span>
 </code></pre></div>
 <h4 id="_11">进度显示<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
-<p><a class="glightbox" href="../Resources/image-20220927210941350-16735895089921-168492058032923.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220927210941350" src="../Resources/image-20220927210941350-16735895089921-168492058032923.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220927210941350-16735895089921-168492058032923.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220927210941350" src="../Resources/image-20220927210941350-16735895089921-168492058032923.png" /></a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">float</span><span class="w"> </span><span class="n">AmountOfWork</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span>
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">FScopedSlowTask</span><span class="w"> </span><span class="n">RootTask</span><span class="p">(</span><span class="n">AmountOfWork</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">NSLOCTEXT</span><span class="p">(</span><span class="s">&quot;SlowTaskNamespace&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;This is slow root task&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;This is slow root task&quot;</span><span class="p">)));</span>
 <a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">RootTask</span><span class="p">.</span><span class="n">MakeDialog</span><span class="p">();</span>
@@ -2917,7 +2915,7 @@
 <a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="p">}</span>
 </code></pre></div>
 <h4 id="_12"><a href="https://zhuanlan.zhihu.com/p/268069477">对话框</a><a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
-<p><a class="glightbox" href="../Resources/image-20220928100532108-167358956103511-168492058697726.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220928100532108" src="../Resources/image-20220928100532108-167358956103511-168492058697726.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220928100532108-167358956103511-168492058697726.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220928100532108" src="../Resources/image-20220928100532108-167358956103511-168492058697726.png" /></a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">EAppReturnType</span><span class="o">::</span><span class="n">Type</span><span class="w"> </span><span class="n">Ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FMessageDialog</span><span class="o">::</span><span class="n">Open</span><span class="p">(</span><span class="n">EAppMsgType</span><span class="o">::</span><span class="n">YesNo</span><span class="p">,</span><span class="w"> </span><span class="n">NSLOCTEXT</span><span class="p">(</span><span class="s">&quot;NS&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;message dialog&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;message dialog&quot;</span><span class="p">));</span>
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Ret</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">EAppReturnType</span><span class="o">::</span><span class="n">Yes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">   </span>
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
@@ -3373,10 +3371,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

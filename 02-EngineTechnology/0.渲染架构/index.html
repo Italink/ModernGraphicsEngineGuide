@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -1756,17 +1754,17 @@
 <a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="p">}</span>
 </code></pre></div>
 <p>这样我们就能够 很轻松组织 代码结构 来将 许多几何图形 绘制到 一张图像 上：</p>
-<p><a class="glightbox" href="../Resources/image-20231006120654050.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231006120654050" src="../Resources/image-20231006120654050.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231006120654050.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006120654050" src="../Resources/image-20231006120654050.png" /></a></p>
 <p>这个 <strong>渲染过程（RenderPass）</strong> 我们一般称之为 <strong>BasePass</strong> / <strong>MeshPass</strong> / <strong>PrimitivePass</strong> 。</p>
 <p>该Pass的职责就是绘制3D场景中几乎全部的几何形体。</p>
 <p>但仅仅通过MeshPass ，我们得到的图形效果往往是比较朴素的，虽然我们可以调整 Pass内部 渲染项 的 流水线着色逻辑 来丰富 图形效果（前向渲染），但在现代图形渲染中，我们会进行多帧（多Pass）的处理 来调整 整个画面 的效果（延迟渲染 + 后处理）。 </p>
 <p>这么说可能有点难理解，但看完下面的图示，相信你就能明白了：</p>
-<p><a class="glightbox" href="../Resources/image-20231006114116772.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231006114116772" src="../Resources/image-20231006114116772.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20231006123724423.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231006123724423" src="../Resources/image-20231006123724423.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20231006124210852.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231006124210852" src="../Resources/image-20231006124210852.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20231006125745195.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231006125745195" src="../Resources/image-20231006125745195.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20231006131116388.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231006131116388" src="../Resources/image-20231006131116388.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20231006130046879.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231006130046879" src="../Resources/image-20231006130046879.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231006114116772.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006114116772" src="../Resources/image-20231006114116772.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231006123724423.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006123724423" src="../Resources/image-20231006123724423.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231006124210852.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006124210852" src="../Resources/image-20231006124210852.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231006125745195.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006125745195" src="../Resources/image-20231006125745195.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231006131116388.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006131116388" src="../Resources/image-20231006131116388.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231006130046879.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006130046879" src="../Resources/image-20231006130046879.png" /></a></p>
 <p>为了能够更好地支持这种多Pass的渲染逻辑，现代图形引擎也都封装了相应的结构，通常情况下，我们称其为 <strong>Render Graph / Frame Graph / Scene Graph</strong></p>
 <h2 id="rendergraph">RenderGraph<a class="headerlink" href="#rendergraph" title="Permanent link">&para;</a></h2>
 <p>关于RenderGraph的详细描述，有很多优秀的文章，强烈建议大家去阅读一下：</p>
@@ -1788,7 +1786,7 @@
 <p>学习别人积淀的成果是一个非常大的挑战，因为我们没有遭遇过与开发者相同的困境，所以很难 设身处地 的思考，为什么要这么做~</p>
 </blockquote>
 <p>RenderGraph的首要设计目标，是为了能够完成 渲染依赖图 的构建：</p>
-<p><a class="glightbox" href="../Resources/image-20231006140150745.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231006140150745" src="../Resources/image-20231006140150745.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231006140150745.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006140150745" src="../Resources/image-20231006140150745.png" /></a></p>
 <p>假如想实现这样的渲染结构，在代码层面，你会如何设计呢？</p>
 <p>笔者首先对 <strong>RenderPassNode</strong> 进行了抽象：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">IRenderPassNode</span><span class="p">{</span>
@@ -1878,7 +1876,7 @@
 <a id="__codelineno-3-38" name="__codelineno-3-38" href="#__codelineno-3-38"></a><span class="p">)</span>
 </code></pre></div>
 <p>该代码搭建了如下的RenderGraph：</p>
-<p><a class="glightbox" href="../Resources/image-20231006140150745.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231006140150745" src="../Resources/image-20231006140150745.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231006140150745.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006140150745" src="../Resources/image-20231006140150745.png" /></a></p>
 <p>这个实现可以说是非常简单，这得益于QRhi已经完成了RenderGraph的一些职责。</p>
 <p><a href="https://italink.github.io/ModernGraphicsEngineGuide/01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/#_2">上一节</a> 中我们提到： <strong>现代图形API要求手动管理资源的同步</strong> 。</p>
 <p>现代图形引擎则会在RenderGraph中，分析资源的依赖关系，来自动管理资源的同步。</p>
@@ -1892,12 +1890,12 @@
 <p>FrameGraph的结构固化，因为是一次创建整个FrameGraph，将其装配到渲染器中，现有的代码结构想要动态的调整渲染结构是一件很困难的事情，假如我能判断当前相机空间内不包含任何发光的物体，那么是否意味着可以把<code>BloomPass</code>给去掉？而去掉<code>BloomPass</code>其实就是将<code>BloomPass</code>的输入直接连接到之后的Pass上，就像是这样：</p>
 </li>
 </ul>
-<p><a class="glightbox" href="Resources/image-20231006151018957.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="Resources/image-20231006151018957.png" alt="image-20231006151018957" style="zoom:50%;" /></a> </p>
+<p><a class="glightbox" href="Resources/image-20231006151018957.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="Resources/image-20231006151018957.png" alt="image-20231006151018957" style="zoom:50%;" /></a> </p>
 <ul>
 <li>并没有很好的处理资源之间的依赖和重建，打个比方，假如窗口的尺寸发生变动，某些Pass中的RT就需要重建，而RT中的Texture重建，也就意味着之后使用该Texture的 <strong>ShaderResourceBindings</strong> 也需要重建，而当下的做法就很蠢：当窗口尺寸变动时，会重建整个FrameGraph中的所有资源。因为资源的创建全部放到了 <strong>IRenderPassNode</strong> 中的<code>onRecrecteResource</code>函数中，该函数包含了所有的资源创建，为了图省事就统一调用了它，虽然后面笔者增加了另一个抽象函数<code>onResizeAndLink</code>，在里面添加RT和Bindings的重建逻辑，但这部分结构依旧比较难用。</li>
 </ul>
 <p>虽然这个FrameGraph很拉垮，但 "又不是不能用"：</p>
-<p><a class="glightbox" href="Resources/faf2b2119313b07e4e15ba5539b35f2896dd8cb7.jpeg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img src="Resources/faf2b2119313b07e4e15ba5539b35f2896dd8cb7.jpeg" alt="img" style="zoom:50%;" /></a></p>
+<p><a class="glightbox" href="Resources/faf2b2119313b07e4e15ba5539b35f2896dd8cb7.jpeg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img src="Resources/faf2b2119313b07e4e15ba5539b35f2896dd8cb7.jpeg" alt="img" style="zoom:50%;" /></a></p>
 <blockquote>
 <p>要不是为了出这篇文章，我肯定是不会去爆肝重构的T.T</p>
 </blockquote>
@@ -2290,7 +2288,7 @@
 <p>在各个引擎中材质系统实现都有所差异，但它们都遵循这一原则：材质定义了图形的表面属性，它可以被视为控制物体视觉外观的"皮肤"。</p>
 <p>Unreal Engine 中的材质系统无疑是最为强大的，它的材质系统涵盖了所有控制图形外观功能，它提供一系列的参数去控制流水线 裁剪测试，深度测试，模板测试，混合模式，背面剔除...</p>
 <p>针对不同的 <strong>着色模型（Shading Model）</strong> 提供 材质表达式插槽，它提供了大量的材质函数节点，可以将其转换为对应的Shader代码，还能轻松创建着色器资源（Buffer，Sampler和Texture），并自动创建着色器资源绑定。</p>
-<p><a class="glightbox" href="../Resources/image-20231006192226000.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231006192226000" src="../Resources/image-20231006192226000.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231006192226000.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006192226000" src="../Resources/image-20231006192226000.png" /></a></p>
 <p>材质系统的架构需要考虑引擎的整个渲染体系，由于本教程更多的是进行渲染尝试（主要是因为没有精力），因此在笔者封装的 <strong>QMaterial</strong> 中，它只是一个简单提供参数和纹理的结构：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">QMaterial</span><span class="w"> </span><span class="p">{</span>
 <a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="n">QMap</span><span class="o">&lt;</span><span class="n">QString</span><span class="p">,</span><span class="w"> </span><span class="n">QVariant</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mProperties</span><span class="p">;</span>
@@ -2301,7 +2299,7 @@
 <ul>
 <li><a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/2-EngineTechnology/00-RenderingArchitecture/Source/main.cpp">https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/2-EngineTechnology/00-RenderingArchitecture/Source/main.cpp</a></li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20231006201742745.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231006201742745" src="../Resources/image-20231006201742745.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231006201742745.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006201742745" src="../Resources/image-20231006201742745.png" /></a></p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;QEngineApplication.h&quot;</span>
 <a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;QRenderWidget.h&quot;</span>
 <a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;Render/IRenderComponent.h&quot;</span>
@@ -2632,10 +2630,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

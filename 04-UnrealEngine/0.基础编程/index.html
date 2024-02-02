@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -2079,7 +2077,7 @@
 <p>本文旨在阐述基础开发的主干路线，仅仅只是一个开发者文档，并非教程。</p>
 <h2 id="_2">工程结构<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>一个标准的UE工程的文件结构如下：</p>
-<p><a class="glightbox" href="../Resources/image-20230517115452232-16848129576282.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230517115452232" src="../Resources/image-20230517115452232-16848129576282.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230517115452232-16848129576282.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230517115452232" src="../Resources/image-20230517115452232-16848129576282.png" /></a></p>
 <ul>
 <li><code>Config</code>：存放项目中的各类配置文件（GameConfig，EngineConfig，EditorConfig，PluginConfig...）</li>
 <li><code>Content</code>：存放项目的资源文件</li>
@@ -2121,13 +2119,13 @@
 <p>这些参数虽然可以手动修改，但大多时候，在UE的编辑器上进行变更会更加安全和任意。</p>
 <h4 id="_3">切换引擎版本<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
 <p>在<code>*.uproject</code> 的右键菜单下，可以切换当前工程的引擎版本：</p>
-<p><a class="glightbox" href="../Resources/image-20230523140419952.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230523140419952" src="../Resources/image-20230523140419952.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20230523140518199.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230523140518199" src="../Resources/image-20230523140518199.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230523140419952.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230523140419952" src="../Resources/image-20230523140419952.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230523140518199.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230523140518199" src="../Resources/image-20230523140518199.png" /></a></p>
 <p>如果引擎没有出现在选择框的下拉列表中，则需要到下方目录使用 <strong>UnrealVersionSelector-Win64-Shipping.exe</strong> 进行注册：</p>
-<p><a class="glightbox" href="../Resources/image-20230523140739431.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230523140739431" src="../Resources/image-20230523140739431.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230523140739431.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230523140739431" src="../Resources/image-20230523140739431.png" /></a></p>
 <h4 id="_4">开启内置插件<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
 <p>在引擎中，开启内置插件后，编辑器会自动在<code>*.uproject</code> 文件的<code>Plugins</code>下追加新的插件条目：</p>
-<p><a class="glightbox" href="../Resources/image-20230523115125388.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230523115125388" src="../Resources/image-20230523115125388.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230523115125388.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230523115125388" src="../Resources/image-20230523115125388.png" /></a></p>
 <h4 id="_5">添加工程模块<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
 <p><strong>模块（Modules）</strong> 是 <strong>虚拟引擎（UE）</strong> 的软件架构的基础构建块。它们在独立的代码单元中封装了一体的编程工具、运行时功能、库或其他功能。</p>
 <p>使用模块化编程可以带来以下好处：</p>
@@ -2140,7 +2138,7 @@
 </ul>
 <p>所有项目和插件在默认情况下都有自己的 <strong>主模块</strong></p>
 <p>在UE编辑器主面板-<code>工具（Tools）</code>- <code>调试（Debug）</code> - <code>模块（Modules）</code>，可以看到当前工程开启的所有模块：</p>
-<p><a class="glightbox" href="../Resources/image-20230523115940276.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230523115940276" src="../Resources/image-20230523115940276.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230523115940276.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230523115940276" src="../Resources/image-20230523115940276.png" /></a></p>
 <p>关于模块的创建，请参阅：</p>
 <ul>
 <li>虚幻引擎模块：<a href="https://docs.unrealengine.com/5.2/zh-CN/unreal-engine-modules/">https://docs.unrealengine.com/5.2/zh-CN/unreal-engine-modules/</a></li>
@@ -2314,7 +2312,7 @@
 <p>为了让模块不会出现编译冲突的风险和编译缓慢的问题，所以在写模块的时候，应尽可能使用Private，当模块需要对外传递时，才考虑用Public。</p>
 <h2 id="_6">对象系统<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <p>UObject 是 UE 对象系统的基类，它的结构层次如下：</p>
-<p><a class="glightbox" href="../Resources/image-20220622175331091.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220622175331091" src="../Resources/image-20220622175331091.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220622175331091.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220622175331091" src="../Resources/image-20220622175331091.png" /></a></p>
 <p>它主要由三级结构构成，这三级结构有着不同的职责：</p>
 <ul>
 <li>
@@ -2329,7 +2327,7 @@
 </li>
 <li>
 <p><strong>UObjectBaseUtility</strong> ：数据接口层，提供了很多数据层的处理接口。</p>
-<p><a class="glightbox" href="../Resources/image-20220622180328342.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220622180328342" src="../Resources/image-20220622180328342.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220622180328342.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220622180328342" src="../Resources/image-20220622180328342.png" /></a></p>
 </li>
 <li>
 <p><strong>UObject</strong> ：功能层，提供了大量对象系统的基本函数接口。</p>
@@ -2542,7 +2540,7 @@
 <p>使用函数 <code>void UObject::AddToRoot()</code> 可以将对象加入到根对象集合中，从而让对象不会被释放，使用<code>void UObject::RemoveFromRoot()</code>可以将对象从根对象集合中移除。</p>
 </li>
 <li>
-<p>派生 <strong>FGCObject</strong> 类，它被广泛用于UE中各个模块的对象生命周期管理：<a class="glightbox" href="../Resources/image-20230523170954045.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230523170954045" src="../Resources/image-20230523170954045.png" /></a></p>
+<p>派生 <strong>FGCObject</strong> 类，它被广泛用于UE中各个模块的对象生命周期管理：<a class="glightbox" href="../Resources/image-20230523170954045.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230523170954045" src="../Resources/image-20230523170954045.png" /></a></p>
 <p>UE在执行GC时，会调用 <strong>所有FGCObject对象</strong> 的 <code>virtual void AddReferencedObjects( FReferenceCollector&amp; Collector )</code> 函数， <strong>Collector</strong> 是一个操作入口，添加到 <strong>Collector</strong> 中的对象在本次GC中不会被释放。</p>
 <p>而 <strong>FGCObject</strong> 的构造函数中，会把该对象注册到UE全局的 FGCObject对象列表 中，相当于派生了FGCObject类的对象就可以作为一个根对象</p>
 <p>因此开发者只需要在自己原生的结构定义上，增加<code>public FGCObject</code>，并派生它的相关函数：</p>
@@ -2585,7 +2583,7 @@
 <li>由于<code>对象A</code>被添加到了根对象集合，因此它不会被释放，又因为UE根据反射确定了<code>对象A</code>的<code>Prop属性</code>引用了<code>对象B</code>，因此B也不会被释放</li>
 </ul>
 <p>可以在项目配置中对GC的参数细节进行调整：</p>
-<p><a class="glightbox" href="../Resources/image-20230523174457486.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230523174457486" src="../Resources/image-20230523174457486.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230523174457486.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230523174457486" src="../Resources/image-20230523174457486.png" /></a></p>
 <p>在C++中，可以使用如下代码在当前帧手动执行GC：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kt">bool</span><span class="w"> </span><span class="n">bForceGarbageCollectionPurge</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span><span class="w">   </span><span class="c1">//是否为全量GC</span>
 <a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="n">GEngine</span><span class="o">-&gt;</span><span class="n">ForceGarbageCollection</span><span class="p">(</span><span class="n">bForceGarbageCollectionPurge</span><span class="p">);</span>
@@ -2920,7 +2918,7 @@
 </code></pre></div>
 <p>UE在<code>NewObject</code>的时候会以CDO作为模板，因此你可以修改CDO的属性值来调整 新对象属性 的初始值。</p>
 <p>UE的细节面板也会以CDO作为参照，查看当前对象的哪些属性与CDO存在差异：</p>
-<p><a class="glightbox" href="../Resources/image-20230523200403812.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230523200403812" src="../Resources/image-20230523200403812.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230523200403812.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230523200403812" src="../Resources/image-20230523200403812.png" /></a></p>
 <p>此外，CDO还与UE的Config机制紧密关联：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">UCLASS</span><span class="p">(</span><span class="n">config</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CustomSettings</span><span class="p">,</span><span class="w"> </span><span class="n">defaultconfig</span><span class="p">)</span>
 <a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="k">class</span><span class="w"> </span><span class="nc">UCustomSettings</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">UObject</span><span class="w"> </span><span class="p">{</span>
@@ -3025,7 +3023,7 @@
 </code></pre></div>
 <p>而UE的蓝图，不过是对上面的操作进行了一些包装，并提供了相应的编辑器。</p>
 <p>UE的蓝图对应的数据结构是 <strong>UBlueprint</strong> ，我们在蓝图编辑器上的绝大部分操作（属性、函数操作，节点编辑，类设置...），基本上都是在修改 <strong>UBlueprint</strong> 的参数：</p>
-<p><a class="glightbox" href="../Resources/image-20220928175121797-16735895312067.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/image-20220928175121797-16735895312067.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220928175121797-16735895312067.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/image-20220928175121797-16735895312067.png" /></a></p>
 <p>使用如下接口可以创建一个蓝图：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="k">static</span><span class="w"> </span><span class="n">UBlueprint</span><span class="o">*</span><span class="w"> </span><span class="nf">FKismetEditorUtilities::CreateBlueprint</span><span class="p">(</span>
 <a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="w">    </span><span class="n">UClass</span><span class="o">*</span><span class="w"> </span><span class="n">ParentClass</span><span class="p">,</span>
@@ -3099,7 +3097,7 @@
 <a id="__codelineno-35-16" name="__codelineno-35-16" href="#__codelineno-35-16"></a><span class="p">}</span>
 </code></pre></div>
 <p>当点击蓝图编辑器的编译按钮时</p>
-<p><a class="glightbox" href="../Resources/image-20230523203638600.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230523203638600" src="../Resources/image-20230523203638600.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230523203638600.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230523203638600" src="../Resources/image-20230523203638600.png" /></a></p>
 <p>实际会调用以下函数：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">FKismetEditorUtilities::CompileBlueprint</span><span class="p">(</span><span class="n">UBlueprint</span><span class="o">*</span><span class="w"> </span><span class="n">BlueprintObj</span><span class="p">,</span><span class="w"> </span>
 <a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a><span class="w">                             </span><span class="n">EBlueprintCompileOptions</span><span class="w"> </span><span class="n">CompileFlags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EBlueprintCompileOptions</span><span class="o">::</span><span class="n">None</span><span class="p">,</span>
@@ -3161,7 +3159,7 @@
 <a id="__codelineno-39-36" name="__codelineno-39-36" href="#__codelineno-39-36"></a><span class="n">FBlueprintEditorModule</span><span class="o">&amp;</span><span class="w"> </span><span class="n">BlueprintEditorModule</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FModuleManager</span><span class="o">::</span><span class="n">LoadModuleChecked</span><span class="o">&lt;</span><span class="n">FBlueprintEditorModule</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Kismet&quot;</span><span class="p">);</span>
 <a id="__codelineno-39-37" name="__codelineno-39-37" href="#__codelineno-39-37"></a><span class="n">BlueprintEditorModule</span><span class="p">.</span><span class="n">CreateBlueprintEditor</span><span class="p">(</span><span class="n">EToolkitMode</span><span class="o">::</span><span class="n">Standalone</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="n">NewBP</span><span class="p">);</span><span class="w">  </span>
 </code></pre></div>
-<p><a class="glightbox" href="../Resources/image-20220928202723812-16735895507339.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220928202723812" src="../Resources/image-20220928202723812-16735895507339.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220928202723812-16735895507339.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220928202723812" src="../Resources/image-20220928202723812-16735895507339.png" /></a></p>
 <h2 id="_11">资产<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
 <p>UE的资产管理也是建立在对象系统之上，UObject支持序列化和反序列化，因此任何一个UObject都可以作为资产（Asset）。</p>
 <p>UE的序列化接口如下：</p>
@@ -3202,7 +3200,7 @@
 <a id="__codelineno-41-18" name="__codelineno-41-18" href="#__codelineno-41-18"></a><span class="w">                                            </span><span class="n">GError</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="n">SAVE_NoError</span><span class="p">);</span>
 </code></pre></div>
 <p>该操作会在工程的Content目录下创建一个<code>CustomPackage.uasset</code>文件</p>
-<p><a class="glightbox" href="../Resources/image-20230524105904811.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230524105904811" src="../Resources/image-20230524105904811.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230524105904811.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230524105904811" src="../Resources/image-20230524105904811.png" /></a></p>
 <p>我们可以通过如下代码去加载磁盘上的包和资产对象：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="n">UPackage</span><span class="o">*</span><span class="w"> </span><span class="n">LoadedPackage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoadPackage</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;/Game/CustomPackage&quot;</span><span class="p">),</span><span class="w"> </span><span class="n">LOAD_None</span><span class="p">);</span>
 <a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">LoadedAsset</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">LoadObject</span><span class="o">&lt;</span><span class="n">UObject</span><span class="o">&gt;</span><span class="p">(</span><span class="k">nullptr</span><span class="p">,</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;/Game/CustomPackage.CustomInstance&quot;</span><span class="p">));</span>
@@ -3518,10 +3516,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

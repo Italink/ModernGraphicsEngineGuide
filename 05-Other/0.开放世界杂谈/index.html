@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -2350,7 +2348,7 @@
 <ul>
 <li><a href="https://docs.unrealengine.com/5.2/zh-CN/building-virtual-worlds-in-unreal-engine/">https://docs.unrealengine.com/5.2/zh-CN/building-virtual-worlds-in-unreal-engine/</a></li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20230802173927033.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230802173927033" src="../Resources/image-20230802173927033.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230802173927033.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230802173927033" src="../Resources/image-20230802173927033.png" /></a></p>
 <p>但 <strong>Unreal Engine 5</strong> 并不是万能的，它同样存在一些问题：</p>
 <ul>
 <li>Unreal Engine 5 提供的功能是易于使用，但不易于管理的，它保证了通用，而并非无所不能，因此需要有专业的引擎团队进行调校和扩展，项目才能持续推进，可目前而言，它的一些核心功能还在迭代，这种不稳定性会给开发团队带来很大的挑战。</li>
@@ -2374,7 +2372,7 @@
 <ul>
 <li><a href="https://store.steampowered.com/hwsurvey/videocard/">Steam 软件和硬件调查</a></li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20230802192946543.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230802192946543" src="../Resources/image-20230802192946543.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230802192946543.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230802192946543" src="../Resources/image-20230802192946543.png" /></a></p>
 <p>可以看出，目前主流的显卡依旧是 <code>NVIDIA GeForce GTX 1650</code>，而显卡的配置就代表了游戏图形的算力，甚至决定了某个美术效果能不能使用。</p>
 <p>考虑到国内玩家群体的电脑配置普遍不会太高，游戏开发团队为了争取到更多的用户，需要做很多的优化工作和兼容方案，而这会带来巨量的试错成本。</p>
 <h3 id="_6">项目管理<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
@@ -2396,18 +2394,18 @@
 <h3 id="atomic">基于 <strong>Atomic</strong> 的玩法设计<a class="headerlink" href="#atomic" title="Permanent link">&para;</a></h3>
 <p>开放的显著特征是 <strong>一定范围内</strong> 的自由，这种自由往往需要庞大的玩法体系来支撑，在上文我们提到，一个失败的玩法设计，将会增加玩家的上手难度，导致团队的工作量激增，成本飙升，管理混乱，那什么是一个成功的玩法设计呢？</p>
 <p>本节通过《塞尔达传说：王国之泪》来做简单的分析。</p>
-<p><a class="glightbox" href="../Resources/789722-the-legend-of-zelda-tears-of-the-kingdom-breath-of-the-wild-2-bande-annonce-et-date-de-sortie.jpg" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="塞尔达传说》王国之泪：我们对《荒野之息》续集的看法- Sortiraparis.com" src="../Resources/789722-the-legend-of-zelda-tears-of-the-kingdom-breath-of-the-wild-2-bande-annonce-et-date-de-sortie.jpg" /></a></p>
+<p><a class="glightbox" href="../Resources/789722-the-legend-of-zelda-tears-of-the-kingdom-breath-of-the-wild-2-bande-annonce-et-date-de-sortie.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="塞尔达传说》王国之泪：我们对《荒野之息》续集的看法- Sortiraparis.com" src="../Resources/789722-the-legend-of-zelda-tears-of-the-kingdom-breath-of-the-wild-2-bande-annonce-et-date-de-sortie.jpg" /></a></p>
 <p>王国之泪的核心角色玩法如下：</p>
-<p><a class="glightbox" href="../Resources/image-20230803132314099.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230803132314099" src="../Resources/image-20230803132314099.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230803132314099.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230803132314099" src="../Resources/image-20230803132314099.png" /></a></p>
 <ul>
 <li><a href="https://baike.baidu.com/item/%E5%A1%9E%E5%B0%94%E8%BE%BE%E4%BC%A0%E8%AF%B4%EF%BC%9A%E7%8E%8B%E5%9B%BD%E4%B9%8B%E6%B3%AA">[百度百科] 塞尔达传说：王国之泪</a> </li>
 </ul>
 <p>从上图可以看出，王国之泪的核心玩法并不复杂，它有着非常 <strong>低粒度</strong> 的结构设计，而上层玩法几乎是完全建立在这个 <strong>基础骨架</strong>  上，从而保证了高度的资源复用。</p>
 <p>再看王国之泪的怪物体系：</p>
-<p><a class="glightbox" href="../Resources/image-20230803133232216.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230803133232216" src="../Resources/image-20230803133232216.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230803133232216.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230803133232216" src="../Resources/image-20230803133232216.png" /></a></p>
 <p>怪物设计同样有着 <strong>低粒度</strong> 的结构设计，也是在上层高度复用，比如丘丘怪，有着普通丘丘，电丘丘，火丘丘，兵丘丘，它们分布在不同的地区。</p>
-<p><a class="glightbox" href="../Resources/456468.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="456468" src="../Resources/456468.png" /></a></p>
-<p><a class="glightbox" href="../Resources/EZUU%60%5D%5D%40%251HMB%7DABO%7D6PT1T.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/EZUU%60%5D%5D%40%251HMB%7DABO%7D6PT1T.png" /></a></p>
+<p><a class="glightbox" href="../Resources/456468.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="456468" src="../Resources/456468.png" /></a></p>
+<p><a class="glightbox" href="../Resources/EZUU%60%5D%5D%40%251HMB%7DABO%7D6PT1T.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/EZUU%60%5D%5D%40%251HMB%7DABO%7D6PT1T.png" /></a></p>
 <p>与之相似的还有：</p>
 <ul>
 <li>八爪怪：水八爪怪，森八爪怪，岩八爪怪，雪八爪怪，宝八爪怪</li>
@@ -2435,22 +2433,22 @@
 <p>具体的烹饪公式，详见 <a href="https://www.9game.cn/sedcswgzl/8089996.html">塞尔达传说王国之泪料理配方大全一览</a> </p>
 </blockquote>
 <p>综上，不难看出，王国之泪的核心玩法是一种 <a href="https://zhuanlan.zhihu.com/p/77479952"> <strong>自顶向下</strong> </a> 的设计方式，就像是这样：</p>
-<p><a class="glightbox" href="../Resources/image-20230803141535141.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230803141535141" src="../Resources/image-20230803141535141.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230803141535141.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230803141535141" src="../Resources/image-20230803141535141.png" /></a></p>
 <p>而上层玩法，则是在核心玩法的基础上， <strong>自底向上进行组合</strong> ，其中的重要手段是：在抽象级别制作 <strong>模板（Template）</strong> ，实例级别处理 <strong>特化（Specialize）</strong> ，就像是这样：</p>
-<p><a class="glightbox" href="../Resources/image-20230803153605584.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230803153605584" src="../Resources/image-20230803153605584.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230803153605584.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230803153605584" src="../Resources/image-20230803153605584.png" /></a></p>
 <p>而这一设计理念，有点类似于UI设计中的原子设计理论，这里有一本非常非常非常好的相关书籍：</p>
 <ul>
 <li><a href="https://zhuanlan.zhihu.com/p/137173868">[知乎] 《原子设计》全书知识架构 - 加西莫多</a></li>
 </ul>
 <p>它的目录结构如下：</p>
-<p><a class="glightbox" href="../Resources/image-20230803144252164.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230803144252164" src="../Resources/image-20230803144252164.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230803144252164.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230803144252164" src="../Resources/image-20230803144252164.png" /></a></p>
 <p>虽然这是一本介绍UI设计的书籍，但它的很多理念特别适用于开放世界的玩法设计。</p>
 <p>遵循原子设计理念可以尽可能的复用项目资源，让开放流程更清晰直观，此外，还需要强调一点的是：</p>
 <ul>
 <li><strong>在开发初期，就应该明确开放世界的核心玩法设计</strong></li>
 </ul>
 <p>因为后续的场景规范和逻辑开发都是围绕着核心玩法进行的，还是以塞尔达为例，它的场景元素有：</p>
-<p><a class="glightbox" href="../Resources/image-20230803151941438.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230803151941438" src="../Resources/image-20230803151941438.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230803151941438.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230803151941438" src="../Resources/image-20230803151941438.png" /></a></p>
 <p>在明确核心角色玩法之后，开发团队才能制定与之对应的 <strong>场景规范</strong> ，确立 <strong>性能优化指标</strong> ，并制作相应的 <strong>工具链</strong> 。</p>
 <p>例如这样的规范：</p>
 <ul>
@@ -2689,10 +2687,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

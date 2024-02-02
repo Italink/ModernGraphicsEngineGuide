@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -2216,7 +2214,7 @@
 <a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
 <a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="p">}</span>
 </code></pre></div>
-<p><a class="glightbox" href="../Resources/image-20230211103821026.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230211103821026" src="../Resources/image-20230211103821026.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230211103821026.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230211103821026" src="../Resources/image-20230211103821026.png" /></a></p>
 <blockquote>
 <p>控制台程序在运行过程中会疯狂闪烁，这一点会在下文解决</p>
 </blockquote>
@@ -2243,7 +2241,7 @@
 <a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">ImGui</span><span class="o">::</span><span class="n">Checkbox</span><span class="p">(</span><span class="s">&quot;CheckBox &quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">CheckState</span><span class="p">);</span>
 </code></pre></div>
 <p>能生成这样的界面：</p>
-<p><a class="glightbox" href="../Resources/image-20230210205746160.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230210205746160" src="../Resources/image-20230210205746160.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230210205746160.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230210205746160" src="../Resources/image-20230210205746160.png" /></a></p>
 <p><strong>Immediate Mode（立即模式）</strong> 主要体现在它将变量 <code>CheckState</code> 的指针传递到了 “控件” 之中，而传统的 <strong>Retained Mode（保留模式）</strong> ，比如在Qt中，它的代码可能是这样的：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">CheckState</span><span class="p">;</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">QCheckBox</span><span class="o">*</span><span class="w"> </span><span class="n">CheckBox</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">QCheckBox</span><span class="p">;</span>
@@ -2255,7 +2253,7 @@
 <p>可以看到 <strong>QCheckBox</strong> 并没有使用 <code>CheckState</code> 的指针，而是通过<code>CheckState</code>设置控件的初始状态，当控件<code>stateChanged</code>时，再设置 <code>CheckState</code> 的值，也就是说控件本身是持有自己的State，而 <strong>Immediate Mode 则强调无状态</strong> ，而是将状态嵌入到了控件之中</p>
 <p>在开发过程中，存储过多的局部状态需要编写很多代码保持同步，可能一不小心就弄出了个Bug，比如很容易导致某些事件多次执行 甚至 死循环</p>
 <p>打个比方，对一个Color调色：</p>
-<p><a class="glightbox" href="../Resources/image-20230210212343936.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../Resources/image-20230210212343936.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230210212343936.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../Resources/image-20230210212343936.png" /></a></p>
 <p>使用调色盘，拖拽或输入通道数值，十六进制输入，屏幕取色等多种方式都可以对同一个颜色值进行调整，如果使用保留模式，在通过某种方式修改了颜色之后，还得手动调整其他控件来保证颜色同步，虽然遵循一些设计模式可以解决这个问题，但立即模式在这种应用场景下具有天然优势，关于它们的差异的争论，请查阅：</p>
 <ul>
 <li><a href="https://www.zhihu.com/question/39093254/answer/1351958747">知乎：Retained 和 IMGUI 有何联系和区别？</a></li>
@@ -2296,7 +2294,7 @@
 </ul>
 <h2 id="_2">平台基础<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>GUI程序将显示在屏幕上，为了能够系统的管理屏幕上的像素，操作系统提供了名为 Window 的结构，在Windows10上，一个标准的Window如下，它带有一个标题栏（图标，标题文本，最小化按钮，最大化按钮，关闭按钮）：</p>
-<p><a class="glightbox" href="../Resources/image-20230210223818978.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../Resources/image-20230210223818978.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230210223818978.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../Resources/image-20230210223818978.png" /></a></p>
 <p>你可以按如下的方式来创建一个Window：</p>
 <ul>
 <li>
@@ -2312,7 +2310,7 @@
 </code></pre></div>
 <blockquote>
 <p>Win32 表明该executable为Win32窗口，具体对应Visual Studio的<code>项目设置</code> - <code>链接器</code> - <code>系统</code> - <code>子系统</code> - <code>窗口</code></p>
-<p><a class="glightbox" href="../Resources/image-20230210225528304.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230210225528304" src="../Resources/image-20230210225528304.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230210225528304.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230210225528304" src="../Resources/image-20230210225528304.png" /></a></p>
 </blockquote>
 <ul>
 <li>在<code>main.cpp</code> 中填入：</li>
@@ -2402,7 +2400,7 @@
 <ul>
 <li>使用CMake命令行或CMakeGUI生成VisualStudio工程文件，在<code>解决方案资源管理器</code>中，右键 Window项目 - <code>设为启动项目</code>，执行就能看到</li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20230210225702843.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230210225702843" src="../Resources/image-20230210225702843.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230210225702843.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230210225702843" src="../Resources/image-20230210225702843.png" /></a></p>
 <p>上述代码来自于 微软 的官方教程，有兴趣的读者可以自己过一遍：</p>
 <ul>
 <li><a href="https://learn.microsoft.com/en-us/windows/win32/learnwin32/your-first-windows-program">https://learn.microsoft.com/en-us/windows/win32/learnwin32/your-first-windows-program</a></li>
@@ -2410,25 +2408,25 @@
 <h3 id="spy">Spy++<a class="headerlink" href="#spy" title="Permanent link">&para;</a></h3>
 <p>看到这里，你觉得什么是Window？它是一个带有最大化、最小化、关闭的按钮的框吗？</p>
 <p>不尽然，在 Visual Studio 中可以找到 <strong>Spy++</strong> ：<code>菜单栏</code>—<code>工具</code>—<code>Spy++</code></p>
-<p><a class="glightbox" href="../Resources/image-20230210231111020.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230210231111020" src="../Resources/image-20230210231111020.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230210231111020.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230210231111020" src="../Resources/image-20230210231111020.png" /></a></p>
 <p>使用它可以查看系统中的所有Window：</p>
-<p><a class="glightbox" href="../Resources/image-20220523194419184.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220523194419184" src="../Resources/image-20220523194419184.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220523194419184.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220523194419184" src="../Resources/image-20220523194419184.png" /></a></p>
 <blockquote>
 <p>Spy++自底向上按层级显示了所有窗口，即，你在显示器上看到的东西，都有迹可循，比如最底层为桌面（壁纸）</p>
 </blockquote>
 <p>使用它的窗口搜索工具（<code>菜单栏</code>—<code>搜索</code>—<code>查找窗口</code>—<code>拖拽</code>下图准心到任意窗口），可以在Spy++中定位到具体的<code>Item</code>，这有点类似UE中的控件反射器。</p>
-<p><a class="glightbox" href="../Resources/image-20220523194840789.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220523194840789" src="../Resources/image-20220523194840789.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220523194840789.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220523194840789" src="../Resources/image-20220523194840789.png" /></a></p>
 <p>通过上面的工具，可以发现窗口是有层级的，且不一定会有关闭按钮，甚至没有边框。</p>
-<p><a class="glightbox" href="../Resources/image-20220523195615080.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220523195615080" src="../Resources/image-20220523195615080.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220523195615080.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220523195615080" src="../Resources/image-20220523195615080.png" /></a></p>
 <p>在Windows下，边框和标题栏部分由系统控制，它不属于程序本身，我们称之为 <strong>Non-Client Area（非客户区域）</strong></p>
 <p>边框内部的区域才可以由程序自由绘制，这部分称之为 <strong>Client Area（ 客户区域）</strong></p>
 <ul>
 <li><a href="https://www.equestionanswers.com/vcpp/client-non-client-area.php">What is windows client and non-client area?</a></li>
 </ul>
 <p>微软可能意识到它的标题栏限制了UI的美化，所以窗口还支持设置 <strong>无边框且背景透明</strong> 的属性，而很多软件通过这种方式来绘制 <strong>异形窗口</strong> ，比如QQ音乐的播放器：</p>
-<p><a class="glightbox" href="../Resources/image-20230210223110058.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230210223110058" src="../Resources/image-20230210223110058.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230210223110058.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230210223110058" src="../Resources/image-20230210223110058.png" /></a></p>
 <p>系统交互事件会传递给 当前的Activated（激活的）窗口，而处于Unactivated状态的窗口，系统一般会以灰色的样式来进行显示：</p>
-<p><a class="glightbox" href="../Resources/image-20230210223752691.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="" src="../Resources/image-20230210223752691.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230210223752691.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="" src="../Resources/image-20230210223752691.png" /></a></p>
 <blockquote>
 <p>一般情况下，只会有一个激活的窗口，这也意味着当前只有一个窗口能接受电脑的输入事件，不过也可以通过一些方法来打破规则，比如 <a href="https://baike.baidu.com/item/%E9%92%A9%E5%AD%90">钩子</a></p>
 </blockquote>
@@ -2534,7 +2532,7 @@
 <p>DPI（Dots Per Inch，每英寸点数）是一个量度单位，用于点阵<a href="https://baike.baidu.com/item/数码影像/6208065?fromModule=lemma_inlink">数码影像</a>，指每一<a href="https://baike.baidu.com/item/英寸?fromModule=lemma_inlink">英寸</a>长度中，取样、可显示或输出点的数目。</p>
 </blockquote>
 <p>在Windows上，通过设置 <strong>缩放与布局</strong> 来调整系统的DPI</p>
-<p><a class="glightbox" href="../Resources/image-20230211105647629.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230211105647629" src="../Resources/image-20230211105647629.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230211105647629.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230211105647629" src="../Resources/image-20230211105647629.png" /></a></p>
 <p>操作系统将根据DPI的变动按一定可配置的机制去调整窗口的尺寸和内容，关于DPI感知的细节，请查阅：</p>
 <ul>
 <li><a href="https://learn.microsoft.com/zh-cn/windows/win32/hidpi/high-dpi-desktop-application-development-on-windows">https://learn.microsoft.com/zh-cn/windows/win32/hidpi/high-dpi-desktop-application-development-on-windows</a></li>
@@ -2549,7 +2547,7 @@
 <h2 id="qt">Qt基础<a class="headerlink" href="#qt" title="Permanent link">&para;</a></h2>
 <h3 id="_3">安装<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p><a href="https://courses.qt.io/how-to-install-qt/index.html#/lessons/WDj_gIccDJa6gmhH_-3P7uC2QDaZHbYA">https://courses.qt.io/how-to-install-qt/index.html#/lessons/WDj_gIccDJa6gmhH_-3P7uC2QDaZHbYA</a></p>
-<p><a class="glightbox" href="../Resources/image-20230211151023126.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230211151023126" src="../Resources/image-20230211151023126.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230211151023126.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230211151023126" src="../Resources/image-20230211151023126.png" /></a></p>
 <p>如果你想继续学习之后的图形章节，那么你在安装的时候请选择 <code>Custom installation</code>，确保安装以下模块：</p>
 <ul>
 <li>Qt6以上的任意版本，建议是最新的（比如6.5.2 beta），包含</li>
@@ -2608,7 +2606,7 @@
 <p>选择  <strong>QtExample</strong> 为启动项目，编译运行，就能看到：</p>
 </li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20230211170238365.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230211170238365" src="../Resources/image-20230211170238365.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230211170238365.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230211170238365" src="../Resources/image-20230211170238365.png" /></a></p>
 <p><a href="https://doc.qt.io/qt-6/qapplication.html"> <strong>QApplication</strong> </a> 是Qt对整个程序的调度管控中心，通过它可以：</p>
 <ul>
 <li>解析程序的输入参数（即上方的<code>argument count</code>，<code>argument value</code>）</li>
@@ -2661,9 +2659,9 @@
 </code></pre></div>
 <p><code>AUTOMOC</code>会自动检测头文件中是否存在 <code>Q_OBJECT</code> 之类的宏，如果存在，则会使用Qt的反射编译器 <strong>moc</strong>  扫描该文件，扫描结束将生成一个 <code>*.moc</code> 文件，这里面包含了Qt反射数据的定义</p>
 <p>你能在类似如下的路径中，找到Qt的moc，在当前目录打开cmd，执行 <code>moc -h</code>，就能看到它的帮助文档</p>
-<p><a class="glightbox" href="../Resources/image-20230211183009226.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230211183009226" src="../Resources/image-20230211183009226.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230211183009226.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230211183009226" src="../Resources/image-20230211183009226.png" /></a></p>
 <p>moc的源码位于如下路径：</p>
-<p><a class="glightbox" href="../Resources/image-20230211183213258.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230211183213258" src="../Resources/image-20230211183213258.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230211183213258.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230211183213258" src="../Resources/image-20230211183213258.png" /></a></p>
 <blockquote>
 <p>UE 的反射编译器为 UHT（Unreal Header Tool）</p>
 </blockquote>
@@ -2838,7 +2836,7 @@
 <p>你要说它两之间没 “奸情” 我肯定是不信的0.0</p>
 </blockquote>
 <p>在Window的客户区域中，经常会有很多的小部件，比如下面的窗口：</p>
-<p><a class="glightbox" href="../Resources/image-20220523202054386.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20220523202054386" src="../Resources/image-20220523202054386.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20220523202054386.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20220523202054386" src="../Resources/image-20220523202054386.png" /></a></p>
 <p>它拥有很多的按钮和控件，如果我们单纯使用一个窗口的点击事件（可获取到鼠标坐标）去判断点了窗口的哪个部分，再一点点处理绘制，当窗口的复杂度一上来，整个代码会显得异常混乱，管理困难，虽然Windows提供了SubWindow的机制，但由于维护一个Window的开销过大，所以，很多框架都提出了 <strong>Widget</strong> 的概念</p>
 <blockquote>
 <p>对应Qt中的QWidget，UE中的 SWidget</p>
@@ -2863,9 +2861,9 @@
 <a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="p">}</span>
 </code></pre></div>
 <p>在单个部件的开发中，主要是设置 QWidget 的 <a href="https://doc.qt.io/qt-6/qwidget.html#protected-functions">Properties</a>：</p>
-<p><a class="glightbox" href="../Resources/image-20230212112016670.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230212112016670" src="../Resources/image-20230212112016670.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230212112016670.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230212112016670" src="../Resources/image-20230212112016670.png" /></a></p>
 <p>和覆写<a href="https://doc.qt.io/qt-6/qwidget.html#protected-functions">Event</a>：</p>
-<p><a class="glightbox" href="../Resources/image-20230212112135238.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230212112135238" src="../Resources/image-20230212112135238.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230212112135238.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230212112135238" src="../Resources/image-20230212112135238.png" /></a></p>
 <p>来实现各种复杂的界面效果和交互逻辑</p>
 <h4 id="windowoption">WindowOption<a class="headerlink" href="#windowoption" title="Permanent link">&para;</a></h4>
 <p>在一般情况下，开发者甚至都不会接触到 <code>QWindow</code>，因为最外层 （or 最顶级）的 <code>QWidget</code> 会自动生成 <code>QWindow</code>，我们可以通过对这个QWidget做一些设置，来影响Window的生成：</p>
@@ -2955,13 +2953,13 @@
 <a id="__codelineno-15-55" name="__codelineno-15-55" href="#__codelineno-15-55"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;main.moc&quot;</span>
 </code></pre></div>
 <p>运行它你能看到如下效果：</p>
-<p><a class="glightbox" href="../Resources/8.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="8" src="../Resources/8.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/8.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="8" src="../Resources/8.gif" /></a></p>
 <p>使用QWidget，可以实现我们想要的任何效果。</p>
 <p>Qt官方的提供了很多基础控件供开发者使用：</p>
 <ul>
 <li><a href="https://doc.qt.io/qt-6/widget-classes.html">https://doc.qt.io/qt-6/widget-classes.html</a></li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20230212115640323.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230212115640323" src="../Resources/image-20230212115640323.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230212115640323.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230212115640323" src="../Resources/image-20230212115640323.png" /></a></p>
 <h4 id="layout">Layout<a class="headerlink" href="#layout" title="Permanent link">&para;</a></h4>
 <p>在一个程序中，往往不会只有一个QWidget，所以我们还需要组织这些Widget的布局，Qt中常用的布局是BoxLayout，这里有一个简单的示例：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;QApplication&gt;</span>
@@ -3001,7 +2999,7 @@
 <a id="__codelineno-16-35" name="__codelineno-16-35" href="#__codelineno-16-35"></a>
 <a id="__codelineno-16-36" name="__codelineno-16-36" href="#__codelineno-16-36"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&quot;main.moc&quot;</span>
 </code></pre></div>
-<p><a class="glightbox" href="../Resources/image-20230212120836086.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230212120836086" src="../Resources/image-20230212120836086.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230212120836086.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230212120836086" src="../Resources/image-20230212120836086.png" /></a></p>
 <p>布局的完整介绍，请查阅：</p>
 <ul>
 <li><a href="https://doc.qt.io/qt-6/layout.html">https://doc.qt.io/qt-6/layout.html</a></li>
@@ -3041,25 +3039,25 @@
 <h3 id="_6">文档<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <p>在 <strong>Qt Creator</strong> 中，你只需选择代码中的Qt结构，按下 <code>F1</code>就能打开它的相关文档</p>
 <p>在 <strong>Visual Studio</strong> 中，你需要安装 Qt Vs Tool 插件，在设置中开启：</p>
-<p><a class="glightbox" href="../Resources/image-20230212132401879.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230212132401879" src="../Resources/image-20230212132401879.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20230212132323526.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230212132323526" src="../Resources/image-20230212132323526.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230212132401879.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230212132401879" src="../Resources/image-20230212132401879.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230212132323526.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230212132323526" src="../Resources/image-20230212132323526.png" /></a></p>
 <h3 id="_7">示例<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <p>这是Qt官方的示例教程页面：</p>
 <ul>
 <li><a href="https://doc.qt.io/qt-6/qtexamplesandtutorials.html">https://doc.qt.io/qt-6/qtexamplesandtutorials.html</a></li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20230212132530234.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230212132530234" src="../Resources/image-20230212132530234.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230212132530234.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230212132530234" src="../Resources/image-20230212132530234.png" /></a></p>
 <p>在Qt Creator中也有大量的使用示例：</p>
-<p><a class="glightbox" href="../Resources/image-20230212132047945.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230212132047945" src="../Resources/image-20230212132047945.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230212132047945.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230212132047945" src="../Resources/image-20230212132047945.png" /></a></p>
 <h3 id="_8">源码<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <p>在达到一定阶段之后，好奇心总会驱使你打开这个目录：</p>
-<p><a class="glightbox" href="../Resources/image-20230212132713169.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230212132713169" src="../Resources/image-20230212132713169.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230212132713169.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230212132713169" src="../Resources/image-20230212132713169.png" /></a></p>
 <p>在每个模块的<code>tests</code>目录下面，你能找到非常多可供运行的测试工程：</p>
-<p><a class="glightbox" href="../Resources/image-20230212132902145.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230212132902145" src="../Resources/image-20230212132902145.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230212132902145.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230212132902145" src="../Resources/image-20230212132902145.png" /></a></p>
 <h2 id="_9">结尾<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
 <p>看到这里，你还觉得Qt只是一个 GUI 框架吗？</p>
 <p>Qt的GUI功能甚至都只是源码目录下的一小部分：</p>
-<p><a class="glightbox" href="../Resources/image-20230212171714634.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230212171714634" src="../Resources/image-20230212171714634.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230212171714634.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230212171714634" src="../Resources/image-20230212171714634.png" /></a></p>
 <p>翻阅一下源码，你能体会到Qt有多么庞大~</p>
 <p>在笔者眼里，它在代码层面并不比 Unreal Engine 逊色，由于它们适用于不同的行业，比较起来毫无意义</p>
 <p>但无论你之后的目标是 Qt 还是 Unreal Engine 或是其他，只要方向是 C++ ，那么 Qt 不仅是一个完善的工具库，更是提升代码素养、架构能力的最好途径</p>
@@ -3265,10 +3263,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

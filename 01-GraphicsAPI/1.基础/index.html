@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -2132,7 +2130,7 @@
 <li><code>rhi-&gt;beginOffscreenFrame</code> 会创建一个新的 CommandBuffer</li>
 </ul>
 <p><strong>QRhiCommandBuffer</strong> 支持如下指令：</p>
-<p><a class="glightbox" href="../Resources/image-20230305213442549.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230305213442549" src="../Resources/image-20230305213442549.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230305213442549.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230305213442549" src="../Resources/image-20230305213442549.png" /></a></p>
 </blockquote>
 <h3 id="device-queue">设备队列（Device Queue）<a class="headerlink" href="#device-queue" title="Permanent link">&para;</a></h3>
 <p>设备队列是 代理商（逻辑设备）和 物理设备 沟通的唯一 <strong>”桥梁“</strong></p>
@@ -2175,7 +2173,7 @@
 <p>GUI 框架也大多提供了 Window Surface 的管理，我们要做的就是翻阅文档，深入源码。</p>
 <h3 id="swapchain">交换链（<a href="https://en.wikipedia.org/wiki/Swap_chain">SwapChain</a>）<a class="headerlink" href="#swapchain" title="Permanent link">&para;</a></h3>
 <p>在前两节中，我们已经通过控制台程序阐述了交换链的作用，它能有效的避免窗口绘制的闪烁和撕裂。</p>
-<p><a class="glightbox" href="../Resources/Ch10_gpu_swapchain_display.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/Ch10_gpu_swapchain_display.png" /></a></p>
+<p><a class="glightbox" href="../Resources/Ch10_gpu_swapchain_display.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/Ch10_gpu_swapchain_display.png" /></a></p>
 <blockquote>
 <p><a href="https://mkblog.co.kr/vulkan-tutorial-10-create-swap-chain/">https://mkblog.co.kr/vulkan-tutorial-10-create-swap-chain/</a></p>
 </blockquote>
@@ -2187,7 +2185,7 @@
 <li>光线追踪管线（<a href="https://www.khronos.org/blog/ray-tracing-in-vulkan#blog_Ray_Tracing_Pipelines">Ray Tracing Pipeline</a>）：用于光线追踪流程</li>
 </ul>
 <p>上一节中我们通过控制台程序以及简单的了解了一下图形渲染管线，这里有一个更完整的流程图：</p>
-<p><a class="glightbox" href="../Resources/graphics-pipeline.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="图形流水线" src="../Resources/graphics-pipeline.png" /></a></p>
+<p><a class="glightbox" href="../Resources/graphics-pipeline.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="图形流水线" src="../Resources/graphics-pipeline.png" /></a></p>
 <blockquote>
 <p><a href="https://graphicscompendium.com/intro/01-graphics-pipeline">https://graphicscompendium.com/intro/01-graphics-pipeline</a></p>
 </blockquote>
@@ -2223,7 +2221,7 @@
 <p>现代图形引擎的通用RHI中，由于要支持多种图形API，它们往往会使用上面的一种着色器语言进行开发，再转译成其他API的着色器代码。</p>
 <blockquote>
 <p>在QRhi中，使用Vulkan风格的GLSL进行开发，Qt会通过glslang将GLSL编译为 <a href="https://zhuanlan.zhihu.com/p/497460602">SPIR-V</a> 格式的着色器代码，再使用开源库 <a href="https://github.com/KhronosGroup/SPIRV-Cross">SPIRV-Cross</a> 将之转译为各个API下的着色器代码，流程如下：</p>
-<p><a class="glightbox" href="../Resources/shaderconditioning.pngwidth%3D1280%26name%3Dshaderconditioning-1682759360241-2.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="着色器调节" src="../Resources/shaderconditioning.pngwidth%3D1280%26name%3Dshaderconditioning-1682759360241-2.png" /></a></p>
+<p><a class="glightbox" href="../Resources/shaderconditioning.pngwidth%3D1280%26name%3Dshaderconditioning-1682759360241-2.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="着色器调节" src="../Resources/shaderconditioning.pngwidth%3D1280%26name%3Dshaderconditioning-1682759360241-2.png" /></a></p>
 <p>QRhi使用Vulkan风格的GLSL，因此这个文档是非常重要的：</p>
 <ul>
 <li><a href="https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html">https://registry.khronos.org/OpenGL/specs/gl/GLSLangSpec.4.60.html</a></li>
@@ -2269,11 +2267,11 @@
 <ul>
 <li>在UV值超出值域[0,1]时，使用何种方式处理越界采样：</li>
 </ul>
-<p><a class="glightbox" href="../Resources/texture_wrapping.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/texture_wrapping.png" /></a></p>
+<p><a class="glightbox" href="../Resources/texture_wrapping.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/texture_wrapping.png" /></a></p>
 <ul>
 <li>在精度过高或过低时，使用何种方式对纹理进行采用：</li>
 </ul>
-<p><a class="glightbox" href="../Resources/texture_filtering.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/texture_filtering.png" /></a></p>
+<p><a class="glightbox" href="../Resources/texture_filtering.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/texture_filtering.png" /></a></p>
 <blockquote>
 <p>这里分别对应QRhi中的 <strong>QRhiTexture</strong> 和 <strong>QRhiSampler</strong></p>
 <p><div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cm">/*创建带有一个颜色附件的RT*/</span>
@@ -2300,7 +2298,7 @@
 </ul>
 <blockquote>
 <p>这里对应QRhi的 <strong>QRhiShaderResourceBinding</strong> ：</p>
-<p><a class="glightbox" href="../Resources/image-20230430003736149.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230430003736149" src="../Resources/image-20230430003736149.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230430003736149.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230430003736149" src="../Resources/image-20230430003736149.png" /></a></p>
 </blockquote>
 <h3 id="descriptorsetlayoutbinding">描述符集布局绑定（DescriptorSetLayoutBinding）<a class="headerlink" href="#descriptorsetlayoutbinding" title="Permanent link">&para;</a></h3>
 <p>一个着色器往往不会只有一种类型的Uniform输入，描述符集布局绑定（DescriptorSetLayoutBinding）是一个描述符的集合，它定义了着色器上的Uniform结构布局，图形API在创建流水线之后，流水线的绝大部分参数都无法改变，而描述符集布局绑定，是可以在不重建流水线的前提下，动态去替换的。</p>
@@ -2316,7 +2314,7 @@
 </blockquote>
 <h3 id="rendertarget">渲染目标（<a href="https://en.wikipedia.org/wiki/Render_Target">RenderTarget</a>）<a class="headerlink" href="#rendertarget" title="Permanent link">&para;</a></h3>
 <p>它等价于OpenGL中的 <a href="https://en.wikipedia.org/wiki/Framebuffer_object">Frame Buffer Object</a>，它由一个或多个 <strong>颜色附件(Color Attachment)</strong> 组成，可能包含深度附件和模板附件。</p>
-<p><a class="glightbox" href="../Resources/Figura-5-Esquema-representando-a-estrutura-de-um-Frame-Buffer-Object-Green-2005.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="Esquema representando a estrutura de um Frame Buffer Object [Green 2005]  " src="../Resources/Figura-5-Esquema-representando-a-estrutura-de-um-Frame-Buffer-Object-Green-2005.png" /></a></p>
+<p><a class="glightbox" href="../Resources/Figura-5-Esquema-representando-a-estrutura-de-um-Frame-Buffer-Object-Green-2005.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Esquema representando a estrutura de um Frame Buffer Object [Green 2005]  " src="../Resources/Figura-5-Esquema-representando-a-estrutura-de-um-Frame-Buffer-Object-Green-2005.png" /></a></p>
 <p>通常，我们的绘制其实是在RenderTarget上填充颜色数据，对于深度和模板的数据，GPU会自动进行处理，我们只需要去配置一些处理规则。</p>
 <blockquote>
 <p>它对应QRhi中的 <strong>QRhiRenderTarget</strong> ，使用QRhi创建一个RenderTarget是一件非常容易的事情：</p>
@@ -2337,7 +2335,7 @@
 <p>在游戏和影视作品中，为朴素的图形增加一些后期效果，能极大程度的提升画面的艺术感，而在图形渲染管线中，Pass可以当作是一帧图像（RenderTarget）的绘制。</p>
 <p>在游戏引擎中，绘制朴素几何物体的Pass我们一般称为 <strong>BasePass</strong></p>
 <p>下面的 <strong>FrameGraph</strong> 展示了如何使用多个Pass来实现<a href="https://en.wikipedia.org/wiki/Bloom_(shader_effect)">Bloom</a>的效果</p>
-<p><a class="glightbox" href="../Resources/image-20230305215210666.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230305215210666" src="../Resources/image-20230305215210666.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230305215210666.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230305215210666" src="../Resources/image-20230305215210666.png" /></a></p>
 <h3 id="renderpassdescriptor">渲染通道描述符（RenderPassDescriptor ）<a class="headerlink" href="#renderpassdescriptor" title="Permanent link">&para;</a></h3>
 <p>RenderPassDescriptor用于规定何种格式的RenderTarget符合该RenderPass的使用，在Vulkan中，它的创建极其繁琐。在QRhi，只需要使用：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">QRhiTextureRenderTarget</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">QRhiRenderTarget</span>
@@ -2352,7 +2350,7 @@
 <li><a href="http://mirrors.ustc.edu.cn/qtproject/official_releases/online_installers/">http://mirrors.ustc.edu.cn/qtproject/official_releases/online_installers/</a></li>
 </ul>
 <p>如果你已经有Qt了，可以在Qt的安装目录找到它的维护工具，它用于更新和卸载Qt的组件</p>
-<p><a class="glightbox" href="../Resources/image-20230429172832427.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230429172832427" src="../Resources/image-20230429172832427.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230429172832427.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230429172832427" src="../Resources/image-20230429172832427.png" /></a></p>
 <p>请确保至少安装以下Qt组件：</p>
 <ul>
 <li><strong>6.0以上版本的Qt库</strong> （当前最新 <code>6.6.0</code>）</li>
@@ -2416,7 +2414,7 @@
 <ul>
 <li>使用cmake编译执行，执行成功你能看到控制台窗口打印了显卡信息:</li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20230429175841296.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230429175841296" src="../Resources/image-20230429175841296.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230429175841296.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230429175841296" src="../Resources/image-20230429175841296.png" /></a></p>
 <h3 id="qrhiwindow">QRhiWindow<a class="headerlink" href="#qrhiwindow" title="Permanent link">&para;</a></h3>
 <p>操作系统提供的窗口有非常细粒度的控制，在开发者想要调整窗口的某个效果时，可能会需要改变窗口的多个属性和事件，当大量的效果堆叠设置的时候，就很比较容易出现冲突。打个比方：</p>
 <blockquote>
@@ -2548,7 +2546,7 @@
 <a id="__codelineno-8-50" name="__codelineno-8-50" href="#__codelineno-8-50"></a><span class="p">}</span>
 </code></pre></div>
 <p>运行它可以看到：</p>
-<p><a class="glightbox" href="../Resources/image-20230304201240208.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230304201240208" src="../Resources/image-20230304201240208.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230304201240208.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230304201240208" src="../Resources/image-20230304201240208.png" /></a></p>
 <p>如果遇到困难，可以参考 <a href="https://github.com/Italink/ModernGraphicsEngineGuide/tree/main/Source/1-GraphicsAPI">ModernGraphicsEngineGuide</a> 中的 <strong>01-WindowAndWidget</strong> 项目，也可以在<a href="https://github.com/Italink/ModernGraphicsEngineGuide/issues">此处</a>提问</p>
 <p>下一章节，我们开始整活~</p>
 
@@ -2753,10 +2751,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

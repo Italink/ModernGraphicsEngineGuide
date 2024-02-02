@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -2257,6 +2255,7 @@
 <ul>
 <li><a href="https://docs.unrealengine.com/5.3/zh-CN/building-virtual-worlds-in-unreal-engine/">在虚幻引擎中构建虚拟世界 | 虚幻引擎5.3文档 (unrealengine.com)</a></li>
 <li><a href="https://www.bilibili.com/video/BV1UC4y1V7jt">Unreal Fest 2023 - Building Bigger</a></li>
+<li>[<a href="https://www.bilibili.com/video/BV1GK4y1676a/">UFSH2023]从创建小场景到构建大世界的工作流升级 | Chris Murphy Epic Games</a></li>
 </ul>
 <p>还有一些通俗易懂的讲解视频：</p>
 <ul>
@@ -2264,46 +2263,46 @@
 <li><a href="https://www.youtube.com/watch?v=fDgKV3SjDTI">UE5 World Partition Part 1 Concepts - YouTube</a></li>
 </ul>
 <p>简而言之，就是UE将地图划分成很多个 <strong>单元格（Cell）</strong> ，随着 <strong>玩家（流送源）</strong> 的移动去 <strong>流送（Streaming）</strong> 周围的单元：</p>
-<p><a class="glightbox" href="../Resources/image-20231103161359654.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231103161359654" src="../Resources/image-20231103161359654.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231103161359654.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231103161359654" src="../Resources/image-20231103161359654.png" /></a></p>
 <p>在上图中，我们看到的只是一个四向的划分，但事实上，UE的世界分区采用了一种 <strong>稀疏四叉树</strong> 的方式进行流送，它还具有多个网格级别（Level），我们看到的只是Level0：</p>
-<p><a class="glightbox" href="../Resources/image-20231103164631165.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231103164631165" src="../Resources/image-20231103164631165.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231103164631165.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231103164631165" src="../Resources/image-20231103164631165.png" /></a></p>
 <h3 id="_2">分区<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <p>世界分区会根据 <strong>物体的包围盒</strong> 来确定它归属于哪个 <strong>网格级别（Grid Level）</strong> 的 <strong>单元格（Cell）</strong> 。</p>
 <p>打个比方，假如我们世界分区域中存在如下物体，红色区域是它们 <strong>包围盒（Bound）</strong> 的 <strong>水平面积（Area）</strong> ：</p>
-<p><a class="glightbox" href="../Resources/image-20231128100717690.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231128100717690" src="../Resources/image-20231128100717690.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231128100717690.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231128100717690" src="../Resources/image-20231128100717690.png" /></a></p>
 <p>世界分区在划分时，会从最低的网格级别开始，将物体划分到刚好能囊括其面积的单元格之中</p>
 <p>因此上述物体分布的最终划分情况如下：</p>
-<p><a class="glightbox" href="../Resources/image-20231128100134840.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231128100134840" src="../Resources/image-20231128100134840.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231128100134840.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231128100134840" src="../Resources/image-20231128100134840.png" /></a></p>
 <p>在此处可以对分区相关的参数进行设置：</p>
-<p><a class="glightbox" href="../Resources/image-20231130100005205.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231130100005205" src="../Resources/image-20231130100005205.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231130100005205.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231130100005205" src="../Resources/image-20231130100005205.png" /></a></p>
 <p>勾选 <strong>预览网格</strong> 能在编辑器视图下，看到场景的流送视图：</p>
-<p><a class="glightbox" href="../Resources/image-20231130101753095.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231130101753095" src="../Resources/image-20231130101753095.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231130101753095.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231130101753095" src="../Resources/image-20231130101753095.png" /></a></p>
 <h3 id="_3">流送<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p>场景中新建的Actor默认都会参与流送，也就是会被卸载，在Actor的细节面板上可以做相关调整：</p>
-<p><a class="glightbox" href="../Resources/image-20231201112501518.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231201112501518" src="../Resources/image-20231201112501518.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231201112501518.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231201112501518" src="../Resources/image-20231201112501518.png" /></a></p>
 <ul>
 <li><strong>运行时网格</strong> ：该Actor归属于哪个世界分区网格，如果为None会被指定到 <strong>MainGrid</strong> 中。</li>
 <li><strong>已空间加载</strong> ：勾选后该Actor会参与世界分区的流送，取消勾选会让该Actor在场景中永远被加载，不参加流送。</li>
 </ul>
 <p>世界分区的流送由 <strong>流送源（Streaming Source）</strong> 来触发。</p>
 <p>流送源对应的C++接口为： <strong>IWorldPartitionStreamingSourceProvider</strong></p>
-<p><a class="glightbox" href="../Resources/image-20231128110811971.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231128110811971" src="../Resources/image-20231128110811971.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231128110811971.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231128110811971" src="../Resources/image-20231128110811971.png" /></a></p>
 <p><strong>玩家控制器（PlayerController）</strong> 是一个默认的流送源:</p>
-<p><a class="glightbox" href="../Resources/image-20231128111620135.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231128111620135" src="../Resources/image-20231128111620135.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231128111620135.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231128111620135" src="../Resources/image-20231128111620135.png" /></a></p>
 <p>假如此时人物位于地图的右下角，结合上面的划分情况，整体加载情况可能是这样的：</p>
-<p><a class="glightbox" href="../Resources/image-20231128101425779.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231128101425779" src="../Resources/image-20231128101425779.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231128101425779.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231128101425779" src="../Resources/image-20231128101425779.png" /></a></p>
 <p>我们也可以通过 <strong>世界分区流送源组件（WorldPartitionStreamingSourceComponent）</strong> 来让其他actor也能作为流送源：</p>
-<p><a class="glightbox" href="../Resources/image-20231128111308024.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231128111308024" src="../Resources/image-20231128111308024.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20231128111209378.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231128111209378" src="../Resources/image-20231128111209378.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231128111308024.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231128111308024" src="../Resources/image-20231128111308024.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231128111209378.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231128111209378" src="../Resources/image-20231128111209378.png" /></a></p>
 <h4 id="_4">调试视图<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
 <p>官方提供了一些指令可以预览流送的过程：</p>
 <ul>
 <li><code>wp.Runtime.ToggleDrawRuntimeHash2D</code></li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20231127182325974.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231127182325974" src="../Resources/image-20231127182325974.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231127182325974.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231127182325974" src="../Resources/image-20231127182325974.png" /></a></p>
 <ul>
 <li>
-<p><code>wp.Runtime.ToggleDrawRuntimeHash3D</code><a class="glightbox" href="../Resources/image-20231127182512039.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231127182512039" src="../Resources/image-20231127182512039.png" /></a></p>
+<p><code>wp.Runtime.ToggleDrawRuntimeHash3D</code><a class="glightbox" href="../Resources/image-20231127182512039.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231127182512039" src="../Resources/image-20231127182512039.png" /></a></p>
 </li>
 <li>
 <p>在开启预览视图后：</p>
@@ -2313,19 +2312,19 @@
 </li>
 <li>
 <p>使用指令 <code>wp.Runtime.ToggleDrawRuntimeCellsDetails</code> 可以看到单元格加载的耗时：</p>
-<p><a class="glightbox" href="../Resources/image-20231129134856514.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129134856514" src="../Resources/image-20231129134856514.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231129134856514.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231129134856514" src="../Resources/image-20231129134856514.png" /></a></p>
 </li>
 <li>
 <p>使用指令 <code>wp.Runtime.ShowRuntimeSpatialHashCellStreamingPriority 1</code>查看单元格流送的优先级热图</p>
-<p><a class="glightbox" href="../Resources/image-20231129135711872.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129135711872" src="../Resources/image-20231129135711872.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231129135711872.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231129135711872" src="../Resources/image-20231129135711872.png" /></a></p>
 </li>
 </ul>
 <h4 id="_5">关键配置<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
 <h5 id="_6">联机<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h5>
 <p>在多人联机时，服务器默认不会启用流送，场景流送只是玩家的本地行为：</p>
-<p><a class="glightbox" href="../Resources/image-20231128134921374.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231128134921374" src="../Resources/image-20231128134921374.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231128134921374.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231128134921374" src="../Resources/image-20231128134921374.png" /></a></p>
 <p>使用指令<code>wp.Runtime.EnableServerStreaming 1</code>可以开启服务器上的流送</p>
-<p><a class="glightbox" href="../Resources/image-20231128135313851.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231128135313851" src="../Resources/image-20231128135313851.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231128135313851.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231128135313851" src="../Resources/image-20231128135313851.png" /></a></p>
 <h5 id="_7">流送优化<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h5>
 <p>世界分区默认是开启流送优化的，并非每一帧都会更新流送的状态，通过以下配置我们可以调整优化的策略：</p>
 <ul>
@@ -2391,9 +2390,9 @@
 <a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="p">};</span>
 </code></pre></div>
 <p>引擎之中有不少覆写：</p>
-<p><a class="glightbox" href="../Resources/image-20231017112528040.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231017112528040" src="../Resources/image-20231017112528040.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231017112528040.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231017112528040" src="../Resources/image-20231017112528040.png" /></a></p>
 <p>在编辑器下，世界分区地图中新建Actor，会自动创建 <strong>FWorldPartitionActorDesc</strong> ：</p>
-<p><a class="glightbox" href="../Resources/image-20231017113022901.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231017113022901" src="../Resources/image-20231017113022901.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231017113022901.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231017113022901" src="../Resources/image-20231017113022901.png" /></a></p>
 <p>在编辑器中，所有创建的ActorDesc存储在 <strong>UWorldPartition</strong> 的<code>ActorDescContainer</code>中：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">UWorldPartition</span><span class="w"> </span><span class="k">final</span><span class="w"> </span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">UObject</span>
@@ -2516,19 +2515,19 @@
 <p>来将该Grid中的所有Actor划分到具体的 <strong>单元（Cell）</strong> 中</p>
 <h4 id="_10">流送<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
 <p>流送的逻辑主要位于：</p>
-<p><a class="glightbox" href="../Resources/image-20231129161940907.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129161940907" src="../Resources/image-20231129161940907.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231129161940907.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231129161940907" src="../Resources/image-20231129161940907.png" /></a></p>
 <h3 id="_11">关键问题<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
 <p>世界分区（World Partition）可以让我们轻易实现无缝加载的大世界，但流送的特性也带来了很多限制，这往往需要开发商具有更加成熟的制作团队，并配备专业的引擎团队，在设计时充分考虑到世界分区的特性，并且 <strong>需要专业人员来监管世界分区的流送策略</strong> 。</p>
 <h4 id="_12">跨边界<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
 <p>观察之前的物体划分和流送情况：</p>
-<p><a class="glightbox" href="../Resources/image-20231129094519448.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129094519448" src="../Resources/image-20231129094519448.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20231128203302065.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231128203302065" src="../Resources/image-20231128203302065.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231129094519448.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231129094519448" src="../Resources/image-20231129094519448.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231128203302065.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231128203302065" src="../Resources/image-20231128203302065.png" /></a></p>
 <p>可以看到一些 “奇怪” 的现象，</p>
 <ul>
 <li>由于 物体<code>E</code> 的包围盒位于世界分区的轴线上，结果被划分到了Level3，这将导致它会永远被加载，但是它的包围盒区域明明非常小。</li>
 </ul>
 <p>这个问题非常容易出现：</p>
-<p><a class="glightbox" href="../Resources/image-20231128102516857.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231128102516857" src="../Resources/image-20231128102516857.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231128102516857.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231128102516857" src="../Resources/image-20231128102516857.png" /></a></p>
 <h5 id="_13">解决方案<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h5>
 <p>引擎提供了一些指令有助于缓解该现象：</p>
 <ul>
@@ -2542,15 +2541,15 @@
 <li><a href="https://forums.unrealengine.com/t/tech-note-world-partition-spatially-loaded-actors-are-always-loaded/661466">Tech Note: World Partition Spatially Loaded Actors are Always Loaded  - Epic Developer Community Forums </a></li>
 </ul>
 <p>但这并不是一个很好的解决方案，为了能规避这些问题，UE允许开发团队根据自己的场景需求定制 <strong>RuntimeHashClass</strong> ，在此处进行替换：</p>
-<p><a class="glightbox" href="../Resources/image-20231017150541788.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231017150541788" src="../Resources/image-20231017150541788.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231017150541788.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231017150541788" src="../Resources/image-20231017150541788.png" /></a></p>
 <blockquote>
 <p>可参考：<code>Engine\Source\Runtime\Engine\Private\WorldPartition\RuntimeSpatialHash\RuntimeSpatialHashGridHelper.cpp</code></p>
 </blockquote>
 <p>在UE5.3中，官方把上述配置公开到了编辑器中，并允许调整世界分区的坐标原点，它能满足绝大部分的需求：</p>
-<p><a class="glightbox" href="../Resources/image-20231128103524123.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231128103524123" src="../Resources/image-20231128103524123.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231128103524123.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231128103524123" src="../Resources/image-20231128103524123.png" /></a></p>
 <h4 id="_14">加载优先级<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h4>
 <p>因为世界分区流送的缘故，将导致场景中的一些运动物体出现异常，重力是其中最常见的：</p>
-<p><a class="glightbox" href="../Resources/1232265272.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="1232265272" src="../Resources/1232265272.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/1232265272.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="1232265272" src="../Resources/1232265272.gif" /></a></p>
 <p>上图中，存在的问题是：</p>
 <ul>
 <li>部分立方体被划分到其中一个单元格中，由于划分算法的局限性，地面被划分到了另一个单元格中，由于地面所在的单元格不在加载范围之内，这将导致物体直接掉落到地底</li>
@@ -2568,12 +2567,12 @@
 <h4 id="_16">数据持久性<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h4>
 <p>参与世界分区的Actor并不具有数据持久性，当我们对一个加载之后的物体进行了修改，卸载时，修改的数据并不会保存。</p>
 <p>比如这个例子：界分区中有一群浮空的立方体，加载之后，因为重力，它会掉向地面，卸载之后再加载，可以发现立方体已经正确的保存了之前的状态，落在地面上：</p>
-<p><a class="glightbox" href="../Resources/123d23422.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="123d23422" src="../Resources/123d23422.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/123d23422.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="123d23422" src="../Resources/123d23422.gif" /></a></p>
 <p>世但当我们开启控制台指令 <code>gc.ForceCollectGarbageEveryFrame 1</code>，再来看：</p>
-<p><a class="glightbox" href="../Resources/123asd23422.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="123asd23422" src="../Resources/123asd23422.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/123asd23422.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="123asd23422" src="../Resources/123asd23422.gif" /></a></p>
 <p>这时重新加载立方体，立方体会回到起始位置。</p>
 <p>第一个示例让我们产生 物体修改能被保存 的错觉，是因为超出加载范围的单元格不会立即被释放，而是处于 <code>Unloaded Still Around</code> 状态，这样能保证下次加载的时候可以立即复用，真正卸载单元格的时机是在下次GC。</p>
-<p><a class="glightbox" href="../Resources/image-20231129112140082.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129112140082" src="../Resources/image-20231129112140082.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231129112140082.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231129112140082" src="../Resources/image-20231129112140082.png" /></a></p>
 <h5 id="_17">解决方案<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h5>
 <p>这个问题是由流送的特性导致：</p>
 <ul>
@@ -2590,34 +2589,44 @@
 <li>让这部分数据不要参与流送，即数据存储在一个合理的作用域，而不是存到Actor中。</li>
 </ul>
 <p>UE5.3中提供了一个实验性插件 <strong>LevelStreamingPersistence</strong> 可以帮助开发者解决该问题。</p>
-<p><a class="glightbox" href="../Resources/image-20231204160944855.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231204160944855" src="../Resources/image-20231204160944855.png" /></a></p>
-<p>其核心结构如下：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">ULevelStreamingPersistenceManager</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">UWorldSubsystem</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="p">{</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="n">GENERATED_BODY</span><span class="p">()</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="c1">// Serialization</span>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">SerializeTo</span><span class="p">(</span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">uint8</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">OutPayload</span><span class="p">);</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">InitializeFrom</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">uint8</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">InPayload</span><span class="p">);</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span><span class="c1">// Sets property value and creates the entry if necessary, returns true on success.</span>
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">ClassType</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">PropertyType</span><span class="o">&gt;</span>
-<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">SetPropertyValue</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InObjectPathName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InPropertyName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">PropertyType</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InPropertyValue</span><span class="p">);</span>
-<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
-<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">    </span><span class="c1">// Sets the property value on existing entries, returns true on success.</span>
-<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">    </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">PropertyType</span><span class="o">&gt;</span>
-<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">TrySetPropertyValue</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InObjectPathName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InPropertyName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">PropertyType</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InPropertyValue</span><span class="p">);</span>
-<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
-<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="w">    </span><span class="c1">// Gets the property value if found, returns true on success.</span>
-<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">PropertyType</span><span class="o">&gt;</span>
-<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">GetPropertyValue</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InObjectPathName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InPropertyName</span><span class="p">,</span><span class="w"> </span><span class="n">PropertyType</span><span class="o">&amp;</span><span class="w"> </span><span class="n">OutPropertyValue</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
-<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>
-<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="w">    </span><span class="c1">// Sets the property value converted from the provided string value on existing entries, returns true on success.</span>
-<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">TrySetPropertyValueFromString</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InObjectPathName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InPropertyName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InPropertyValue</span><span class="p">);</span>
-<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>
-<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a><span class="w">    </span><span class="c1">// Gets the property value and converts it to a string if found, returns true on success.</span>
-<a id="__codelineno-10-25" name="__codelineno-10-25" href="#__codelineno-10-25"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">GetPropertyValueAsString</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InObjectPathName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InPropertyName</span><span class="p">,</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">OutPropertyValue</span><span class="p">);</span>
-<a id="__codelineno-10-26" name="__codelineno-10-26" href="#__codelineno-10-26"></a><span class="p">};</span>
+<p><a class="glightbox" href="../Resources/image-20231204160944855.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231204160944855" src="../Resources/image-20231204160944855.png" /></a></p>
+<p>该插件通过 <strong>ULevelStreamingPersistenceSettings</strong> 来配置引擎中哪些属性需要持久性：</p>
+<p><a class="glightbox" href="../Resources/image-20231211095416739.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231211095416739" src="../Resources/image-20231211095416739.png" /></a></p>
+<p>在世界分区流送单元时，会根据以上配置将流出的单元中具有持久性的属性进行保存，对于流入的单元，使用之前的历史值赋值：</p>
+<p>要解决上面的重力问题，只需要我们在<code>DefaultEngine.ini</code>中，增加如下配置：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="p">[</span><span class="o">/</span><span class="n">Script</span><span class="o">/</span><span class="n">LevelStreamingPersistence</span><span class="p">.</span><span class="n">LevelStreamingPersistenceSettings</span><span class="p">]</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">Properties</span><span class="o">=</span><span class="p">(</span><span class="n">Path</span><span class="o">=</span><span class="s">&quot;/Script/Engine.SceneComponent:RelativeLocation&quot;</span><span class="p">,</span><span class="n">bIsPublic</span><span class="o">=</span><span class="n">False</span><span class="p">)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">Properties</span><span class="o">=</span><span class="p">(</span><span class="n">Path</span><span class="o">=</span><span class="s">&quot;/Script/Engine.SceneComponent:RelativeRotation&quot;</span><span class="p">,</span><span class="n">bIsPublic</span><span class="o">=</span><span class="n">False</span><span class="p">)</span>
+</code></pre></div>
+<p>通过 <strong>PropertyPath</strong> 来确定哪些属性往往会得到非常宽泛的范围，比如上面的配置将序列化所有场景组件的位置和旋转，而并非所有场景组件都需要持久化，该插件也提供了一些委托用于进一步筛选哪些对象需要序列化：</p>
+<p><a class="glightbox" href="../Resources/image-20231211100646090.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231211100646090" src="../Resources/image-20231211100646090.png" /></a></p>
+<p>其中 <code>bIsPublic</code> 决定了该属性被保存的值是否可以被手动修改，而不仅仅是根据流送自动序列化，其中操作的接口主要位于**ULevelStreamingPersistenceManager** 中：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">ULevelStreamingPersistenceManager</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">UWorldSubsystem</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="p">{</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="n">GENERATED_BODY</span><span class="p">()</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">    </span><span class="c1">// Serialization</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">SerializeTo</span><span class="p">(</span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">uint8</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">OutPayload</span><span class="p">);</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">InitializeFrom</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">uint8</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">InPayload</span><span class="p">);</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="c1">// Sets property value and creates the entry if necessary, returns true on success.</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">    </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">ClassType</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">PropertyType</span><span class="o">&gt;</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">SetPropertyValue</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InObjectPathName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InPropertyName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">PropertyType</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InPropertyValue</span><span class="p">);</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">    </span><span class="c1">// Sets the property value on existing entries, returns true on success.</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="w">    </span><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">PropertyType</span><span class="o">&gt;</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">TrySetPropertyValue</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InObjectPathName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InPropertyName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">PropertyType</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InPropertyValue</span><span class="p">);</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">    </span><span class="c1">// Gets the property value if found, returns true on success.</span>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">    </span><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">PropertyType</span><span class="o">&gt;</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="n">GetPropertyValue</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InObjectPathName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InPropertyName</span><span class="p">,</span><span class="w"> </span><span class="n">PropertyType</span><span class="o">&amp;</span><span class="w"> </span><span class="n">OutPropertyValue</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="p">;</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a><span class="w">    </span><span class="c1">// Sets the property value converted from the provided string value on existing entries, returns true on success.</span>
+<a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">TrySetPropertyValueFromString</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InObjectPathName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InPropertyName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InPropertyValue</span><span class="p">);</span>
+<a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a>
+<a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="w">    </span><span class="c1">// Gets the property value and converts it to a string if found, returns true on success.</span>
+<a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">GetPropertyValueAsString</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InObjectPathName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InPropertyName</span><span class="p">,</span><span class="w"> </span><span class="n">FString</span><span class="o">&amp;</span><span class="w"> </span><span class="n">OutPropertyValue</span><span class="p">);</span>
+<a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="p">};</span>
 </code></pre></div>
 <h4 id="_18">运行时生成<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h4>
 <p>世界分区划分是在编辑器中进行的，运行时生成（Spawn）的任何物体都不会参与世界分区的流送，试想一个这样的情景：</p>
@@ -2641,22 +2650,22 @@
 <ul>
 <li>方案一：关闭角色Tick，将角色传送到目标点，以角色自身作为流送源触发周边区域的流送， <strong>轮询（FTSTicker）</strong> 到目标区域加载完成时开启Tick，在黑客帝国的Mass框架下也有相应的参考：</li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20231129150658814.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129150658814" src="../Resources/image-20231129150658814.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231129150658814.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231129150658814" src="../Resources/image-20231129150658814.png" /></a></p>
 <ul>
 <li>方案二：在目标位置Spawn一个带流送源组件的Actor，开启流送，轮询加载是否完成，完成后再将角色传送过去：</li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20231129151231027.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129151231027" src="../Resources/image-20231129151231027.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231129151231027.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231129151231027" src="../Resources/image-20231129151231027.png" /></a></p>
 <h3 id="one-file-per-actor">One File Per Actor<a class="headerlink" href="#one-file-per-actor" title="Permanent link">&para;</a></h3>
 <p>OFPA 允许团队成员可以共同编辑同一地图的不同Actor</p>
 <p>传统地图会将 所有Actor 存储在 World 对应的资产包中，而UE的开放世界地图默认启用了 <a href="https://docs.unrealengine.com/5.3/zh-CN/one-file-per-actor-in-unreal-engine/"> <strong>一Actor一文件（One File Per Actor，简称OFPA）</strong> </a>，即每个Actor都对应一个文件。</p>
 <p>这些文件存储在项目Content目录下，<code>__ExternalActors__</code>和<code>__ExternalObjects__</code>文件夹中的对应地图路径下，下图表示了名为<code>OpenWorld</code>的地图中的所有Actor：</p>
-<p><a class="glightbox" href="../Resources/image-20231017111331540.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231017111331540" src="../Resources/image-20231017111331540.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231017111331540.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231017111331540" src="../Resources/image-20231017111331540.png" /></a></p>
 <p>我们可以在场景大纲中获取Actor的真实文件路径：</p>
-<p><a class="glightbox" href="../Resources/image-20231017111622364.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231017111622364" src="../Resources/image-20231017111622364.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231017111622364.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231017111622364" src="../Resources/image-20231017111622364.png" /></a></p>
 <p>通常情况下，所有Actor都存储在<code>__ExternalActors__</code>中，而<code>__ExternalObjects__</code>存储的是一些UObject（非Actor）对象，比如各类Setting，大纲分组等。</p>
 <h3 id="hlod">HLOD<a class="headerlink" href="#hlod" title="Permanent link">&para;</a></h3>
 <p>通过世界分区的流送，我们可以将全场景的性能压力缩减到只需关注流送源的周边区域：</p>
-<p><a class="glightbox" href="../Resources/image-20231129151341077.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129151341077" src="../Resources/image-20231129151341077.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231129151341077.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231129151341077" src="../Resources/image-20231129151341077.png" /></a></p>
 <p>对于游戏逻辑而言，这种流送固然是一种优化，但对场景来说，我们并不希望因为流送而卸载掉远处的场景，而HLOD正是为了解决这个问题。</p>
 <p><strong>HLOD用于在世界分区中显示远景</strong> ，在开放世界地图中，它的使用方式不同于普通地图（UE4）的HLOD：</p>
 <ul>
@@ -2666,12 +2675,12 @@
 <ul>
 <li>将  <strong>单元格（Cell）</strong> 中 <strong>所有Actor</strong> 合并为一个低精度的 单元格模型代理，当单元格超出流送源的加载范围时，可以使用该简模显示，这样做，在显示远景的同时，即减少了渲染消耗（使用低精度模型和材质），又优化了遮挡剔除的计算量（减少了Actor的数量）</li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20231129152538095.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129152538095" src="../Resources/image-20231129152538095.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20231129153201753.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129153201753" src="../Resources/image-20231129153201753.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231129152538095.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231129152538095" src="../Resources/image-20231129152538095.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231129153201753.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231129153201753" src="../Resources/image-20231129153201753.png" /></a></p>
 <p>我们可以在此处设置整个地图的 默认（缺省）HLOD层 配置，它会对所有Actor生效：</p>
-<p><a class="glightbox" href="../Resources/image-20231027163751104.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231027163751104" src="../Resources/image-20231027163751104.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231027163751104.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231027163751104" src="../Resources/image-20231027163751104.png" /></a></p>
 <p>它的资产配置面板如下：</p>
-<p><a class="glightbox" href="../Resources/image-20231027164043816.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231027164043816" src="../Resources/image-20231027164043816.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231027164043816.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231027164043816" src="../Resources/image-20231027164043816.png" /></a></p>
 <ul>
 <li>
 <p><strong>层类型：</strong> 使用何种策略来生成HLOD</p>
@@ -2699,8 +2708,8 @@
 </ul>
 <h3 id="_22">数据层<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h3>
 <p>数据层是 UE 5 为开放世界所提供的一项功能，它的用法类似于大纲文件夹：</p>
-<p><a class="glightbox" href="../Resources/image-20231020115448454.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231020115448454" src="../Resources/image-20231020115448454.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20231020113158786.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231020113158786" src="../Resources/image-20231020113158786.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231020115448454.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231020115448454" src="../Resources/image-20231020115448454.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231020113158786.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231020113158786" src="../Resources/image-20231020113158786.png" /></a></p>
 <p>但与文件夹不同的是，它还提供了两项关键功能：</p>
 <ul>
 <li>可以在编辑器打开地图时，默认不加载该类别的Layer。</li>
@@ -2713,20 +2722,20 @@
 <li>数据层是参与世界分区流送的 <strong>子关卡</strong> 。</li>
 </ul>
 <p>在此处可以打开数据层面板：</p>
-<p><a class="glightbox" href="../Resources/image-20231020115915843.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231020115915843" src="../Resources/image-20231020115915843.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231020115915843.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231020115915843" src="../Resources/image-20231020115915843.png" /></a></p>
 <p>右键创建 <strong>该地图</strong> 的 <strong>数据层</strong> ：</p>
-<p><a class="glightbox" href="../Resources/image-20231020115943300.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231020115943300" src="../Resources/image-20231020115943300.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231020115943300.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231020115943300" src="../Resources/image-20231020115943300.png" /></a></p>
 <p>这样创建 <strong>所有地图可公用</strong> 的 <strong>数据层资产</strong></p>
-<p><a class="glightbox" href="../Resources/image-20231020133605969-1698391657801-4.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231020133605969" src="../Resources/image-20231020133605969-1698391657801-4.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231020133605969-1698391657801-4.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231020133605969" src="../Resources/image-20231020133605969-1698391657801-4.png" /></a></p>
 <p>可以在此处手动设置Actor隶属于哪个Actor：</p>
-<p><a class="glightbox" href="../Resources/image-20231027153421929.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231027153421929" src="../Resources/image-20231027153421929.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231027153421929.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231027153421929" src="../Resources/image-20231027153421929.png" /></a></p>
 <p>也可以这样：</p>
-<p><a class="glightbox" href="../Resources/image-20231027153551427.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231027153551427" src="../Resources/image-20231027153551427.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231027153551427.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231027153551427" src="../Resources/image-20231027153551427.png" /></a></p>
 <p>我们也可以设置数据层的 <strong>当前上下文（Current Context）</strong> ，新建的Actor会自动添加到当前数据层中：</p>
-<p><a class="glightbox" href="../Resources/image-20231027153936040.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231027153936040" src="../Resources/image-20231027153936040.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20231027154047197.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231027154047197" src="../Resources/image-20231027154047197.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231027153936040.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231027153936040" src="../Resources/image-20231027153936040.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231027154047197.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231027154047197" src="../Resources/image-20231027154047197.png" /></a></p>
 <p>按这样来移除或清理当前数据层：</p>
-<p><a class="glightbox" href="../Resources/image-20231027154204423.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231027154204423" src="../Resources/image-20231027154204423.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231027154204423.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231027154204423" src="../Resources/image-20231027154204423.png" /></a></p>
 <h3 id="_23">关卡实例<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h3>
 <p>UE 5 中提供了 关卡实例化（Level Instancing）的功能，旨在改善和简化世界分区的编辑体验。</p>
 <ul>
@@ -2734,9 +2743,9 @@
 </ul>
 <p>关卡实例的本意是将一组Actor编组，这样就可以在整个世界内放置和复用的关卡实例，但由于它可以在打包时嵌入到主关卡的世界分区中，再加上目前UE5数据层的使用还未得到普及，很多习惯UE4的开发团队会喜欢将它作为 <strong>开放世界地图的子关卡</strong> 来使用。</p>
 <p>在5.3中也解决了之前无法为关卡实例中的Actor设置 <strong>运行时网格</strong> 的问题：</p>
-<p><a class="glightbox" href="../Resources/image-20231129161229035.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129161229035" src="../Resources/image-20231129161229035.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231129161229035.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231129161229035" src="../Resources/image-20231129161229035.png" /></a></p>
 <p>对于关卡实例中的Actor，也多了一个<code>仅在主世界</code>的选项，勾选之后，该Actor只有在打开关卡实例地图时才会被加载，当作为关卡实例被其他地图加载时，不会加载此Actor：</p>
-<p><a class="glightbox" href="../Resources/image-20231129161335413.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20231129161335413" src="../Resources/image-20231129161335413.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20231129161335413.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231129161335413" src="../Resources/image-20231129161335413.png" /></a></p>
 <h2 id="_24">场景制作<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h2>
 <p>这里有一篇文章罗列了许多内容：</p>
 <ul>
@@ -2837,7 +2846,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2023-12-05 01:47:49</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-02-02 02:28:48</span>
   </span>
 
     
@@ -3017,10 +3026,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

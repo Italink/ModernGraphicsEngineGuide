@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -1736,7 +1734,7 @@
 <li>破坏软件代码的组织架构，一个组件化设计优秀的UI，可以从界面上看出代码的层次结构，一个条例混乱的界面，它的代码往往也是乱作一团。</li>
 </ul>
 <p>以UnrealEngine为例，它的组件化设计就很直观：</p>
-<p><a class="glightbox" href="../Resources/image-20230629110339347.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230629110339347" src="../Resources/image-20230629110339347.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230629110339347.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230629110339347" src="../Resources/image-20230629110339347.png" /></a></p>
 <p>用户只需理解和掌握界面上各个组件元素的职责，很多时候都可以在不借助教程或文档的情况下，举一反三地进行操作。</p>
 <p>UI设计师大多专注于于UI效果，因此让他们去制作一个适用于代码架构的组件化设计往往是比较困难的，所以关于这方面的内容，需要开发者去思考，讨论，引导，并学会说 "不"。</p>
 <p>关于UI设计上的一些概念和风格，这里有更详细的参考：</p>
@@ -1875,7 +1873,7 @@
 <p>笔者在Qt上有数十万行代码的积累，但在Unreal Engine上只使用了数万行的代码，却出做出了更多更完备的功能，并且在Unreal Engine中，界面风格和用户体验的需求是非常容易满足的，这很大程度得益于 Unreal Engine 的 “ <strong>基础建设</strong> ” 。</p>
 <p>在游戏引擎中，基于Meta理念的架构比比皆是，而在这其中最有用最强大的无疑是 —— <strong>基于反射的编辑器架构</strong></p>
 <p>相信大家都见过一些参数调节面板，比如：</p>
-<p><a class="glightbox" href="../Resources/image-20230628222459585.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230628222459585" src="../Resources/image-20230628222459585.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230628222459585.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230628222459585" src="../Resources/image-20230628222459585.png" /></a></p>
 <p>在代码层面，这些可配置参数往往对应具体的数据结构，它可能是这样的：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Options</span><span class="p">{</span>
 <a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="kt">bool</span><span class="w">            </span><span class="n">Option0</span><span class="p">;</span>
@@ -1967,7 +1965,7 @@
 <li>代码：<a href="https://github.com/Italink/QEngineUtilities/tree/main/Source/Editor/Source/Public/DetailView">https://github.com/Italink/QEngineUtilities/tree/main/Source/Editor/Source/Public/DetailView</a></li>
 <li>示例工程：<a href="https://github.com/Italink/QEngineUtilities/tree/main/Samples/DetailViewExample">https://github.com/Italink/QEngineUtilities/tree/main/Samples/DetailViewExample</a></li>
 </ul>
-<p><a class="glightbox" href="../Resources/image-20230628234033004.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230628234033004" src="../Resources/image-20230628234033004.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230628234033004.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230628234033004" src="../Resources/image-20230628234033004.png" /></a></p>
 <h2 id="_4">性能优化<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>计算机的计算资源始终是有限的，而在游戏引擎中，性能消耗的大头毫无疑问是Game，因此我们需要尽可能的降低编辑器的性能损耗以减少它对Game执行的影响。</p>
 <p>一般情况下，我们可以通过以下手段来优化编辑器的性能（游戏内UI也适用）：</p>
@@ -1983,7 +1981,7 @@
 </li>
 <li>
 <p>对于静态的UI，尽可能使用已制作好的图像，或者预先绘制RT（Bitmap），而不是使用GUI框架每帧实时绘制，如取色器的调色板：</p>
-<p><a class="glightbox" href="../Resources/image-20230629115539526.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230629115539526" src="../Resources/image-20230629115539526.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230629115539526.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230629115539526" src="../Resources/image-20230629115539526.png" /></a></p>
 </li>
 <li>
 <p><strong>管控界面重绘的时机</strong> ：假如某个<code>操作A</code>会触发界面更新，但有时候我们往往在一帧执行多次<code>操作A</code>，很显然我们没必须要一帧重绘多次界面，所以我们往往不会在<code>操作A</code>中直接更新UI，而是设置标识，在UI的<code>Tick</code>事件中，根据标识去重绘UI，就像是这样(伪代码)：</p>
@@ -2219,10 +2217,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>

@@ -16,7 +16,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.2">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.6">
     
     
       
@@ -68,17 +68,15 @@
   <link rel="stylesheet" href="../../assets/stylesheets/custom.2fa34c39.min.css">
 
    <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
-        html.glightbox-open { overflow: initial; height: 100%; }
-        .gslide-title { margin-top: 0px; user-select: text; }
-        .gslide-desc { color: #666; user-select: text; }
-        .gslide-image img { background: white; }
-        
-            .gscrollbar-fixer { padding-right: 15px; }
-            .gdesc-inner { font-size: 0.75rem; }
-            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
-            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
-            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}
-            </style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../assets/javascripts/glightbox.min.js"></script></head>
   
   
     
@@ -2108,10 +2106,10 @@
 </ul>
 <h2 id="_5">纹理<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <p>在之前的章节中，我们通过三个顶点特征，借助光栅化插值，来生成了一个彩色的三角形图像：</p>
-<p><a class="glightbox" href="../Resources/image-20230503194533809.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230503194533809" src="../Resources/image-20230503194533809.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230503194533809.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230503194533809" src="../Resources/image-20230503194533809.png" /></a></p>
 <p>而在计算机中，如果我们想绘制一张图片，由于图片中往往具有非常多的特征，而这些特征往往不是线性渐变的，如果继续采用顶点的方式来传递图片的颜色特征，一张图片可能会有上百上千万个三角形，虽然这点数据量对GPU来说不在话下，但这么多数量的三角形，无疑会给几何和光栅化阶段带来巨大的压力</p>
 <p>例如这是一张大小仅<code>500*500</code>的噪声图：</p>
-<p><a class="glightbox" href="../Resources/image-20230520124250341.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="image-20230520124250341" src="../Resources/image-20230520124250341.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20230520124250341.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20230520124250341" src="../Resources/image-20230520124250341.png" /></a></p>
 <p>它的每个颜色都不是线性渐变的，如果以顶点的方式来描述这些特征，那么将需要两百五十万的顶点，这也就意味着图形渲染管线如果想渲染这张图片，将需要处理近百万数量的三角形，很显然，这个操作的性能消耗是非常昂贵的。</p>
 <p>为了解决图片渲染的难题，图形API提出了另一个概念 —— <strong>纹理（Texture）</strong></p>
 <p>它以 <strong>着色器资源（Shader Resource）</strong> 的形式存在于图形渲染管线中，与缓冲区相似，它也持有一段GPU上的内存，并且还包含一些特征—— <strong>图像格式（Format），采样数（Sample Count），类型标识（Flags）</strong></p>
@@ -2143,7 +2141,7 @@
 <p>为了将图像隐射到几何图形上面，我们会给几何图形的顶点增加一个属性—— <strong>纹理坐标(Texture Coordinate)</strong></p>
 <blockquote>
 <p>纹理坐标在x和y轴上，范围为0到1之间。使用纹理坐标获取纹理颜色叫做采样(Sampling)。纹理坐标起始于(0, 0)，也就是纹理图片的左下角，终始于(1, 1)，即纹理图片的右上角。下面的图片展示了如何把纹理坐标映射到三角形上的。</p>
-<p><a class="glightbox" href="../Resources/tex_coords.png" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/tex_coords.png" /></a></p>
+<p><a class="glightbox" href="../Resources/tex_coords.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/tex_coords.png" /></a></p>
 <p>为了跟空间位置的坐标分量进行区分，纹理坐标一般不使用x，y，z，而是使用u，v，w，又因为二维纹理比较常用，所以也经常将 纹理坐标 称作 <strong>UV</strong></p>
 </blockquote>
 <p>另外，还有一些我们需要考虑的问题：</p>
@@ -2239,7 +2237,7 @@
 </blockquote>
 <h2 id="_6">示例<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <p>在该教程的<a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/1-GraphicsAPI/04-BufferAndTexture/Source/main.cpp">04-BufferAndTexture</a>示例中，演示了如何使用 <strong>Uniform Buffer</strong> ， <strong>Index Buffer</strong> 和 <strong>Texture</strong> ，你可以以它为参考，去实现一些有意思的东西：</p>
-<p><a class="glightbox" href="../Resources/418.gif" data-type="image" data-width="100%" data-height="auto" data-desc-position="bottom"><img alt="418" src="../Resources/418.gif" /></a></p>
+<p><a class="glightbox" href="../Resources/418.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="418" src="../Resources/418.gif" /></a></p>
 <h2 id="_7">内存管理<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <p>在 <a href="https://zhuanlan.zhihu.com/p/603325037">C++内存管理</a> 的章节中，我们介绍了一些C++中管理CPU内存的方法，而在GPU中，它的内存使用同样也有一些黑话，这里有一些详细的文档：</p>
 <ul>
@@ -2463,10 +2461,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e1c3ead8.min.js"></script>
       
     
   <script>document$.subscribe(() => {const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});})</script></body>
