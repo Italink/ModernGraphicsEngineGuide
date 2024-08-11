@@ -1585,6 +1585,15 @@
           <li class="md-nav__item">
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
+      制作参考
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
       总结
     </span>
   </a>
@@ -1597,7 +1606,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       植被组织
     </span>
@@ -1607,7 +1616,16 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      搭建方式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       分区与流送
     </span>
@@ -1621,7 +1639,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
+  <a href="#_11" class="md-nav__link">
     <span class="md-ellipsis">
       阴影优化
     </span>
@@ -1630,7 +1648,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
+  <a href="#_12" class="md-nav__link">
     <span class="md-ellipsis">
       碰撞及交互优化
     </span>
@@ -1639,7 +1657,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
+  <a href="#_13" class="md-nav__link">
     <span class="md-ellipsis">
       其他
     </span>
@@ -1841,6 +1859,15 @@
           <li class="md-nav__item">
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
+      制作参考
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
       总结
     </span>
   </a>
@@ -1853,7 +1880,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
+  <a href="#_8" class="md-nav__link">
     <span class="md-ellipsis">
       植被组织
     </span>
@@ -1863,7 +1890,16 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      搭建方式
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       分区与流送
     </span>
@@ -1877,7 +1913,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_9" class="md-nav__link">
+  <a href="#_11" class="md-nav__link">
     <span class="md-ellipsis">
       阴影优化
     </span>
@@ -1886,7 +1922,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_10" class="md-nav__link">
+  <a href="#_12" class="md-nav__link">
     <span class="md-ellipsis">
       碰撞及交互优化
     </span>
@@ -1895,7 +1931,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_11" class="md-nav__link">
+  <a href="#_13" class="md-nav__link">
     <span class="md-ellipsis">
       其他
     </span>
@@ -2023,7 +2059,7 @@
 <ul>
 <li><a href="https://www.youtube.com/watch?v=Ur53sJdS8rQ&amp;t=794s">Zen of Streaming: Building and Loading 'Ghost of Tsushima' (youtube.com)</a></li>
 </ul>
-<p>试想一下，我们如果用UE的Nanite去复刻对马岛之魂那样的场景，保守一些，我们把资产精度提升给四五倍，可以预想到这么庞大的项目资产所带来的管理成本会有多高。</p>
+<p>试想一下，我们如果用UE的Nanite去复刻对马岛之魂那样的场景，保守一些，我们把资产精度提升个四五倍，可以预想到这么庞大的项目资产所带来的管理成本会有多高。</p>
 <p>因此，如果是游戏项目，笔者还是建议请尽可能管理好对场景美术效果的预期，它不应该影响甚至拖累游戏性的迭代。</p>
 <blockquote>
 <p>如果游戏场景在开发机上都不能够稳定运行80帧，并且严重侵占玩法或其他模块的性能预算和迭代空间，就是搭得再好看，缺乏游戏性，那又有什么用呢？
@@ -2037,25 +2073,28 @@
 <li>又遇到坑了，Nanite的特性不能贴合HISM机制，理论上要用HISM渲染的物体，就不能开Nanite。</li>
 <li>在深入了解一些项目的制作手段之后 —— 正经人谁用Nanite做植被哦。</li>
 </ol>
-<p>先说第一个坑，Nanite的减面是对单个实例友好的，它可以轻易将一个数百万三角形的模型减到变为空像素最后被裁剪掉，但像草这种通过实例化动辄数万个实例的情况，使用Nanite的退化并不能减少实例，这会很容易给Nanite的调度计算产生巨大的开销，当前画面里的Nanite的实例数量超过了一定阈值时，会出现画面异常BUG，虽然有一些引擎指令有助于改善该现象。</p>
-<p>而第二个坑，要结合世界分区的HLOD来谈，HLOD是一种在开放世界中用来显示在流送加载范围之外的 <strong>远景代理</strong> ，平常的模型可以在分区中 <strong>Merge</strong> + <strong>Remesh</strong> 来生成远景HLOD，但对于植被而言，对这种零碎面片比较多的物体使用体素化的Remesh算法会生成棉花糖， <strong>Merge</strong> + <strong>Reduce（减面）</strong> 的方式并不能在大幅度减少顶点数量和DrawCall的前提下，保障远景植被的画面质量，因此植被的HLOD，只能使用 <strong>实例化（Instanced）</strong> ，而世界分区中的实例化优化，除了对实例化植被进行 <strong>区域切块</strong> ，还需要用上 <strong>层级实例化静态网格 （HISM ：HierachicalInstanceStaticMesh）</strong> ，与 <strong>实例化静态网格（ISM ：InstanceStaticMesh）</strong> 不同的是，层级实例化网格允许在实例化网格内部切换LOD，比如下面的所有树木都是用一个HISM绘制的：</p>
+<p>先说第一个坑，Nanite的减面是对单个实例友好的，它可以轻易将一个数百万三角形的模型减到变为空像素最后被裁剪掉，但像草这种通过实例化动辄数万个实例的情况，使用Nanite的退化并不能有效减少实例，这会很容易给Nanite的调度计算产生巨大的开销，当前画面里的Nanite的实例数量超过了一定阈值时，会出现画面异常，虽然有一些引擎指令有助于改善该现象。</p>
+<p>而第二个坑，要结合世界分区的HLOD来谈，HLOD是一种在开放世界中用来显示在流送加载范围之外的 <strong>远景代理</strong> ，平常的模型可以在分区中 <strong>Merge</strong> + <strong>Remesh（重构）</strong> 来生成远景HLOD，但对于植被而言，对这种零碎面片比较多的物体使用体素化的Remesh算法会生成棉花糖， <strong>Merge</strong> + <strong>Reduce（减面）</strong> 的方式并不能在大幅度减少顶点数量和DrawCall的前提下，保障远景植被的画面质量，因此植被的HLOD，只能使用 <strong>实例化（Instancing）</strong> ，而世界分区中的实例化优化，除了对实例化植被进行 <strong>区域切块</strong> ，还需要用上 <strong>层级实例化静态网格 （HISM ：HierachicalInstancedStaticMesh）</strong> ，与 <strong>实例化静态网格（ISM ：InstancedStaticMesh）</strong> 不同的是，层级实例化网格允许在实例化网格内部切换LOD，比如下面的所有树木都是用一个HISM绘制的：</p>
 <p><a class="glightbox" href="../Resources/image-20240809135411348.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809135411348" src="../Resources/image-20240809135411348.png" /></a></p>
 <p>HISM本质上是将实例化网格划分成ClusterTree，每一个Cluster有其独立的LOD级别，最终会产生多个级别的ISM，通过一些引擎指令，我们可以管控HISM的划分策略，关于具体的实现细节可以参考：</p>
 <ul>
 <li><a href="https://blog.csdn.net/qq_29523119/article/details/123932029">UHierarchicalInstancedStaticMesh(HISM)原理分析-CSDN博客</a></li>
 <li><a href="https://blog.csdn.net/ZJU_fish1996/article/details/108806360">HISM 大规模植被渲染解决方案-CSDN博客</a></li>
 </ul>
-<p>而Nanite不像传统的LOD方案那样，具有少数固定精度梯度的模型，它的LOD梯度不是模型级别的，而是簇（Cluster）级别的，因此HISM机制不能在使用Nanite的模型上正常工作，这也是为什么我们不使用Nanite来制作大型植被的真正原因。</p>
+<p>而Nanite不像传统的LOD方案那样，具有少数固定精度梯度的模型，它的LOD梯度不是模型级别的，而是簇（Cluster）级别的，因此HISM机制不能有效地和Nanite一起正常正常工作，这也是为什么我们不使用Nanite来制作大型植被的真正原因。</p>
 <h4 id="_5">并非最具性价比的优化策略<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
 <p>通常优化模型的手段有两种：</p>
 <ul>
 <li><strong>减面（Reduce）</strong> ：在源模型的几何数据上进行删减从而得到简化的模型。</li>
 <li><strong>重构（Remesh）</strong> ：通过体素化的模型算法，以一定体素精度来逼近源模型从而得到简化的模型。</li>
 </ul>
+<blockquote>
+<p>Nanite 使用的是减面的算法</p>
+</blockquote>
 <p>这两种策略有着不同的适用场景：</p>
 <ul>
-<li>减面：适用于面片，对几何棱角追求比较高的模型，如地形，建筑，植物，水体面片...</li>
-<li>重构：适合模型闭合，几何形体比较圆润的模型，如石头，建筑，道具...</li>
+<li>减面：适用于面片，它通常用于对几何棱角追求比较高的模型，如地形，建筑，植物，水体面片...</li>
+<li>重构：适合模型闭合，几何形体比较圆润的模型，它通常能以极少的顶点来保证源模型的几何形态，如石头，建筑，道具...</li>
 </ul>
 <p>对于树而言，假如我们采用这两种策略来生成相同三角形数量的简模：</p>
 <p><a class="glightbox" href="../Resources/image-20240809151946858.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809151946858" src="../Resources/image-20240809151946858.png" /></a></p>
@@ -2091,7 +2130,7 @@
 <li><a href="https://www.simplygon.com/">Simplygon - 树立 3D 游戏内容优化标准</a></li>
 <li><a href="https://instalod.com/zh/">InstaLOD - 生产和自动优化3D内容所需的一切</a></li>
 </ul>
-<p>笔者测试时使用的是 InstaLod（个人免费使用），这是它提供的UE插件，里面包含了诸多的模型处理算法：</p>
+<p>笔者测试时使用的是 InstaLOD（个人使用免费），这是它提供的UE插件，里面包含了诸多的模型处理算法：</p>
 <p><a class="glightbox" href="../Resources/image-20240809161248634.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809161248634" src="../Resources/image-20240809161248634.png" /></a></p>
 <p>对于 <strong>八面体（Octahedron）</strong> ，UE提供了专门的插件：</p>
 <p><a class="glightbox" href="../Resources/image-20240809161621579.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809161621579" src="../Resources/image-20240809161621579.png" /></a></p>
@@ -2105,7 +2144,7 @@
 <p>这么多的替身策略，有小伙伴可能就会问了， 谁的性能效果更好呢？</p>
 <p>Billboard 和 Flipbook 有非常少的顶点，它们的性能效果无疑是最好的，但它们的表现效果往往不佳。</p>
 <p>比较有争议的主要是 卡片簇 和 八面体 的方式，在之前的很多3A项目中，所采用的基本都是卡片簇的方式，而笔者在 UE 论坛中发现，其实很多人更推荐使用八面体。</p>
-<p>笔者这里做了一个简单的测试，具体谁有谁劣可能需要更多的数据支持：</p>
+<p>笔者这里做了一个简单的对比测试，具体谁优谁劣可能需要更多的数据支撑：</p>
 <p><strong>源模型</strong></p>
 <ul>
 <li>三角形数量：639639</li>
@@ -2128,17 +2167,54 @@
 </ul>
 <p><a class="glightbox" href="../Resources/image-20240808105838771.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240808105838771" src="../Resources/image-20240808105838771.png" /></a></p>
 <p>可以明显看出八面体的性能和画面表现更优于卡片簇的方式，但如果只是作为最后一级LOD的话，卡片簇的纹理尺寸还有很大的优化空间，具体采用什么方案可能就要仁者见仁智者见智了。</p>
-<h3 id="_6">总结<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<h3 id="_6">制作参考<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>对于LOD的制作标准，可以参考地平线在GDC上的分享，只不过最后一级LOD变成了八面体：</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=wavnKZNSYqU&amp;t=2412s">Between Tech and Art: The Vegetation of Horizon Zero Dawn (youtube.com)</a></li>
+<li><a href="https://www.youtube.com/watch?v=MKX45_riWQA">Interactive Wind and Vegetation in 'God of War' (youtube.com)</a></li>
+</ul>
+<blockquote>
+<p>如果要保证植被的LOD过渡没有明显异常，需要在制作时，以较少的主枝干尽可能营造出更大的覆盖范围，用副枝干去增添植被的细节，制作低级别的LOD时，只需要减少副枝干的数量即可。</p>
+</blockquote>
+<p><a class="glightbox" href="../Resources/image-20240622181134887.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240622181134887" src="../Resources/image-20240622181134887.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20240622180652772.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240622180652772" src="../Resources/image-20240622180652772.png" /></a></p>
+<p><a class="glightbox" href="../Resources/image-20240622180634547.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240622180634547" src="../Resources/image-20240622180634547.png" /></a></p>
+<h3 id="_7">总结<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <p>上面说了很多琐碎的信息，这里统一总结一下：</p>
 <ul>
 <li>相同茂密程度的植物，使用模型树的方式会产生大量的顶点，它所带来的性能和内存消耗远高于插片树的方式。</li>
 <li>无论是模型树还是插片树，开启Nanite是一定有优化提升的，但Nanite 不支持 HISM，所以如果项目场景中有大量的植被，就不建议使用Nanite植被，而是通过传统的LOD制作流程借助ISM和HISM进行优化。</li>
-<li>对于新兴团队来说，大家都是摸着石头过河，很难说什么方案是最优的，定好之后按这个规范铺量就完事了。面对这种解决方案不定的问题，我们最好的管理方案就是搭建好自己的内容生成管线，尽可能地去减少迭代和验证过程中的沉没成本。</li>
+<li>对于新兴团队来说，大家都是摸着石头过河，很难说什么方案是最优的，定好之后按这个规范铺量就高枕无忧了。面对这种解决方案不定的问题，我们最好的管理方案就是搭建好自己的内容生成管线，来尽可能地去减少迭代和验证过程中的沉没成本。</li>
 </ul>
-<h2 id="_7">植被组织<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h2 id="_8">植被组织<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
 <p>在确定了植被制作管线之后，还需要考虑植被在场景中的规划方式。</p>
-<p>它不像其他常规静态模型一样，在开放世界场景中 Merge+Remesh 就能生成一个高品质的远景代理，之后就再也不用多操心它对性能的影响了，而植被不行，如果要制作大量的植被的化，只能采用实例化的方式来铺设，因此在美术效果上，一定是会有一些妥协的。</p>
-<h3 id="_8">分区与流送<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>它不像其他常规静态模型一样，在开放世界场景中 Merge+Remesh 就能生成一个高品质的远景代理，但植被不行，它不能被Merge成一个Mesh，或者说Merge成一个Mesh之后，没有什么很好的策略可以既保证植被的效果，又能大幅度的削减它的顶点和优化它的材质，因此如果要制作大量的植被的话，只能采用实例化的方式来铺设，所以在美术效果上，一定是会有一些妥协的。</p>
+<h3 id="_9">搭建方式<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>在UE中创建大量植被，主要有以下几种方式：</p>
+<ul>
+<li>
+<p><strong>植被编辑模式（Foliage EdMode）</strong></p>
+<p><a class="glightbox" href="../Resources/image-20240809175349308.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809175349308" src="../Resources/image-20240809175349308.png" /></a></p>
+</li>
+<li>
+<p><strong>地形草地类型（Landscape Foliage Type）</strong></p>
+<p><a class="glightbox" href="../Resources/image-20240809175526774.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809175526774" src="../Resources/image-20240809175526774.png" /></a></p>
+</li>
+<li>
+<p><strong>程序内容生成框架</strong> <a class="glightbox" href="../Resources/image-20240809175559308.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809175559308" src="../Resources/image-20240809175559308.png" /></a></p>
+</li>
+</ul>
+<p>这几种方式有各自的使用场景：</p>
+<ul>
+<li>
+<p>植被编辑模式：对于一个正经点的游戏项目来说，我只能说 <strong>植被编辑模式 是碰都不能碰的东西</strong> ，这种刷植被的方式，返工成本巨高，也很难做跨平台的性能适配。</p>
+</li>
+<li>
+<p>PCG：PCG框架毫无疑问是最优的植被编辑方式，使用它可以轻易快速的搭建出生态群落，并且可以定制一些的可延展性参数来做多平台的适配。</p>
+</li>
+<li>地形草地类型：它适用于密集草的绘制，UE中的实现应该是参考了对马岛中<a href="https://www.bilibili.com/video/BV1SF411N7RW/">程序化草</a>的管理流程，在预览时通过异步任务去生成草簇，它虽然很高效，但使用地形草地类型会占用一个地形图层去描述草的密度，并不适合大规模使用。</li>
+</ul>
+<h3 id="_10">分区与流送<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
 <p>首先再回顾一下关于UE5世界分区的内容，之前笔者整理过一个相关文章：</p>
 <ul>
 <li><a href="https://zhuanlan.zhihu.com/p/670363215">Unreal Engine 5 开发 — 开放世界制作 - 知乎 (zhihu.com)</a></li>
@@ -2186,7 +2262,7 @@
 <tr>
 <td>SmallGrid</td>
 <td>6400</td>
-<td>6400</td>
+<td>12800</td>
 <td>-9</td>
 <td>false</td>
 </tr>
@@ -2196,30 +2272,6 @@
 <p>通常 256 m 的加载范围可以保证视野范围内的绝大部分表现效果是正常的，下面是3D视图下的效果（远处的角色是256m下的小黑点）：</p>
 <p><a class="glightbox" href="../Resources/image-20240809171835592.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809171835592" src="../Resources/image-20240809171835592.png" /></a></p>
 <p>场景模型一般是放在 <code>Main Gird</code> 中，但考虑到单元格尺寸（CellSize）也会影响到HLOD合批的距离大小，所以笔者推荐把植被放到 <code>DeferGrid</code>中</p>
-<p>在UE中创建大量植被，主要有以下几种方式：</p>
-<ul>
-<li>
-<p><strong>植被编辑模式（Foliage EdMode）</strong></p>
-<p><a class="glightbox" href="../Resources/image-20240809175349308.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809175349308" src="../Resources/image-20240809175349308.png" /></a></p>
-</li>
-<li>
-<p><strong>地形草地类型（Landscape Foliage Type）</strong></p>
-<p><a class="glightbox" href="../Resources/image-20240809175526774.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809175526774" src="../Resources/image-20240809175526774.png" /></a></p>
-</li>
-<li>
-<p><strong>程序内容生成框架</strong> <a class="glightbox" href="../Resources/image-20240809175559308.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809175559308" src="../Resources/image-20240809175559308.png" /></a></p>
-</li>
-</ul>
-<p>这几种方式有各自的使用场景：</p>
-<ul>
-<li>
-<p>植被编辑模式：对于一个正经点的游戏项目来说，我只能说 <strong>植被编辑模式 是碰都不能碰的东西</strong> ，这种刷植被的方式，返工成本巨高，也很难做跨平台的性能适配。</p>
-</li>
-<li>
-<p>PCG：PCG框架毫无疑问是最优的植被编辑方式，使用它可以轻易快速的搭建出生态群落，并且可以定制一些的可延展性参数来做多平台的适配。</p>
-</li>
-<li>地形草地类型：它适用于密集草的绘制，UE中的实现应该是参考了对马岛中<a href="https://www.bilibili.com/video/BV1SF411N7RW/">程序化草</a>的管理流程，使用地形草地类型会占用一个地形图层去描述草的密度，在预览时通过异步任务去生成草簇，它虽然很高效，但并不适合大规模使用。</li>
-</ul>
 <p>通常植被在近距离使用的是HISM的方式进行组织，这就要求在项目场景搭建的时候，需要严格管控植被的种类数量，越少越好，在超出加载范围之后：</p>
 <ul>
 <li>对于小型植被，可以直接不显示远景代理，如果用的是地形草，通常需要保证草的颜色跟地形颜色基本一致，这样在远距离时才不会有特别明显的视觉瑕疵，如果不是使用地形草，使用的是程序化草，可以在编辑器下，通过程序化蓝图中从顶视图烘培一张颜色纹理，以贴花的方式进行渲染来作为草的远景代理。</li>
@@ -2230,42 +2282,36 @@
 <p>植被的LOD需要能够平滑过渡，由于超出加载范围时HISM会变为ISM，需要保证加载距离左侧和右侧的LOD等级是一致的，这也就意味着模型的LOD梯度是分布在加载距离之内的，由于UE目前使用屏幕空间大小作为模型LOD的切换依据，因此在制作时，需要将其转化为对应的距离。</p>
 </blockquote>
 <p>虽然有了世界分区的加持，并不意味着我们可以把场景搭的无限大，它的优势更多的是无缝加载，计算机的实时计算资源是有限的，虽然可以通过这套合批机制进一步扩大距离，但越大的范围所带来的性能开销也就越大，留给玩法的预算也就越少，因此，角色能看到的距离应该依旧维持在一定距离之内，比如768m：</p>
+<p><a class="glightbox" href="../Resources/image-20240809174827247.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809174827247" src="../Resources/image-20240809174827247.png" /></a></p>
 <blockquote>
 <p>不只是树木，其他如模型，粒子，动态材质效果等也建议遵守该规则。</p>
 </blockquote>
-<p><a class="glightbox" href="../Resources/image-20240809174827247.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809174827247" src="../Resources/image-20240809174827247.png" /></a></p>
-<p>对于LOD的制作标准，可以参考地平线在GDC上的分享，只不过最后一级LOD变成了八面体：</p>
-<ul>
-<li><a href="https://www.youtube.com/watch?v=wavnKZNSYqU&amp;t=2412s">Between Tech and Art: The Vegetation of Horizon Zero Dawn (youtube.com)</a></li>
-</ul>
-<p><a class="glightbox" href="../Resources/image-20240622181134887.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240622181134887" src="../Resources/image-20240622181134887.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20240622180652772.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240622180652772" src="../Resources/image-20240622180652772.png" /></a></p>
-<p><a class="glightbox" href="../Resources/image-20240622180634547.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240622180634547" src="../Resources/image-20240622180634547.png" /></a></p>
-<h2 id="_9">阴影优化<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<h2 id="_11">阴影优化<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
 <p>植被的阴影消耗往往是整个场景中占比非常大的一环，因为它具有大量密集且重叠的三角形。</p>
 <p>那怎么优化阴影呢？</p>
-<p>首先，我们需要思考一个问题，为什么需要阴影？</p>
+<p>首先，我们需要思考一个问题，为什么需要阴影？假如我们把阴影关了，那么将会看到：</p>
 <p><a class="glightbox" href="../Resources/image-20240809193856172.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809193856172" src="../Resources/image-20240809193856172.png" /></a></p>
-<p>很明显，当我们把阴影关了之后，画面的空间层次关系变得差了很多，这已经违反了人对空间感的直观感受。</p>
 <p>如果让玩家看完上面的对比画面之后，提问：你是喜欢有阴影的画面呢，还是喜欢没阴影的画面？</p>
 <p>那玩家的回答一定是有阴影的。</p>
 <p>进一步提问：为什么喜欢阴影呢？</p>
 <p>大多数的回答可能是：没阴影的话，画面看起来很违和。</p>
-<p>听到这里，我们要明白玩家真正的诉求，他们真正在意的并非是想要阴影，他们可能都不在乎什么是阴影？他们仅仅只是不喜欢没有阴影之后违和的画面，而已。</p>
-<p>所以对我们来说，追求物理正确的阴影通常是没有意义的，或者说把它做到极致的性价比对游戏项目来说并不高，我们只要以一种性能优越的方式， 能充分表现出画面的层次感其实就够了。</p>
+<p>确实，当我们把阴影关了之后，画面的空间层次关系变得差了很多，这已经违反了人对空间的直观感受。</p>
+<p>在游戏开发的过程中，我们要学着揣摩玩家的真正的意图，就像在这里一样，本质上玩家在意的并非是想要阴影，他们可能都不在乎什么是阴影？他们仅仅只是不喜欢没有阴影之后违和的画面，而已。</p>
+<p>笔者认为，通常在游戏项目中，追求物理或学术上的正确通常是没有意义的，或者说它的性价比并不高，我们只要保证玩家深层次的需求，以一种性能优越的方式， 能充分表现出画面的层次感其实就够了。</p>
 <p>看着这么扁平的画面：</p>
 <p><a class="glightbox" href="../Resources/image-20240809195258560.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809195258560" src="../Resources/image-20240809195258560.png" /></a></p>
-<p>想要增加它的层次感，你能想到什么？SSAO 呀！</p>
+<p>想要增加它的层次感，你能想到什么？</p>
+<p>SSAO 呀！</p>
 <blockquote>
 <p>使用 Lumen 后默认不开启 SSAO，可以使用如下指令开启：</p>
 <p><code>r.Lumen.ScreenProbeGather.ShortRangeAO 0</code></p>
-<p><code>r.Lumen.DiffuseIndirect.SSAO</code></p>
+<p><code>r.Lumen.DiffuseIndirect.SSAO 1</code>  </p>
 </blockquote>
 <p><a class="glightbox" href="../Resources/image-20240809195940083.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809195940083" src="../Resources/image-20240809195940083.png" /></a></p>
 <ul>
 <li>如果可以把AO对画面的权重收益提高一些，画面的层次感就会好很多，但这种想法跟目前的Lumen相悖，感兴趣的小伙伴可以试下。</li>
 </ul>
-<p>提升AO只能增加画面中细微的空间感，大面积的空间阴影还是非常必要的。</p>
+<p>提升AO只能增加画面中细微的空间感，如果没有大面积的空间阴影，画面看起来还是可能会比较奇怪。</p>
 <p>对于草，我们可以直接把草的动态阴影给关闭，把接触阴影打开，接触阴影可以看成是一种基于屏幕空间的阴影算法，它几乎是为草量身定制的阴影策略：</p>
 <blockquote>
 <p>在模型组件开启接触阴影后，可以在定向光源中设置接触阴影的长度。</p>
@@ -2277,13 +2323,16 @@
 <p>对于树而言，它不能像草一样使用屏幕空间一样的阴影算法，但我们可以优化提交给阴影的顶点数据，因为我们采用的LOD的方式来渲染树木，假如画面中显示的是LOD0，我们完全可以不用LOD0来绘制阴影，而是使用LOD2，或者LOD3...</p>
 <p>在UE中，我们可以通过引擎指令<code>r.ForceLODShadow</code>，来锁定构建ShadowMap所使用的LOD：</p>
 <p><a class="glightbox" href="../Resources/image-20240809203942983.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809203942983" src="../Resources/image-20240809203942983.png" /></a></p>
-<h2 id="_10">碰撞及交互优化<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>通过对比图我们可以看出使用不同LOD的阴影存在一些细微差异，但如果不说的话，谁知道呢？</p>
+</blockquote>
+<h2 id="_12">碰撞及交互优化<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
 <p>对于树的碰撞制作，具体要看项目对场景的要求，在熟悉前文的一些网格处理算法之后，我们也可以很容易搭建出一条树木碰撞体的生成管线，比如借助Remesh蓬松的特性可以轻易生成一个像棉花糖一样少量顶点的碰撞体，或者说根据顶点色的分布，只生成树干部分的碰撞...</p>
 <p>而对于交互而言，由于我们近距离使用的HISM，并非是一个真实的个体，通常是不能正常交互的。</p>
 <p>如果我们需要交互的话，就需要对HISM做一些特殊处理，比如引擎里面扩展了 <strong>UFoliageInstancedStaticMeshComponent</strong> ，它可以用来处理实例的伤害计算：</p>
 <p><a class="glightbox" href="../Resources/image-20240809223452013.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809223452013" src="../Resources/image-20240809223452013.png" /></a></p>
-<p>如果有需求的话，也可以自己派生HISM，让近距离的实例退化为一个实际的Actor，这里笔者不建议世界分区的方式来管理这种退化。</p>
-<h2 id="_11">其他<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>如果有需求的话，也可以自己派生HISM，让近距离的实例退化为一个实际的Actor，这里笔者不建议走世界分区的方式来管理这种退化。</p>
+<h2 id="_13">其他<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
 <p>草皮里面过多的顶点会增加速度缓冲区的绘制消耗，UE也扩展了一个 <strong>UGrassInstancedStaticMeshComponent</strong> 允许我们关闭 HISM 的 WPO 速度写入：</p>
 <p><a class="glightbox" href="../Resources/image-20240809224217321.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809224217321" src="../Resources/image-20240809224217321.png" /></a></p>
 
@@ -2308,7 +2357,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-08-09 15:13:03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-08-11 03:21:07</span>
   </span>
 
     
