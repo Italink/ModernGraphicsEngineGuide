@@ -2046,7 +2046,7 @@
 <p>：我都用Nanite了，做个百万三角形的小石头不过分吧，反正会自动减面。</p>
 <p>：你这么点顶点也叫树？细节都没了，看不起谁呢？</p>
 <p>这种情况通常会出现在使用UE的新兴团队当中，而实际上，UE的爆火距离现在也并不久远，使用UE的团队大多也没有深厚的引擎技术积累（国内更甚），对于这种新兴的技术，这样的团队会容易盲从一些营销上的话术，从而弱化甚至忽视内容制作管线上的迭代和积累。</p>
-<p>正因为有了Nanite的加持，通常美术制作人员会对游戏画面有着更高的要求，在优化层面来看，虽然Nanite可以提高顶点的利用率，但如果使用了细节更多的源资产，将意味着更大的磁盘占用，整个场景画面也会有着相比以往更多更密集的顶点。</p>
+<p>正因为有了Nanite的加持，往往导致投资人和开发团队会对游戏画面有着更高的要求，在优化层面来看，虽然Nanite可以提高顶点的利用率，但如果使用了细节更多的源资产，将意味着更大的磁盘占用，整个场景画面也会有着相比以往更多更密集的顶点。</p>
 <p>其中顶点的数量将严重影响到一些渲染阶段的性能消耗：</p>
 <ul>
 <li>Shadow Map 的构建</li>
@@ -2103,13 +2103,14 @@
 <li>重构：模型变得蓬松，UV映射异常的地方出现黑块。（实际上要生成效果良好的重构模型，体素算法的参数得做很多微调和特化）</li>
 <li>减面：丢失大量树叶细节。</li>
 </ul>
-<p>在这方面，笔者做过很多尝试，可以明确的说，通过自动化的模型处理算法，很难得到一个效果优良的植物简模。</p>
-<p>想要达到好的简模效果，可以在植被制作时，手动通过剪枝的方式来制作。</p>
-<p>如果嫌手动制作的工作量过高，可以通过基于植物顶点色权重的减面方式。</p>
+<p>在这方面，笔者做过很多尝试，可以明确的说，通过自动化的模型处理算法，很难得到一个效果优良的植物LOD。</p>
+<p>植被优化为什么这么难，就是因为很多时候大家在引擎里面把它视为一种常规模型在渲染机制上来进行优化，但真正要做好游戏中的植被，最关键的部分还是制作上的技巧。</p>
+<p>人工制作LOD，美术同学可以以较少的主枝干尽可能营造出更大的覆盖范围，用副枝干去增添主枝干的局部细节，制作低级别的LOD时，只需要剪除一定数量的副枝干。</p>
+<p>也可以通过调整顶定色，来区分主枝干和副枝干，最终通过基于植物顶点色权重的减面方式。</p>
 <blockquote>
-<p>通常情况下是需要刷顶点色作为植物风力计算时顶点偏移幅度的权重，可以根据这一权重因子，来作为区域简化幅度的权重。</p>
+<p>通常情况下会对树木刷顶点色作为植物风力计算时顶点偏移幅度的权重，可以根这一权重因子，也来作为区域简化幅度的权重。</p>
 </blockquote>
-<p>减面的方式可以用来生成植物模型的几个较高精度的LOD，但可惜的是，这样生成的简模往往仍然具有较高的顶点数量（上面简化到1500+个顶点的时候，模型已经面目全非了），想要让顶点数量进一步大幅减少，但却要保证模型的表现效果，很显然，使用简化的方式是做不到的，我们必须得打破原有模型的几何结构，而 Remesh 的方式，往往会让一棵树变得非常蓬松，并且有UV映射异常的问题，它的表现效果并不好，那有没有其他手段能解决这个问题呢？</p>
+<p>这种方式可以用来生成植物模型的几个较高精度的LOD，但可惜的是，这样生成的简模往往仍然具有较高的顶点数量（上面简化到1500+个顶点的时候，模型已经面目全非了），想要让顶点数量进一步大幅减少（不能剪除主枝，否则会有很大的视觉瑕疵），但却要保证模型的表现效果，很显然，使用简化的方式是做不到的，我们必须得打破原有模型的几何结构，而 Remesh 的方式，往往会让一棵树变得非常蓬松，并且有UV映射异常的问题，它的表现效果并不好，那有没有其他手段能解决这个问题呢？</p>
 <p>答案是有的，我们最终的目的是保证模型的显示效果，而非几何结构，这也引申出了模型优化的另一种策略 —— <strong>替身（Impostor）</strong> 。</p>
 <blockquote>
 <p>替身 是笔者自己瞎翻译的，译作 代理 容易跟 Proxy 混淆， 译作 冒名顶替者 又不太好听。</p>
@@ -2142,7 +2143,7 @@
 <p>这对一个实际项目来说最有价值的并非是编辑器，而是里面的模型处理相关的代码接口有助于项目团队搭建出符合自身项目规格的模型生成管线。</p>
 </blockquote>
 <p>这么多的替身策略，有小伙伴可能就会问了， 谁的性能效果更好呢？</p>
-<p>Billboard 和 Flipbook 有非常少的顶点，它们的性能效果无疑是最好的，但它们的表现效果往往不佳。</p>
+<p>Billboard 和 Flipbook 有非常少的顶点，较小的贴图尺寸以及简单的着色器程序，它们的性能效果无疑是最好的，但它们的表现效果往往不佳。</p>
 <p>比较有争议的主要是 卡片簇 和 八面体 的方式，在之前的很多3A项目中，所采用的基本都是卡片簇的方式，而笔者在 UE 论坛中发现，其实很多人更推荐使用八面体。</p>
 <p>笔者这里做了一个简单的对比测试，具体谁优谁劣可能需要更多的数据支撑：</p>
 <p><strong>源模型</strong></p>
@@ -2167,15 +2168,15 @@
 </ul>
 <p><a class="glightbox" href="../Resources/image-20240808105838771.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240808105838771" src="../Resources/image-20240808105838771.png" /></a></p>
 <p>可以明显看出八面体的性能和画面表现更优于卡片簇的方式，但如果只是作为最后一级LOD的话，卡片簇的纹理尺寸还有很大的优化空间，具体采用什么方案可能就要仁者见仁智者见智了。</p>
+<p>假如采用的是八面体，我们可以在不影响树木效果的前提下，制作出这样的 LOD链：</p>
+<p><a class="glightbox" href="../Resources/v2-c6b23613225d3dfb096a7d9481959052_1440w.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/v2-c6b23613225d3dfb096a7d9481959052_1440w.png" /></a></p>
+<p>这样的精度梯度，再结合实例化，它的性能消耗可以做到很低，相比之下，使用Nanite想要到达相同的目的就很困难，因为目前的Nanite所采用的 <strong>自动</strong> 减面算法对树这类模型而言，退化效率很低，为了保证画面不失真，它会综合考虑精度的平均分布来确保保证画面不失真，缺乏重要性的部位区分，它通常具有更多的顶点细节，而Imposter所带来的性能提升是Nanite完全比不了的。</p>
 <h3 id="_6">制作参考<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <p>对于LOD的制作标准，可以参考地平线在GDC上的分享，只不过最后一级LOD变成了八面体：</p>
 <ul>
 <li><a href="https://www.youtube.com/watch?v=wavnKZNSYqU&amp;t=2412s">Between Tech and Art: The Vegetation of Horizon Zero Dawn (youtube.com)</a></li>
 <li><a href="https://www.youtube.com/watch?v=MKX45_riWQA">Interactive Wind and Vegetation in 'God of War' (youtube.com)</a></li>
 </ul>
-<blockquote>
-<p>如果要保证植被的LOD过渡没有明显异常，需要在制作时，以较少的主枝干尽可能营造出更大的覆盖范围，用副枝干去增添植被的细节，制作低级别的LOD时，只需要减少副枝干的数量即可。</p>
-</blockquote>
 <p><a class="glightbox" href="../Resources/image-20240622181134887.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240622181134887" src="../Resources/image-20240622181134887.png" /></a></p>
 <p><a class="glightbox" href="../Resources/image-20240622180652772.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240622180652772" src="../Resources/image-20240622180652772.png" /></a></p>
 <p><a class="glightbox" href="../Resources/image-20240622180634547.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240622180634547" src="../Resources/image-20240622180634547.png" /></a></p>
@@ -2184,11 +2185,11 @@
 <ul>
 <li>相同茂密程度的植物，使用模型树的方式会产生大量的顶点，它所带来的性能和内存消耗远高于插片树的方式。</li>
 <li>无论是模型树还是插片树，开启Nanite是一定有优化提升的，但Nanite 不支持 HISM，所以如果项目场景中有大量的植被，就不建议使用Nanite植被，而是通过传统的LOD制作流程借助ISM和HISM进行优化。</li>
+<li>Nanite树叶的退化效率很低，而人工控制LOD精度梯度，并使用Imposter，通常可以制作出性能更好的植被。</li>
 <li>对于新兴团队来说，大家都是摸着石头过河，很难说什么方案是最优的，定好之后按这个规范铺量就高枕无忧了。面对这种解决方案不定的问题，我们最好的管理方案就是搭建好自己的内容生成管线，来尽可能地去减少迭代和验证过程中的沉没成本。</li>
 </ul>
 <h2 id="_8">植被组织<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
 <p>在确定了植被制作管线之后，还需要考虑植被在场景中的规划方式。</p>
-<p>它不像其他常规静态模型一样，在开放世界场景中 Merge+Remesh 就能生成一个高品质的远景代理，但植被不行，它不能被Merge成一个Mesh，或者说Merge成一个Mesh之后，没有什么很好的策略可以既保证植被的效果，又能大幅度的削减它的顶点和优化它的材质，因此如果要制作大量的植被的话，只能采用实例化的方式来铺设，所以在美术效果上，一定是会有一些妥协的。</p>
 <h3 id="_9">搭建方式<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
 <p>在UE中创建大量植被，主要有以下几种方式：</p>
 <ul>
@@ -2272,7 +2273,11 @@
 <p>通常 256 m 的加载范围可以保证视野范围内的绝大部分表现效果是正常的，下面是3D视图下的效果（远处的角色是256m下的小黑点）：</p>
 <p><a class="glightbox" href="../Resources/image-20240809171835592.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809171835592" src="../Resources/image-20240809171835592.png" /></a></p>
 <p>场景模型一般是放在 <code>Main Gird</code> 中，但考虑到单元格尺寸（CellSize）也会影响到HLOD合批的距离大小，所以笔者推荐把植被放到 <code>DeferGrid</code>中</p>
-<p>通常植被在近距离使用的是HISM的方式进行组织，这就要求在项目场景搭建的时候，需要严格管控植被的种类数量，越少越好，在超出加载范围之后：</p>
+<p>植被不像其他常规静态模型一样，在开放世界场景中 Merge+Remesh 就能生成一个高品质的远景代理，但植被不行，它不能被Merge成一个Mesh，或者说Merge成一个Mesh之后，没有什么很好的策略可以既保证植被的效果，又能大幅度的削减它的顶点和优化它的材质，因此如果要制作大范围的植被的话，只能采用实例化的方式铺设，为了保证整个世界分区单元之间性能的负载均衡，我们必须严格管控植物的种类数量，在美术效果上，一定是会存在一些妥协的。</p>
+<blockquote>
+<p>距离剔除通常会造成严重的视觉瑕疵，如果可以用一些手段（比如雾，转角）让植被在远距离被遮挡，这种情况下我们就无需再考虑远景代理的问题，这种情况把植物视为一个常规的Mesh，开启Nanite，结合世界分区的卸载或者距离剔除就能达到很好的性能效果。</p>
+</blockquote>
+<p>通常植被在近距离使用的是HISM的方式进行组织，在超出加载范围之后：</p>
 <ul>
 <li>对于小型植被，可以直接不显示远景代理，如果用的是地形草，通常需要保证草的颜色跟地形颜色基本一致，这样在远距离时才不会有特别明显的视觉瑕疵，如果不是使用地形草，使用的是程序化草，可以在编辑器下，通过程序化蓝图中从顶视图烘培一张颜色纹理，以贴花的方式进行渲染来作为草的远景代理。</li>
 <li>对于大型植被，通常指树木，可以在超出加载范围之后，可以将HISM退化为使用最低级别LOD的ISM作为HLOD（HISM具有簇划分和LOD切换调度的开销），就像是这样：</li>
@@ -2297,7 +2302,7 @@
 <p>大多数的回答可能是：因为没阴影的话，画面看起来很违和。</p>
 <p>确实，当我们把阴影关了之后，画面的空间层次关系变得差了很多，这已经违反了人对空间的直观感受。</p>
 <p>在游戏开发的过程中，我们要学着揣摩玩家的真正的意图，就像在这里一样，本质上玩家在意的并非是想要阴影，他们可能都不在乎什么是阴影？他们仅仅只是不喜欢没有阴影之后违和的画面，而已。</p>
-<p>笔者认为，通常在游戏项目中，追求物理或学术上的正确通常是没有意义的，或者说它的性价比并不高，我们只要保证玩家深层次的需求，以一种性能优越的方式， 能充分表现出画面的层次感其实就够了。</p>
+<p>通常在游戏项目中，追求物理或学术上的正确通常是没有意义的，或者说它的性价比并不高，在这里，只要我们可以保证玩家深层次的需求，以一种性能优越的方式， 充分表现出画面的层次感其实就够了。</p>
 <p>看着这么扁平的画面：</p>
 <p><a class="glightbox" href="../Resources/image-20240809195258560.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809195258560" src="../Resources/image-20240809195258560.png" /></a></p>
 <p>想要增加它的层次感，你能想到什么？</p>
@@ -2333,8 +2338,14 @@
 <p><a class="glightbox" href="../Resources/image-20240809223452013.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809223452013" src="../Resources/image-20240809223452013.png" /></a></p>
 <p>如果有需求的话，也可以自己派生HISM，让近距离的实例退化为一个实际的Actor，这里笔者不建议走世界分区的方式来管理这种退化。</p>
 <h2 id="_13">其他<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
-<p>草皮里面过多的顶点会增加速度缓冲区的绘制消耗，UE也扩展了一个 <strong>UGrassInstancedStaticMeshComponent</strong> 允许我们关闭 HISM 的 WPO 速度写入：</p>
+<ul>
+<li>尝试关闭 HISM 的 WPO 速度写入：</li>
+</ul>
 <p><a class="glightbox" href="../Resources/image-20240809224217321.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809224217321" src="../Resources/image-20240809224217321.png" /></a></p>
+<ul>
+<li>限制材质的 WPO最大绘制距离。</li>
+<li>距离剔除通常会造成严重的视觉瑕疵，如果可以用一些手段（比如雾，转角）让植被在远距离被遮挡，这种情况下我们就无需再考虑远景代理的问题，这种情况把植物视为一个常规的Mesh，可以开启Nanite，结合世界分区的卸载或者距离剔除就能达到很好的性能效果。</li>
+</ul>
 
 
 
@@ -2357,7 +2368,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-08-11 04:07:02</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-08-13 15:24:16</span>
   </span>
 
     
