@@ -1562,7 +1562,7 @@
           <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
-      不友好的实例化
+      并非性能最优的模型优化方式
     </span>
   </a>
   
@@ -1571,7 +1571,7 @@
           <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
-      并非最具性价比的优化策略
+      固定精度梯度的静态数据更容易组织出性能优越的密集植被
     </span>
   </a>
   
@@ -1836,7 +1836,7 @@
           <li class="md-nav__item">
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
-      不友好的实例化
+      并非性能最优的模型优化方式
     </span>
   </a>
   
@@ -1845,7 +1845,7 @@
           <li class="md-nav__item">
   <a href="#_5" class="md-nav__link">
     <span class="md-ellipsis">
-      并非最具性价比的优化策略
+      固定精度梯度的静态数据更容易组织出性能优越的密集植被
     </span>
   </a>
   
@@ -1984,7 +1984,8 @@
 <p>《刺客信条：奥德赛》</p>
 </blockquote>
 <p>而这些游戏，都不是UE做的...</p>
-<p>需要承认的是，尽管 Unreal Engine 5 非常强大，但也并非无所不能，想要搭建出像上面那样能够满足游戏项目性能要求的自然场景，我们还将会面临许多除引擎技术之外的挑战，在开放的自然场景中，植被产生性能问题的频率往往不亚于光影和特效。</p>
+<p>需要承认的是，尽管 Unreal Engine 5 非常强大，但并非无所不能，想要搭建出像上面那样能够满足游戏项目性能要求的自然场景，我们还将会面临许多除引擎技术之外的挑战.</p>
+<p>在开放的自然场景中，植被产生性能问题的频率以及所造成的影响往往不亚于光影和特效。</p>
 <p>在UE5中，如果谈到植被优化，大家的第一反应想到的可能是减面，实例化，距离裁剪，优化材质，使用LOD或者Nanite...</p>
 <p>这些资产级别的调优和复杂的特化手段，往往很难支撑起开放场景中茂盛的植被生态。</p>
 <p>因此，本文会阐述一些关于植被优化的策略和观点。</p>
@@ -2033,8 +2034,8 @@
 <p>下面会分几个方面来阐述一下使用Nanite存在的问题，观点可能有些主观，有不对的地方，烦请大佬帮忙指正~</p>
 <ul>
 <li>更高的效果预期伴随着更难把控的性能平衡</li>
-<li>不友好的实例化</li>
-<li>并非最具性价比的优化方式</li>
+<li>并非性能最优的模型优化方式</li>
+<li>固定精度梯度的静态数据更容易组织出性能优越的密集植被</li>
 </ul>
 <h4 id="_3">更高的效果预期伴随着更难把控的性能平衡<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
 <p>UE5 发布演示的时候，相信很多小伙伴都被演示所展现出的画面效果所震撼，当时很多人可能都在想，或许我们即将迎来下一个世代的游戏画面：</p>
@@ -2044,7 +2045,7 @@
 <p>但吐槽归吐槽，Nanite确实是一项突破性的技术，相比传统的LOD有着绝对的优势，随着这几年官方的优化迭代，其可靠性也逐渐提升。</p>
 <p>目前它的的确确可以被广泛应用于实际的游戏项目中，但Nanite所带来的问题，通常不在于其自身。</p>
 <p>：我都用Nanite了，做个百万三角形的小石头不过分吧，反正会自动减面。</p>
-<p>：你这么点顶点也叫树？细节都没了，看不起谁呢？</p>
+<p>：你这么点顶点也叫树？细节都没了，这也好意思跟人说自己用的UE5，看不起谁呢？</p>
 <p>这种情况通常会出现在使用UE的新兴团队当中，而实际上，UE的爆火距离现在也并不久远，使用UE的团队大多也没有深厚的引擎技术积累（国内更甚），对于这种新兴的技术，这样的团队会容易盲从一些营销上的话术，从而弱化甚至忽视内容制作管线上的迭代和积累。</p>
 <p>正因为有了Nanite的加持，往往导致投资人和开发团队会对游戏画面有着更高的要求，在优化层面来看，虽然Nanite可以提高顶点的利用率，但如果使用了细节更多的源资产，将意味着更大的磁盘占用，整个场景画面也会有着相比以往更多更密集的顶点。</p>
 <p>其中顶点的数量将严重影响到一些渲染阶段的性能消耗：</p>
@@ -2065,24 +2066,7 @@
 <p>如果游戏场景在开发机上都不能够稳定运行80帧，并且严重侵占玩法或其他模块的性能预算和迭代空间，就是搭得再好看，缺乏游戏性，那又有什么用呢？
 笔者相信绝大部分玩家都不会因为一个游戏仅仅拥有照片级的写实画面就傻傻的买单。</p>
 </blockquote>
-<h4 id="_4">不友好的实例化<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
-<p>笔者对Nanite的认知经历了几个阶段：</p>
-<ol>
-<li>“应用尽用”：一言不合开Nanite。</li>
-<li>遇到坑了，草不应该用Nanite，这种密集实例化渲染的物体开启Nanite会有一些Bug。</li>
-<li>又遇到坑了，Nanite的特性不能贴合HISM机制，理论上要用HISM渲染的物体，就不能开Nanite。</li>
-<li>在深入了解一些项目的制作手段之后 —— 正经人谁用Nanite做植被哦。</li>
-</ol>
-<p>先说第一个坑，Nanite的减面是对单个实例友好的，它可以轻易将一个数百万三角形的模型减到变为空像素最后被裁剪掉，但像草这种通过实例化动辄数万个实例的情况，使用Nanite的退化并不能有效减少实例，这会很容易给Nanite的调度计算产生巨大的开销，当前画面里的Nanite的实例数量超过了一定阈值时，会出现画面异常，虽然有一些引擎指令有助于改善该现象。</p>
-<p>而第二个坑，要结合世界分区的HLOD来谈，HLOD是一种在开放世界中用来显示在流送加载范围之外的 <strong>远景代理</strong> ，平常的模型可以在分区中 <strong>Merge</strong> + <strong>Remesh（重构）</strong> 来生成远景HLOD，但对于植被而言，对这种零碎面片比较多的物体使用体素化的Remesh算法会生成棉花糖， <strong>Merge</strong> + <strong>Reduce（减面）</strong> 的方式并不能在大幅度减少顶点数量和DrawCall的前提下，保障远景植被的画面质量，因此植被的HLOD，只能使用 <strong>实例化（Instancing）</strong> ，而世界分区中的实例化优化，除了对实例化植被进行 <strong>区域切块</strong> ，还需要用上 <strong>层级实例化静态网格 （HISM ：HierachicalInstancedStaticMesh）</strong> ，与 <strong>实例化静态网格（ISM ：InstancedStaticMesh）</strong> 不同的是，层级实例化网格允许在实例化网格内部切换LOD，比如下面的所有树木都是用一个HISM绘制的：</p>
-<p><a class="glightbox" href="../Resources/image-20240809135411348.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809135411348" src="../Resources/image-20240809135411348.png" /></a></p>
-<p>HISM本质上是将实例化网格划分成ClusterTree，每一个Cluster有其独立的LOD级别，最终会产生多个级别的ISM，通过一些引擎指令，我们可以管控HISM的划分策略，关于具体的实现细节可以参考：</p>
-<ul>
-<li><a href="https://blog.csdn.net/qq_29523119/article/details/123932029">UHierarchicalInstancedStaticMesh(HISM)原理分析-CSDN博客</a></li>
-<li><a href="https://blog.csdn.net/ZJU_fish1996/article/details/108806360">HISM 大规模植被渲染解决方案-CSDN博客</a></li>
-</ul>
-<p>而Nanite不像传统的LOD方案那样，具有少数固定精度梯度的模型，它的LOD梯度不是模型级别的，而是簇（Cluster）级别的，因此HISM机制不能有效地和Nanite一起正常正常工作，这也是为什么我们不使用Nanite来制作大型植被的真正原因。</p>
-<h4 id="_5">并非最具性价比的优化策略<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<h4 id="_4">并非性能最优的模型优化方式<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
 <p>通常优化模型的手段有两种：</p>
 <ul>
 <li><strong>减面（Reduce）</strong> ：在源模型的几何数据上进行删减从而得到简化的模型。</li>
@@ -2171,6 +2155,26 @@
 <p>假如采用的是八面体，我们可以在不影响树木效果的前提下，制作出这样的 LOD链：</p>
 <p><a class="glightbox" href="../Resources/v2-c6b23613225d3dfb096a7d9481959052_1440w.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../Resources/v2-c6b23613225d3dfb096a7d9481959052_1440w.png" /></a></p>
 <p>这样的精度梯度，再结合实例化，它的性能消耗可以做到很低，相比之下，使用Nanite想要到达相同的目的就很困难，因为目前的Nanite所采用的 <strong>自动</strong> 减面算法对树这类模型而言，退化效率很低，为了保证画面不失真，它会综合考虑精度的平均分布来确保保证画面不失真，缺乏重要性的部位区分，它通常具有更多的顶点细节，而Imposter所带来的性能提升是Nanite完全比不了的。</p>
+<h4 id="_5">固定精度梯度的静态数据更容易组织出性能优越的密集植被<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<p>笔者对Nanite的认知经历了几个阶段：</p>
+<ol>
+<li>“应用尽用”：一言不合开Nanite。</li>
+<li>遇到坑了，草不应该用Nanite，这种密集实例化渲染的物体开启Nanite会有一些Bug。</li>
+<li>又遇到坑了，Nanite的特性不能贴合HISM机制，理论上要用HISM才能高效渲染的物体，就不能开Nanite。</li>
+<li>在深入了解一些项目的制作手段之后 —— 正经人谁用Nanite做植被哦。</li>
+</ol>
+<p>先说第一个坑，Nanite的减面是对单个实例友好的，它可以轻易将一个数百万三角形的几何比较圆润的模型减到变为空像素最后被裁剪掉，但像草或树这种通过实例化动辄数万个实例的情况，使用Nanite的退化并不能高效减少实例，而大量的顶点无疑会给Nanite的调度计算产生巨大的开销，进一步侵占其他GPU任务的计算资源，这在一些中低端机型上，尤为明显。</p>
+<blockquote>
+<p>在当前画面里的Nanite的实例数量超过了一定阈值时，甚至会导致画面异常，虽然有一些引擎指令有助于改善该现象。</p>
+</blockquote>
+<p>而第二个坑，要结合世界分区的HLOD来谈，HLOD是一种在开放世界中用来显示在流送加载范围之外的 <strong>远景代理</strong> ，平常的模型可以在分区中 <strong>Merge</strong> + <strong>Remesh（重构）</strong> 来生成远景HLOD，但对于植被而言，对这种零碎面片比较多的物体使用体素化的Remesh算法会生成棉花糖， <strong>Merge</strong> + <strong>Reduce（减面）</strong> 的方式并不能在大幅度减少顶点数量和DrawCall的前提下，保障远景植被的画面质量，因此植被的HLOD，只能使用 <strong>实例化（Instancing）</strong> ，而世界分区中的实例化优化，除了对实例化植被进行 <strong>区域切块</strong> ，还需要用上 <strong>层级实例化静态网格 （HISM ：HierachicalInstancedStaticMesh）</strong> ，与 <strong>实例化静态网格（ISM ：InstancedStaticMesh）</strong> 不同的是，层级实例化网格允许在实例化网格内部切换LOD，比如下面的所有树木都是用一个HISM绘制的：</p>
+<p><a class="glightbox" href="../Resources/image-20240809135411348.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809135411348" src="../Resources/image-20240809135411348.png" /></a></p>
+<p>HISM本质上是将实例化网格划分成ClusterTree，每一个Cluster有其独立的LOD级别，最终会产生多个级别的ISM，通过一些引擎指令，我们可以管控HISM的划分策略，关于具体的实现细节可以参考：</p>
+<ul>
+<li><a href="https://blog.csdn.net/qq_29523119/article/details/123932029">UHierarchicalInstancedStaticMesh(HISM)原理分析-CSDN博客</a></li>
+<li><a href="https://blog.csdn.net/ZJU_fish1996/article/details/108806360">HISM 大规模植被渲染解决方案-CSDN博客</a></li>
+</ul>
+<p>而Nanite不像传统的LOD方案那样，具有少数固定精度梯度的模型，它的LOD梯度不是模型级别的，而是簇（Cluster）级别的，因此HISM机制不能在使用Nanite的模型上正常工作。</p>
 <h3 id="_6">制作参考<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <p>对于LOD的制作标准，可以参考地平线在GDC上的分享，只不过最后一级LOD变成了八面体：</p>
 <ul>
@@ -2184,8 +2188,8 @@
 <p>上面说了很多琐碎的信息，这里统一总结一下：</p>
 <ul>
 <li>相同茂密程度的植物，使用模型树的方式会产生大量的顶点，它所带来的性能和内存消耗远高于插片树的方式。</li>
-<li>无论是模型树还是插片树，开启Nanite是一定有优化提升的，但Nanite 不支持 HISM，所以如果项目场景中有大量的植被，就不建议使用Nanite植被，而是通过传统的LOD制作流程借助ISM和HISM进行优化。</li>
-<li>Nanite树叶的退化效率很低，而人工控制LOD精度梯度，并使用Imposter，通常可以制作出性能更好的植被。</li>
+<li>目前Nanite的减面策略对树叶的退化效率很低，而人工控制LOD精度梯度，并使用Imposter，通常可以制作出性能更好的植被。</li>
+<li>无论是模型树还是插片树，开启Nanite是一定有优化提升的，但 Nanite 与 HISM 相悖，所以如果项目场景中有大量的植被，就不建议使用Nanite植被，而是通过传统的LOD制作流程借助ISM和HISM进行优化。</li>
 <li>对于新兴团队来说，大家都是摸着石头过河，很难说什么方案是最优的，定好之后按这个规范铺量就高枕无忧了。面对这种解决方案不定的问题，我们最好的管理方案就是搭建好自己的内容生成管线，来尽可能地去减少迭代和验证过程中的沉没成本。</li>
 </ul>
 <h2 id="_8">植被组织<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
@@ -2368,7 +2372,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-08-13 15:24:16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-08-15 03:23:11</span>
   </span>
 
     
