@@ -12,7 +12,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.40">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.42">
     
     
       
@@ -20,7 +20,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.8c3ca2c6.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
       
         
         <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
@@ -1621,9 +1621,27 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#-" class="md-nav__link">
+  <a href="#lod_1" class="md-nav__link">
     <span class="md-ellipsis">
-      -
+      为什么要用LOD？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lod_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      谁来制作LOD？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lod_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      如何制作LOD？
     </span>
   </a>
   
@@ -1726,14 +1744,194 @@
 
 
 <h1 id="lod">模型LOD不完全指南<a class="headerlink" href="#lod" title="Permanent link">&para;</a></h1>
-<p>关于 <strong>LOD （Level of Detail ）</strong>，相信很多小伙伴都知道它的作用，我们通常会去制作多个细节层次梯度的资产，用于在不同重要性的场合展示，从而尽可能的减少资源的浪费，提升整个系统的上限。</p>
-<p>在模型层面， LOD 通常是指模型的多个精度级别，在显示时，近距离使用高精度模型，远距离使用低精度模型。</p>
+<p>关于 <strong>LOD （Level of Detail ）</strong>，通常是指制作多个细节层次梯度的资产，用于在不同重要性的场合展示。</p>
+<h2 id="lod_1">为什么要用LOD？<a class="headerlink" href="#lod_1" title="Permanent link">&para;</a></h2>
+<p>在模型层面， LOD 通常是指模型的多个精度级别，在显示时，近距离使用高精度模型，远距离使用低精度模型，从而尽可能的减少资源的浪费，提升整个系统的上限。</p>
 <p>在一个用于实时渲染领域且具有一定规模的三维场景中，为了保证程序的帧率，LOD的制作是开发团队无法绕开的难题。</p>
-<p>高额的时间和人力成本让很多独立开发者和小型团队搭建复杂场景时困境重重.</p>
-<p>直到UE的虚拟几何体技术出现 —— <strong>Nanite</strong></p>
-<p>它会分析模型几何的重要性信息，自动生成高质量的LOD，不仅占用了更少的存储空间，还可以以非常高的性能绘制，它无疑是几何渲染的未来。</p>
-<p>但目前而言，它还存在一些瑕疵。</p>
-<h2 id="-">-<a class="headerlink" href="#-" title="Permanent link">&para;</a></h2>
+<p>高额的时间和人力成本让很多独立开发者和小型团队搭建复杂场景时困境重重。</p>
+<p>直到UE的虚拟几何体技术（ <strong>Nanite</strong> ）出现 ，Nanite 会分析模型几何的重要性信息，自动生成高质量的LOD，不仅占用了更少的存储空间，还可以以非常高的性能绘制，它无疑是几何渲染的未来。</p>
+<p>但目前而言，在一些特定场景下，我们还不能完全放弃LOD：</p>
+<ul>
+<li>现代PC的GPU算力通常是冗余的，大部分的中端GPU足以应付一些常见的复杂场景渲染，但其他平台，比如手机，X Box，Switch...，对于有较高画面要求的项目，它们的算力目前而言更多只是堪堪够用，为了追求更好的视觉效果，甚至往往需要定制一些比较Hack的渲染机制来进行极致的优化，而所分配剩余的算力很难支撑起Nanite的运作。</li>
+<li>Nanite的模型简化算法在植被这种模型类型上还存在一定瑕疵，如果是植被密度较大范围较广的场景，通常使用LOD更能极致的压缩性能，这在之前的<a href="https://zhuanlan.zhihu.com/p/713731229">文章</a>中有提到。</li>
+</ul>
+<h2 id="lod_2">谁来制作LOD？<a class="headerlink" href="#lod_2" title="Permanent link">&para;</a></h2>
+<p>笔者入行比较晚，请教了一些前辈，得知早期大部分的游戏项目，通常是由美术人员在DDC软件中来制作LOD，美术人员在提供模型源文件的同时，按照一定规范来生产模型对应的LOD。</p>
+<p>这种做法，目前来看是存在一定局限性的：</p>
+<ul>
+<li>早期的模型制作流程比较“务实”，大部分时候还是只能通过人工建模的方式，而现在涌现了许多网格处理的SDK，它们往往会提供一些有效的模型简化算法，无需重新建模，就能生成高品质的LOD。 </li>
+<li>人工制作LOD往往需要高额的成本，团队自身有足够的人力物力还好，如果是交给外包团队去做这个事情的话，无疑会是一笔巨大的开销。</li>
+<li>任何方法论都有一定适用条件，模型制作也一样，除了一些老牌制作厂商之外，大部分团队应该都很难在游戏制作之初，就能制定出一套尽善尽美的制作规范，往往很多隐秘的问题随着开发进度的推进逐渐浮现，而美术制作又是整个项目中费用消耗的大头，对于LOD制作来说，如果源模型或者规范变了，那么之前制作的“产品”就白费了，所以我们需要将关注点从制作具体的产品，转化为去搭建一条可迭代的生产管线。</li>
+<li>源模型虽然是由美术人员制作的，但他们往往对性能并不敏感，对LOD的认识也不是很深，在面对那些无论怎么制作都很难满足规范的模型时，他们所表现出来的，只会是无措。</li>
+</ul>
+<p>此时如果有人可以包揽这些事务，就可以为团队节省出大量的成本。</p>
+<p>这类专业人员一般称作 <strong>管线TA</strong> / <strong>引擎管线工程师</strong>，通常 ta 需要对几何处理，图形渲染，编辑器方向有深入的了解。</p>
+<h2 id="lod_3">如何制作LOD？<a class="headerlink" href="#lod_3" title="Permanent link">&para;</a></h2>
+<p>在阐述LOD制作之前，我们先了解一下一些现代游戏中的模型制作规格：</p>
+<ul>
+<li><a href="https://polycount.com/discussion/141061/polycounts-in-next-gen-games-thread">一些次世代游戏中的三角形计数 | Polycount</a></li>
+<li><a href="https://polycount.com/discussion/126662/triangle-counts-for-assets-from-various-videogames">一些视频游戏中的三角形计数 | Polycount</a></li>
+</ul>
+<p>这些资料可以作为有效的参考，避免源模型就出现那种超出实时渲染规格的情况，这是 <a href="https://3d-ace.com/">3D - ACE</a> 给出的一个标准：</p>
+<ul>
+<li>
+<p><strong>PC 和游戏机</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>游戏资产</strong></th>
+<th><strong>多边形计数 （UE）</strong></th>
+<th><strong>三角形数 （UE）</strong></th>
+<th><strong>多边形计数 （Unity）</strong></th>
+<th><strong>三角形计数 （Unity）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>低细节角色</strong></td>
+<td>10,000-20,000</td>
+<td>20,000-40,000</td>
+<td>5,000-10,000</td>
+<td>10,000-20,000</td>
+</tr>
+<tr>
+<td><strong>高细节角色</strong></td>
+<td>20,000-60,000</td>
+<td>40,000-120,000</td>
+<td>10,000-30,000</td>
+<td>20,000-60,000</td>
+</tr>
+<tr>
+<td><strong>简单道具</strong></td>
+<td>500-2,000</td>
+<td>1,000-4,000</td>
+<td>250-1,000</td>
+<td>500-2,000</td>
+</tr>
+<tr>
+<td><strong>复杂道具</strong></td>
+<td>2,000-10,000</td>
+<td>4,000-20,000</td>
+<td>1,000-5,000</td>
+<td>2,000-10,000</td>
+</tr>
+<tr>
+<td><strong>基本环境</strong></td>
+<td>10,000-50,000</td>
+<td>20,000-100,000</td>
+<td>5,000-25,000</td>
+<td>10,000-50,000</td>
+</tr>
+<tr>
+<td><strong>详细环境</strong></td>
+<td>50,000-200,000</td>
+<td>100,000-400,000</td>
+<td>25,000-100,000</td>
+<td>50,000-200,000</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>移动和低端设备</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>游戏资产</strong></th>
+<th><strong>多边形计数</strong></th>
+<th><strong>三角形计数</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>低细节角色</strong></td>
+<td>1,000-5,000</td>
+<td>2,000-10,000</td>
+</tr>
+<tr>
+<td><strong>高细节角色</strong></td>
+<td>5,000-10,000</td>
+<td>10,000-20,000</td>
+</tr>
+<tr>
+<td><strong>简单 prop</strong></td>
+<td>100-500</td>
+<td>200-1,000</td>
+</tr>
+<tr>
+<td><strong>Complex 属性</strong></td>
+<td>500-2,000</td>
+<td>1,000-4,000</td>
+</tr>
+<tr>
+<td><strong>基本环境</strong></td>
+<td>2,000-10,000</td>
+<td>4,000-20,000</td>
+</tr>
+<tr>
+<td><strong>详细环境</strong></td>
+<td>10,000-20,000</td>
+<td>20,000-40,000</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><strong>VR/AR 设备</strong></p>
+<table>
+<thead>
+<tr>
+<th><strong>游戏资产</strong></th>
+<th><strong>多边形计数</strong></th>
+<th><strong>三角形计数</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>低细节角色</strong></td>
+<td>2,000-10,000</td>
+<td>4,000-20,000</td>
+</tr>
+<tr>
+<td><strong>高细节角色</strong></td>
+<td>10,000-20,000</td>
+<td>20,000-40,000</td>
+</tr>
+<tr>
+<td><strong>简单 prop</strong></td>
+<td>500-1,500</td>
+<td>1,000-3,000</td>
+</tr>
+<tr>
+<td><strong>Complex 属性</strong></td>
+<td>1,500-5,000</td>
+<td>3,000-10,000</td>
+</tr>
+<tr>
+<td><strong>基本环境</strong></td>
+<td>5,000-15,000</td>
+<td>10,000-30,000</td>
+</tr>
+<tr>
+<td><strong>详细环境</strong></td>
+<td>15,000-30,000</td>
+<td>30,000-60,000</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+<p>原博客位于：</p>
+<ul>
+<li><a href="https://3d-ace.com/blog/polygon-count-in-3d-modeling-for-game-assets/">多边形数量在游戏资产的 3D 建模中重要吗？– 3D-Ace 工作室</a></li>
+</ul>
+<p>3D-ACE中有很多有价值的<a href="https://3d-ace.com/blog/">博客</a>参考，感兴趣的小伙伴可以看下：</p>
+<p><a class="glightbox" href="../Resources/image-20241023201143597.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241023201143597" src="../Resources/image-20241023201143597.png" /></a></p>
+<p>在制作LOD之前，我们最好搭建一个简单的Preview关卡，通过一个简单的编辑器工具来自动排列</p>
+<p>人工制作的LOD通常</p>
+<ul>
+<li>虽然</li>
+</ul>
 <p><a href="https://3d-ace.com/blog/polygon-count-in-3d-modeling-for-game-assets/">多边形数量在游戏资产的 3D 建模中重要吗？– 3D-Ace 工作室</a></p>
 <p><a href="https://www.simplygon.com/posts/51aba9d5-bafd-459d-94b8-718273fdf092">当涉及到 LOD 过渡时要考虑什么？ - Simplygon 博客</a></p>
 <p><a href="https://polycount.com/discussion/141061/polycounts-in-next-gen-games-thread">Polycounts in next gen games thread! — polycount</a></p>
@@ -1768,7 +1966,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-10-10 12:19:25</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-10-23 12:34:53</span>
   </span>
 
     
@@ -1867,7 +2065,7 @@
     <script id="__config" type="application/json">{"base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
     
     
-      <script src="../../assets/javascripts/bundle.525ec568.min.js"></script>
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
       
     
   <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
