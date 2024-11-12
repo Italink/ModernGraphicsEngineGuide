@@ -2278,7 +2278,7 @@
 </tr>
 <tr>
 <td>AdvanceGrid</td>
-<td>25600</td>
+<td>51200</td>
 <td>51200</td>
 <td>9</td>
 <td>true</td>
@@ -2295,7 +2295,7 @@
 <p><a class="glightbox" href="../Resources/image-20240809171548496.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809171548496" src="../Resources/image-20240809171548496.png" /></a></p>
 <p>通常 256 m 的加载范围可以保证视野范围内的绝大部分表现效果是正常的，下面是3D视图下的效果（远处的角色是256m下的小黑点）：</p>
 <p><a class="glightbox" href="../Resources/image-20240809171835592.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809171835592" src="../Resources/image-20240809171835592.png" /></a></p>
-<p>场景模型一般是放在 <code>Main Gird</code> 中，但考虑到单元格尺寸（CellSize）也会影响到HLOD合批的距离大小，所以笔者推荐把植被放到 <code>DeferGrid</code>中</p>
+<p>场景模型一般是放在 <code>Main Gird</code> 中，但考虑到单元格尺寸（CellSize）也会影响到HLOD合批的距离大小，所以笔者推荐把植被放到 <code>AdvanceGrid</code>中</p>
 <p>植被不像其他常规静态模型一样，在开放世界场景中 Merge+Remesh 就能生成一个高品质的远景代理，但植被不行，它不能被Merge成一个Mesh，或者说Merge成一个Mesh之后，没有什么很好的策略可以既保证植被的效果，又能大幅度的削减它的顶点和优化它的材质，因此如果要制作大范围的植被的话，只能采用实例化的方式铺设，为了保证整个世界分区单元之间性能的负载均衡，我们必须严格管控植物的种类数量，在美术效果上，一定是会存在一些妥协的。</p>
 <blockquote>
 <p>距离剔除通常会造成严重的视觉瑕疵，如果可以用一些手段（比如雾，转角）让植被在远距离被遮挡，这种情况下我们就无需再考虑远景代理的问题，这种情况把植物视为一个常规的Mesh，开启Nanite，结合世界分区的卸载或者距离剔除就能达到很好的性能效果。</p>
@@ -2310,7 +2310,7 @@
 <p>植被的LOD需要能够平滑过渡，由于超出加载范围时HISM会变为ISM，需要保证加载距离左侧和右侧的LOD等级是一致的，这也就意味着模型的LOD梯度是分布在加载距离之内的，由于UE目前使用屏幕空间大小作为模型LOD的切换依据，因此在制作时，需要将其转化为对应的距离。</p>
 </blockquote>
 <p>虽然有了世界分区的加持，并不意味着我们可以把场景搭的无限大，它的优势更多的是无缝加载，计算机的实时计算资源是有限的，虽然可以通过这套合批机制进一步扩大距离，但越大的范围所带来的性能开销也就越大，留给玩法的预算也就越少，因此，角色能看到的距离应该依旧维持在一定距离之内，比如768m：</p>
-<p><a class="glightbox" href="../Resources/image-20240809174827247.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809174827247" src="../Resources/image-20240809174827247.png" /></a></p>
+<p><a class="glightbox" href="Resources/image-20240809174827247.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809174827247" src="Resources/image-20240809174827247.png" /></a></p>
 <blockquote>
 <p>不只是树木，其他如模型，粒子，动态材质效果等也建议遵守该规则。</p>
 </blockquote>
@@ -2391,7 +2391,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-09-02 12:40:08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-11-12 13:59:58</span>
   </span>
 
     

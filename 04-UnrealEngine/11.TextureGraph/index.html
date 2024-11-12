@@ -1723,14 +1723,14 @@
 </ul>
 <p>很多小伙伴可能看完插件介绍之后，感觉它好像有点用，但是似乎跟自己没多少关系，但实际上，它其实是一个非常强大的插件！</p>
 <h2 id="_1">概述<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>如果你是一名图形开发者应该知道，我们会使用许多 <strong>图形渲染管线（Graphics Rendering Pipeline）</strong> 将几何图形**（Primitive）<strong>绘制到一张  **渲染目标（Render Target）</strong>（可以理解为纹理，图像）上，这个过程我们一般称为 <strong>Base Pass</strong> （ 或者 <strong>Mesh Pass</strong>，<strong>Primitives Pass</strong>）：</p>
+<p>如果你是一名图形开发者应该知道，我们会使用许多 <strong>图形渲染管线（Graphics Rendering Pipeline）</strong> 将几何图形 <strong>（Primitive）</strong> 绘制到一张  <strong>渲染目标（Render Target）</strong> （可以理解为纹理，图像）上，这个过程我们一般称为 <strong>Base Pass</strong> （ 或者 <strong>Mesh Pass</strong> ， <strong>Primitives Pass</strong> ）：</p>
 <p><a class="glightbox" href="../Resources/image-20231006120654050.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006120654050" src="../Resources/image-20231006120654050.png" /></a></p>
 <p>而最终呈现给观众的画面，我们往往还需要根据 Base Pass 输出的图像，增加一些额外的效果（比如全局光照，后期处理...)：</p>
 <p><a class="glightbox" href="../Resources/image-20231006114116772.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20231006114116772" src="../Resources/image-20231006114116772.png" /></a></p>
 <p>这类效果通常是使用一堆 Render Pass 来生成的，Render Pass通常会需要输入一些纹理，最终生成一些RT，而这些生成的RT，又可以作为另一个Render Pass的纹理输入，将这些Render Pass视为一个节点，将它们的输入输出用线连起来，最终我们会得到一个图状结构:</p>
 <p><a class="glightbox" href="../Resources/image-20240921164132083.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240921164132083" src="../Resources/image-20240921164132083.png" /></a></p>
-<p>我们通常称它为 <strong>Render Graph / Frame Graph</strong>。</p>
-<p>而我们使用的 Texture Graph，也是类似的流程，只不过 Render Graph 是用来完成一帧游戏画面的绘制，而Texture Graph <strong>通常</strong> 是用来在 <strong>编辑器阶段生成纹理资产</strong>。</p>
+<p>我们通常称它为 <strong>Render Graph / Frame Graph</strong> 。</p>
+<p>而我们使用的 Texture Graph，也是类似的流程，只不过 Render Graph 是用来完成一帧游戏画面的绘制，而Texture Graph <strong>通常</strong> 是用来在 <strong>编辑器阶段生成纹理资产</strong> 。</p>
 <h2 id="_2">用途<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>Texture Graph 虽然本质上是做程序化纹理，但实际上它的功能集远不如成熟的程序化纹理工具（比如 <a href="https://www.adobe.com/hk_en/products/substance3d/apps/designer.html">Substance Designer</a>），它比较适合像笔者这种既没有深入了解程序化纹理，也不能熟悉使用PS，但知道怎么写代码，并具备一定图像处理知识基础的人。</p>
 <p>笔者会用它来做这些事情：</p>
@@ -1819,7 +1819,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-10-30 15:12:04</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-11-12 13:59:58</span>
   </span>
 
     
