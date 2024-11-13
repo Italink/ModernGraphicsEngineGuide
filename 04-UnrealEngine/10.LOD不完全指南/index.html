@@ -1918,9 +1918,9 @@
 </ul>
 <p>在这样的视图下我们能更加直观地查看和管理模型的规格：</p>
 <p><a class="glightbox" href="../Resources/image-20241109114502541.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109114502541" src="../Resources/image-20241109114502541.png" /></a></p>
-<p>在早期的LOD制作流程中，我们一般将模型与相机之间的 <strong>距离</strong> 作为LOD切换的判断标准，将可能制作出类似这样的 <strong>LOD 链</strong> ：</p>
+<p>在早期的LOD制作流程中，我们一般将 模型与相机 之间的 <strong>距离</strong> 作为LOD切换的判断标准，每隔一段距离，切换一个精度的简模，在这种方式下我们可能会制作出这样的 <strong>LOD 链</strong> ：</p>
 <p><a class="glightbox" href="../Resources/image-20241109115221157.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109115221157" src="../Resources/image-20241109115221157.png" /></a></p>
-<p>但很快有人发现，使用 距离 似乎并不能很直观地确立LOD之间的距离间隔，因为有的模型大，有的模型小，所以引入了另一个参数 —— <strong>屏幕尺寸（Screen Size）</strong> ：我们通过综合评估 <strong>相机距离</strong> ， <strong>相机的透视矩阵</strong> 以及模型的 <strong>包围球半径</strong>  来得到它，这是它的计算公式：</p>
+<p>但很快有人发现，使用 距离 似乎并不能很直观地确立LOD之间的距离间隔，因为有的模型大，有的模型小，为了保证每个模型采用合适的精度分布，就必须为其评估出不同的距离间隔，为了解决这个问题，我们引入了另一个参数 —— <strong>屏幕尺寸（Screen Size）</strong> ：通过综合评估 <strong>相机距离</strong> ， <strong>相机的透视矩阵</strong> 以及模型的 <strong>包围球半径</strong>  来得到屏幕尺寸，这是它的计算公式：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">float</span><span class="w"> </span><span class="nf">ConvertDistanceToScreenSize</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">ObjectSphereRadius</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">Distance</span><span class="p">)</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p">{</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">FOV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">60.0f</span><span class="p">;</span><span class="w">                                </span><span class="c1">// 相机参数可以统一写死</span>
@@ -1932,8 +1932,8 @@
 </code></pre></div>
 <p>我们通过每次缩减一定百分比的屏幕尺寸来确定LOD之间的间隔，相比直接使用距离，会更加容易一些：</p>
 <p><a class="glightbox" href="../Resources/image-20241109121834793.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109121834793" src="../Resources/image-20241109121834793.png" /></a></p>
-<p>可是，虽然使用屏幕尺寸确实能直观地设置LOD之间的间隔，但为不同尺寸的模型生成不均匀分布的LOD链，会导致视觉上产生的瑕疵更加明显。</p>
-<p>假如我们采用屏幕尺寸百分比递减的方式生成LOD（这里为了能看出瑕疵，刻意把LOD的简化幅度调得很大）：</p>
+<p>可是，虽然使用屏幕尺寸确实能直观地设置LOD之间的间隔，但如果为不同尺寸的模型生成LOD链的距离间隔不统一，将会让视觉上产生的瑕疵更加明显。</p>
+<p>假如我们采用屏幕尺寸百分比递减的方式生成LOD，可以看到不同模型的LOD链距离是不一致的（这里为了能看出瑕疵，刻意把LOD的简化幅度调得很大）：</p>
 <p><a class="glightbox" href="../Resources/image-20241109133230072.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109133230072" src="../Resources/image-20241109133230072.png" /></a></p>
 <p><a class="glightbox" href="../Resources/LODTest0.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="LODTest0" src="../Resources/LODTest0.gif" /></a></p>
 <p>对比一下使用固定的距离梯度来生成LOD：</p>
@@ -1941,7 +1941,7 @@
 <p><a class="glightbox" href="../Resources/LODTest1.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="LODTest1" src="../Resources/LODTest1.gif" /></a></p>
 <p>可以看到使用固定距离梯度LOD的画面变化会更加平缓一些：</p>
 <p><a class="glightbox" href="../Resources/image-20241109135329103.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109135329103" src="../Resources/image-20241109135329103.png" /></a></p>
-<p>虽然使用屏幕尺寸确实可以让单个模型的LOD链组织得更加合理，但由于引擎中大量使用 距离 来为某些视觉效果进行限制（比如阴影，距离场光照...），如果为了可以保证视觉效果的平滑过渡，更建议使用这样的策略来生成LOD：</p>
+<p>虽然使用屏幕尺寸确实可以让单个模型的LOD链组织得更加合理，但由于引擎中大量使用 <strong>距离</strong> 来限制某些视觉效果（比如阴影，距离场光照...），如果为了可以让视觉效果更加平滑地过渡，建议使用这样的策略来生成LOD：</p>
 <ul>
 <li>使用固定的LOD距离梯度</li>
 <li>根据包围球半径确定LOD的数量</li>
@@ -1988,10 +1988,10 @@
 <h2 id="_3">地形<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>UE5的地形运行机制非常完善，地形的LOD是通过调整曲面细分的精度，目前默认使用的是8级LOD，想要修改LOD，只需要调整这些参数：</p>
 <p><a class="glightbox" href="../Resources/image-20241109210110173.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109210110173" src="../Resources/image-20241109210110173.png" /></a></p>
-<p>UE5.1之后支持了Nanite地形，相比LOD，Nanite拥有更合理的几何组织，它通常具有更少的三角形和更保真的视觉效果：</p>
+<p>UE5.1之后支持了Nanite地形，由于地形拿到的是一种非常标准化的模型数据，开启Nanite之后无疑会拥有更合理的几何组织，相比LOD，它通常具有更少的三角形和更保真的视觉效果：</p>
 <p><a class="glightbox" href="../Resources/image-20241109211741424.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109211741424" src="../Resources/image-20241109211741424.png" /></a></p>
 <p>虽然Nanite的调度算法相比曲面细分复杂一些，并且多了一份网格数据，但在镜头静止时，Nanite的渲染消耗明显低于LOD，并且Nanite对虚拟阴影是友好的，如果没有设备限制，Nanite地形会是更好的选择。</p>
-<p>目前一些项目中会使用静态网格作为地形，借助世界分区的流送和HLOD可以得到更好的性能且没有地形编辑的限制，但地形主要的优势在于使用几张高分辨率（贴图的分辨率远远小于地形分辨率）的Tile贴图就可以平铺出一个很大的区域，它所占用的磁盘大小要远远小于使用模型平铺出相同精度的地形。</p>
+<p>目前一些项目中会使用静态网格作为地形，借助世界分区的流送和HLOD可以得到更好的性能且没有地形编辑的限制，但地形主要的优势在于使用几张高分辨率（贴图的分辨率远远小于地形分辨率）的Tile贴图就可以平铺出一个很大的区域，它所占用的磁盘大小要远远小于使用模型平铺出相同视觉精度的地形。</p>
 <h2 id="hlod">HLOD<a class="headerlink" href="#hlod" title="Permanent link">&para;</a></h2>
 <p>上面提到的几种LOD类型主要的针对单个资产，而HLOD则是对资产合批之后再制作LOD。</p>
 <p>目前HLOD在UE中存在两种使用方式：</p>
@@ -2016,23 +2016,15 @@
 </ul>
 <p>但它同样也存在问题：</p>
 <ul>
-<li>只针对静态网格资产</li>
 <li>只能扩大一定的显示范围</li>
 <li>会增加磁盘空间大小</li>
 </ul>
-<p>目前UE提供了四种基础的HLOD生成策略，分布是：</p>
+<p>目前UE提供了四种基础的HLOD生成策略，它们 <strong>只针对静态网格体资产</strong> ，分布是：</p>
 <ul>
 <li>实例化：将单元格内的物体合并为ISM</li>
 <li>合并：将单元格内的物体合并为一个网格</li>
 <li>简化：将单元格内的物体合并之后进行网格简化</li>
 <li>近似：将单元格内的物体合并之后进行网格近似</li>
-</ul>
-<p>它们分布适用于不同的网格类别，主要可以分以下几个大类：</p>
-<ul>
-<li>地形</li>
-<li>植被</li>
-<li>场景模型</li>
-<li>其他</li>
 </ul>
 <p>假如使用了这样的分区网格：</p>
 <table>
@@ -2070,19 +2062,24 @@
 <tr>
 <td><code>SmallGrid</code></td>
 <td>6400</td>
-<td>12800</td>
+<td>19200</td>
 <td>-9</td>
 <td>false</td>
 </tr>
 </tbody>
 </table>
-<p>地形主要是一些地表静态网格，分布在<code>AdvanceGrid</code>，HLOD策略是合并几何，减少 DrawCall 和 图元组件数量。</p>
-<p>植被分布在<code>AdvanceGrid</code>中，使用 <code>25600</code> 的 HISM 进行 Partition，HLOD策略是将 HISM 合并 并退化为大小为<code>51200</code> 的ISM。</p>
-<p>场景模型分布在 <code>MainGrid</code> 中，HLOD是剔除掉小物件，使用近似生成HLOD简模。</p>
-<p>其他包含水体以及一些自定义的渲染组件，可能需要定制专属的HLOD生成策略。</p>
+<p>它们分布适用于不同的网格类别，主要可以分以下几个大类：</p>
+<ul>
+<li>地形面片：主要是一些用来补充地表的静态网格面片（非地形组件），分布在<code>AdvanceGrid</code>，地形块的大小一般可以是25600，对于地形面片，它们会放在<code>51200</code>的Cell中，合并几何来生成HLOD，减少 DrawCall 和 图元组件数量。</li>
+<li>普通模型：分布在 <code>MainGrid</code> 中，放置在<code>12800</code>的Cell中，HLOD的生成方式是剔除掉小物件，合并后简化或近似生成HLOD简模，可以具有多个HLOD级别。</li>
+<li>植被：分布在<code>AdvanceGrid</code>中，使用 <code>25600</code> 的 HISM 组织 Partition，放置在<code>51200</code>的Cell中，HLOD策略是将 HISM 合并并退化为大小为<code>51200</code> 的ISM。</li>
+<li>其他：一些自定义或是动态的渲染组件（如粒子，水体...），尽可能避免在远处显示，通常这类物品在远处显示需要扩大加载距离，并做好LOD，或者定制专属的HLOD生成策略。</li>
+</ul>
+<p><a class="glightbox" href="Resources/image-20241113203356506.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241113203356506" src="Resources/image-20241113203356506.png" /></a></p>
 <h2 id="_4">物理<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <h2 id="_5">特效<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p>特效（Niagara）是一种非常特殊的渲染组件，GPU粒子使用 Computer Shader 模拟粒子运动，模拟的数据将交由粒子渲染器执行间接渲染。</p>
+<p><strong>特效（Niagara）**是一种非常特殊的渲染组件，GPU粒子使用 **Computer Shader</strong> 模拟粒子运动，模拟的数据将交由粒子渲染器执行 <strong>间接渲染 （Indirect Rendering）</strong>。</p>
+<p>粒子的LOD主要体现在</p>
 <blockquote>
 <p>Waiting</p>
 </blockquote>
@@ -2120,7 +2117,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-11-13 00:59:53</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-11-13 12:39:26</span>
   </span>
 
     
