@@ -1623,14 +1623,89 @@
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      静态模型
+      模型
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      参考
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      制作流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      底层机制
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="底层机制">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      创建自定义网格
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      渲染资源提交时机
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      渲染执行策略
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      常用控制台变量
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_9" class="md-nav__link">
     <span class="md-ellipsis">
       材质贴图
     </span>
@@ -1639,7 +1714,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       地形
     </span>
@@ -1657,45 +1732,9 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      物理
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
+  <a href="#_11" class="md-nav__link">
     <span class="md-ellipsis">
       特效
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_6" class="md-nav__link">
-    <span class="md-ellipsis">
-      骨骼模型
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_7" class="md-nav__link">
-    <span class="md-ellipsis">
-      光影
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_8" class="md-nav__link">
-    <span class="md-ellipsis">
-      动作
     </span>
   </a>
   
@@ -1731,7 +1770,7 @@
 <li>在不同 <strong>重要性（Significance）</strong> 的场合，采用不同精度的策略，从而尽可能的减少资源的浪费，提升整个系统的上限。</li>
 </ul>
 <p>这样的思想策略体现在游戏制作的方方面面</p>
-<h2 id="_1">静态模型<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="_1">模型<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>在模型上， LOD 的应用主要是为模型创建多个精度级别的低模，在近距离时，使用高精度模型，远距离时，使用低精度模型。</p>
 <p>在用于实时渲染领域且具有一定规模的三维场景中，为了保证程序的帧率，模型LOD的制作通常是开发团队无法绕开的难题。</p>
 <p>高额的时间和人力成本让很多独立开发者和小型团队搭建复杂场景时需要面临非常多非常多的困难。</p>
@@ -1746,11 +1785,12 @@
 <p>这种做法，目前来看是存在一定局限性的：</p>
 <ul>
 <li>早期的模型制作流程比较“务实”，大部分时候还是只能通过人工建模的方式，而现在涌现了许多网格处理的SDK，它们往往会提供一些有效的模型简化算法，无需重新建模，就能生成高品质的LOD。 </li>
-<li>人工制作LOD往往需要高额的成本，团队自身有足够的人力物力还好，如果是交给外包团队去做这个事情的话，无疑会是一笔巨大的开销。</li>
+<li>人工制作LOD往往需要高额的成本，团队自身有足够的人力物力还好，如果是交给外包团队去做，这无疑会是一笔巨大的开销。</li>
 <li>任何方法论都有一定适用条件，模型制作也一样，除了一些老牌制作厂商之外，大部分团队应该都很难在游戏制作之初，就能制定出一套尽善尽美的制作规范，往往很多隐秘的问题随着开发进度的推进逐渐浮现，而美术制作又是整个项目中费用消耗的大头，对于LOD制作来说，如果源模型或者规范变了，那么之前制作的“产品”就白费了，所以我们需要将关注点从制作具体的 LOD ，转化为去搭建一条可迭代的 LOD 生产管线。</li>
 <li>源模型虽然是由美术人员制作的，但他们往往对性能并不敏感，对LOD的认识也不是很深，在面对那些无论怎么制作都很难满足规范的模型时，他们所表现出来的，只会是无措。</li>
 </ul>
-<p>此时如果有人对几何处理，图形渲染，编辑器方向有深入的了解，以程序化的方式包揽这些事务，就可以为团队节省出大量的制作成本，这类专业人员一般被定义为 <strong>管线TA</strong> / <strong>引擎管线工程师</strong> 。</p>
+<p>此时如果有人对几何处理，图形渲染，编辑器方向有深入的了解，以程序化的方式包揽这些事务，就可以为团队节省出不少制作成本，这类专业人员一般被定义为 <strong>管线TA</strong> / <strong>引擎管线工程师</strong> 。</p>
+<h3 id="_2">参考<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
 <p>在阐述LOD制作之前，我们先了解一下一些现代游戏中的模型制作规格：</p>
 <ul>
 <li><a href="https://polycount.com/discussion/141061/polycounts-in-next-gen-games-thread">一些次世代游戏中的三角形计数 | Polycount</a></li>
@@ -1909,6 +1949,7 @@
 </ul>
 <p>3D-ACE中有很多有价值的 <a href="https://3d-ace.com/blog/">博客</a> 参考，感兴趣的小伙伴可以看下：</p>
 <p><a class="glightbox" href="../Resources/image-20241023201143597.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241023201143597" src="../Resources/image-20241023201143597.png" /></a></p>
+<h3 id="_3">制作流程<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p>在制作LOD之前，我们最好搭建一个简单的预览关卡，通过一个简单的编辑器工具来自动排列，去完成这样的目的：</p>
 <ul>
 <li>根据资产列表或者资产路径确定要预览的所有资产。</li>
@@ -1920,10 +1961,10 @@
 <p><a class="glightbox" href="../Resources/image-20241109114502541.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109114502541" src="../Resources/image-20241109114502541.png" /></a></p>
 <p>在早期的LOD制作流程中，我们一般将 模型与相机 之间的 <strong>距离</strong> 作为LOD切换的判断标准，每隔一段距离，切换一个精度的简模，在这种方式下我们可能会制作出这样的 <strong>LOD 链</strong> ：</p>
 <p><a class="glightbox" href="../Resources/image-20241109115221157.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109115221157" src="../Resources/image-20241109115221157.png" /></a></p>
-<p>但很快有人发现，使用 距离 似乎并不能很直观地确立LOD之间的距离间隔，因为有的模型大，有的模型小，为了保证每个模型采用合适的精度分布，就必须为其评估出不同的距离间隔，为了解决这个问题，我们引入了另一个参数 —— <strong>屏幕尺寸（Screen Size）</strong> ：通过综合评估 <strong>相机距离</strong> ， <strong>相机的透视矩阵</strong> 以及模型的 <strong>包围球半径</strong>  来得到屏幕尺寸，这是它的计算公式：</p>
+<p>但很快有人发现，使用 距离 似乎并不能很直观地确立LOD之间的距离间隔，因为有的模型大，有的模型小，为了保证每个模型采用合适的精度分布，就必须为其评估出不同的距离间隔，为了解决这个问题，我们引入了另一个参数 —— <strong>屏幕尺寸（Screen Size）</strong> ：它会综合评估 <strong>相机距离</strong> ， <strong>相机的透视矩阵</strong> 以及模型的 <strong>包围球半径</strong>  得到一个数值，它可以粗略当作是模型的占屏比，这是它的计算公式：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">float</span><span class="w"> </span><span class="nf">ConvertDistanceToScreenSize</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">ObjectSphereRadius</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">Distance</span><span class="p">)</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="p">{</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">FOV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">60.0f</span><span class="p">;</span><span class="w">                                </span><span class="c1">// 相机参数可以统一写死</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">FOV</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">90.0f</span><span class="p">;</span><span class="w">                                </span><span class="c1">// 相机参数可以统一确认</span>
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">FOVRad</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FOV</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="n">UE_PI</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">360.0f</span><span class="p">;</span>
 <a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="n">FMatrix</span><span class="w"> </span><span class="n">ProjectionMatrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FPerspectiveMatrix</span><span class="p">(</span><span class="n">FOVRad</span><span class="p">,</span><span class="w"> </span><span class="mi">1920</span><span class="p">,</span><span class="w"> </span><span class="mi">1080</span><span class="p">,</span><span class="w"> </span><span class="mf">0.01f</span><span class="p">);</span><span class="w">     </span>
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="k">const</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">ScreenMultiple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FMath</span><span class="o">::</span><span class="n">Max</span><span class="p">(</span><span class="mf">0.5f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ProjectionMatrix</span><span class="p">.</span><span class="n">M</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="mf">0.5f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">ProjectionMatrix</span><span class="p">.</span><span class="n">M</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]);</span>
@@ -1933,7 +1974,7 @@
 <p>我们通过每次缩减一定百分比的屏幕尺寸来确定LOD之间的间隔，相比直接使用距离，会更加容易一些：</p>
 <p><a class="glightbox" href="../Resources/image-20241109121834793.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109121834793" src="../Resources/image-20241109121834793.png" /></a></p>
 <p>可是，虽然使用屏幕尺寸确实能直观地设置LOD之间的间隔，但如果为不同尺寸的模型生成LOD链的距离间隔不统一，将会让视觉上产生的瑕疵更加明显。</p>
-<p>假如我们采用屏幕尺寸百分比递减的方式生成LOD，可以看到不同模型的LOD链距离是不一致的（这里为了能看出瑕疵，刻意把LOD的简化幅度调得很大）：</p>
+<p>假如我们采用屏幕尺寸固定百分比递减的方式生成LOD，可以看到不同模型的LOD链距离是不一致的（这里为了能看出瑕疵，刻意把LOD的简化幅度调得很大）：</p>
 <p><a class="glightbox" href="../Resources/image-20241109133230072.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109133230072" src="../Resources/image-20241109133230072.png" /></a></p>
 <p><a class="glightbox" href="../Resources/LODTest0.gif" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="LODTest0" src="../Resources/LODTest0.gif" /></a></p>
 <p>对比一下使用固定的距离梯度来生成LOD：</p>
@@ -1945,10 +1986,19 @@
 <ul>
 <li>使用固定的LOD距离梯度</li>
 <li>根据包围球半径确定LOD的数量</li>
-<li>根据屏幕尺寸和顶点密度确定简化幅度</li>
+<li>根据屏幕尺寸，顶点密度和模型特征来确定简化幅度</li>
 </ul>
-<p>上述的一些关键参数会随着项目的复杂度以及平台的性能要求发生变化，所以我们不应该直接手动去生成LOD，而是搭建一条LOD生成管线，这样可以不断迭代和优化这条管线。</p>
-<p>目前大部分的团队会把这条管线搭建在DDC与引擎之间，但目前来说，虚幻引擎在提供了非常优秀的模型处理接口，如果我们直接把管线搭建在引擎侧，可以更好的结合实际的游戏场景环境来生成更好的效果，比如之前植被章节所提到的 <strong>八面体替身 （Octahedron Impostor）</strong> ：</p>
+<p>上述的一些关键参数会随着项目的迭代，复杂度的提升以及平台的性能要求发生变化，所以我们不应该直接手动去生成LOD，而是搭建一条LOD生成管线，这样可以不断迭代和优化这条管线。</p>
+<p>常见的简模生成策略有三类：</p>
+<ul>
+<li><strong>减面（Reduce）</strong> ：根据重要性按照一定 <strong>简化幅度</strong> 进行删减原有模型的顶点数据上来生成简模。</li>
+<li><strong>重构（Remesh）</strong> ：通过体素化的模型算法，以一定 <strong>体素精度</strong> 来逼近源模型从而得到简模。</li>
+<li><strong>替身（Impostor）</strong> ：以一种取巧的方式来保证模型的视觉效果，通常它会打破原有模型的几何结构。</li>
+</ul>
+<p><a class="glightbox" href="../Resources/image-20240809151946858.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20240809151946858" src="../Resources/image-20240809151946858.png" /></a></p>
+<p><a class="glightbox" href="../Resources/v2-ac82f9df3eb6d0ab62edc448957c80e6_r.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="v2-ac82f9df3eb6d0ab62edc448957c80e6_r" src="../Resources/v2-ac82f9df3eb6d0ab62edc448957c80e6_r.jpg" /></a></p>
+<p>目前大部分的团队会把这条管线搭建在DDC与引擎之间，但目前来说，虚幻引擎在提供了非常优秀的模型处理接口，如果我们直接把管线搭建在引擎侧，可以更好的结合实际的游戏场景环境来生成更好的效果 。</p>
+<p>比如之前植被章节所提到的 <strong>八面体替身 （Octahedron Impostor）</strong> ：</p>
 <ul>
 <li><a href="https://shaderbits.com/blog/octahedral-impostors">https://shaderbits.com/blog/octahedral-impostors</a></li>
 </ul>
@@ -1958,12 +2008,189 @@
 <li><a href="https://link.zhihu.com/?target=https%3A//instalod.com/zh/">InstaLOD - 生产和自动优化3D内容所需的一切</a></li>
 </ul>
 <p>使用这些SDK提供的接口，可以轻易搭建一条LOD链生成管线。</p>
-<p>这是一些可供参考的文档：</p>
+<p>这是一些制作LOD时可供参考的文档：</p>
 <ul>
 <li><a href="https://3d-ace.com/blog/polygon-count-in-3d-modeling-for-game-assets/">多边形数量在游戏资产的 3D 建模中重要吗？– 3D-Ace 工作室</a></li>
 <li><a href="https://www.simplygon.com/posts/51aba9d5-bafd-459d-94b8-718273fdf092">当涉及到 LOD 过渡时要考虑什么？ - Simplygon 博客</a></li>
 </ul>
-<h2 id="_2">材质贴图<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_4">底层机制<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<h4 id="_5">创建自定义网格<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">UPackage</span><span class="o">*</span><span class="w"> </span><span class="n">NewPackage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">CreatePackage</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">&quot;/Game/NewStaticMesh&quot;</span><span class="p">));</span><span class="w">                                              </span><span class="c1">// 创建新包</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">UStaticMesh</span><span class="o">*</span><span class="w"> </span><span class="n">NewStaticMesh</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewObject</span><span class="o">&lt;</span><span class="n">UStaticMesh</span><span class="o">&gt;</span><span class="p">(</span><span class="n">NewPackage</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;NewStaticMesh&quot;</span><span class="p">,</span><span class="w">  </span><span class="n">RF_Public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">RF_Standalone</span><span class="p">);</span><span class="w">   </span><span class="c1">// 创建新网格，指定Outer为新包，这样保存新包时，会将该对象序列化存储</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="p">{</span><span class="w">   </span><span class="c1">// LOD0</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="n">FStaticMeshSourceModel</span><span class="o">&amp;</span><span class="w"> </span><span class="n">NewSourceModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">AddSourceModel</span><span class="p">();</span><span class="w">                                   </span><span class="c1">// 创建新的源模型  </span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="n">FMeshDescription</span><span class="o">&amp;</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">CreateMeshDescription</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w">                            </span><span class="c1">// 为该源模型创建网格描述</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="n">FStaticMeshAttributes</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FStaticMeshAttributes</span><span class="p">(</span><span class="n">NewMeshDescription</span><span class="p">);</span><span class="w">                          </span><span class="c1">// 创建网格描述的属性获取器</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">    </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">Register</span><span class="p">();</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="w">    </span><span class="n">TPolygonGroupAttributesRef</span><span class="o">&lt;</span><span class="n">FName</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PolygonGroupNames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetPolygonGroupMaterialSlotNames</span><span class="p">();</span><span class="w">   </span><span class="c1">// 几何组名称列表，对应相应的MeshsSection</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="w">    </span><span class="n">TVertexAttributesRef</span><span class="o">&lt;</span><span class="n">FVector3f</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VertexPositions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetVertexPositions</span><span class="p">();</span><span class="w">                     </span><span class="c1">// 顶点数组</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="n">TVertexInstanceAttributesRef</span><span class="o">&lt;</span><span class="n">FVector3f</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Normals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetVertexInstanceNormals</span><span class="p">();</span><span class="w">               </span><span class="c1">// 法线数组</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="n">TVertexInstanceAttributesRef</span><span class="o">&lt;</span><span class="n">FVector3f</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Tangents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetVertexInstanceTangents</span><span class="p">();</span><span class="w">             </span><span class="c1">// 切线数组</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="n">TVertexInstanceAttributesRef</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BinormalSigns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetVertexInstanceBinormalSigns</span><span class="p">();</span><span class="w">       </span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="w">    </span><span class="n">TVertexInstanceAttributesRef</span><span class="o">&lt;</span><span class="n">FVector4f</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Colors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetVertexInstanceColors</span><span class="p">();</span><span class="w">                 </span><span class="c1">// 顶点色数组</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="w">    </span><span class="n">TVertexInstanceAttributesRef</span><span class="o">&lt;</span><span class="n">FVector2f</span><span class="o">&gt;</span><span class="w"> </span><span class="n">UVs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetVertexInstanceUVs</span><span class="p">();</span><span class="w">                       </span><span class="c1">// 纹理坐标数组</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="w">    </span><span class="n">int32</span><span class="w"> </span><span class="n">VertexCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="w">    </span><span class="n">int32</span><span class="w"> </span><span class="n">VertexInstanceCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="p">;</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="w">    </span><span class="n">int32</span><span class="w"> </span><span class="n">PolygonCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="w">    </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">ReserveNewVertices</span><span class="p">(</span><span class="n">VertexCount</span><span class="p">);</span><span class="w">                                                         </span><span class="c1">// 预分配内存</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">    </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">ReserveNewVertexInstances</span><span class="p">(</span><span class="n">VertexInstanceCount</span><span class="p">);</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="w">    </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">ReserveNewPolygons</span><span class="p">(</span><span class="n">PolygonCount</span><span class="p">);</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">    </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">ReserveNewEdges</span><span class="p">(</span><span class="n">PolygonCount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="w">    </span><span class="n">UVs</span><span class="p">.</span><span class="n">SetNumChannels</span><span class="p">(</span><span class="n">PolygonCount</span><span class="p">);</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexID</span><span class="w"> </span><span class="n">VertexID0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertex</span><span class="p">();</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexID</span><span class="w"> </span><span class="n">VertexID1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertex</span><span class="p">();</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexID</span><span class="w"> </span><span class="n">VertexID2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertex</span><span class="p">();</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexID</span><span class="w"> </span><span class="n">VertexID3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertex</span><span class="p">();</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="w">        </span><span class="n">VertexPositions</span><span class="p">[</span><span class="n">VertexID0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector3f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="w">        </span><span class="n">VertexPositions</span><span class="p">[</span><span class="n">VertexID1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector3f</span><span class="p">(</span><span class="mf">100.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="w">        </span><span class="n">VertexPositions</span><span class="p">[</span><span class="n">VertexID2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector3f</span><span class="p">(</span><span class="mf">100.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">100.0f</span><span class="p">);</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="w">        </span><span class="n">VertexPositions</span><span class="p">[</span><span class="n">VertexID3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector3f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">100.0f</span><span class="p">);</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexInstanceID</span><span class="w"> </span><span class="n">VertexInstanceID0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertexInstance</span><span class="p">(</span><span class="n">VertexID0</span><span class="p">);</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexInstanceID</span><span class="w"> </span><span class="n">VertexInstanceID1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertexInstance</span><span class="p">(</span><span class="n">VertexID1</span><span class="p">);</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexInstanceID</span><span class="w"> </span><span class="n">VertexInstanceID2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertexInstance</span><span class="p">(</span><span class="n">VertexID2</span><span class="p">);</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a>
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexInstanceID</span><span class="w"> </span><span class="n">VertexInstanceID3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertexInstance</span><span class="p">(</span><span class="n">VertexID0</span><span class="p">);</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexInstanceID</span><span class="w"> </span><span class="n">VertexInstanceID4</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertexInstance</span><span class="p">(</span><span class="n">VertexID2</span><span class="p">);</span>
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexInstanceID</span><span class="w"> </span><span class="n">VertexInstanceID5</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertexInstance</span><span class="p">(</span><span class="n">VertexID3</span><span class="p">);</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a>
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a><span class="w">        </span><span class="n">UVs</span><span class="p">[</span><span class="n">VertexInstanceID0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector2f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a><span class="w">        </span><span class="n">UVs</span><span class="p">[</span><span class="n">VertexInstanceID1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector2f</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a><span class="w">        </span><span class="n">UVs</span><span class="p">[</span><span class="n">VertexInstanceID2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector2f</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a><span class="w">        </span><span class="n">UVs</span><span class="p">[</span><span class="n">VertexInstanceID3</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector2f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a><span class="w">        </span><span class="n">UVs</span><span class="p">[</span><span class="n">VertexInstanceID4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector2f</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a><span class="w">        </span><span class="n">UVs</span><span class="p">[</span><span class="n">VertexInstanceID5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector2f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a>
+<a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a><span class="w">        </span><span class="n">Normals</span><span class="p">[</span><span class="n">VertexInstanceID0</span><span class="p">]</span><span class="w"> </span>
+<a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">Normals</span><span class="p">[</span><span class="n">VertexInstanceID1</span><span class="p">]</span><span class="w"> </span>
+<a id="__codelineno-1-54" name="__codelineno-1-54" href="#__codelineno-1-54"></a><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">Normals</span><span class="p">[</span><span class="n">VertexInstanceID2</span><span class="p">]</span><span class="w"> </span>
+<a id="__codelineno-1-55" name="__codelineno-1-55" href="#__codelineno-1-55"></a><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">Normals</span><span class="p">[</span><span class="n">VertexInstanceID3</span><span class="p">]</span><span class="w"> </span>
+<a id="__codelineno-1-56" name="__codelineno-1-56" href="#__codelineno-1-56"></a><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">Normals</span><span class="p">[</span><span class="n">VertexInstanceID4</span><span class="p">]</span><span class="w"> </span>
+<a id="__codelineno-1-57" name="__codelineno-1-57" href="#__codelineno-1-57"></a><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">Normals</span><span class="p">[</span><span class="n">VertexInstanceID5</span><span class="p">]</span><span class="w"> </span>
+<a id="__codelineno-1-58" name="__codelineno-1-58" href="#__codelineno-1-58"></a><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">FVector3f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-1-59" name="__codelineno-1-59" href="#__codelineno-1-59"></a>
+<a id="__codelineno-1-60" name="__codelineno-1-60" href="#__codelineno-1-60"></a><span class="w">        </span><span class="n">UMaterialInterface</span><span class="o">*</span><span class="w"> </span><span class="n">Material</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UMaterial</span><span class="o">::</span><span class="n">GetDefaultMaterial</span><span class="p">(</span><span class="n">MD_Surface</span><span class="p">);</span>
+<a id="__codelineno-1-61" name="__codelineno-1-61" href="#__codelineno-1-61"></a>
+<a id="__codelineno-1-62" name="__codelineno-1-62" href="#__codelineno-1-62"></a><span class="w">        </span><span class="p">{</span><span class="w">   </span><span class="c1">// Mesh Section 0</span>
+<a id="__codelineno-1-63" name="__codelineno-1-63" href="#__codelineno-1-63"></a><span class="w">            </span><span class="n">FPolygonGroupID</span><span class="w"> </span><span class="n">PolygonGroup0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreatePolygonGroup</span><span class="p">();</span>
+<a id="__codelineno-1-64" name="__codelineno-1-64" href="#__codelineno-1-64"></a><span class="w">            </span><span class="n">PolygonGroupNames</span><span class="p">[</span><span class="n">PolygonGroup0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;LOD0_Section0&quot;</span><span class="p">;</span>
+<a id="__codelineno-1-65" name="__codelineno-1-65" href="#__codelineno-1-65"></a><span class="w">            </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreatePolygon</span><span class="p">(</span><span class="n">PolygonGroup0</span><span class="p">,</span>
+<a id="__codelineno-1-66" name="__codelineno-1-66" href="#__codelineno-1-66"></a><span class="w">                </span><span class="p">{</span>
+<a id="__codelineno-1-67" name="__codelineno-1-67" href="#__codelineno-1-67"></a><span class="w">                    </span><span class="n">VertexInstanceID0</span><span class="p">,</span>
+<a id="__codelineno-1-68" name="__codelineno-1-68" href="#__codelineno-1-68"></a><span class="w">                    </span><span class="n">VertexInstanceID1</span><span class="p">,</span>
+<a id="__codelineno-1-69" name="__codelineno-1-69" href="#__codelineno-1-69"></a><span class="w">                    </span><span class="n">VertexInstanceID2</span><span class="p">,</span>
+<a id="__codelineno-1-70" name="__codelineno-1-70" href="#__codelineno-1-70"></a><span class="w">                </span><span class="p">});</span>
+<a id="__codelineno-1-71" name="__codelineno-1-71" href="#__codelineno-1-71"></a><span class="w">            </span><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">GetStaticMaterials</span><span class="p">().</span><span class="n">Add</span><span class="p">(</span><span class="n">FStaticMaterial</span><span class="p">(</span><span class="n">Material</span><span class="p">));</span>
+<a id="__codelineno-1-72" name="__codelineno-1-72" href="#__codelineno-1-72"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-73" name="__codelineno-1-73" href="#__codelineno-1-73"></a>
+<a id="__codelineno-1-74" name="__codelineno-1-74" href="#__codelineno-1-74"></a><span class="w">        </span><span class="p">{</span><span class="w">   </span><span class="c1">// Mesh Section 1</span>
+<a id="__codelineno-1-75" name="__codelineno-1-75" href="#__codelineno-1-75"></a><span class="w">            </span><span class="n">FPolygonGroupID</span><span class="w"> </span><span class="n">PolygonGroup1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreatePolygonGroup</span><span class="p">();</span>
+<a id="__codelineno-1-76" name="__codelineno-1-76" href="#__codelineno-1-76"></a><span class="w">            </span><span class="n">PolygonGroupNames</span><span class="p">[</span><span class="n">PolygonGroup1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;LOD0_Section1&quot;</span><span class="p">;</span>
+<a id="__codelineno-1-77" name="__codelineno-1-77" href="#__codelineno-1-77"></a><span class="w">            </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreatePolygon</span><span class="p">(</span><span class="n">PolygonGroup1</span><span class="p">,</span>
+<a id="__codelineno-1-78" name="__codelineno-1-78" href="#__codelineno-1-78"></a><span class="w">                </span><span class="p">{</span>
+<a id="__codelineno-1-79" name="__codelineno-1-79" href="#__codelineno-1-79"></a><span class="w">                    </span><span class="n">VertexInstanceID3</span><span class="p">,</span>
+<a id="__codelineno-1-80" name="__codelineno-1-80" href="#__codelineno-1-80"></a><span class="w">                    </span><span class="n">VertexInstanceID4</span><span class="p">,</span>
+<a id="__codelineno-1-81" name="__codelineno-1-81" href="#__codelineno-1-81"></a><span class="w">                    </span><span class="n">VertexInstanceID5</span>
+<a id="__codelineno-1-82" name="__codelineno-1-82" href="#__codelineno-1-82"></a><span class="w">                </span><span class="p">});</span>
+<a id="__codelineno-1-83" name="__codelineno-1-83" href="#__codelineno-1-83"></a><span class="w">            </span><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">GetStaticMaterials</span><span class="p">().</span><span class="n">Add</span><span class="p">(</span><span class="n">FStaticMaterial</span><span class="p">(</span><span class="n">Material</span><span class="p">));</span>
+<a id="__codelineno-1-84" name="__codelineno-1-84" href="#__codelineno-1-84"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-85" name="__codelineno-1-85" href="#__codelineno-1-85"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-86" name="__codelineno-1-86" href="#__codelineno-1-86"></a><span class="w">    </span><span class="n">NewSourceModel</span><span class="p">.</span><span class="n">ScreenSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span><span class="w">                                                      </span><span class="c1">// 设置屏幕尺寸</span>
+<a id="__codelineno-1-87" name="__codelineno-1-87" href="#__codelineno-1-87"></a><span class="w">    </span><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">CommitMeshDescription</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w">                                            </span><span class="c1">// 提交网格描述</span>
+<a id="__codelineno-1-88" name="__codelineno-1-88" href="#__codelineno-1-88"></a><span class="p">}</span>
+<a id="__codelineno-1-89" name="__codelineno-1-89" href="#__codelineno-1-89"></a>
+<a id="__codelineno-1-90" name="__codelineno-1-90" href="#__codelineno-1-90"></a><span class="p">{</span>
+<a id="__codelineno-1-91" name="__codelineno-1-91" href="#__codelineno-1-91"></a><span class="w">    </span><span class="n">FStaticMeshSourceModel</span><span class="o">&amp;</span><span class="w"> </span><span class="n">NewSourceModel</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">AddSourceModel</span><span class="p">();</span>
+<a id="__codelineno-1-92" name="__codelineno-1-92" href="#__codelineno-1-92"></a><span class="w">    </span><span class="n">FMeshDescription</span><span class="o">&amp;</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">CreateMeshDescription</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-1-93" name="__codelineno-1-93" href="#__codelineno-1-93"></a><span class="w">    </span><span class="n">FStaticMeshAttributes</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FStaticMeshAttributes</span><span class="p">(</span><span class="n">NewMeshDescription</span><span class="p">);</span>
+<a id="__codelineno-1-94" name="__codelineno-1-94" href="#__codelineno-1-94"></a><span class="w">    </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">Register</span><span class="p">();</span>
+<a id="__codelineno-1-95" name="__codelineno-1-95" href="#__codelineno-1-95"></a>
+<a id="__codelineno-1-96" name="__codelineno-1-96" href="#__codelineno-1-96"></a><span class="w">    </span><span class="n">TPolygonGroupAttributesRef</span><span class="o">&lt;</span><span class="n">FName</span><span class="o">&gt;</span><span class="w"> </span><span class="n">PolygonGroupNames</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetPolygonGroupMaterialSlotNames</span><span class="p">();</span>
+<a id="__codelineno-1-97" name="__codelineno-1-97" href="#__codelineno-1-97"></a><span class="w">    </span><span class="n">TVertexAttributesRef</span><span class="o">&lt;</span><span class="n">FVector3f</span><span class="o">&gt;</span><span class="w"> </span><span class="n">VertexPositions</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetVertexPositions</span><span class="p">();</span>
+<a id="__codelineno-1-98" name="__codelineno-1-98" href="#__codelineno-1-98"></a><span class="w">    </span><span class="n">TVertexInstanceAttributesRef</span><span class="o">&lt;</span><span class="n">FVector3f</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Tangents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetVertexInstanceTangents</span><span class="p">();</span>
+<a id="__codelineno-1-99" name="__codelineno-1-99" href="#__codelineno-1-99"></a><span class="w">    </span><span class="n">TVertexInstanceAttributesRef</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">BinormalSigns</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetVertexInstanceBinormalSigns</span><span class="p">();</span>
+<a id="__codelineno-1-100" name="__codelineno-1-100" href="#__codelineno-1-100"></a><span class="w">    </span><span class="n">TVertexInstanceAttributesRef</span><span class="o">&lt;</span><span class="n">FVector3f</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Normals</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetVertexInstanceNormals</span><span class="p">();</span>
+<a id="__codelineno-1-101" name="__codelineno-1-101" href="#__codelineno-1-101"></a><span class="w">    </span><span class="n">TVertexInstanceAttributesRef</span><span class="o">&lt;</span><span class="n">FVector4f</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Colors</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetVertexInstanceColors</span><span class="p">();</span>
+<a id="__codelineno-1-102" name="__codelineno-1-102" href="#__codelineno-1-102"></a><span class="w">    </span><span class="n">TVertexInstanceAttributesRef</span><span class="o">&lt;</span><span class="n">FVector2f</span><span class="o">&gt;</span><span class="w"> </span><span class="n">UVs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">AttributeGetter</span><span class="p">.</span><span class="n">GetVertexInstanceUVs</span><span class="p">();</span>
+<a id="__codelineno-1-103" name="__codelineno-1-103" href="#__codelineno-1-103"></a>
+<a id="__codelineno-1-104" name="__codelineno-1-104" href="#__codelineno-1-104"></a><span class="w">    </span><span class="n">int32</span><span class="w"> </span><span class="n">VertexCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<a id="__codelineno-1-105" name="__codelineno-1-105" href="#__codelineno-1-105"></a><span class="w">    </span><span class="n">int32</span><span class="w"> </span><span class="n">VertexInstanceCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+<a id="__codelineno-1-106" name="__codelineno-1-106" href="#__codelineno-1-106"></a><span class="w">    </span><span class="n">int32</span><span class="w"> </span><span class="n">PolygonCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<a id="__codelineno-1-107" name="__codelineno-1-107" href="#__codelineno-1-107"></a><span class="w">    </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">ReserveNewVertices</span><span class="p">(</span><span class="n">VertexCount</span><span class="p">);</span>
+<a id="__codelineno-1-108" name="__codelineno-1-108" href="#__codelineno-1-108"></a><span class="w">    </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">ReserveNewVertexInstances</span><span class="p">(</span><span class="n">VertexInstanceCount</span><span class="p">);</span>
+<a id="__codelineno-1-109" name="__codelineno-1-109" href="#__codelineno-1-109"></a><span class="w">    </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">ReserveNewPolygons</span><span class="p">(</span><span class="n">PolygonCount</span><span class="p">);</span>
+<a id="__codelineno-1-110" name="__codelineno-1-110" href="#__codelineno-1-110"></a><span class="w">    </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">ReserveNewEdges</span><span class="p">(</span><span class="n">PolygonCount</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-1-111" name="__codelineno-1-111" href="#__codelineno-1-111"></a><span class="w">    </span><span class="n">UVs</span><span class="p">.</span><span class="n">SetNumChannels</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-1-112" name="__codelineno-1-112" href="#__codelineno-1-112"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-1-113" name="__codelineno-1-113" href="#__codelineno-1-113"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexID</span><span class="w"> </span><span class="n">VertexID0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertex</span><span class="p">();</span>
+<a id="__codelineno-1-114" name="__codelineno-1-114" href="#__codelineno-1-114"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexID</span><span class="w"> </span><span class="n">VertexID1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertex</span><span class="p">();</span>
+<a id="__codelineno-1-115" name="__codelineno-1-115" href="#__codelineno-1-115"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexID</span><span class="w"> </span><span class="n">VertexID2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertex</span><span class="p">();</span>
+<a id="__codelineno-1-116" name="__codelineno-1-116" href="#__codelineno-1-116"></a>
+<a id="__codelineno-1-117" name="__codelineno-1-117" href="#__codelineno-1-117"></a><span class="w">        </span><span class="n">VertexPositions</span><span class="p">[</span><span class="n">VertexID0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector3f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-1-118" name="__codelineno-1-118" href="#__codelineno-1-118"></a><span class="w">        </span><span class="n">VertexPositions</span><span class="p">[</span><span class="n">VertexID1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector3f</span><span class="p">(</span><span class="mf">100.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-1-119" name="__codelineno-1-119" href="#__codelineno-1-119"></a><span class="w">        </span><span class="n">VertexPositions</span><span class="p">[</span><span class="n">VertexID2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector3f</span><span class="p">(</span><span class="mf">50.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">100.0f</span><span class="p">);</span>
+<a id="__codelineno-1-120" name="__codelineno-1-120" href="#__codelineno-1-120"></a>
+<a id="__codelineno-1-121" name="__codelineno-1-121" href="#__codelineno-1-121"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexInstanceID</span><span class="w"> </span><span class="n">VertexInstanceID0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertexInstance</span><span class="p">(</span><span class="n">VertexID0</span><span class="p">);</span>
+<a id="__codelineno-1-122" name="__codelineno-1-122" href="#__codelineno-1-122"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexInstanceID</span><span class="w"> </span><span class="n">VertexInstanceID1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertexInstance</span><span class="p">(</span><span class="n">VertexID1</span><span class="p">);</span>
+<a id="__codelineno-1-123" name="__codelineno-1-123" href="#__codelineno-1-123"></a><span class="w">        </span><span class="k">const</span><span class="w"> </span><span class="n">FVertexInstanceID</span><span class="w"> </span><span class="n">VertexInstanceID2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreateVertexInstance</span><span class="p">(</span><span class="n">VertexID2</span><span class="p">);</span>
+<a id="__codelineno-1-124" name="__codelineno-1-124" href="#__codelineno-1-124"></a>
+<a id="__codelineno-1-125" name="__codelineno-1-125" href="#__codelineno-1-125"></a><span class="w">        </span><span class="n">UVs</span><span class="p">[</span><span class="n">VertexInstanceID0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector2f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-1-126" name="__codelineno-1-126" href="#__codelineno-1-126"></a><span class="w">        </span><span class="n">UVs</span><span class="p">[</span><span class="n">VertexInstanceID1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector2f</span><span class="p">(</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-1-127" name="__codelineno-1-127" href="#__codelineno-1-127"></a><span class="w">        </span><span class="n">UVs</span><span class="p">[</span><span class="n">VertexInstanceID2</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector2f</span><span class="p">(</span><span class="mf">0.5f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">);</span>
+<a id="__codelineno-1-128" name="__codelineno-1-128" href="#__codelineno-1-128"></a>
+<a id="__codelineno-1-129" name="__codelineno-1-129" href="#__codelineno-1-129"></a><span class="w">        </span><span class="n">Normals</span><span class="p">[</span><span class="n">VertexInstanceID0</span><span class="p">]</span>
+<a id="__codelineno-1-130" name="__codelineno-1-130" href="#__codelineno-1-130"></a><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">Normals</span><span class="p">[</span><span class="n">VertexInstanceID1</span><span class="p">]</span>
+<a id="__codelineno-1-131" name="__codelineno-1-131" href="#__codelineno-1-131"></a><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">Normals</span><span class="p">[</span><span class="n">VertexInstanceID2</span><span class="p">]</span>
+<a id="__codelineno-1-132" name="__codelineno-1-132" href="#__codelineno-1-132"></a><span class="w">            </span><span class="o">=</span><span class="w"> </span><span class="n">FVector3f</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-1-133" name="__codelineno-1-133" href="#__codelineno-1-133"></a>
+<a id="__codelineno-1-134" name="__codelineno-1-134" href="#__codelineno-1-134"></a><span class="w">        </span><span class="n">UMaterialInterface</span><span class="o">*</span><span class="w"> </span><span class="n">Material</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UMaterial</span><span class="o">::</span><span class="n">GetDefaultMaterial</span><span class="p">(</span><span class="n">MD_Surface</span><span class="p">);</span>
+<a id="__codelineno-1-135" name="__codelineno-1-135" href="#__codelineno-1-135"></a>
+<a id="__codelineno-1-136" name="__codelineno-1-136" href="#__codelineno-1-136"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-1-137" name="__codelineno-1-137" href="#__codelineno-1-137"></a><span class="w">            </span><span class="n">FPolygonGroupID</span><span class="w"> </span><span class="n">PolygonGroup0</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreatePolygonGroup</span><span class="p">();</span>
+<a id="__codelineno-1-138" name="__codelineno-1-138" href="#__codelineno-1-138"></a><span class="w">            </span><span class="n">PolygonGroupNames</span><span class="p">[</span><span class="n">PolygonGroup0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;LOD1_Section0&quot;</span><span class="p">;</span>
+<a id="__codelineno-1-139" name="__codelineno-1-139" href="#__codelineno-1-139"></a><span class="w">            </span><span class="n">NewMeshDescription</span><span class="p">.</span><span class="n">CreatePolygon</span><span class="p">(</span><span class="n">PolygonGroup0</span><span class="p">,</span>
+<a id="__codelineno-1-140" name="__codelineno-1-140" href="#__codelineno-1-140"></a><span class="w">                </span><span class="p">{</span>
+<a id="__codelineno-1-141" name="__codelineno-1-141" href="#__codelineno-1-141"></a><span class="w">                    </span><span class="n">VertexInstanceID0</span><span class="p">,</span>
+<a id="__codelineno-1-142" name="__codelineno-1-142" href="#__codelineno-1-142"></a><span class="w">                    </span><span class="n">VertexInstanceID1</span><span class="p">,</span>
+<a id="__codelineno-1-143" name="__codelineno-1-143" href="#__codelineno-1-143"></a><span class="w">                    </span><span class="n">VertexInstanceID2</span><span class="p">,</span>
+<a id="__codelineno-1-144" name="__codelineno-1-144" href="#__codelineno-1-144"></a><span class="w">                </span><span class="p">});</span>
+<a id="__codelineno-1-145" name="__codelineno-1-145" href="#__codelineno-1-145"></a><span class="w">            </span><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">GetStaticMaterials</span><span class="p">().</span><span class="n">Add</span><span class="p">(</span><span class="n">FStaticMaterial</span><span class="p">(</span><span class="n">Material</span><span class="p">));</span>
+<a id="__codelineno-1-146" name="__codelineno-1-146" href="#__codelineno-1-146"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-1-147" name="__codelineno-1-147" href="#__codelineno-1-147"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-1-148" name="__codelineno-1-148" href="#__codelineno-1-148"></a><span class="w">    </span><span class="n">NewSourceModel</span><span class="p">.</span><span class="n">ScreenSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">;</span>
+<a id="__codelineno-1-149" name="__codelineno-1-149" href="#__codelineno-1-149"></a><span class="w">    </span><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">CommitMeshDescription</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-1-150" name="__codelineno-1-150" href="#__codelineno-1-150"></a><span class="p">}</span>
+<a id="__codelineno-1-151" name="__codelineno-1-151" href="#__codelineno-1-151"></a>
+<a id="__codelineno-1-152" name="__codelineno-1-152" href="#__codelineno-1-152"></a><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">ImportVersion</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EImportStaticMeshVersion</span><span class="o">::</span><span class="n">LastVersion</span><span class="p">;</span><span class="w">           </span><span class="c1">// 声明此次构建已是最新版本的数据，避免自动生成LOD顶替我们填充的模型数据</span>
+<a id="__codelineno-1-153" name="__codelineno-1-153" href="#__codelineno-1-153"></a><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">Build</span><span class="p">();</span><span class="w">                                                         </span><span class="c1">// 构建网格</span>
+<a id="__codelineno-1-154" name="__codelineno-1-154" href="#__codelineno-1-154"></a><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">PostEditChange</span><span class="p">();</span>
+<a id="__codelineno-1-155" name="__codelineno-1-155" href="#__codelineno-1-155"></a><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">MarkPackageDirty</span><span class="p">();</span>
+<a id="__codelineno-1-156" name="__codelineno-1-156" href="#__codelineno-1-156"></a><span class="n">NewStaticMesh</span><span class="o">-&gt;</span><span class="n">WaitForPendingInitOrStreaming</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-1-157" name="__codelineno-1-157" href="#__codelineno-1-157"></a>
+<a id="__codelineno-1-158" name="__codelineno-1-158" href="#__codelineno-1-158"></a><span class="n">FStaticMeshCompilingManager</span><span class="o">::</span><span class="n">Get</span><span class="p">().</span><span class="n">FinishAllCompilation</span><span class="p">();</span>
+<a id="__codelineno-1-159" name="__codelineno-1-159" href="#__codelineno-1-159"></a><span class="n">FAssetRegistryModule</span><span class="o">::</span><span class="n">AssetCreated</span><span class="p">(</span><span class="n">NewStaticMesh</span><span class="p">);</span><span class="w">                              </span>
+<a id="__codelineno-1-160" name="__codelineno-1-160" href="#__codelineno-1-160"></a>
+<a id="__codelineno-1-161" name="__codelineno-1-161" href="#__codelineno-1-161"></a><span class="n">FPackagePath</span><span class="w"> </span><span class="n">PackagePath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FPackagePath</span><span class="o">::</span><span class="n">FromPackageNameChecked</span><span class="p">(</span><span class="n">NewPackage</span><span class="o">-&gt;</span><span class="n">GetName</span><span class="p">());</span>
+<a id="__codelineno-1-162" name="__codelineno-1-162" href="#__codelineno-1-162"></a><span class="n">FString</span><span class="w"> </span><span class="n">PackageLocalPath</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PackagePath</span><span class="p">.</span><span class="n">GetLocalFullPath</span><span class="p">();</span>
+<a id="__codelineno-1-163" name="__codelineno-1-163" href="#__codelineno-1-163"></a><span class="n">UPackage</span><span class="o">::</span><span class="n">SavePackage</span><span class="p">(</span><span class="n">NewPackage</span><span class="p">,</span><span class="w"> </span><span class="n">NewStaticMesh</span><span class="p">,</span><span class="w"> </span><span class="n">RF_Public</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">RF_Standalone</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">PackageLocalPath</span><span class="p">,</span><span class="w"> </span><span class="n">GError</span><span class="p">,</span><span class="w"> </span><span class="k">nullptr</span><span class="p">,</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="n">SAVE_NoError</span><span class="p">);</span><span class="w">         </span><span class="c1">// 保存新包</span>
+</code></pre></div>
+<h4 id="_6">渲染资源提交时机<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<p><a class="glightbox" href="../Resources/image-20241115222000975.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241115222000975" src="../Resources/image-20241115222000975.png" /></a></p>
+<h4 id="_7">渲染执行策略<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<p><a class="glightbox" href="../Resources/image-20241115223942867.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241115223942867" src="../Resources/image-20241115223942867.png" /></a></p>
+<h4 id="_8">常用控制台变量<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<ul>
+<li><code>r.ForceLOD</code>：强制锁定所有模型的LOD级别</li>
+<li><code>r.ForceLODShadow</code>：强制锁定用于提交给阴影Pass的LOD级别</li>
+<li><code>r.StaticMesh.MinLodQualityLevel</code>：设置模型的最小LOD级别</li>
+<li><code>r.StaticMeshLODDistanceScale</code>：LOD距离的缩放因子</li>
+</ul>
+<h2 id="_9">材质贴图<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
 <p>对于材质而言，早期有一些项目，在生成模型LOD的同时，也会为对应的材质生成LOD，虽然理论意义上，简化材质的逻辑确实可以减少性能开销，但材质LOD无疑会增加材质集的大小，且带来的性能提升并不是特别明显，较复杂的管理方式也让这种做法在实际项目中很难推广。</p>
 <p>目前更多的关注点是在贴图上面，而LOD的应用主要是为贴图生成 <strong>Mipmap</strong> 。</p>
 <p>大家对 <strong>Mipmap（多级渐远纹理）</strong> 更多的认识应该是解决摩尔纹现象：</p>
@@ -1973,25 +2200,26 @@
 </ul>
 <p>除了解决摩尔纹， Mipmap目前在UE中还有其他用处：</p>
 <ul>
-<li><strong>纹理流送（Texture Streaming）</strong> ：为了缓解显存占用的压力，UE默认会分配一定大小的纹理流送池（使用<code>r.Streaming.PoolSize</code>配置），根据纹理的重要性（相机距离和纹理组优先级）来流入纹理的某个 <strong>MipLevel</strong> ，从而尽可能降低降低整体的显存消耗，这里有一些关于纹理流送非常有价值的文章：<ul>
+<li><strong>纹理流送（Texture Streaming）</strong> ：为了缓解显存占用的压力，UE默认会分配一定大小的纹理流送池（使用<code>r.Streaming.PoolSize</code>配置），根据纹理的重要性（相机距离和纹理组优先级）来流入纹理的某个 <strong>MipLevel</strong> ，从而尽可能降低降低整体的显存占用，这里有一些关于纹理流送非常有价值的文章：<ul>
 <li><a href="https://zhuanlan.zhihu.com/p/556620567">知乎 | UE4 Texture Streaming - mike</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/566998709">知乎 | 虚幻引擎（UE4）对移动端纹理资源（ASTC）的极致压缩处理总结 - Sparrowfc</a></li>
 </ul>
 </li>
-<li><strong>UI适配（UI Adaptation）</strong> ：由于游戏可能要面临不同分辨率的运行环境，当缩小UI贴图的时候，由于 <strong>下采样 （Downsampling）</strong> 的纹素跨度过大，将会导致贴图出现锯齿边缘，对于动态调整位置的UI，还会出现明细的闪烁，此时就可以给UI贴图生成Mipmap，因为引擎会根据 <code>DDX(UV)</code>，<code>DDY(UV)</code>来确定使用UI贴图的哪一个 <strong>MipLevel</strong> 。</li>
+<li><strong>UI适配（UI Adaptation）</strong> ：由于游戏可能要面临不同分辨率的运行环境，当缩小UI贴图的时候，由于 <strong>下采样 （Downsampling）</strong> 的纹素跨度过大，将会导致贴图出现锯齿边缘，对于动态调整位置的UI，还会出现明显的闪烁，此时就可以给UI贴图生成Mipmap，因为引擎会根据 <code>DDX(UV)</code>，<code>DDY(UV)</code>来确定使用UI贴图的哪一个 <strong>MipLevel</strong> 。</li>
 </ul>
+<p><a class="glightbox" href="../Resources/image-20241115230952306.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241115230952306" src="../Resources/image-20241115230952306.png" /></a></p>
 <p>我们在这里可以单独特化某个贴图的Mipmap：</p>
 <p><a class="glightbox" href="../Resources/image-20241109194151209.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109194151209" src="../Resources/image-20241109194151209.png" /></a></p>
 <p>但最好的方式还是将贴图进行分类到不同的 <strong>纹理组（TextureLODGroup）</strong> ，对每个纹理组采用统一的配置，这样在做多平台的性能调优时，会方便很多。</p>
 <p>UE 5 中可以在此处统一设置不同平台下纹理组的配置：</p>
 <p><a class="glightbox" href="../Resources/image-20241109201815611.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109201815611" src="../Resources/image-20241109201815611.png" /></a></p>
-<h2 id="_3">地形<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_10">地形<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
 <p>UE5的地形运行机制非常完善，地形的LOD是通过调整曲面细分的精度，目前默认使用的是8级LOD，想要修改LOD，只需要调整这些参数：</p>
 <p><a class="glightbox" href="../Resources/image-20241109210110173.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109210110173" src="../Resources/image-20241109210110173.png" /></a></p>
 <p>UE5.1之后支持了Nanite地形，由于地形拿到的是一种非常标准化的模型数据，开启Nanite之后无疑会拥有更合理的几何组织，相比LOD，它通常具有更少的三角形和更保真的视觉效果：</p>
 <p><a class="glightbox" href="../Resources/image-20241109211741424.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241109211741424" src="../Resources/image-20241109211741424.png" /></a></p>
-<p>虽然Nanite的调度算法相比曲面细分复杂一些，并且多了一份网格数据，但在镜头静止时，Nanite的渲染消耗明显低于LOD，并且Nanite对虚拟阴影是友好的，如果没有设备限制，Nanite地形会是更好的选择。</p>
-<p>目前一些项目中会使用静态网格作为地形，借助世界分区的流送和HLOD可以得到更好的性能且没有地形编辑的限制，但地形主要的优势在于使用几张高分辨率（贴图的分辨率远远小于地形分辨率）的Tile贴图就可以平铺出一个很大的区域，它所占用的磁盘大小要远远小于使用模型平铺出相同视觉精度的地形。</p>
+<p>虽然Nanite的调度算法相比曲面细分复杂一些，并且多了一份网格数据，但在镜头静止时，Nanite的渲染消耗明显低于LOD，并且Nanite对虚拟阴影是友好的，如果没有平台限制，Nanite地形会是更好的选择。</p>
+<p>目前一些项目中会使用静态网格作为地形，借助世界分区的流送和HLOD可以得到更好地平衡性能且没有地形编辑的限制，但地形主要的优势在于使用几张高分辨率（贴图的分辨率远远小于地形分辨率）的Tile贴图就可以平铺出一个很大的区域，它所占用的磁盘大小要远远小于使用模型平铺出相同视觉精度的地形。</p>
 <h2 id="hlod">HLOD<a class="headerlink" href="#hlod" title="Permanent link">&para;</a></h2>
 <p>上面提到的几种LOD类型主要的针对单个资产，而HLOD则是对资产合批之后再制作LOD。</p>
 <p>目前HLOD在UE中存在两种使用方式：</p>
@@ -2026,7 +2254,7 @@
 <li>简化：将单元格内的物体合并之后进行网格简化</li>
 <li>近似：将单元格内的物体合并之后进行网格近似</li>
 </ul>
-<p>假如使用了这样的分区网格：</p>
+<p>它们分布适用于不同的网格类别，假如使用了这样的分区网格：</p>
 <table>
 <thead>
 <tr>
@@ -2068,33 +2296,20 @@
 </tr>
 </tbody>
 </table>
-<p>它们分布适用于不同的网格类别，主要可以分以下几个大类：</p>
+<p>依此可以分以下几个大类：</p>
 <ul>
 <li>地形面片：主要是一些用来补充地表的静态网格面片（非地形组件），分布在<code>AdvanceGrid</code>，地形块的大小一般可以是25600，对于地形面片，它们会放在<code>51200</code>的Cell中，合并几何来生成HLOD，减少 DrawCall 和 图元组件数量。</li>
 <li>普通模型：分布在 <code>MainGrid</code> 中，放置在<code>12800</code>的Cell中，HLOD的生成方式是剔除掉小物件，合并后简化或近似生成HLOD简模，可以具有多个HLOD级别。</li>
 <li>植被：分布在<code>AdvanceGrid</code>中，使用 <code>25600</code> 的 HISM 组织 Partition，放置在<code>51200</code>的Cell中，HLOD策略是将 HISM 合并并退化为大小为<code>51200</code> 的ISM。</li>
 <li>其他：一些自定义或是动态的渲染组件（如粒子，水体...），尽可能避免在远处显示，通常这类物品在远处显示需要扩大加载距离，并做好LOD，或者定制专属的HLOD生成策略。</li>
 </ul>
-<p><a class="glightbox" href="Resources/image-20241113203356506.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241113203356506" src="Resources/image-20241113203356506.png" /></a></p>
-<h2 id="_4">物理<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<h2 id="_5">特效<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p><strong>特效（Niagara）**是一种非常特殊的渲染组件，GPU粒子使用 **Computer Shader</strong> 模拟粒子运动，模拟的数据将交由粒子渲染器执行 <strong>间接渲染 （Indirect Rendering）</strong>。</p>
-<p>粒子的LOD主要体现在</p>
-<blockquote>
-<p>Waiting</p>
-</blockquote>
-<h2 id="_6">骨骼模型<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>Waiting</p>
-</blockquote>
-<h2 id="_7">光影<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>Waiting</p>
-</blockquote>
-<h2 id="_8">动作<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
-<blockquote>
-<p>Waiting</p>
-</blockquote>
+<p><a class="glightbox" href="../Resources/image-20241116120055164.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241116120055164" src="../Resources/image-20241116120055164.png" /></a></p>
+<h2 id="_11">特效<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p><strong>特效（Niagara）</strong> 是一种非常特殊的渲染组件，GPU粒子使用 <strong>Computer Shader</strong> 模拟粒子运动，模拟的数据将交由粒子渲染器执行 <strong>间接渲染 （Indirect Rendering）</strong> 。</p>
+<p>粒子的优化主要在于减少模拟逻辑的复杂度，减少发射器，裁剪，优化材质和OverDraw。</p>
+<p>LOD的主要应用在于Niagara提供了一些引擎内置变量：</p>
+<p><a class="glightbox" href="../Resources/image-20241116115756142.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20241116115756142" src="../Resources/image-20241116115756142.png" /></a></p>
+<p>通常我们会根据LOD的距离去动态调整粒子的数量以及生命周期，来优化粒子的性能消耗。</p>
 
 
 
@@ -2117,7 +2332,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-11-13 12:39:26</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-11-16 04:04:17</span>
   </span>
 
     
