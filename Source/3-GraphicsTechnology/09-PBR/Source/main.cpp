@@ -25,6 +25,8 @@ public:
 
 		addComponent(&mStaticComp);
 
+		setCurrentObject(&mStaticComp);
+
 		getCamera()->setPosition(QVector3D(20, 15, 12));
 		getCamera()->setRotation(QVector3D(-30, 145, 0));
 	}

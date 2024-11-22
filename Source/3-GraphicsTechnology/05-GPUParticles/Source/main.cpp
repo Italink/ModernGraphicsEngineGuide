@@ -121,7 +121,10 @@ public:
 		mGpuParticlesComp.setEmitter(new MyGpuParticleEmitter);
 
 		addComponent(&mCpuParticlesComp);
+
 		addComponent(&mGpuParticlesComp);
+
+		setCurrentObject(&mCpuParticlesComp);
 	}
 protected:
 	void setupGraph(QRenderGraphBuilder& graphBuilder) override {

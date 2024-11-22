@@ -26,8 +26,14 @@ public:
 		}
 
 		mSplineComp.setPoints(points);
+		mSplineComp.setLineWidth(50);
 
 		addComponent(&mSplineComp);
+
+		setCurrentObject(&mSplineComp);
+
+		getCamera()->setRotation(QVector3D(0, 90, 0));
+		getCamera()->setPosition(QVector3D(0, 0, 150));
 	}
 protected:
 	void setupGraph(QRenderGraphBuilder& graphBuilder) override {

@@ -21,6 +21,7 @@ protected:
 		QOutputPassBuilder::Output cout
 			= graphBuilder.addPassBuilder<QOutputPassBuilder>("OutputPass")
 			.setInitialTexture(skyOut.SkyTexture);
+
 	}
 };
 

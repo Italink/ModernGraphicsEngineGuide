@@ -20,7 +20,7 @@ public:
 	{
 		QtConcurrent::run([this]() {
 			mStaticComp.setStaticMesh(QStaticMesh::CreateFromFile("Resources/Model/mandalorian_ship/scene.gltf"));
-			});
+		});
 
 		mSkyPass->setSkyBoxImageByPath("Resources/Image/environment.hdr");
 

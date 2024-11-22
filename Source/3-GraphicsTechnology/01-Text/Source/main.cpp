@@ -14,13 +14,17 @@ public:
 	MyRenderer()
 		: IRenderer({ QRhi::Vulkan })
 	{
-		//QtConcurrent::run([this]() {
-
-		//});
-		mTextTextureComp.setStaticMesh(QStaticMesh::CreateFromText("TextTexture", QFont("微软雅黑", 64), Qt::white, Qt::Horizontal, 2, true));
 		mTextMeshComp.setStaticMesh(QStaticMesh::CreateFromText("TextMesh", QFont("微软雅黑", 64), Qt::white, Qt::Horizontal, 2, false));
-		addComponent(&mTextTextureComp);
 		addComponent(&mTextMeshComp);
+		
+		mTextTextureComp.setStaticMesh(QStaticMesh::CreateFromText("TextTexture", QFont("微软雅黑", 64), Qt::white, Qt::Horizontal, 2, true));
+		mTextTextureComp.setTranslate(QVector3D(0.0f, -100.0f, 0.0f));
+		addComponent(&mTextTextureComp);
+
+		setCurrentObject(&mTextMeshComp);
+
+		getCamera()->setRotation(QVector3D(0, 90, 0));
+		getCamera()->setPosition(QVector3D(0, 0, 500));
 	}
 protected:
 	void setupGraph(QRenderGraphBuilder& graphBuilder) override {

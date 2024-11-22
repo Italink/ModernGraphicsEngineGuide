@@ -17,7 +17,10 @@ public:
 		
 		getCamera()->setPosition(QVector3D(0, 190, -700));
 		getCamera()->setRotation(QVector3D(-5, 265, 0));
+
 		addComponent(&mSkeletonComp);
+
+		setCurrentObject(&mSkeletonComp);
 	}
 protected:
 	void setupGraph(QRenderGraphBuilder& graphBuilder) override {

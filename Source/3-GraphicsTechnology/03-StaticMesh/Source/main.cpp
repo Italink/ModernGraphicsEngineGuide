@@ -8,16 +8,27 @@
 class MyRenderer : public IRenderer {
 private:
 	QStaticMeshRenderComponent mStaticComp;
+	QSharedPointer<QStaticMesh> StaitcMeshAsyncLoader;
 	QSharedPointer<QMeshPassBuilder> mMeshPass{ new QMeshPassBuilder };
 public:
 	MyRenderer()
 		: IRenderer({ QRhi::Vulkan })
 	{
-		QtConcurrent::run([this]() {
-			mStaticComp.setStaticMesh(QStaticMesh::CreateFromFile("Resources/Model/mandalorian_ship/scene.gltf"));
+		QFuture future = QtConcurrent::run([this]() {
+			StaitcMeshAsyncLoader = QStaticMesh::CreateFromFile("Resources/Model/mandalorian_ship/scene.gltf");
 		});
+		future.then(this, [this]() {			// 传入this作为线程切换的Context，回到主线程中进行设置
+			mStaticComp.setStaticMesh(StaitcMeshAsyncLoader);
+		});
+		
+		mStaticComp.setRotation(QVector3D(-90, 0, 0));
 
 		addComponent(&mStaticComp);
+
+		setCurrentObject(&mStaticComp);
+
+		getCamera()->setPosition(QVector3D(20, 15, 12));
+		getCamera()->setRotation(QVector3D(-30, 145, 0));
 	}
 protected:
 	void setupGraph(QRenderGraphBuilder& graphBuilder) override {
