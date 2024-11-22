@@ -21,12 +21,12 @@ endfunction()
 
 function(add_example EXAMPLE_PATH)
     get_filename_component(EXAMPLE_NAME ${EXAMPLE_PATH} NAME)
-    file(GLOB_RECURSE PROJECT_SOURCE FILES ${EXAMPLE_PATH}/*.h  ${EXAMPLE_PATH}/*.cpp ${EXAMPLE_PATH}/*.qrc)
-    qengine_add_target(${EXAMPLE_NAME} 
-        ${PROJECT_SOURCE}
+    file(GLOB_RECURSE PROJECT_SOURCES FILES  ${EXAMPLE_PATH}/*.cpp ${EXAMPLE_PATH}/*.h ${EXAMPLE_PATH}/*.qrc)
+    add_executable(${EXAMPLE_NAME} 
+        ${PROJECT_SOURCES}
     )
-    target_link_libraries(${EXAMPLE_NAME} PRIVATE QEngineUtilities)
-    qengine_setup_env(${EXAMPLE_NAME})
+    target_link_libraries(${EXAMPLE_NAME} PRIVATE QEngineLaunch)
+    add_dependencies(${EXAMPLE_NAME} QEngineCopyDLL)
 endfunction()
 
 function(add_example_dir DIR_PATH GROUP_NAME)
@@ -42,8 +42,14 @@ function(add_example_dir DIR_PATH GROUP_NAME)
     endforeach()
 endfunction()
 
-
 add_subdirectory(Source/0-QEngineUtilities)
+file(GLOB PLUGIN_DIR_LIST RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} Source/Plugins/*)
+foreach(PLUGIN_DIR ${PLUGIN_DIR_LIST})
+    if(IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${PLUGIN_DIR})
+        add_subdirectory(${PLUGIN_DIR})
+    endif()
+endforeach()
+qengine_make_copy_target(QEngineCopyDLL)
 
 add_example_dir(${CMAKE_CURRENT_SOURCE_DIR}/Source/1-GraphicsAPI 1-GraphicsAPI)
 add_example_dir(${CMAKE_CURRENT_SOURCE_DIR}/Source/2-EngineTechnology 2-EngineTechnology)
@@ -59,6 +65,8 @@ set_property(TARGET 04-DepthOfField PROPERTY AUTOMOC ON)
 set_property(TARGET 00-RenderingArchitecture PROPERTY AUTOMOC ON)
 set_property(TARGET 05-GPUParticles PROPERTY AUTOMOC ON)
 set_property(TARGET 03-SSAO PROPERTY AUTOMOC ON)
+
+
 
 execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory  ${CMAKE_CURRENT_SOURCE_DIR}/Resources ${CMAKE_CURRENT_BINARY_DIR}/Resources)
 
