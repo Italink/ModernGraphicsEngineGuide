@@ -22,11 +22,11 @@ endfunction()
 function(add_example EXAMPLE_PATH)
     get_filename_component(EXAMPLE_NAME ${EXAMPLE_PATH} NAME)
     file(GLOB_RECURSE PROJECT_SOURCE FILES ${EXAMPLE_PATH}/*.h  ${EXAMPLE_PATH}/*.cpp ${EXAMPLE_PATH}/*.qrc)
-    add_executable(${EXAMPLE_NAME} 
+    qengine_add_target(${EXAMPLE_NAME} 
         ${PROJECT_SOURCE}
     )
-    target_link_libraries(${EXAMPLE_NAME} PRIVATE QEngineLaunch)
-    qengine_copy_dll(${EXAMPLE_NAME})
+    target_link_libraries(${EXAMPLE_NAME} PRIVATE QEngineUtilities)
+    qengine_setup_env(${EXAMPLE_NAME})
 endfunction()
 
 function(add_example_dir DIR_PATH GROUP_NAME)
