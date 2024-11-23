@@ -1,2 +1,5 @@
+---
+comments: true
+---
 # Blog
 

@@ -6,10 +6,7 @@ comments: true
 
 - Github仓库：https://github.com/Italink/DesktopWaveEffect.git
 
-<p style="text-align:center"> 
-    <iframe width="560" height="315" src="//player.bilibili.com/player.html?isOutside=true&aid=753422025&bvid=BV1yk4y1B72b&cid=197938359&p=1&autoplay=false" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">		
-    </iframe> 
-</p>
+<p style="text-align:center"><iframe width="560" height="315" src="//player.bilibili.com/player.html?isOutside=true&aid=753422025&bvid=BV1yk4y1B72b&cid=197938359&p=1&autoplay=false" scrolling="no" border="0" frameborder="0" framespacing="0" allowfullscreen="true"></iframe></p>
 
 ![img](Resources/6c6942fc23e6d499a06203ccb8e73992.png)
 

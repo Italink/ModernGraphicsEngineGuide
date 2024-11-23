@@ -24,21 +24,14 @@ Spec的初衷是为了让笔者自己能学到一些音视频、图形相关的�
 
 本科毕业答辩PPT演示：
 
-<p style="text-align:center"> 
-    <iframe width="560" height="315" src="//player.bilibili.com/player.html?bvid=BV1f44y1z7qi&cid=348421166&p=1&share_source=copy_web&autoplay=false" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">		
-    </iframe> 
-</p>
-
+<p style="text-align:center"><iframe width="560" height="315" src="//player.bilibili.com/player.html?bvid=BV1f44y1z7qi&cid=348421166&p=1&share_source=copy_web&autoplay=false" scrolling="no" border="0" frameborder="0" framespacing="0" allowfullscreen="true"></iframe></p>
 ## **Specinker是什么？**
 
 Specinker是up耗时一年呕心沥血制作的一个音频可视化图形引擎， 它具备很多的图形效果，包含一些基础的频谱图形，特效滤镜，粒子系统，3D模型等，up把这些图形进行了封装，公开了一些可调整的参数，你甚至可以为这些参数编写lua脚本以实现动态的效果（比如说自动旋转、跟踪鼠标、跟随节奏移动......）
 
 ## **视频教程**
 
-<p style="text-align:center"> 
-    <iframe width="560" height="315" src="//player.bilibili.com/player.html?isOutside=true&aid=335187087&bvid=BV1XA411c7vb&cid=398619724&p=1&autoplay=false" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true">		
-    </iframe> 
-</p>
+<p style="text-align:center"><iframe width="560" height="315" src="//player.bilibili.com/player.html?isOutside=true&aid=335187087&bvid=BV1XA411c7vb&cid=398619724&p=1&autoplay=false" scrolling="no" border="0" frameborder="0" framespacing="0" allowfullscreen="true"></iframe></p>
 
 ## **Specinker的功能亮点**
 
