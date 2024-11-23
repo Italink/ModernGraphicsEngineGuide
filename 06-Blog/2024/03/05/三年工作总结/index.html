@@ -1,0 +1,2759 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../../../2023/12/17/%E8%BD%AF%E4%BB%B6%E9%87%8D%E6%9E%84%E5%A4%A7%E8%AE%A1%E5%88%92%E5%B7%B2%E8%B7%B3%E7%A5%A8/">
+      
+      
+        <link rel="next" href="../../../05/05/%E8%99%9A%E5%B9%BB%E6%88%96%E8%AE%B8%E4%B9%9F%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%AA%E4%BD%93%E7%B4%A0%E5%8C%96%E7%9A%84%E7%89%A9%E7%90%86%E4%B8%96%E7%95%8C/">
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.45">
+    
+    
+      
+        <title>三年工作总结 - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-S1J8MN27P8",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  <link rel="stylesheet" href="../../../../../assets/stylesheets/custom.2fa34c39.min.css">
+
+   <link href="../../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76"/></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              三年工作总结
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label=""  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../05-OpenSource/%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96%E8%BD%AF%E4%BB%B6-Specinker/" class="md-tabs__link">
+          
+  
+    
+  
+  开源
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../../" class="md-tabs__link">
+          
+  
+    
+  
+  个人博客
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    开篇
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    C++
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            C++
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 计算机发展史
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - C++基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 工具链
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 宏、模板、反射
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 内存管理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - GUI
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    图形API
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            图形API
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 概述
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 基础
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 图形渲染管线
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 着色器
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - 缓冲区与纹理
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - 3D空间
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 图形API进阶
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    引擎技术
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            引擎技术
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 渲染架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 编辑器架构
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - DebugDraw
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - DebugDraw
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Unreal Engine
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Unreal Engine
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 基础编程
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - Slate 开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - 插件开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - 粒子系统
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - Niagara 性能优化
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - Fluid Ninja 流体插件
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - 开放世界制作
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/7.%E9%9F%B3%E9%A2%91%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7 - 音频开发
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/9.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E4%B8%AD%E7%9A%84%E6%A4%8D%E8%A2%AB%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9 - 植被优化
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/10.LOD%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    10 - LOD不完全指南
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    开源
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            开源
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96%E8%BD%AF%E4%BB%B6-Specinker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    0 - 音频可视化软件-Specinker(已闭源)
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/%E9%A2%91%E8%B0%B1%E5%88%86%E6%9E%90%E5%99%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    1 - 频谱分析器
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/C%2B%2B%E5%8F%8D%E5%B0%84%E7%BC%96%E8%AF%91%E5%99%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    2 - C++反射编译器
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/Qt%E6%8B%9F%E6%80%81%E7%AA%97%E5%8F%A3%E6%BB%A4%E9%95%9C/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    3 - Qt拟态窗口滤镜
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/Qt%E5%B1%8F%E5%B9%95%E5%8F%96%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    4 - Qt屏幕取色器
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/Qt%E6%B8%90%E5%8F%98%E8%B0%83%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    5 - Qt渐变调色器
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/Qt%E6%A1%8C%E9%9D%A2%E7%B2%92%E5%AD%90%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    6 - Qt桌面粒子特效
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/Qt%E6%A1%8C%E9%9D%A2%E6%B0%B4%E9%9D%A2%E6%B3%A2%E7%BA%B9%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    7 - Qt桌面水面波纹特效
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    个人博客
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            个人博客
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    归档
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            归档
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2024/05/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    五月 2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2024/03/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    三月 2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2023/12/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    十二月 2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2023/11/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    十一月 2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2023/10/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    十月 2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2023/08/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    八月 2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2023/06/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    六月 2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2023/04/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    四月 2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2023/03/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    三月 2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2023/02/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    二月 2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2020/09/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    九月 2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2020/01/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    一月 2020
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../archive/2019/11/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    十一月 2019
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    分类
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            分类
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    个人随笔
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/%E6%95%B4%E6%B4%BB/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    整活
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../category/%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    杂谈
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      个人经历
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      职业发展
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="职业发展">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#student" class="md-nav__link">
+    <span class="md-ellipsis">
+      Student
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#job-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job 1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#job-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Job 2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#now" class="md-nav__link">
+    <span class="md-ellipsis">
+      Now
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      个人变化
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      未来规划
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      题外话
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../../../../" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    回到主页
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="https://avatars.githubusercontent.com/u/33830802" alt="Italink">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          <a href="https://github.com/Italink">Italink</a>
+                        
+                      </strong>
+                      <br>
+                      Creator
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    元数据
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2024-03-05 00:00:00+00:00" class="md-ellipsis">2024年3月5日</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            分类于
+                            
+                              <a href="../../../../category/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/">个人随笔</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              需要 5 分钟阅读时间
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+
+  
+  
+
+
+  <h1>三年工作总结</h1>
+
+<p>一转眼就过了工作的第三个年头，笔者也算是从之前的阴影中走了出来，很多感慨，在这里记录一下这三年的状态，期待下一个三年~</p>
+<!-- more -->
+
+<h2 id="_1"><strong>个人经历</strong><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>笔者入职的第一家公司是 <strong>Insta 360</strong> （实名给老东家打Call），它是一家非常有活力和激情的<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=独角兽企业&amp;zhida_source=entity">独角兽企业</a>，虽然只在那边待了两个月，但那边浓烈的工程师文化，让笔者学到很多优秀的习惯，至今受益无穷，就比如说，笔者会很愿意认真地在<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=Wiki&amp;zhida_source=entity">Wiki</a>上去写对外的文档和Demo，因为这会得到其他同事的鼓励和认可，这是一件非常值得高兴的事情~</p>
+<p>可是，笔者偏偏又是一个比较理想化的人，在大学的时候，看到过很多讲述国内游戏如何如何艰难的文章，那时候就在想，原来小的时候玩过的那些游戏，背后原来有那么多曲折的故事，让人觉得非常惋惜，又是那么的向往...</p>
+<p>“嗯，我要做游戏。”</p>
+<p>所以笔者大学的时候，几乎把所有的时间都花在了学习<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=图形引擎&amp;zhida_source=entity">图形引擎</a>的知识上面，那时候的梦想就是，到网易工作。（因为自己很多喜欢的游戏，不是网易工作室开发的，就是网易代理的）</p>
+<p>快毕业时，一开始秋招的目标也只有网易，两轮面试下来，感觉自己发挥得还不错，但一个月多过去（那时已经十月份了），杳无音讯，我开始怀疑自己，是不是因为常年的闭门造车，导致对自己的认知有着很大的偏差，高估自己了，论坛上一看，有很多人晒offer，更焦虑了，一度害怕自己毕业找不到工作，虽然不甘心，但也只能老老实实继续投简历，然后，就得到了老东家的赏识，可以毫不夸张地说，我当时觉得它对我是有知遇之恩的，就像这样：</p>
+<p><a class="glightbox" href="../../../../%E6%9D%82%E8%B0%88/Resources/v2-ef1d4e94a03e9357ef71e5f5bf368c35_1440w.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../../../../%E6%9D%82%E8%B0%88/Resources/v2-ef1d4e94a03e9357ef71e5f5bf368c35_1440w.jpg" /></a></p>
+<p>在收到Offer后我立马答应，果断选择了躺平，然后戏剧性的一幕就来了，刚过三天，网易就发Offer了，年包还比之前高了一大截，啊这，你这让我怎么办？</p>
+<p>正如前文所说，笔者是一个比较理想化的人（嫩头青），思来想去，最终还是回了封婉拒的邮件...</p>
+<p>当时笔者周围很多人都表示不理解，包括笔者现在再回头去审视这个问题，站在利益最大化的角度，之前的选择肯定是不明智的，但回顾起这段经历，笔者又是非常幸运的。</p>
+<p>在 影石 的那段时间应该是笔者身体状态最好的时候，但 做游戏 的执念，宛如梦魇，直到某天，无疑间看到了前司的一条<a href="https://link.zhihu.com/?target=https%3A//tieba.baidu.com/p/6978363742">帖子</a>，讲述了他们做<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=自研引擎&amp;zhida_source=entity">自研引擎</a>的艰难历程，看完后整个人都给燃爆了，这不就是自己梦寐以求的地方吗，那一晚，我翻了所有有关它的信息，第二天便跟领导说了自己的想法，在得到肯定后，投了简历，过了！写了很多交接文档，在处理完离职后，去到了广州。</p>
+<p>就这样，笔者迈进了自己梦寐以求的游戏行业，就跟大多数游戏人一样，结识了很多优秀的同事，技术力超群的领导，同样，也承受着游戏行业的诅咒...</p>
+<p>在笔者入职之后没多久，发生了一件非常令人惋惜的事情，是的，MXY跳楼了，笔者是野路子出身，在此之前并不了解这个人，但在事发前，刚好在知乎上看过他招人的 <a href="https://zhuanlan.zhihu.com/p/422247380">文章</a> ，当时看这篇文章最深的印象是 —— 评论区里骂声一片。</p>
+<p>在此之前，笔者就跟那些无脑小年轻一样，对腾讯也有着不小的偏见，看了几篇文章，听了几句口嗨，搞得自己就跟正义之师一样，笔者承认自己并不高尚，只庆幸自己在那个愚蠢的年龄没干出什么蠢事，只是越是了解他的经历，越觉得后怕...</p>
+<p>刚工作的时候，领导给了很高的自由度去做自研引擎的各种尝试和预研，因为招不到合适的同事，所以就干脆去挤时间写教程，说不定能“骗”来一两个0.0</p>
+<p>可搞着搞着自研引擎就寄了，就在笔者想出路的时候，突然来了个王炸，说是要搞3A，就是得转<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=UE&amp;zhida_source=entity">UE</a>。</p>
+<p>卧槽，啥，没听错吧？？？3A？？端游？？？单机？？仙侠？？转！</p>
+<p>为了不拖后腿，后面可以说是卷到爆，当然，并非每一个人都会像笔者那样感到高兴。</p>
+<p>这段时间一定是笔者人生之中最为难忘的经历之一，笔者由衷地感谢那些帮助过自己的每一个人。</p>
+<p>可是虽然自己抱着舍命陪君子的决心，但最终，梦想还是破灭了，这种不甘情绪产生的困惑所引起的一系列连锁反应，让自己的状态跌到了谷底。</p>
+<p>于是自己便回家了，再次回到熟悉的地方，突然觉得自己有些陌生了，小的时候多开心，除了上学，其他时候不是在看动漫，就是跟小伙伴玩游戏，要不就是跟着舅舅去钓鱼，哪有那么多奇奇怪怪的目标和梦想。</p>
+<p>现在终于有时间来审视一下自己，发现自己逐渐能理解很多原来觉得很困惑的事情，就比如，酒明明一点也不好喝，还会有那么多人要去喝，原来是因为真的有那种无法从言语表达的情感，而自己原来只不过是一个幸运儿，一直以来都刚好有“大人们”在前面顶着，又想到了<a href="https://link.zhihu.com/?target=https%3A//www.bilibili.com/video/BV1RN411c7ok">上野千鹤子</a>所提到的那句话：“你所秉持的‘努力就会有回报’的观念，其实是周边环境一直以来的提携。”，这段话让笔者觉得无力，自责。</p>
+<p>这期间有在反复看一部电影 -<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=《本杰明·巴顿奇事》&amp;zhida_source=entity">《本杰明·巴顿奇事》</a>，有很多印象深刻的台词：</p>
+<p><a class="glightbox" href="../../../../%E6%9D%82%E8%B0%88/Resources/v2-62e0a2e073f35956fecde2a07fc2103b_1440w.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../../../../%E6%9D%82%E8%B0%88/Resources/v2-62e0a2e073f35956fecde2a07fc2103b_1440w.jpg" /></a></p>
+<p>好不容易能在家待一段时间，但长期的颓废，总会让那些关心你的人感到不安，为了创造出一些希望，还是决定振奋起来，继续工作，虽然那时精神状态非常脆弱，但好在之前认识的朋友收留了自己。</p>
+<p>不过现在已经不在游戏行业了，一方面是因为现在很难有机会去做自己喜欢的游戏，另一方面，在认真审视自己后，对游戏的执念已经没那么深了，可能跟成长经历有关，自己真正在意的其实是可以得到别人的鼓励和认可，这是一件非常值得高兴的事情，那个人可以是亲人，可以是朋友，可以是同事，可以是同学...</p>
+<p>后面可能还会做游戏，不过如果能有机会的话，其实是非常想当一名老师的，但是可能现在离现在的自己太遥远了，不过可以确定的一点是，如果我想，那就去做吧，就比如我喜欢那种引导思维，分享知识收获的喜悦，那就去做吧，而这并不一定需要在学校。</p>
+<h2 id="_2"><strong>职业发展</strong><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>说了这么多矫情的话，也展开说说这几年自己都做了些什么吧。</p>
+<h3 id="student"><strong>Student</strong><a class="headerlink" href="#student" title="Permanent link">&para;</a></h3>
+<p>笔者早期是一个网瘾少年，除了打游戏，对自己未来发展稍微有一点正向的爱好就是喜欢做视频剪辑。</p>
+<p>在老师的引导下，喜欢上了编程，它无疑是一种自由维度更高的娱乐方式，于是自己便化生 刷题Boy ，在网上结识了很多卷王，自己在<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=CSDN&amp;zhida_source=entity">CSDN</a>上也写了不少题解。</p>
+<p>后面无意间发现了AE的音频可视化效果，自己也想搞一个，毅然入了Qt的坑，为了做一些比较炫酷的实时滤镜（主要是Glow），通过 <a href="https://link.zhihu.com/?target=https%3A//learnopengl-cn.github.io/">Learn OpenGL</a> 的教程系统性地学习了OpenGL，只不过用的是Qt封装的接口，遇到很多坑，对相关结构也有了不浅的理解，期间补了很多图形学和线性代数的知识，也写了一些教程和示例，虽然现在回头看，代码很烂：</p>
+<ul>
+<li>OpenGL示例仓库：<a href="https://link.zhihu.com/?target=https%3A//github.com/Italink/QtOpenGL-Essential-Training">https://github.com/Italink/QtOpenGL-Essential-Training</a></li>
+<li>教程：<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/687543043/bilibili.com/read/cv10421402">QtOpenGL入门教程（一）—— 图形渲染管线</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//www.bilibili.com/read/cv10422557">QtOpenGL入门教程（二）—— 搭建渲染管线</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//www.bilibili.com/read/cv10477263">QtOpenGL入门教程（三）—— 初识OpenGL对象（顶点数组对象和缓存对象）</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//www.bilibili.com/read/cv10552786">QtOpenGL入门教程（四）—— 初识纹理对象及2D文字的绘制</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//www.bilibili.com/read/cv10694142">QtOpenGL入门教程（五）—— 再谈着色器及着色器语言</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//www.bilibili.com/read/cv11765941">QtOpenGL入门教程（六）—— 初识帧缓存对象（泛光滤镜）</a></li>
+<li><a href="https://link.zhihu.com/?target=https%3A//www.bilibili.com/read/cv12927018">QtOpenGL入门教程（七）—— TransformFeedBack（GPU粒子）</a></li>
+</ul>
+</li>
+</ul>
+<p>那个时候学完Qt和OpenGL，感觉只要自己想做，什么都能做出来，所以干了很多莽夫行为，不过确实也写了很多有意思的小东西：</p>
+<ul>
+<li>爆肝一个月写的调色器，只因为嫌弃Qt默认的调色器太丑：<a href="https://link.zhihu.com/?target=https%3A//github.com/Italink/QColorsDialog">https://github.com/Italink/QColorsDialog</a></li>
+</ul>
+<p><a class="glightbox" href="../../../../%E6%9D%82%E8%B0%88/Resources/v2-d772ecebd834f5f9cf327e1c1b21b8e6_b.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="动图封面" src="../../../../%E6%9D%82%E8%B0%88/Resources/v2-d772ecebd834f5f9cf327e1c1b21b8e6_b.jpg" /></a></p>
+<ul>
+<li>Qt的拟态窗口滤镜：<a href="https://link.zhihu.com/?target=https%3A//github.com/Italink/QNeumorphism">https://github.com/Italink/QNeumorphism</a></li>
+</ul>
+<p><a class="glightbox" href="../../../../%E6%9D%82%E8%B0%88/Resources/v2-e8c11d9cd4d4a9071121aa1f50d0ada6_1440w.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../../../../%E6%9D%82%E8%B0%88/Resources/v2-e8c11d9cd4d4a9071121aa1f50d0ada6_1440w.jpg" /></a></p>
+<p>而这些小东西，最终都被用在了自己的毕业设计里面：</p>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//blog.csdn.net/qq_40946921/article/details/104124455">https://blog.csdn.net/qq_40946921/article/details/104124455</a></li>
+</ul>
+<p>这是一个非常酷的小软件，应该可以算是一个比较小的图形引擎了，这里面除了制作很多炫酷的图形效果，也是笔者第一次对 <a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=UGC&amp;zhida_source=entity">UGC</a> 所做成功的尝试。</p>
+<p>虽然那个时候比较年轻，代码写的很青涩（一个大佬这么评价的），但这个反复重构的过程中，自己的代码功底和架构能力可以说是有了质的飞跃，对编辑器架构（反射），用户体验（<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=UX&amp;zhida_source=entity">UX</a>），多端兼容有了一定的认识。</p>
+<p>在大佬的推荐下，接触到了 <a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=CMake&amp;zhida_source=entity">CMake</a>， Git 和 Markdown。</p>
+<p>然后就毕业了，大学生涯算是比较圆满吧~</p>
+<h3 id="job-1"><strong>Job 1</strong><a class="headerlink" href="#job-1" title="Permanent link">&para;</a></h3>
+<p>刚工作的时候主要是分两条线。</p>
+<p>一条线是保证工作内容产出，那个时候用的是Qt，主要就是在修bug，客户端组内比较缺乏<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=渲染向&amp;zhida_source=entity">渲染向</a>的成员，所以想的是自己能够顶上，工作之余写了一个VR剪辑软件，支持多片段的剪辑，反射编辑器，特效系统（粒子，滤镜），本来想的是转正答辩的时候，秀领导们一波，后面离开的时候也没拿出手...</p>
+<p>另一条线就是继续维护毕业设计里做的那个小软件，确实受到了一小波用户的喜欢，但问题也层出不穷，比如：</p>
+<ul>
+<li>适配做的很差，笔者只保证了程序能在自己的电脑上能按预期执行，但是这在不同环境下，可能就会产生一些异常，比如不同分辨率，不同<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=DPI&amp;zhida_source=entity">DPI</a>会导致UI界面的布局错乱，不同的显卡和驱动可能导致软件无法正常启动（部分功能使用了一些高级特性）。</li>
+<li>产品的设计理念比较混乱，喜欢按程序设计的思维去定义用户习惯，虽然笔者的想法是希望用户在这个软件上，能够拥有足够高的自由度，但想要做到这一点，就必定会创造很高的使用门槛，有这精力还不如直接写代码，高自由度依然是 UGC 应该追求的目标，但这种自由应该是限定在一定范围之内，至少不应该给用户增加过多的认知负担，不过我们确实可以尝试去制定一套高复杂度的机制供专业用户使用，同时支持弹性预设来收敛参数的复杂度，但想要把控它们之间的平衡，并非易事。</li>
+</ul>
+<p>在维护小软件的过程中，遇到几件极其糟心的事：</p>
+<ul>
+<li>角色A，QQ私聊我，说它朋友使用这个软件遇到点问题，让我帮忙解决一下，于是我远程过去，对面开口就说：“修不好就给我退款。” ，我？？？？在这之前笔者这个软件一直是开源免费的，只在上面挂了个二维码，前前后后收到四百多块打赏（其中两百多是一个人给的）。</li>
+<li>角色B，在我闭源之后，联系到我，说对这个软件很感兴趣，能不能学习一下，于是我高高兴兴地给它讲解整体的流程是怎么样的，都用了那些技术，把自己写的相关文档也发给他了，然后突然画风一转，很不耐烦地直接问我要源码，当时还没反应过来，还跟它解释到自己写的代码可读性不是很高，很多重要功能其实我都写了很详细的文档，要感兴趣的话，可以去看看，不难的，结果它下一句：“我姐是律师，某节跟它打官司都输了，你要是不给，我就去法院告你。”，我？？？？</li>
+<li>角色C，跟技术无关，某天早上笔者在玩游戏，打完一把莫名其妙被对面加好友，开口就是：“哥，我刚出来打工，工资要到月底才发，实在没钱吃饭了，能不能借我50块钱，我想吃个麻辣烫，工资发了我就还你。”，只能说笔者当时太年轻了，听它一说，就想到了自己刚工作的时候，在深圳举目无亲的那种窘境，谁还没个困难的时候？于是我当即微信转给它100，没想到了当天晚上，它又来了：“哥，能不能转20给我，我想喝个奶茶。”，我？？？？我骂了几句，我一气之下删了它的微信，然后一个月过去，当时看到它加我微信，心头一暖，可能是自己误解他了，之前说的话也有点过分，这肯定是来还钱的，结果我同意之后，它说：“哥，能不能再借我100，钱花光了，工资得月底才能发。”，我？？？？</li>
+</ul>
+<h3 id="job-2"><strong>Job 2</strong><a class="headerlink" href="#job-2" title="Permanent link">&para;</a></h3>
+<p>刚来的时候，因为大佬们都在忙其他的项目，就留了很多自由的时间给我去做一些技术研究来练手，那段时间做了很多东西，应该是笔者进步最大的一段时期。</p>
+<p>首先，就是放弃OpenGL，转学Vulkan，虽然初期有点困难，但学下来之后对整个图形渲染流程和设备有了更深层次的理解，曾经在OpenGL中搞不清楚的黑盒，也逐渐明了，于是整了个Vulkan的教程，虽然代码写的比较烂，其中一些概念在理解上还存在误解：</p>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/Italink/HelloVulkan">https://github.com/Italink/HelloVulkan</a></li>
+</ul>
+<p>在感觉对Vulkan理解差不多的时候，于是便想着动手去搭一个简易的引擎，刚把基础的架子搭的差不多了，无疑间在Qt的源码目录下发现了它的<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=RHI&amp;zhida_source=entity">RHI</a>，在深入了解之后，大致摸清了它的结构和理念，简单点说：</p>
+<ul>
+<li>QRhi 使用Vulkan风格的接口，但它的使用门槛甚至比OpenGL低</li>
+</ul>
+<p>于是便用它代替Vulkan作为渲染底层，继续完成小引擎，在早期阶段，找到了一些其他引擎作为参考，其中主要有：</p>
+<ul>
+<li>Bgfx：渲染底层，但没有QRhi那样用得顺手</li>
+<li><a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=Unreal+Engine&amp;zhida_source=entity">Unreal Engine</a>：这玩意是人能看的？</li>
+<li>O3DE：号称是可以做3A的引擎，前身是Cry Engine，深入看了 Atom Renderer 和 编辑器架构，使用CMake作为构建系统，代码的可读性相对而言比较高，其中一些文档也非常有价值，笔者个人认为存在两个巨大的坑点：<ul>
+<li><a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=ECS架构&amp;zhida_source=entity">ECS架构</a>的使用门槛太高，且效率低下。</li>
+<li>使用 旧时的Qt 作为编辑器，因为<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=QWidget&amp;zhida_source=entity">QWidget</a>使用CPU来完成UI绘制，且事件系统冗余比较严重，从而导致它的绘制性能很差，因为这一原因所导致的一系列连锁问题，使得它的编辑器使用起来并不是那么友好。</li>
+</ul>
+</li>
+</ul>
+<p>在上面的引擎基础上，深入地去了解了一下引擎里面的一些底层模块，主要是：</p>
+<ul>
+<li><a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=反射机制&amp;zhida_source=entity">反射机制</a></li>
+<li>内存管理</li>
+<li>垃圾回收</li>
+<li>脚本方案</li>
+</ul>
+<p>在对上述内容理解的差不多之后，便搭了自己的第一个引擎 —— <strong>QEngine</strong> （未开源）</p>
+<p>不过写了一个有关对象系统，反射机制的开源库：</p>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/Italink/XObject.git">https://github.com/Italink/XObject.git</a></li>
+</ul>
+<p>这个引擎并不是很出色，并且存在很多瑕疵：</p>
+<ul>
+<li>那个时候 Games 104 刚开课，看到有很多人在鼓吹ECS架构，笔者就仔细去了解了一下，好像这个设计理念确实挺优秀的，于是便靠着自己对ECS的理解，结合O3DE里面的实现，搭了一个简单的ECS，结果搭完之后，说实话，那个编辑器我自己都不想用-.-，（最近跟一个同学聊过之后，对ECS有了更深的认识，不仅仅是优化结构和性能，采用ECS的架构会更容易去收集帧状态，从而更方便地去完成一些功能，比如说网络同步，游戏回放...）</li>
+<li>对 QRhi 以及 现代图形<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=API&amp;zhida_source=entity">API</a> 的理解不是很深刻，还是以OpenGL那种<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=状态机&amp;zhida_source=entity">状态机</a>的思路去完成整个渲染系统的构建，在实际编写的过程中其实已经慢慢察觉到有点不对劲了，但是积重难返，干脆就不管了。</li>
+<li>对反射的理解还不到位，从而导致编辑器的架构并不是很合理，因为是参考O3DE的实现方式，虽然也能完成功能，但编辑器的搭建成本并不低，在深入了解UE编辑器之后，也更加肯定了这一观点。</li>
+</ul>
+<p>在这个过程中，有几件我印象非常深刻的事情：</p>
+<ul>
+<li>我拿出自己搭建好的编辑器，发工作群里，领导纷纷肯定和点赞，喜悦之情溢于言表，“你坤哥，厉害吧”，但回过头来看，那个编辑器可以说是并无亮点~</li>
+<li>我强烈建议领导在后面的开发过程中使用 <a href="https://link.zhihu.com/?target=https%3A//github.com/ThePhD/sol2">SOL2</a> 去做Lua的绑定，因为这比之前笔者在毕业设计里面用的 <a href="https://link.zhihu.com/?target=https%3A//github.com/jjensen/luaplus51-all">LuaPlus</a> ，不仅使用起来更简单，而且功能也更加强大，然后领导很耐心和温和地跟自己说，这个我们完全可以不用<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=2&amp;q=开源库&amp;zhida_source=entity">开源库</a>哦，自己写的话可以做更多定制性的扩展，公司里的某某某，对这方面做了很多研究，如果有相关的疑问可以去找他请教一下哦，然后笔者当时心里的想法是：明明这么多人都推进，并且还在用，我就不信你们能写的比那个开源库好。</li>
+</ul>
+<p>在那个阶段，笔者是非常浅薄，无知和傲慢的，时至今日，笔者已经能把编辑器的效果和体验做得勉强还算不错，可以对着Lua的虚拟机一顿操作猛如虎，再回想到上面的两件事，有的只是惭愧和感谢~</p>
+<p>在此之前，笔者一直全身心的投入到工作之中，直到某天晚上，下班的时候刚好跟领导顺路，问到了做自研引擎发展的这段经历，在聊天的最后，他说到，其实现在在自研引擎这边，能写代码的，只有我跟你了。</p>
+<p>有时候确实觉得自己脑回路有点清奇，因为长期招不到合适的人，所以想到了出来写文章骗人来的法子，于是我便开启了另一条支线 —— 在知乎上开始写起了小作文（为了装出一番大师风范，逼格拉的很高）：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/597319889">https://zhuanlan.zhihu.com/p/597319889</a></li>
+</ul>
+<p>然后写着写着自研引擎就寄了T.T，转去搞UE了。</p>
+<p>一开始以为自己之前所作的努力全都白费了，但实际上手之后才发现，在自研引擎上的代码积累，让自己对引擎的技术视野变得很宽，怎么说呢，感觉就跟开了挂一样0.0，这几乎是通过现有UE教程和文档很难达到的水平（大佬请无视），那个时候又有了这种感觉 —— 只要我想，我能做到任何事~</p>
+<p>在这个阶段，笔者非常享受那种工作的状态，跟同事的合作地非常“融洽”。</p>
+<p>摸鱼的时候会偷偷去看策划同学精心写的一大堆规划和文案，就跟看小说一样入迷。</p>
+<p>虽然经常跟场景和特效小哥撕逼，因为他们对性能的把控不是很敏感，但是他们做出的效果真的好NB。</p>
+<p>程序小哥和动作小哥配合起来把战斗效果做的很棒，不过经常吐槽策划SB。</p>
+<p>技美同学负责主导一些比较亮眼的效果。</p>
+<p>引擎的同学会跟各个方向的同事对接，收敛开发流程，制作一些编辑工具，完成场景的性能优化，进行技术的预研和选型，编写相关的文档。</p>
+<p>此时笔者自己的职业定位应该是：</p>
+<ul>
+<li>引擎工具</li>
+<li>引擎管线</li>
+</ul>
+<p>深入的点主要是：</p>
+<ul>
+<li>工程管理</li>
+<li>编辑器（Slate，UMG）</li>
+<li>特效（Niagara）</li>
+<li>建模工具（一系列Mesh处理算法）</li>
+<li>开放世界工具集（世界分区，植被，HLOD，关卡实例...）</li>
+</ul>
+<p>也能做一些效果，但专业的同事做起来会更迅速一些。</p>
+<p>但最终，因为诸多原因，我们还是寄了，但我们做的并不差！</p>
+<p>本着善始善终的原则，教程也继续在写下去：</p>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/Italink/ModernGraphicsEngineGuide">https://github.com/Italink/ModernGraphicsEngineGuide</a></li>
+</ul>
+<p>之前自己小引擎的一些模块，也都搬出来用上了：</p>
+<ul>
+<li><a href="https://link.zhihu.com/?target=https%3A//github.com/Italink/QEngineUtilities">https://github.com/Italink/QEngineUtilities</a></li>
+</ul>
+<p>这里面有自己写的一套反射编辑器，几乎完美支持了Qt的3D UI，还有很多不错的小组件，就不拿出来一一细说了，这个时期对引擎的基础模块也有了一些深刻的认识：</p>
+<p><a class="glightbox" href="../../../../%E6%9D%82%E8%B0%88/Resources/v2-401d1d64e5ace1b249713ae20a837d07_1440w.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../../../../%E6%9D%82%E8%B0%88/Resources/v2-401d1d64e5ace1b249713ae20a837d07_1440w.jpg" /></a></p>
+<p>回家这段时间，也一直在反思这段经历，抛开市场原因，在团队方面，笔者说说都有那些可以改善的问题。</p>
+<p>在之前的一篇文章中有提到一个例子：</p>
+<ul>
+<li>你是一个勤勤恳恳的UE小美术，某天，你突然收到一个大佬那边传来的一个需求：要为某个场景铺上植被。你一想，这我熟啊，立马整了几个植被模型，打开<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=UE5&amp;zhida_source=entity">UE5</a>的植被模式，用 画刷 咔咔几下，就把植被给刷好了，叫来大佬一看，大佬说：“你这不行啊，一点意境都没有，再改一版。”，然后你绞尽脑汁，废寝忘食，折腾好几天，终于是搞完了，前后一对比，确实好了不少，叫来大佬再看，大佬也是连连称赞，然后这事也就翻篇了，直到某个风雨交加的下午，一个自称是引擎开发工程师的小秃子带着质问的语气问你：“这片植被是你做的吗？”，你只得颤颤巍巍到：“是...是啊，怎么啦？”，“现在场景的复杂度变高了，植被这里的性能消耗很高，植被模型面数也比较高，并且刷得太密了”，然后啪啪摆出一堆性能测试结果作为证据，让你进行优化，可是如果要优化的话，就得重新再刷一遍，又是几天繁琐的工作量，于是你找到大佬，渴望大佬救自己于水火之中，大佬说：“改吧，注意形态效果要跟之前差不多。”，听闻此言，你宛若晴天霹雳，你让我改就算了，还要求跟原来一样，这无疑是火上浇油，但为了保住这份工，你无奈只能照做，浑浑噩噩几天，终于熬了出来，叫来小秃子一看，确实少了不少，于是它心满意足的离开了，结果第二天，这个*又回来了，说是测了一下，优化得还不够，还得减，你一听，怒发冲冠，一脚踹在小秃子身上，看着它躺在地上嚎啕大哭的样子，你仰天大笑，笑着笑着睁开了双眼，挣扎着从电脑桌前支棱起来，擦去嘴角的口水，继续加班~</li>
+</ul>
+<p>上面的小秃子其实就是笔者自己，很抱歉在实际的开发过程中，因为自己缺乏对整体情况的把控，导致相关的一些同事增加了一些不必要的工作量，当了小白鼠还受气。</p>
+<p>而这种情况在实际的项目开发中只是冰山一角，对于个人而言，我们要认清楚人的能力是有限的，在大型的项目中，要做好项目管理，笔者认为这是几个非常重要的点：</p>
+<ul>
+<li>尽可能让标准能够 <strong>量化（Quantization）</strong></li>
+<li>美术制作流程的 <strong>程序化（Procedural）</strong></li>
+<li>引擎管控流程上的 <strong>自动化（Automation）</strong></li>
+</ul>
+<p>此外，在团队的合作中往往存在一个很无解的点 —— 人性总是利己的</p>
+<p>世界上到处都存在利益的分配，而在分配的过程中，很难去找到一个大家都满意的平衡点。</p>
+<p>对于大多数人而言，谁都希望自己是主角，谁都不希望当陪跑，而在这样一个大型项目中，几乎人人都是螺丝钉，而顺利合作的前提是 —— 大家能够认清这个现实，放下身段，朝着共同的目标前进。</p>
+<p>笔者不擅长解决这类问题，接下来说下UE吧。</p>
+<p>UE 绝对是引擎技术的天花板，但也存在着比较多的问题。</p>
+<p>之前在 Games 104 的<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=王希&amp;zhida_source=entity">王希</a>大大有提到，自研引擎是做加法，商业引擎是在做减法，对于UE而言，想要做减法可并不是一件容易的事情。</p>
+<p>通常情况下，UE的项目必须要有相应的引擎团队，因为UE5早期的版本并不稳定，可能存在一些比较严重的BUG或者功能上的缺失，对于中大型项目来说，也经常会有一些定制化的需求，虽然大多数时候能通过插件的方式完成功能，但难免会遇到一些卡点，此时如果想要项目还能正常推进，一定需要引擎人员负责跟进，而这就意味着可能需要改引擎，这么一看似乎没什么问题，然后紧接着，UE给你来一波超级大更新，在小白都在为引擎新版本功能而欢呼的时候，某个小秃子翻着引擎的ChangeLog，一看就是一个上午，望着密密麻麻的BUG修复，再回看之前自己魔改的代码，现在已经变得面目全非，愣了一会儿，安慰自己道：“自己只做了几个功能，但官方修了几千个BUG，里面还有几个非常重要的BUG修复和性能优化，比如 UE 5 引以为傲的 Lumen 和 <a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=Nanite&amp;zhida_source=entity">Nanite</a>，这总不能不更新吧。”，最后，小秃子也只能默默地叹了一口气，继续加班~</p>
+<p>同样的情况发生在《方舟2：生存进化》，看个乐子：</p>
+<ul>
+<li><a href="https://www.zhihu.com/question/610080498">https://www.zhihu.com/question/610080498</a></li>
+</ul>
+<p><a class="glightbox" href="../../../../%E6%9D%82%E8%B0%88/Resources/v2-4186e9af2af1666934b55e8fb5c86498_1440w.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../../../../%E6%9D%82%E8%B0%88/Resources/v2-4186e9af2af1666934b55e8fb5c86498_1440w.jpg" /></a></p>
+<p><a class="glightbox" href="../../../../%E6%9D%82%E8%B0%88/Resources/v2-d20bd8dcabe403f37f22b025e01e359e_1440w.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../../../../%E6%9D%82%E8%B0%88/Resources/v2-d20bd8dcabe403f37f22b025e01e359e_1440w.jpg" /></a></p>
+<p><a class="glightbox" href="../../../../%E6%9D%82%E8%B0%88/Resources/v2-574a0a6ed9b5fd0a12d6a93e435cbda1_1440w.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../../../../%E6%9D%82%E8%B0%88/Resources/v2-574a0a6ed9b5fd0a12d6a93e435cbda1_1440w.jpg" /></a></p>
+<p>除了引擎不稳定所带来的问题，还要比较重要的一点就是，UE发展到现在，已经是一个非常庞大的系统工程了，它的很多模块目前依然在频繁迭代之中，这些模块有着非常强大的功能（ UI除外 ），对于用户来说，无论是从架构还是使用体验上，都已经做了极大的优化，但如果把他们放到一起，那展现出来的画面将会是 —— 山头林立。</p>
+<p>对于开发团队而言，模块的功能越强大，也就意味着学习门槛也会越高，不同模块之间的壁垒也就越高，虽然这不是UE的错，但在这种不收敛的工作流程下，项目管理的成本肯定会急剧膨胀。</p>
+<p>如果可能的话，笔者非常建议开发团队在UE底层模块的基础上，去搭建自己的工作流和编辑器，当然这需要很高的时间成本，并且现阶段引擎的不稳定性也会让这种做法很难实现，当然，这只是笔者理想中的处理方式，毕竟这个世界更多的还是<a href="https://zhida.zhihu.com/search?content_id=240917268&amp;content_type=Article&amp;match_order=1&amp;q=草台班子&amp;zhida_source=entity">草台班子</a>。</p>
+<h3 id="now"><strong>Now</strong><a class="headerlink" href="#now" title="Permanent link">&para;</a></h3>
+<p>被关注了，乱说话容易被打0.0</p>
+<h2 id="_3"><strong>个人变化</strong><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ul>
+<li>首先变化最大的就是心态吧，原来的自己比较热情，在学校老师同学的眼里应该一个是个乐于助人，有求必应的人，但在工作之后，一方面是因为工作本身比较忙，休息时间也很卷，另外就是因为被上面提到的那些人恶心过，再加上被现实破了几盆冷水，现在的自己会更自私一些，有时候看到别人发消息也不想回，察觉到别人的情绪波动也无所谓了，现在确实会觉得很累，但肯定不愿意让那些相信自己的人失望。</li>
+<li>哦，不对，变化最大的应该是体重，丫的胖了20来斤，这个表情就是笔者现在的真实写照：</li>
+</ul>
+<p><a class="glightbox" href="../../../../%E6%9D%82%E8%B0%88/Resources/v2-35949ac99f50af486698191e22e52183_1440w.jpg" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="img" src="../../../../%E6%9D%82%E8%B0%88/Resources/v2-35949ac99f50af486698191e22e52183_1440w.jpg" /></a></p>
+<ul>
+<li>原来就是个嫩头青，说话直来直去的，虽然有时候自己可能确实是对的，但这种爹味十足的语气绝对会让别人觉得不高兴，因为原来的时候闭门造车，接触的只有技术，在接触更多人之后，才发现对人性的把控其实也是人生当中一个非常重要的课题，之前在谈论一个问题的时候，总会想当然的觉得对方能理解自己，但到了现在，至少懂得了在沟通之前，先摸清自己的定位，首先，可能我们是两个并不熟识的人，对方不相信自己，这是情理之中的事情，自己要做的第一件事情，不是证明自己是对的，因为讨论问题的前提是双方是相互信任的。</li>
+<li>原来做事情的时候总是蹑手蹑脚的，比如在技术方面，明明是一件很小的事情，自己却拿不定主意，第一时间想到的不是立即执行，而是征求领导意见，在工作过程中，总是等领导来下发任务，虽然在发现一些问题时能及时向上反馈风险，但在解决问题的时候，总是不自觉的躲到了后面，不是因为怕自己做不好，而是不想自己太显眼，这种病态的情绪毫无疑问拖了团队的后腿，这也是笔者现在一直在尝试，相信未来一定能解决的问题。</li>
+<li>懂得了降低自己对目标的预期，无论说对梦想的执念，似乎也没那么重要了，说人话就是，我躺平了。</li>
+</ul>
+<h2 id="_4"><strong>未来规划</strong><a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li>把自己的想法和创意融合到新的项目里面，能够持续地推进这个项目的发展。</li>
+<li>继续深挖UE引擎的各个模块，会寻找一些切入点继续写小作文，还有一件非常想做的事情，就是把QML嵌入到UE里面，不过现阶段还只是想想。</li>
+<li>向更多优秀的人学习，看更多的书。</li>
+<li>继续推进小软件新版本的开发，一直被人催更，但按自己目前的工作强度，这个计划大概率要寄T.T</li>
+</ul>
+<h2 id="_5"><strong>题外话</strong><a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ul>
+<li>同志们，多的不说，加油，奥里给！！！</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-11-23 18:04:17</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="创建日期">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2024-11-23 18:04:17</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+  
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js"
+    data-repo="Italink/ModernGraphicsEngineGuide"
+    data-repo-id="R_kgDOIPtbiQ"
+    data-category-id="DIC_kwDOIPtbic4CTxOk"
+    data-mapping="pathname"
+    data-strict="0"
+    data-reactions-enabled="1"
+    data-emit-metadata="0"
+    data-input-position="top"
+    data-theme="preferred_color_scheme"
+    data-lang="zh-CN"
+    crossorigin="anonymous"
+    async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../../../2023/12/17/%E8%BD%AF%E4%BB%B6%E9%87%8D%E6%9E%84%E5%A4%A7%E8%AE%A1%E5%88%92%E5%B7%B2%E8%B7%B3%E7%A5%A8/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 软件重构大计划（已跳票）">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                软件重构大计划（已跳票）
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../05/05/%E8%99%9A%E5%B9%BB%E6%88%96%E8%AE%B8%E4%B9%9F%E9%9C%80%E8%A6%81%E4%B8%80%E4%B8%AA%E4%BD%93%E7%B4%A0%E5%8C%96%E7%9A%84%E7%89%A9%E7%90%86%E4%B8%96%E7%95%8C/" class="md-footer__link md-footer__link--next" aria-label="下一页: 虚幻或许也需要一个体素化的物理世界">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                虚幻或许也需要一个体素化的物理世界
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078q-.408 1.096-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58 58 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.2 9.2 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125M13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../../../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../../../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>
