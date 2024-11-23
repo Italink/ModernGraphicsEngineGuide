@@ -25,15 +25,15 @@ nav:
         - "1 - 编辑器架构" : "02-EngineTechnology/1.编辑器架构.md"
         - "2 - DebugDraw" : "02-EngineTechnology/Waitting.md"
         - "3 - GPU调试" : "02-EngineTechnology/Waitting.md"
-    - '图形技术':
-        - '0 - 网格体渲染': "03-GraphicsTechnology/Waitting.md"
-        - '1 - 天空盒':  "03-GraphicsTechnology/Waitting.md"
-        - '2 - GPU粒子':  "03-GraphicsTechnology/Waitting.md"
-        - '3 - 后期滤镜':  "03-GraphicsTechnology/Waitting.md"
-        - '4 - 光照':  "03-GraphicsTechnology/Waitting.md"
-        - '5 - 体积雾':  "03-GraphicsTechnology/Waitting.md"
-        - '6 - 天空大气':  "03-GraphicsTechnology/Waitting.md"
-        - '7 - 地形':  "03-GraphicsTechnology/Waitting.md"
+    # - '图形技术':
+    #     - '0 - 网格体渲染': "03-GraphicsTechnology/Waitting.md"
+    #     - '1 - 天空盒':  "03-GraphicsTechnology/Waitting.md"
+    #     - '2 - GPU粒子':  "03-GraphicsTechnology/Waitting.md"
+    #     - '3 - 后期滤镜':  "03-GraphicsTechnology/Waitting.md"
+    #     - '4 - 光照':  "03-GraphicsTechnology/Waitting.md"
+    #     - '5 - 体积雾':  "03-GraphicsTechnology/Waitting.md"
+    #     - '6 - 天空大气':  "03-GraphicsTechnology/Waitting.md"
+    #     - '7 - 地形':  "03-GraphicsTechnology/Waitting.md"
     - 'Unreal Engine':
         - '0 - 基础编程': '04-UnrealEngine/0.基础编程.md'
         - '1 - Slate 开发': '04-UnrealEngine/1.Slate开发.md'
@@ -45,9 +45,18 @@ nav:
         - '7 - 音频开发': '04-UnrealEngine/7.音频开发.md'
         - '9 - 植被优化': '04-UnrealEngine/9.开放世界中的植被优化技术.md'
         - '10 - LOD不完全指南': '04-UnrealEngine/10.LOD不完全指南.md'
-    - 'Other':
-        - '0 - 开放世界杂谈': '05-Other/0.开放世界杂谈.md'
-        - '1 - 元宇宙杂谈': '05-Other/1.元宇宙杂谈.md'
+    - "开源":
+        - '0 - 音频可视化软件-Specinker(已闭源)': '05-OpenSource/音频可视化软件-Specinker.md'
+        - '1 - 频谱分析器': '05-OpenSource/频谱分析器.md'
+        - '2 - C++反射编译器': '05-OpenSource/C++反射编译器.md'
+        - '3 - Qt拟态窗口滤镜': '05-OpenSource/Qt拟态窗口滤镜.md'
+        - '4 - Qt屏幕取色器': '05-OpenSource/Qt屏幕取色器.md'
+        - '5 - Qt渐变调色器': '05-OpenSource/Qt渐变调色器.md'
+        - '6 - Qt桌面粒子特效': '05-OpenSource/Qt桌面粒子特效.md'
+        - '7 - Qt桌面水面波纹特效': '05-OpenSource/Qt桌面水面波纹特效.md'
+    - '个人博客':
+        - 06-Blog/index.md
+    
 theme:
     icon:
         repo: fontawesome/brands/github
@@ -96,6 +105,13 @@ plugins:
         docs_path: Docs
         enabled: true
         token: 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
+    - blog:
+        blog_dir: 06-Blog
+        post_dir: "{blog}/Posts"
+        blog_toc: true
+        archive_date_format: MMMM yyyy
+        archive_url_date_format: yyyy/MM
+        archive_toc: true
 extra:
   analytics:
     provider: google
