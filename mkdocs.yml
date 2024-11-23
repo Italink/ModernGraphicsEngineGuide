@@ -95,6 +95,7 @@ plugins:
         branch: main
         docs_path: Docs
         enabled: true
+        token: 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
 extra:
   analytics:
     provider: google
