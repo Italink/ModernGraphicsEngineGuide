@@ -30,7 +30,7 @@ jobs:
             "mkdocs-rss-plugin>=1.2" \
             "mkdocs-redirects>=1.0" \
             "mkdocs-glightbox" \
-            "pillow<10"
+            "pillow"
             
       - name: Deploy documentation
         run: |
