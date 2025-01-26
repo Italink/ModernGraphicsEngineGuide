@@ -46,14 +46,18 @@ nav:
         - '9 - 植被优化': '04-UnrealEngine/9.开放世界中的植被优化技术.md'
         - '10 - LOD不完全指南': '04-UnrealEngine/10.LOD不完全指南.md'
     - "开源":
-        - '0 - 音频可视化软件-Specinker(已闭源)': '05-OpenSource/音频可视化软件-Specinker.md'
-        - '1 - 频谱分析器': '05-OpenSource/频谱分析器.md'
-        - '2 - C++反射编译器': '05-OpenSource/C++反射编译器.md'
-        - '3 - Qt拟态窗口滤镜': '05-OpenSource/Qt拟态窗口滤镜.md'
-        - '4 - Qt屏幕取色器': '05-OpenSource/Qt屏幕取色器.md'
-        - '5 - Qt渐变调色器': '05-OpenSource/Qt渐变调色器.md'
-        - '6 - Qt桌面粒子特效': '05-OpenSource/Qt桌面粒子特效.md'
-        - '7 - Qt桌面水面波纹特效': '05-OpenSource/Qt桌面水面波纹特效.md'
+        - 'UnrealEngine':
+            - 'Gaussian Splatting': '05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine.md'
+        - 'C++':
+            - 'C++反射编译器': '05-OpenSource/C++/C++反射编译器.md'
+        - 'Qt':
+            - '音频可视化软件-Specinker(已闭源)': '05-OpenSource/Qt/音频可视化软件-Specinker.md'
+            - '频谱分析器': '05-OpenSource/Qt/频谱分析器.md'
+            - 'Qt拟态窗口滤镜': '05-OpenSource/Qt/Qt拟态窗口滤镜.md'
+            - 'Qt屏幕取色器': '05-OpenSource/Qt/Qt屏幕取色器.md'
+            - 'Qt渐变调色器': '05-OpenSource/Qt/Qt渐变调色器.md'
+            - 'Qt桌面粒子特效': '05-OpenSource/Qt/Qt桌面粒子特效.md'
+            - 'Qt桌面水面波纹特效': '05-OpenSource/Qt/Qt桌面水面波纹特效.md'
     - '个人博客':
         - 06-Blog/index.md
     
