@@ -3366,7 +3366,7 @@
 <p><strong>可以通过UClass来创建对象</strong> ：<code>NewObject&lt;UCustomObject&gt;()</code>等价于<code>NewObject&lt;UObject&gt;(GetTransientPackage(), UCustomObject::StaticClass())</code></p>
 </li>
 </ul>
-<p>通常，我们在虚幻引擎中接触到的绝大部分对象，它都是一个**UObject**，在代码层面，要创建任意的UObject，我们一般会使用这种方式：</p>
+<p>通常，我们在虚幻引擎中接触到的绝大部分对象，它都是一个 <strong>UObject</strong> ，在代码层面，要创建任意的UObject，我们一般会使用这种方式：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">MyObject</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewObject</span><span class="o">&lt;</span><span class="n">UObject</span><span class="o">&gt;</span><span class="p">();</span>
 <a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
 <a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">UTexture2D</span><span class="o">*</span><span class="w"> </span><span class="n">MyTexture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewObject</span><span class="o">&lt;</span><span class="n">UTexture2D</span><span class="o">&gt;</span><span class="p">();</span>
@@ -4081,7 +4081,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a><span class="k">template</span><span class="o">&lt;</span><span class="w"> </span><span class="k">class</span><span class="w"> </span><span class="nc">T</span><span class="w"> </span><span class="o">&gt;</span>
 <a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a><span class="n">T</span><span class="o">*</span><span class="w"> </span><span class="n">NewObject</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">Outer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="p">)</span><span class="n">GetTransientPackage</span><span class="p">());</span>
 </code></pre></div>
-<p>其中Outer可以简单理解成父对象，需要注意的是，**Outer**跟UObject的GC并没有关联，它的作用是指定了资产存储结构上的关系。</p>
+<p>其中Outer可以简单理解成父对象，需要注意的是， <strong>Outer</strong> 跟UObject的GC并没有关联，它的作用是指定了资产存储结构上的关系。</p>
 <p>UE中的资产对象不等同于物理文件，实际上一个磁盘上的<code>*.uasset</code>和<code>*.umap</code>文件，它可以理解为对应的是  <strong>UPackage</strong> 对象。</p>
 <p>UE中创建资产时，首先会创建一个<code>UPackage</code>作为实际的物理文件映射，然后使用 <code>NewObject</code> 创建实际资产，此时会指定它的<code>Outer</code>为<code>Package</code>，当保存<code>Package</code>时，会将该<code>Package</code>持有的所有<code>UObject</code>都序列化到物理文件中，这个过程看上去就像是：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a><span class="c1">// 创建一个新Package，/Game/CustomPackage为包路径，其中/Game代表工程的Content目录</span>
@@ -4352,7 +4352,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2025-03-04 02:01:15</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime">2025-03-04 03:02:40</span>
   </span>
 
     
