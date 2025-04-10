@@ -12,12 +12,14 @@ private:
 	QSharedPointer<QMeshPassBuilder> mMeshPass{ new QMeshPassBuilder };
 public:
 	MyRenderer()
-		: IRenderer({ QRhi::OpenGLES2 })
+		: IRenderer({ QRhi::Vulkan })
 	{
 		GaussianSplattingPointCloudAsyncLoader = QGaussianSplattingPointCloud::CreateFromFile("Resources/Model/ProjectTitan.ply");
 		m3DGSComp.setGaussianSplattingPointCloud(GaussianSplattingPointCloudAsyncLoader);
 
 		addComponent(&m3DGSComp);
+
+		m3DGSComp.setRotation(QVector3D(-180, 0, 0));
 
 		setCurrentObject(&m3DGSComp);
 
