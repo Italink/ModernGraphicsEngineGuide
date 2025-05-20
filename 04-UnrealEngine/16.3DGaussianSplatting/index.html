@@ -95,7 +95,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#3d-gaussian-splatting" class="md-skip">
+        <a href="#_1" class="md-skip">
           跳转至
         </a>
       
@@ -1422,8 +1422,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -1456,8 +1454,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1475,7 +1471,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3d-gaussian-splatting_1" class="md-nav__link">
+  <a href="#3d-gaussian-splatting" class="md-nav__link">
     <span class="md-ellipsis">
       3D Gaussian Splatting
     </span>
@@ -2588,8 +2584,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -2607,7 +2601,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#3d-gaussian-splatting_1" class="md-nav__link">
+  <a href="#3d-gaussian-splatting" class="md-nav__link">
     <span class="md-ellipsis">
       3D Gaussian Splatting
     </span>
@@ -2643,7 +2637,8 @@
   
 
 
-<h1 id="3d-gaussian-splatting">计算机图形学 — 3D Gaussian Splatting<a class="headerlink" href="#3d-gaussian-splatting" title="Permanent link">&para;</a></h1>
+  <h1>16 - 3DGaussianSplatting</h1>
+
 <p><strong>三维高斯泼溅（3D Gaussian Splatting，3DGS）</strong> 是一种用于实时辐射场渲染的计算机图形学技术，它是近几年学术研究的热点，并且已经广泛应用于三维重建领域。</p>
 <h2 id="_1">三维重建技术<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>大多数技术领域的产生，通常是 <strong>技术突破降低成本</strong> ， <strong>需求升级创造市场</strong> ， <strong>学术研究提供理论</strong> ， <strong>产业变革拓展场景</strong> 共同作用的结果。</p>
@@ -2803,7 +2798,7 @@
 <li><strong>Marching Cubes 算法</strong> ：对每个体素单元（立方体），根据顶点是否在曲面内外（由距离函数或密度函数决定），查找预定义的等值面模式，生成三角形。常见策略如 TSDF（Truncated Signed Distance Function，截断符号距离函数）。</li>
 <li><strong>深度学习方法</strong> ：利用神经网络直接从点云预测 Mesh 的顶点和拓扑，适合自动化处理或复杂形状重建。如<a href="https://github.com/ThibaultGROUEIX/AtlasNet">AtlasNet</a>，<a href="https://github.com/nywang16/Pixel2Mesh">PointToMesh</a>，<a href="https://github.com/facebookresearch/meshrcnn">Mesh R-CNN</a>，<a href="https://github.com/autonomousvision/convolutional_occupancy_networks">ConvONet</a>等。</li>
 </ul>
-<h2 id="3d-gaussian-splatting_1">3D Gaussian Splatting<a class="headerlink" href="#3d-gaussian-splatting_1" title="Permanent link">&para;</a></h2>
+<h2 id="3d-gaussian-splatting">3D Gaussian Splatting<a class="headerlink" href="#3d-gaussian-splatting" title="Permanent link">&para;</a></h2>
 <p>从学术上来看，3DGS可以当作是对传统 SFM + MVS 流程的变革和拓展。</p>
 <p>它可以沿用SFM的结果作为输入，采用 <strong>三维高斯分布</strong> 作为图形基元，通过 <strong>标准随机梯度下降法（Stochastic Gradient Descent, SGD）</strong> 去逼近原始场景，从而得到高质量的图形效果，这个流程看起来像是这样的：</p>
 <p><a class="glightbox" href="../Resources/image-20250517141337442.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="image-20250517141337442" src="../Resources/image-20250517141337442.png" /></a></p>
@@ -3082,7 +3077,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年5月20日 14:08:10">2025-05-20 14:08:10</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年5月20日 14:20:49">2025-05-20 14:20:49</span>
   </span>
 
     
