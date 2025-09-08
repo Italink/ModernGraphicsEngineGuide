@@ -47,6 +47,7 @@ nav:
         - '10 - LOD不完全指南': '04-UnrealEngine/10.LOD不完全指南.md'
         - '12 - 程序化内容管理': '04-UnrealEngine/12.程序化内容管理.md'
         - '16 - 3DGaussianSplatting': '04-UnrealEngine/16.3DGaussianSplatting.md'
+        - '17 - Landscape 避坑指南': '04-UnrealEngine/17.Landscape避坑指南.md'
     - "开源":
         - 'UnrealEngine':
             - 'Gaussian Splatting': '05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine.md'
