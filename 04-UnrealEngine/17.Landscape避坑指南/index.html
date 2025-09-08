@@ -6,14 +6,18 @@
       
       
       
+        <link rel="prev" href="../16.3DGaussianSplatting/">
+      
+      
+        <link rel="next" href="../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.18">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
     
     
       
-        <title>Landscape 避坑指南 - Modern Graphics Engine Guide</title>
+        <title>17 - Landscape 避坑指南 - Modern Graphics Engine Guide</title>
       
     
     
@@ -147,7 +151,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Landscape 避坑指南
+              17 - Landscape 避坑指南
             
           </span>
         </div>
@@ -348,10 +352,12 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
+      <li class="md-tabs__item md-tabs__item--active">
         <a href="../0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
           
   
@@ -1078,8 +1084,10 @@
       
   
   
+    
   
   
+  
     
     
       
@@ -1107,25 +1115,28 @@
       
         
       
+        
+      
     
     
     
+      
+        
+        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
         
           
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
-        
-          
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
             
   
   
@@ -1138,7 +1149,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_5">
             <span class="md-nav__icon md-icon"></span>
             Unreal Engine
@@ -1416,6 +1427,149 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    17 - Landscape 避坑指南
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    17 - Landscape 避坑指南
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      概述
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      规划
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="规划">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      明确场景规模
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      确定分辨率
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      平衡流送代理，组件和分段的数量
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      确定场景生态结构
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lodnanitervthlod" class="md-nav__link">
+    <span class="md-ellipsis">
+      LOD、Nanite、RVT、HLOD
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      底层接口
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -2673,7 +2827,7 @@
 <li><strong>碰撞</strong> ：地形使用生成 高度场碰撞体（Heightfield Collider），支持可破坏，其数据结构的特性使得它的碰撞计算效率远比网格体碰撞要高，并且因为它不存在间隙，在碰撞穿透问题上的防护安全性远优于静态网格体。</li>
 <li><strong>工作流</strong> ：在游戏引擎中，地形被视为基本的图形载体，引擎中围绕地形搭建了非常多的工具和流程，比如植被系统，地形附着物的程序化生成，光影烘焙等。</li>
 </ul>
-<p>关于Landscape的使用，官方文档中有着详细的介绍，至少了解地形的概念，LOD和碰撞的管理：</p>
+<p>关于Landscape的使用，官方文档中有着详细的介绍，很好的讲述了地形的概念，LOD和碰撞的管理：</p>
 <ul>
 <li><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/landscape-outdoor-terrain-in-unreal-engine">https://dev.epicgames.com/documentation/en-us/unreal-engine/landscape-outdoor-terrain-in-unreal-engine</a></li>
 </ul>
@@ -2690,17 +2844,17 @@
 </blockquote>
 <p>需要提醒的是，当想要搭建一个可游玩区域非常大的场景时，比如 <code>64km²</code>，建议千万不要用一个地形去完成整个场景的搭建，过大的场景规模会大幅度提升资产管理，地图编辑，玩法和关卡设计的复杂度，严重拖垮项目的迭代速度。</p>
 <p>虽然 UE WP 地图目前支持的最大地形尺寸为<code>65281</code>，但个人的建议是，单个地形的尺寸不要超过 <code>4km²</code>，只在独立的子关卡中进行游戏内容的迭代，有一个主地图专门负责通过海面、河流或者山脉这类元素去拼接子地图，就像是这样：</p>
-<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Resources/image-20250906220437162.png" data-desc-position="bottom"><img alt="image-20250906220437162" src="../Resources/image-20250906220437162.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Resources/image-20250908203421468.png" data-desc-position="bottom"><img alt="image-20250908203421468" src="../Resources/image-20250908203421468.png"></a></p>
 <p>在 UE 5.4 之后，关卡实例的诸多问题已经得到有效解决，可以依靠它来推动这样的工作流，而后文所述的目标只针对单个地形块。</p>
 <h3 id="_4">确定分辨率<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
-<p>确定单个地形的规模之后，就需要确定地形表示的最小几何精度，通常情况 1m 的水平精度足以满足RPG项目的需求，如果想要增加地表细节，可以通过以下方案来完成：</p>
+<p>确定单个地形的规模之后，就需要确定地形表示的最小几何精度，水平方向通常情况 <code>1m</code> 的精度足以满足RPG项目的需求，如果想要增加地表细节，可以通过以下方案来完成：</p>
 <ul>
 <li><strong>法线贴图（Normal Map）</strong> ：通过修改表面法线方向影响光照反射，让平坦地形看起来有凹凸细节。</li>
 <li><strong>视察遮挡映射（Parallax Occlusion  Mapping）</strong> ：通过计算像素的 “虚拟深度偏移”，让纹理看起来有实际厚度，比法线贴图更具立体感。</li>
 <li><strong>位移贴图（Displacement Mapping）</strong> ： 借助 Nanite 和细分曲面技术支持通过位移贴图实现真正的几何凸起（修改像素级高度）。</li>
 <li><strong>地表附着物</strong> ：在地形表面放置静态网格体和贴花来补充细节，需要关注碰撞体对性能的影响。</li>
 </ul>
-<p>垂直方向的纵深一开始就要确定好，后续迭代了大量内容之后才发现地形的问题，此外，由于要保证碰撞精度，所以不能过渡拉伸Z轴，对于高耸的山脉，应当考虑使用静态网格体进行填充。</p>
+<p>垂直方向的纵深一开始就要确定好，后续迭代了大量内容之后才想起这个问题，再做修改就有些麻烦，此外，由于要保证碰撞精度，所以不能过渡拉伸Z轴，对于高耸的山脉，应当考虑使用静态网格体进行填充。</p>
 <h3 id="_5">平衡流送代理，组件和分段的数量<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
 <p>UE地形实际对应的核心结构是 <strong>ALandscape</strong> ，它负责管理整个地形的全局数据和组件层级结构，包括持有高度图、权重图等基础资源，以及控制地形的整体属性（如物理设置、LOD 全局参数等）</p>
 <p>为了划分 <strong>ALandscape</strong> 的职责，使之拥与更小粒度的LOD管理，可视性判断，DrawCall，碰撞检测和材质管理，于是地形系统提出了 <strong>地形组件（ULandscapeComponent） ** 和 **分段（Section）</strong> 的概念。</p>
@@ -2764,7 +2918,7 @@
 </ul>
 <p>正确的做法是我们应该理清权重图层和地形材质的关系：</p>
 <ul>
-<li>权重图层跟材质并不是一对一的关系，地形材质本质上是作为权重数据的解析器（Resolver），但一个地形（ALandscape）并不是只允许有一个材质，材质管理的最小粒度是地形组件（ULandscapeComponent）。</li>
+<li>权重图层跟材质并不是一对一的关系，地形材质本质上是作为权重数据的解析器（Resolver），一个地形（ALandscape）并不是只允许有一个材质，材质管理的最小粒度是地形组件（ULandscapeComponent）。</li>
 </ul>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Resources/image-20250907161122816.png" data-desc-position="bottom"><img alt="image-20250907161122816" src="../Resources/image-20250907161122816.png"></a></p>
 <p>比如实现这样的效果，每个数字区域有特定的颜色、植被以及物理材质，按之前错误的做法，这样的效果需要用4个地形图层，但这里实际上只用到了一个，只不过每个地形组件有自己的材质：</p>
@@ -2777,7 +2931,7 @@
 <h3 id="lodnanitervthlod">LOD、Nanite、RVT、HLOD<a class="headerlink" href="#lodnanitervthlod" title="Permanent link">¶</a></h3>
 <p>地形的LOD策略可以在ALandscape的属性面板中进行调整。</p>
 <p>目前UE5已经支持了Nanite地形，它具有更高的剔除效率和几何细节，结合VSM，在中高端硬件上的绘制性能通常Nanite比LOD要好。</p>
-<p>由于 Nanite 的几何处理路径与 RVT 的采样路径不兼容，通常 Nanite 网格并不支持 RVT 的写入，但由于地形仍保留了原始高度图和权重图数据，引擎会通过‘非 Nanite 的辅助通道’提交 RVT 绘制数据：</p>
+<p>由于 Nanite 的几何处理路径与 RVT 的采样路径不兼容，通常 Nanite 网格并不支持 RVT 的写入，但由于地形仍保留了原始高度图和权重图数据，引擎会通过非 Nanite 的辅助通道提交 RVT 绘制数据：</p>
 <ul>
 <li><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/using-nanite-with-landscapes-in-unreal-engine">https://dev.epicgames.com/documentation/en-us/unreal-engine/using-nanite-with-landscapes-in-unreal-engine</a></li>
 </ul>
@@ -2788,8 +2942,21 @@
 <p>个人觉得这种做法不是很高效，因为把流送的粒度和合批的粒度划等号了，举个例子，一个地形组件块的大小是100M，为了让HLOD能够合并组件，流送代理的范围可能就得设置为200M，也就是包含四个地形组件，而这会显著增加地形流送的成本，如果改成一个流送代理只包含一个组件，实际合批根据网格划分的粒度来进行，应该会更好一些。</p>
 <p>对于地形的HLOD材质，不需要重新烘培贴图，因为在实际项目中，通常需要在地形上使用RVT，并为地形的RVT开启SVT去存储低级别的MipLevel，因此地形HLOD材质可以直接在ALandscape中指定<code>HLOD Material Override</code></p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Resources/image-20250907223222322.png" data-desc-position="bottom"><img alt="image-20250907223222322" src="../Resources/image-20250907223222322.png"></a></p>
-<p>材质逻辑只需要采样RVT即可：</p>
+<p>因此地形HLOD的材质无需纹理输入，直接采样RVT的SVT即可：</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../Resources/image-20250907223337915.png" data-desc-position="bottom"><img alt="image-20250907223337915" src="../Resources/image-20250907223337915.png"></a></p>
+<p>RVT 在地形上的应用非常广泛，比如可以将远处的地表细节（如贴花，草皮...）烘培到RVT的SVT上，从而保证HLOD的远景材质效果。</p>
+<p>将高度写入RVT，在实现一些特效时非常有用，比如：</p>
+<ul>
+<li>下雨、积雪、水流：根据地形高度（海拔）和法线方向（坡度），动态控制自然现象的效果分布。</li>
+<li>
+<p>足迹 / 踩踏效果：角色移动时，在接触点的地形位置生成匹配地形起伏的足迹。</p>
+</li>
+<li>
+<p>爆炸 / 冲击痕迹：爆炸冲击点在地形表面生成与地形轮廓匹配的凹痕或焦痕。</p>
+</li>
+<li>雾气 / 烟尘分布：利用地形高度和坡度控制雾气浓度，模拟山谷雾、爬坡雾等效果</li>
+<li>地面湿润 / 干燥过渡：根据地形排水能力（坡度）模拟雨后地面干燥过程。</li>
+</ul>
 <p>关于地形RVT开启SVT的步骤，可以查阅：</p>
 <ul>
 <li><a href="https://dev.epicgames.com/documentation/zh-cn/unreal-engine/runtime-virtual-texturing-in-unreal-engine">https://dev.epicgames.com/documentation/zh-cn/unreal-engine/runtime-virtual-texturing-in-unreal-engine</a></li>
@@ -2892,7 +3059,7 @@
     <span class="md-icon" title="最后更新">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年9月7日 15:10:01 UTC">2025-09-07 15:10:01</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年9月8日 12:39:38 UTC">2025-09-08 12:39:38</span>
   </span>
 
     
@@ -2968,6 +3135,44 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚">
+        
+          
+          <a href="../16.3DGaussianSplatting/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 16 - 3DGaussianSplatting">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                16 - 3DGaussianSplatting
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-footer__link md-footer__link--next" aria-label="下一页: Gaussian Splatting">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                Gaussian Splatting
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"></path></svg>
+            </div>
+          </a>
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">
