@@ -123,6 +123,22 @@ extra:
   analytics:
     provider: google
     property: G-S1J8MN27P8
+  alternate:
+    - name: Chinese
+      link: /
+      lang: zh
+    - name: English
+      link: /Localization/en/ 
+      lang: en
+    - name: Japanese
+      link: /Localization/ja/ 
+      lang: ja
+    - name: Korean
+      link: /Localization/ko/ 
+      lang: ko
+    - name: French
+      link: /Localization/fr/ 
+      lang: fr
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/Italink

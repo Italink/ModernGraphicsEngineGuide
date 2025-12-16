@@ -1,0 +1,1234 @@
+{
+    "README.md": {
+        "en": {
+            "src_mtime": 1765803935.564886,
+            "process_time": 1765812554.3026907,
+            "target_file": "Localization\\en\\README.md"
+        },
+        "ja": {
+            "src_mtime": 1765803935.564886,
+            "process_time": 1765812556.358102,
+            "target_file": "Localization\\ja\\README.md"
+        },
+        "ko": {
+            "src_mtime": 1765803935.564886,
+            "process_time": 1765812558.1598437,
+            "target_file": "Localization\\ko\\README.md"
+        },
+        "fr": {
+            "src_mtime": 1765803935.564886,
+            "process_time": 1765812560.0737433,
+            "target_file": "Localization\\fr\\README.md"
+        }
+    },
+    "Waitting.md": {
+        "en": {
+            "src_mtime": 1765803935.565886,
+            "process_time": 1765812560.8508987,
+            "target_file": "Localization\\en\\Waitting.md"
+        },
+        "ja": {
+            "src_mtime": 1765803935.565886,
+            "process_time": 1765812561.641523,
+            "target_file": "Localization\\ja\\Waitting.md"
+        },
+        "ko": {
+            "src_mtime": 1765803935.565886,
+            "process_time": 1765812562.4860394,
+            "target_file": "Localization\\ko\\Waitting.md"
+        },
+        "fr": {
+            "src_mtime": 1765803935.565886,
+            "process_time": 1765812563.3737285,
+            "target_file": "Localization\\fr\\Waitting.md"
+        }
+    },
+    "00-C++\\1.计算机发展史.md": {
+        "en": {
+            "src_mtime": 1723707547.5409622,
+            "process_time": 1765812586.9652853,
+            "target_file": "Localization\\en\\00-C++\\1.计算机发展史.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.5409622,
+            "process_time": 1765812642.081873,
+            "target_file": "Localization\\ja\\00-C++\\1.计算机发展史.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.5409622,
+            "process_time": 1765812698.217393,
+            "target_file": "Localization\\ko\\00-C++\\1.计算机发展史.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.5409622,
+            "process_time": 1765812742.8381383,
+            "target_file": "Localization\\fr\\00-C++\\1.计算机发展史.md"
+        }
+    },
+    "00-C++\\2.C++基础.md": {
+        "en": {
+            "src_mtime": 1723707547.5662842,
+            "process_time": 1765812818.8155532,
+            "target_file": "Localization\\en\\00-C++\\2.C++基础.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.5662842,
+            "process_time": 1765812972.1474175,
+            "target_file": "Localization\\ja\\00-C++\\2.C++基础.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.5662842,
+            "process_time": 1765813080.7843032,
+            "target_file": "Localization\\ko\\00-C++\\2.C++基础.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.5662842,
+            "process_time": 1765813197.434445,
+            "target_file": "Localization\\fr\\00-C++\\2.C++基础.md"
+        }
+    },
+    "00-C++\\3.工具链.md": {
+        "en": {
+            "src_mtime": 1723707547.596341,
+            "process_time": 1765813328.1066039,
+            "target_file": "Localization\\en\\00-C++\\3.工具链.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.596341,
+            "process_time": 1765813602.2637074,
+            "target_file": "Localization\\ja\\00-C++\\3.工具链.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.596341,
+            "process_time": 1765813766.6101353,
+            "target_file": "Localization\\ko\\00-C++\\3.工具链.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.596341,
+            "process_time": 1765813977.0381742,
+            "target_file": "Localization\\fr\\00-C++\\3.工具链.md"
+        }
+    },
+    "00-C++\\4.宏、模板、反射.md": {
+        "en": {
+            "src_mtime": 1723707547.6348546,
+            "process_time": 1765814133.0963085,
+            "target_file": "Localization\\en\\00-C++\\4.宏、模板、反射.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.6348546,
+            "process_time": 1765814541.5696146,
+            "target_file": "Localization\\ja\\00-C++\\4.宏、模板、反射.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.6348546,
+            "process_time": 1765814768.3508635,
+            "target_file": "Localization\\ko\\00-C++\\4.宏、模板、反射.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.6348546,
+            "process_time": 1765814991.3387809,
+            "target_file": "Localization\\fr\\00-C++\\4.宏、模板、反射.md"
+        }
+    },
+    "00-C++\\5.内存管理.md": {
+        "en": {
+            "src_mtime": 1765803933.3179564,
+            "process_time": 1765815322.9139318,
+            "target_file": "Localization\\en\\00-C++\\5.内存管理.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3179564,
+            "process_time": 1765815724.7600145,
+            "target_file": "Localization\\ja\\00-C++\\5.内存管理.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3179564,
+            "process_time": 1765816003.9972942,
+            "target_file": "Localization\\ko\\00-C++\\5.内存管理.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3179564,
+            "process_time": 1765816341.8043382,
+            "target_file": "Localization\\fr\\00-C++\\5.内存管理.md"
+        }
+    },
+    "00-C++\\6.GUI.md": {
+        "en": {
+            "src_mtime": 1723707547.7118545,
+            "process_time": 1765816577.8715074,
+            "target_file": "Localization\\en\\00-C++\\6.GUI.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.7118545,
+            "process_time": 1765816940.5444524,
+            "target_file": "Localization\\ja\\00-C++\\6.GUI.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.7118545,
+            "process_time": 1765817226.9588869,
+            "target_file": "Localization\\ko\\00-C++\\6.GUI.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.7118545,
+            "process_time": 1765817534.5505364,
+            "target_file": "Localization\\fr\\00-C++\\6.GUI.md"
+        }
+    },
+    "01-GraphicsAPI\\0.概述.md": {
+        "en": {
+            "src_mtime": 1723707547.7388544,
+            "process_time": 1765817693.6789312,
+            "target_file": "Localization\\en\\01-GraphicsAPI\\0.概述.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.7388544,
+            "process_time": 1765818031.078841,
+            "target_file": "Localization\\ja\\01-GraphicsAPI\\0.概述.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.7388544,
+            "process_time": 1765818245.4090068,
+            "target_file": "Localization\\ko\\01-GraphicsAPI\\0.概述.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.7388544,
+            "process_time": 1765818474.733967,
+            "target_file": "Localization\\fr\\01-GraphicsAPI\\0.概述.md"
+        }
+    },
+    "01-GraphicsAPI\\1.基础.md": {
+        "en": {
+            "src_mtime": 1723707547.7604234,
+            "process_time": 1765818596.4962173,
+            "target_file": "Localization\\en\\01-GraphicsAPI\\1.基础.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.7604234,
+            "process_time": 1765818870.4795418,
+            "target_file": "Localization\\ja\\01-GraphicsAPI\\1.基础.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.7604234,
+            "process_time": 1765819073.664799,
+            "target_file": "Localization\\ko\\01-GraphicsAPI\\1.基础.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.7604234,
+            "process_time": 1765819284.9892583,
+            "target_file": "Localization\\fr\\01-GraphicsAPI\\1.基础.md"
+        }
+    },
+    "01-GraphicsAPI\\2.图形渲染管线.md": {
+        "en": {
+            "src_mtime": 1723707547.7794318,
+            "process_time": 1765819373.16444,
+            "target_file": "Localization\\en\\01-GraphicsAPI\\2.图形渲染管线.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.7794318,
+            "process_time": 1765819528.6159332,
+            "target_file": "Localization\\ja\\01-GraphicsAPI\\2.图形渲染管线.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.7794318,
+            "process_time": 1765819633.3550346,
+            "target_file": "Localization\\ko\\01-GraphicsAPI\\2.图形渲染管线.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.7794318,
+            "process_time": 1765819752.7879503,
+            "target_file": "Localization\\fr\\01-GraphicsAPI\\2.图形渲染管线.md"
+        }
+    },
+    "01-GraphicsAPI\\3.着色器.md": {
+        "en": {
+            "src_mtime": 1723707547.7994316,
+            "process_time": 1765819916.7806754,
+            "target_file": "Localization\\en\\01-GraphicsAPI\\3.着色器.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.7994316,
+            "process_time": 1765820189.2423768,
+            "target_file": "Localization\\ja\\01-GraphicsAPI\\3.着色器.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.7994316,
+            "process_time": 1765820361.3748868,
+            "target_file": "Localization\\ko\\01-GraphicsAPI\\3.着色器.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.7994316,
+            "process_time": 1765820585.1912673,
+            "target_file": "Localization\\fr\\01-GraphicsAPI\\3.着色器.md"
+        }
+    },
+    "01-GraphicsAPI\\4.缓冲区与纹理.md": {
+        "en": {
+            "src_mtime": 1723707547.8154275,
+            "process_time": 1765820715.4427445,
+            "target_file": "Localization\\en\\01-GraphicsAPI\\4.缓冲区与纹理.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.8154275,
+            "process_time": 1765820955.2977471,
+            "target_file": "Localization\\ja\\01-GraphicsAPI\\4.缓冲区与纹理.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.8154275,
+            "process_time": 1765821150.6797655,
+            "target_file": "Localization\\ko\\01-GraphicsAPI\\4.缓冲区与纹理.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.8154275,
+            "process_time": 1765821311.6727,
+            "target_file": "Localization\\fr\\01-GraphicsAPI\\4.缓冲区与纹理.md"
+        }
+    },
+    "01-GraphicsAPI\\5.三维空间.md": {
+        "en": {
+            "src_mtime": 1723707547.8304317,
+            "process_time": 1765821440.728087,
+            "target_file": "Localization\\en\\01-GraphicsAPI\\5.三维空间.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.8304317,
+            "process_time": 1765821602.8365688,
+            "target_file": "Localization\\ja\\01-GraphicsAPI\\5.三维空间.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.8304317,
+            "process_time": 1765821754.227715,
+            "target_file": "Localization\\ko\\01-GraphicsAPI\\5.三维空间.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.8304317,
+            "process_time": 1765821930.39215,
+            "target_file": "Localization\\fr\\01-GraphicsAPI\\5.三维空间.md"
+        }
+    },
+    "01-GraphicsAPI\\6.图形渲染进阶.md": {
+        "en": {
+            "src_mtime": 1723707547.8654323,
+            "process_time": 1765822179.342617,
+            "target_file": "Localization\\en\\01-GraphicsAPI\\6.图形渲染进阶.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.8654323,
+            "process_time": 1765822551.6293826,
+            "target_file": "Localization\\ja\\01-GraphicsAPI\\6.图形渲染进阶.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.8654323,
+            "process_time": 1765822885.9672525,
+            "target_file": "Localization\\ko\\01-GraphicsAPI\\6.图形渲染进阶.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.8654323,
+            "process_time": 1765823268.228982,
+            "target_file": "Localization\\fr\\01-GraphicsAPI\\6.图形渲染进阶.md"
+        }
+    },
+    "02-EngineTechnology\\0.渲染架构.md": {
+        "en": {
+            "src_mtime": 1765803933.3189569,
+            "process_time": 1765823452.705197,
+            "target_file": "Localization\\en\\02-EngineTechnology\\0.渲染架构.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3189569,
+            "process_time": 1765823800.9201095,
+            "target_file": "Localization\\ja\\02-EngineTechnology\\0.渲染架构.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3189569,
+            "process_time": 1765824011.347064,
+            "target_file": "Localization\\ko\\02-EngineTechnology\\0.渲染架构.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3189569,
+            "process_time": 1765824220.2380898,
+            "target_file": "Localization\\fr\\02-EngineTechnology\\0.渲染架构.md"
+        }
+    },
+    "02-EngineTechnology\\1.编辑器架构.md": {
+        "en": {
+            "src_mtime": 1723707547.9024277,
+            "process_time": 1765824281.4407618,
+            "target_file": "Localization\\en\\02-EngineTechnology\\1.编辑器架构.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.9024277,
+            "process_time": 1765824421.0013998,
+            "target_file": "Localization\\ja\\02-EngineTechnology\\1.编辑器架构.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.9024277,
+            "process_time": 1765824515.1854389,
+            "target_file": "Localization\\ko\\02-EngineTechnology\\1.编辑器架构.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.9024277,
+            "process_time": 1765824633.640344,
+            "target_file": "Localization\\fr\\02-EngineTechnology\\1.编辑器架构.md"
+        }
+    },
+    "02-EngineTechnology\\Waitting.md": {
+        "en": {
+            "src_mtime": 1765803933.3189569,
+            "process_time": 1765824634.441916,
+            "target_file": "Localization\\en\\02-EngineTechnology\\Waitting.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3189569,
+            "process_time": 1765824635.4766195,
+            "target_file": "Localization\\ja\\02-EngineTechnology\\Waitting.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3189569,
+            "process_time": 1765824636.53546,
+            "target_file": "Localization\\ko\\02-EngineTechnology\\Waitting.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3189569,
+            "process_time": 1765824637.3776097,
+            "target_file": "Localization\\fr\\02-EngineTechnology\\Waitting.md"
+        }
+    },
+    "03-GraphicsTechnology\\Waitting.md": {
+        "en": {
+            "src_mtime": 1765803933.3199563,
+            "process_time": 1765824638.47909,
+            "target_file": "Localization\\en\\03-GraphicsTechnology\\Waitting.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3199563,
+            "process_time": 1765824639.4168103,
+            "target_file": "Localization\\ja\\03-GraphicsTechnology\\Waitting.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3199563,
+            "process_time": 1765824640.1816335,
+            "target_file": "Localization\\ko\\03-GraphicsTechnology\\Waitting.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3199563,
+            "process_time": 1765824641.127348,
+            "target_file": "Localization\\fr\\03-GraphicsTechnology\\Waitting.md"
+        }
+    },
+    "04-UnrealEngine\\+.虚幻开发者的基本素养.md": {
+        "en": {
+            "src_mtime": 1765803933.3209612,
+            "process_time": 1765824644.3915062,
+            "target_file": "Localization\\en\\04-UnrealEngine\\+.虚幻开发者的基本素养.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3209612,
+            "process_time": 1765824648.4781497,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\+.虚幻开发者的基本素养.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3209612,
+            "process_time": 1765824652.4887648,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\+.虚幻开发者的基本素养.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3209612,
+            "process_time": 1765824655.9297466,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\+.虚幻开发者的基本素养.md"
+        }
+    },
+    "04-UnrealEngine\\0.基础编程.md": {
+        "en": {
+            "src_mtime": 1765803933.3219564,
+            "process_time": 1765824997.059821,
+            "target_file": "Localization\\en\\04-UnrealEngine\\0.基础编程.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3219564,
+            "process_time": 1765825538.4260752,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\0.基础编程.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3219564,
+            "process_time": 1765825980.5043125,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\0.基础编程.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3219564,
+            "process_time": 1765826421.1981125,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\0.基础编程.md"
+        }
+    },
+    "04-UnrealEngine\\1.Slate开发.md": {
+        "en": {
+            "src_mtime": 1723707547.9994314,
+            "process_time": 1765826676.6480982,
+            "target_file": "Localization\\en\\04-UnrealEngine\\1.Slate开发.md"
+        },
+        "ja": {
+            "src_mtime": 1723707547.9994314,
+            "process_time": 1765827065.3078177,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\1.Slate开发.md"
+        },
+        "ko": {
+            "src_mtime": 1723707547.9994314,
+            "process_time": 1765827386.2879162,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\1.Slate开发.md"
+        },
+        "fr": {
+            "src_mtime": 1723707547.9994314,
+            "process_time": 1765827703.020389,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\1.Slate开发.md"
+        }
+    },
+    "04-UnrealEngine\\10.LOD不完全指南.md": {
+        "en": {
+            "src_mtime": 1765803933.3229563,
+            "process_time": 1765827844.5995216,
+            "target_file": "Localization\\en\\04-UnrealEngine\\10.LOD不完全指南.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3229563,
+            "process_time": 1765828077.0420065,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\10.LOD不完全指南.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3229563,
+            "process_time": 1765828293.392245,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\10.LOD不完全指南.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3229563,
+            "process_time": 1765828840.3086658,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\10.LOD不完全指南.md"
+        }
+    },
+    "04-UnrealEngine\\11.TextureGraph.md": {
+        "en": {
+            "src_mtime": 1765803933.3239563,
+            "process_time": 1765828872.4426408,
+            "target_file": "Localization\\en\\04-UnrealEngine\\11.TextureGraph.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3239563,
+            "process_time": 1765828928.5974026,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\11.TextureGraph.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3239563,
+            "process_time": 1765828980.2159107,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\11.TextureGraph.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3239563,
+            "process_time": 1765829022.3600237,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\11.TextureGraph.md"
+        }
+    },
+    "04-UnrealEngine\\12.程序化内容管理.md": {
+        "en": {
+            "src_mtime": 1765803933.32496,
+            "process_time": 1765829171.2897375,
+            "target_file": "Localization\\en\\04-UnrealEngine\\12.程序化内容管理.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.32496,
+            "process_time": 1765829433.2426798,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\12.程序化内容管理.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.32496,
+            "process_time": 1765829599.6557598,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\12.程序化内容管理.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.32496,
+            "process_time": 1765829812.9008038,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\12.程序化内容管理.md"
+        }
+    },
+    "04-UnrealEngine\\13.现代图形工艺.md": {
+        "en": {
+            "src_mtime": 1765803933.32496,
+            "process_time": 1765829815.3729532,
+            "target_file": "Localization\\en\\04-UnrealEngine\\13.现代图形工艺.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.32496,
+            "process_time": 1765829817.7713845,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\13.现代图形工艺.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.32496,
+            "process_time": 1765829819.7593818,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\13.现代图形工艺.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.32496,
+            "process_time": 1765829821.9071834,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\13.现代图形工艺.md"
+        }
+    },
+    "04-UnrealEngine\\14.虚幻引擎的几何处理.md": {
+        "en": {
+            "src_mtime": 1765803933.325956,
+            "process_time": 1765829880.887747,
+            "target_file": "Localization\\en\\04-UnrealEngine\\14.虚幻引擎的几何处理.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.325956,
+            "process_time": 1765829964.5115418,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\14.虚幻引擎的几何处理.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.325956,
+            "process_time": 1765830056.017513,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\14.虚幻引擎的几何处理.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.325956,
+            "process_time": 1765830154.015719,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\14.虚幻引擎的几何处理.md"
+        }
+    },
+    "04-UnrealEngine\\15.MVP.md": {
+        "en": {
+            "src_mtime": 1765803933.325956,
+            "process_time": 1765830155.1076887,
+            "target_file": "Localization\\en\\04-UnrealEngine\\15.MVP.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.325956,
+            "process_time": 1765830157.3159573,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\15.MVP.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.325956,
+            "process_time": 1765830158.906684,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\15.MVP.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.325956,
+            "process_time": 1765830160.6863039,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\15.MVP.md"
+        }
+    },
+    "04-UnrealEngine\\16.3DGaussianSplatting.md": {
+        "en": {
+            "src_mtime": 1765803933.3269625,
+            "process_time": 1765830294.236855,
+            "target_file": "Localization\\en\\04-UnrealEngine\\16.3DGaussianSplatting.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3269625,
+            "process_time": 1765830521.68911,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\16.3DGaussianSplatting.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3269625,
+            "process_time": 1765830693.5165834,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\16.3DGaussianSplatting.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3269625,
+            "process_time": 1765830903.3926115,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\16.3DGaussianSplatting.md"
+        }
+    },
+    "04-UnrealEngine\\17.Landscape避坑指南.md": {
+        "en": {
+            "src_mtime": 1765803933.32796,
+            "process_time": 1765830999.9104474,
+            "target_file": "Localization\\en\\04-UnrealEngine\\17.Landscape避坑指南.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.32796,
+            "process_time": 1765831217.0703478,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\17.Landscape避坑指南.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.32796,
+            "process_time": 1765831358.420459,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\17.Landscape避坑指南.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.32796,
+            "process_time": 1765831544.0544732,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\17.Landscape避坑指南.md"
+        }
+    },
+    "04-UnrealEngine\\18.开放世界.md": {
+        "en": {
+            "src_mtime": 1765803933.32796,
+            "process_time": 1765831545.8789492,
+            "target_file": "Localization\\en\\04-UnrealEngine\\18.开放世界.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.32796,
+            "process_time": 1765831549.0409713,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\18.开放世界.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.32796,
+            "process_time": 1765831551.9876564,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\18.开放世界.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.32796,
+            "process_time": 1765831554.7559927,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\18.开放世界.md"
+        }
+    },
+    "04-UnrealEngine\\2.插件开发.md": {
+        "en": {
+            "src_mtime": 1723707548.0174317,
+            "process_time": 1765831687.555467,
+            "target_file": "Localization\\en\\04-UnrealEngine\\2.插件开发.md"
+        },
+        "ja": {
+            "src_mtime": 1723707548.0174317,
+            "process_time": 1765831879.5132823,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\2.插件开发.md"
+        },
+        "ko": {
+            "src_mtime": 1723707548.0174317,
+            "process_time": 1765832034.4840028,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\2.插件开发.md"
+        },
+        "fr": {
+            "src_mtime": 1723707548.0174317,
+            "process_time": 1765832197.9422019,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\2.插件开发.md"
+        }
+    },
+    "04-UnrealEngine\\3.粒子系统.md": {
+        "en": {
+            "src_mtime": 1723707548.0454278,
+            "process_time": 1765832372.0144181,
+            "target_file": "Localization\\en\\04-UnrealEngine\\3.粒子系统.md"
+        },
+        "ja": {
+            "src_mtime": 1723707548.0454278,
+            "process_time": 1765832630.6127372,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\3.粒子系统.md"
+        },
+        "ko": {
+            "src_mtime": 1723707548.0454278,
+            "process_time": 1765832866.896804,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\3.粒子系统.md"
+        },
+        "fr": {
+            "src_mtime": 1723707548.0454278,
+            "process_time": 1765833136.7726042,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\3.粒子系统.md"
+        }
+    },
+    "04-UnrealEngine\\4.Niagra性能优化.md": {
+        "en": {
+            "src_mtime": 1723707548.0644312,
+            "process_time": 1765833262.4569829,
+            "target_file": "Localization\\en\\04-UnrealEngine\\4.Niagra性能优化.md"
+        },
+        "ja": {
+            "src_mtime": 1723707548.0644312,
+            "process_time": 1765833553.5294785,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\4.Niagra性能优化.md"
+        },
+        "ko": {
+            "src_mtime": 1723707548.0644312,
+            "process_time": 1765833759.6284032,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\4.Niagra性能优化.md"
+        },
+        "fr": {
+            "src_mtime": 1723707548.0644312,
+            "process_time": 1765833930.7086272,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\4.Niagra性能优化.md"
+        }
+    },
+    "04-UnrealEngine\\5.FluidNinja流体插件.md": {
+        "en": {
+            "src_mtime": 1765803933.3289561,
+            "process_time": 1765834013.6444063,
+            "target_file": "Localization\\en\\04-UnrealEngine\\5.FluidNinja流体插件.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3289561,
+            "process_time": 1765834202.1260762,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\5.FluidNinja流体插件.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3289561,
+            "process_time": 1765834350.9714892,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\5.FluidNinja流体插件.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3289561,
+            "process_time": 1765834489.8106055,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\5.FluidNinja流体插件.md"
+        }
+    },
+    "04-UnrealEngine\\6.开放世界制作.md": {
+        "en": {
+            "src_mtime": 1723707548.1054313,
+            "process_time": 1765834681.68851,
+            "target_file": "Localization\\en\\04-UnrealEngine\\6.开放世界制作.md"
+        },
+        "ja": {
+            "src_mtime": 1723707548.1054313,
+            "process_time": 1765834946.8206086,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\6.开放世界制作.md"
+        },
+        "ko": {
+            "src_mtime": 1723707548.1054313,
+            "process_time": 1765835188.6681893,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\6.开放世界制作.md"
+        },
+        "fr": {
+            "src_mtime": 1723707548.1054313,
+            "process_time": 1765835457.4053023,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\6.开放世界制作.md"
+        }
+    },
+    "04-UnrealEngine\\7.音频开发.md": {
+        "en": {
+            "src_mtime": 1765803933.3299606,
+            "process_time": 1765835647.1527147,
+            "target_file": "Localization\\en\\04-UnrealEngine\\7.音频开发.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3299606,
+            "process_time": 1765835986.139839,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\7.音频开发.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3299606,
+            "process_time": 1765836259.7618644,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\7.音频开发.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3299606,
+            "process_time": 1765836587.033498,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\7.音频开发.md"
+        }
+    },
+    "04-UnrealEngine\\8.开放场景搭建.md": {
+        "en": {
+            "src_mtime": 1765803933.3309596,
+            "process_time": 1765836621.407833,
+            "target_file": "Localization\\en\\04-UnrealEngine\\8.开放场景搭建.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3309596,
+            "process_time": 1765836662.9134812,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\8.开放场景搭建.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3309596,
+            "process_time": 1765836705.3817458,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\8.开放场景搭建.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3309596,
+            "process_time": 1765836739.4208457,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\8.开放场景搭建.md"
+        }
+    },
+    "04-UnrealEngine\\9.开放世界中的植被优化技术.md": {
+        "en": {
+            "src_mtime": 1765803933.3319552,
+            "process_time": 1765836908.424465,
+            "target_file": "Localization\\en\\04-UnrealEngine\\9.开放世界中的植被优化技术.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3319552,
+            "process_time": 1765837209.7662897,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\9.开放世界中的植被优化技术.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3319552,
+            "process_time": 1765837442.66639,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\9.开放世界中的植被优化技术.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3319552,
+            "process_time": 1765837705.592992,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\9.开放世界中的植被优化技术.md"
+        }
+    },
+    "04-UnrealEngine\\Cosmos\\0.起源.md": {
+        "en": {
+            "src_mtime": 1765803933.3329597,
+            "process_time": 1765837724.5691857,
+            "target_file": "Localization\\en\\04-UnrealEngine\\Cosmos\\0.起源.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3329597,
+            "process_time": 1765837756.7274134,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\Cosmos\\0.起源.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3329597,
+            "process_time": 1765837789.76393,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\Cosmos\\0.起源.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3329597,
+            "process_time": 1765837820.2970407,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\Cosmos\\0.起源.md"
+        }
+    },
+    "04-UnrealEngine\\Cosmos\\1.UI框架.md": {
+        "en": {
+            "src_mtime": 1765803933.3339593,
+            "process_time": 1765837821.071309,
+            "target_file": "Localization\\en\\04-UnrealEngine\\Cosmos\\1.UI框架.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3339593,
+            "process_time": 1765837821.817511,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\Cosmos\\1.UI框架.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3339593,
+            "process_time": 1765837822.5901213,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\Cosmos\\1.UI框架.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3339593,
+            "process_time": 1765837823.509461,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\Cosmos\\1.UI框架.md"
+        }
+    },
+    "04-UnrealEngine\\Cosmos\\2.3D高斯.md": {
+        "en": {
+            "src_mtime": 1765803933.3339593,
+            "process_time": 1765837824.143701,
+            "target_file": "Localization\\en\\04-UnrealEngine\\Cosmos\\2.3D高斯.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3339593,
+            "process_time": 1765837825.0585372,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\Cosmos\\2.3D高斯.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3339593,
+            "process_time": 1765837825.8328116,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\Cosmos\\2.3D高斯.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3339593,
+            "process_time": 1765837826.541052,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\Cosmos\\2.3D高斯.md"
+        }
+    },
+    "04-UnrealEngine\\Cosmos\\3.AI.md": {
+        "en": {
+            "src_mtime": 1765803933.3349607,
+            "process_time": 1765837827.49717,
+            "target_file": "Localization\\en\\04-UnrealEngine\\Cosmos\\3.AI.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3349607,
+            "process_time": 1765837828.4088373,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\Cosmos\\3.AI.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3349607,
+            "process_time": 1765837829.2857177,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\Cosmos\\3.AI.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3349607,
+            "process_time": 1765837830.1411214,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\Cosmos\\3.AI.md"
+        }
+    },
+    "04-UnrealEngine\\Cosmos\\4.程序化.md": {
+        "en": {
+            "src_mtime": 1765803933.3349607,
+            "process_time": 1765837830.9972463,
+            "target_file": "Localization\\en\\04-UnrealEngine\\Cosmos\\4.程序化.md"
+        },
+        "ja": {
+            "src_mtime": 1765803933.3349607,
+            "process_time": 1765837831.9059596,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\Cosmos\\4.程序化.md"
+        },
+        "ko": {
+            "src_mtime": 1765803933.3349607,
+            "process_time": 1765837832.7506857,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\Cosmos\\4.程序化.md"
+        },
+        "fr": {
+            "src_mtime": 1765803933.3349607,
+            "process_time": 1765837833.54129,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\Cosmos\\4.程序化.md"
+        }
+    },
+    "04-UnrealEngine\\FX\\0.传送门效果.md": {
+        "en": {
+            "src_mtime": 1723707548.199427,
+            "process_time": 1765837846.7197585,
+            "target_file": "Localization\\en\\04-UnrealEngine\\FX\\0.传送门效果.md"
+        },
+        "ja": {
+            "src_mtime": 1723707548.199427,
+            "process_time": 1765837871.0866346,
+            "target_file": "Localization\\ja\\04-UnrealEngine\\FX\\0.传送门效果.md"
+        },
+        "ko": {
+            "src_mtime": 1723707548.199427,
+            "process_time": 1765837890.2560008,
+            "target_file": "Localization\\ko\\04-UnrealEngine\\FX\\0.传送门效果.md"
+        },
+        "fr": {
+            "src_mtime": 1723707548.199427,
+            "process_time": 1765837910.112079,
+            "target_file": "Localization\\fr\\04-UnrealEngine\\FX\\0.传送门效果.md"
+        }
+    },
+    "05-OpenSource\\C++\\C++反射编译器.md": {
+        "en": {
+            "src_mtime": 1765803934.6735215,
+            "process_time": 1765838015.341905,
+            "target_file": "Localization\\en\\05-OpenSource\\C++\\C++反射编译器.md"
+        },
+        "ja": {
+            "src_mtime": 1765803934.6735215,
+            "process_time": 1765838232.1800919,
+            "target_file": "Localization\\ja\\05-OpenSource\\C++\\C++反射编译器.md"
+        },
+        "ko": {
+            "src_mtime": 1765803934.6735215,
+            "process_time": 1765838398.1992073,
+            "target_file": "Localization\\ko\\05-OpenSource\\C++\\C++反射编译器.md"
+        },
+        "fr": {
+            "src_mtime": 1765803934.6735215,
+            "process_time": 1765838566.7209814,
+            "target_file": "Localization\\fr\\05-OpenSource\\C++\\C++反射编译器.md"
+        }
+    },
+    "05-OpenSource\\Qt\\Qt屏幕取色器.md": {
+        "en": {
+            "src_mtime": 1765803934.6745217,
+            "process_time": 1765838576.413922,
+            "target_file": "Localization\\en\\05-OpenSource\\Qt\\Qt屏幕取色器.md"
+        },
+        "ja": {
+            "src_mtime": 1765803934.6745217,
+            "process_time": 1765838595.570968,
+            "target_file": "Localization\\ja\\05-OpenSource\\Qt\\Qt屏幕取色器.md"
+        },
+        "ko": {
+            "src_mtime": 1765803934.6745217,
+            "process_time": 1765838614.8296096,
+            "target_file": "Localization\\ko\\05-OpenSource\\Qt\\Qt屏幕取色器.md"
+        },
+        "fr": {
+            "src_mtime": 1765803934.6745217,
+            "process_time": 1765838630.453688,
+            "target_file": "Localization\\fr\\05-OpenSource\\Qt\\Qt屏幕取色器.md"
+        }
+    },
+    "05-OpenSource\\Qt\\Qt拟态窗口滤镜.md": {
+        "en": {
+            "src_mtime": 1765803934.6755216,
+            "process_time": 1765838638.1757953,
+            "target_file": "Localization\\en\\05-OpenSource\\Qt\\Qt拟态窗口滤镜.md"
+        },
+        "ja": {
+            "src_mtime": 1765803934.6755216,
+            "process_time": 1765838651.3941615,
+            "target_file": "Localization\\ja\\05-OpenSource\\Qt\\Qt拟态窗口滤镜.md"
+        },
+        "ko": {
+            "src_mtime": 1765803934.6755216,
+            "process_time": 1765838661.7235155,
+            "target_file": "Localization\\ko\\05-OpenSource\\Qt\\Qt拟态窗口滤镜.md"
+        },
+        "fr": {
+            "src_mtime": 1765803934.6755216,
+            "process_time": 1765838672.024843,
+            "target_file": "Localization\\fr\\05-OpenSource\\Qt\\Qt拟态窗口滤镜.md"
+        }
+    },
+    "05-OpenSource\\Qt\\Qt桌面水面波纹特效.md": {
+        "en": {
+            "src_mtime": 1765803934.6755216,
+            "process_time": 1765838713.7149482,
+            "target_file": "Localization\\en\\05-OpenSource\\Qt\\Qt桌面水面波纹特效.md"
+        },
+        "ja": {
+            "src_mtime": 1765803934.6755216,
+            "process_time": 1765838777.430447,
+            "target_file": "Localization\\ja\\05-OpenSource\\Qt\\Qt桌面水面波纹特效.md"
+        },
+        "ko": {
+            "src_mtime": 1765803934.6755216,
+            "process_time": 1765838836.861688,
+            "target_file": "Localization\\ko\\05-OpenSource\\Qt\\Qt桌面水面波纹特效.md"
+        },
+        "fr": {
+            "src_mtime": 1765803934.6755216,
+            "process_time": 1765838893.4447496,
+            "target_file": "Localization\\fr\\05-OpenSource\\Qt\\Qt桌面水面波纹特效.md"
+        }
+    },
+    "05-OpenSource\\Qt\\Qt桌面粒子特效.md": {
+        "en": {
+            "src_mtime": 1765803934.678527,
+            "process_time": 1765838912.1271622,
+            "target_file": "Localization\\en\\05-OpenSource\\Qt\\Qt桌面粒子特效.md"
+        },
+        "ja": {
+            "src_mtime": 1765803934.678527,
+            "process_time": 1765838937.8831902,
+            "target_file": "Localization\\ja\\05-OpenSource\\Qt\\Qt桌面粒子特效.md"
+        },
+        "ko": {
+            "src_mtime": 1765803934.678527,
+            "process_time": 1765838964.9173594,
+            "target_file": "Localization\\ko\\05-OpenSource\\Qt\\Qt桌面粒子特效.md"
+        },
+        "fr": {
+            "src_mtime": 1765803934.678527,
+            "process_time": 1765838986.6379347,
+            "target_file": "Localization\\fr\\05-OpenSource\\Qt\\Qt桌面粒子特效.md"
+        }
+    },
+    "05-OpenSource\\Qt\\Qt渐变调色器.md": {
+        "en": {
+            "src_mtime": 1765803934.678527,
+            "process_time": 1765838989.4321868,
+            "target_file": "Localization\\en\\05-OpenSource\\Qt\\Qt渐变调色器.md"
+        },
+        "ja": {
+            "src_mtime": 1765803934.678527,
+            "process_time": 1765838993.2902162,
+            "target_file": "Localization\\ja\\05-OpenSource\\Qt\\Qt渐变调色器.md"
+        },
+        "ko": {
+            "src_mtime": 1765803934.678527,
+            "process_time": 1765838996.9103193,
+            "target_file": "Localization\\ko\\05-OpenSource\\Qt\\Qt渐变调色器.md"
+        },
+        "fr": {
+            "src_mtime": 1765803934.678527,
+            "process_time": 1765839000.4551783,
+            "target_file": "Localization\\fr\\05-OpenSource\\Qt\\Qt渐变调色器.md"
+        }
+    },
+    "05-OpenSource\\Qt\\音频可视化软件-Specinker.md": {
+        "en": {
+            "src_mtime": 1765803934.8341393,
+            "process_time": 1765839085.336358,
+            "target_file": "Localization\\en\\05-OpenSource\\Qt\\音频可视化软件-Specinker.md"
+        },
+        "ja": {
+            "src_mtime": 1765803934.8341393,
+            "process_time": 1765839239.4001844,
+            "target_file": "Localization\\ja\\05-OpenSource\\Qt\\音频可视化软件-Specinker.md"
+        },
+        "ko": {
+            "src_mtime": 1765803934.8341393,
+            "process_time": 1765839676.2328987,
+            "target_file": "Localization\\ko\\05-OpenSource\\Qt\\音频可视化软件-Specinker.md"
+        },
+        "fr": {
+            "src_mtime": 1765803934.8341393,
+            "process_time": 1765839820.8545206,
+            "target_file": "Localization\\fr\\05-OpenSource\\Qt\\音频可视化软件-Specinker.md"
+        }
+    },
+    "05-OpenSource\\Qt\\频谱分析器.md": {
+        "en": {
+            "src_mtime": 1765803934.8341393,
+            "process_time": 1765839830.2127666,
+            "target_file": "Localization\\en\\05-OpenSource\\Qt\\频谱分析器.md"
+        },
+        "ja": {
+            "src_mtime": 1765803934.8341393,
+            "process_time": 1765839849.8201692,
+            "target_file": "Localization\\ja\\05-OpenSource\\Qt\\频谱分析器.md"
+        },
+        "ko": {
+            "src_mtime": 1765803934.8341393,
+            "process_time": 1765839865.3059094,
+            "target_file": "Localization\\ko\\05-OpenSource\\Qt\\频谱分析器.md"
+        },
+        "fr": {
+            "src_mtime": 1765803934.8341393,
+            "process_time": 1765839880.2659686,
+            "target_file": "Localization\\fr\\05-OpenSource\\Qt\\频谱分析器.md"
+        }
+    },
+    "05-OpenSource\\UnrealEngine\\GaussianSplattingForUnrealEngine.md": {
+        "en": {
+            "src_mtime": 1765803934.8350642,
+            "process_time": 1765839888.9428887,
+            "target_file": "Localization\\en\\05-OpenSource\\UnrealEngine\\GaussianSplattingForUnrealEngine.md"
+        },
+        "ja": {
+            "src_mtime": 1765803934.8350642,
+            "process_time": 1765839907.2707028,
+            "target_file": "Localization\\ja\\05-OpenSource\\UnrealEngine\\GaussianSplattingForUnrealEngine.md"
+        },
+        "ko": {
+            "src_mtime": 1765803934.8350642,
+            "process_time": 1765839922.2945642,
+            "target_file": "Localization\\ko\\05-OpenSource\\UnrealEngine\\GaussianSplattingForUnrealEngine.md"
+        },
+        "fr": {
+            "src_mtime": 1765803934.8350642,
+            "process_time": 1765839937.9954169,
+            "target_file": "Localization\\fr\\05-OpenSource\\UnrealEngine\\GaussianSplattingForUnrealEngine.md"
+        }
+    },
+    "06-Blog\\index.md": {
+        "en": {
+            "src_mtime": 1765803935.5598862,
+            "process_time": 1765839938.8115532,
+            "target_file": "Localization\\en\\06-Blog\\index.md"
+        },
+        "ja": {
+            "src_mtime": 1765803935.5598862,
+            "process_time": 1765839939.644178,
+            "target_file": "Localization\\ja\\06-Blog\\index.md"
+        },
+        "ko": {
+            "src_mtime": 1765803935.5598862,
+            "process_time": 1765839940.5410573,
+            "target_file": "Localization\\ko\\06-Blog\\index.md"
+        },
+        "fr": {
+            "src_mtime": 1765803935.5598862,
+            "process_time": 1765839941.2943122,
+            "target_file": "Localization\\fr\\06-Blog\\index.md"
+        }
+    },
+    "MkdocsRepair\\README.md": {
+        "en": {
+            "src_mtime": 1765803935.562886,
+            "process_time": 1765839942.670447,
+            "target_file": "Localization\\en\\MkdocsRepair\\README.md"
+        },
+        "ja": {
+            "src_mtime": 1765803935.562886,
+            "process_time": 1765839944.392476,
+            "target_file": "Localization\\ja\\MkdocsRepair\\README.md"
+        },
+        "ko": {
+            "src_mtime": 1765803935.562886,
+            "process_time": 1765839946.1153119,
+            "target_file": "Localization\\ko\\MkdocsRepair\\README.md"
+        },
+        "fr": {
+            "src_mtime": 1765803935.562886,
+            "process_time": 1765839948.000904,
+            "target_file": "Localization\\fr\\MkdocsRepair\\README.md"
+        }
+    }
+}
