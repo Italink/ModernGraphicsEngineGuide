@@ -1,0 +1,4371 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+          <link rel="alternate" href="/" hreflang="zh">
+        
+          <link rel="alternate" href="/Localization/en/" hreflang="en">
+        
+          <link rel="alternate" href="/Localization/ja/" hreflang="ja">
+        
+          <link rel="alternate" href="/Localization/ko/" hreflang="ko">
+        
+          <link rel="alternate" href="/Localization/fr/" hreflang="fr">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>2.插件开发 - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-S1J8MN27P8",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link rel="stylesheet" href="../../../../assets/stylesheets/custom.2fa34c39.min.css">
+
+  <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&amp;k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76"></path></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2.插件开发
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="zh" class="md-select__link">
+              Chinese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/en/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ja/" hreflang="ja" class="md-select__link">
+              Japanese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ko/" hreflang="ko" class="md-select__link">
+              Korean
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/fr/" hreflang="fr" class="md-select__link">
+              French
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  开源
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../06-Blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  个人博客
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 计算机发展史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - C++基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 宏、模板、反射
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 内存管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - GUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图形API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    图形API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 图形渲染管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 着色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 缓冲区与纹理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - 3D空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 图形API进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引擎技术
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    引擎技术
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 渲染架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 编辑器架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unreal Engine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unreal Engine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 基础编程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - Slate 开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 插件开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 粒子系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - Niagara 性能优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - Fluid Ninja 流体插件
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 开放世界制作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/7.%E9%9F%B3%E9%A2%91%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 - 音频开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/9.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E4%B8%AD%E7%9A%84%E6%A4%8D%E8%A2%AB%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9 - 植被优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/10.LOD%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 - LOD不完全指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/12.%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%86%85%E5%AE%B9%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 - 程序化内容管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/16.3DGaussianSplatting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 - 3DGaussianSplatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/17.Landscape%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 - Landscape 避坑指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开源
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开源
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1">
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UnrealEngine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    UnrealEngine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Splatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2">
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/C%2B%2B/C%2B%2B%E5%8F%8D%E5%B0%84%E7%BC%96%E8%AF%91%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++反射编译器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3">
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Qt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96%E8%BD%AF%E4%BB%B6-Specinker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频可视化软件-Specinker(已闭源)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%A2%91%E8%B0%B1%E5%88%86%E6%9E%90%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    频谱分析器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%8B%9F%E6%80%81%E7%AA%97%E5%8F%A3%E6%BB%A4%E9%95%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt拟态窗口滤镜
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E5%B1%8F%E5%B9%95%E5%8F%96%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt屏幕取色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%B8%90%E5%8F%98%E8%B0%83%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt渐变调色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E7%B2%92%E5%AD%90%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面粒子特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E6%B0%B4%E9%9D%A2%E6%B3%A2%E7%BA%B9%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面水面波纹特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../06-Blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人博客
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    个人博客
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_2">
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    五月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    八月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    六月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    四月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    九月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2019/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_3">
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人随笔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%95%B4%E6%B4%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    整活
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    杂谈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        기초
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        메뉴바 툴바 확장
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        에셋 확장
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        뷰포트 확장
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        디테일 패널 관련
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        블루프린트 확장
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        사용자 경험
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="사용자 경험">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        撤销重做
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        피드백 상호작용
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="피드백 상호작용">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        알림
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        진행 상황 표시
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        대화상자
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        기초 작업
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="기초 작업">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        문자열
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="문자열">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tchar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TCHAR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fstring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FString
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ftext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FText
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FText">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文本 지역화（국제화）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fname" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FName
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        相互转换
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="相互转换">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        경로
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        정규 표현식
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        수학
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        시간 날짜
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        타이머
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        입력 출력
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="입력 출력">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#farchive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FArchive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        文件
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        바이트 스트림
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        이미지
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        직렬화
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Json
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#xml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        XML
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        멀티스레딩
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="멀티스레딩">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fthreadfrunnable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FThread、FRunnable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fstreammanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FStreamManager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#asynctask" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AsyncTask
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taskgraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TaskGraph
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        디버깅
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="디버깅">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        로그
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        어설션
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        성능 분석
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        콘솔 명령
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        모델링 도구
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        개발心得
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>2.插件开发</h1>
+
+<p>플러그인은 엔진과 프로젝트 코드 외부에 존재하며, UE에서 프로그램 기능을 확장하는 주요 방식입니다.</p>
+<p>플러그인은 본질적으로 모듈화된 코드 설계로, 이 설계를 따르면 코드 간 의존성을 줄이고 후속 반복 및 유지 관리가 더 쉬워집니다.</p>
+<p>UE에서 플러그인의 표준 파일 구조는 다음과 같습니다:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20230525143413268.png" data-desc-position="bottom"><img alt="image-20230525143413268" src="../../../../04-UnrealEngine/Resources/image-20230525143413268.png"></a></p>
+<ul>
+<li><code>Binaries</code>：컴파일된 생성 파일 저장</li>
+<li><code>Content</code>：플러그인의 에셋 내용 저장</li>
+<li><code>Intermediate</code>：컴파일 과정에서 생성된 중간 파일 저장</li>
+<li><code>Resources</code>：플러그인의 리소스 파일(예: 아이콘, 비UE 에셋) 저장</li>
+<li>
+<p><code>Source</code>：코드 소스 파일 저장，여러 Module 포함 가능</p>
+</li>
+<li>
+<p><code>*.uplugin</code>：플러그인의 구조 조직 파일</p>
+</li>
+</ul>
+<p>其中 <code>*.uplugin</code> 的 기본 내용如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="s">"FileVersion"</span><span class="o">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">               </span><span class="c1">//파일 버전</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="s">"Version"</span><span class="o">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">                   </span><span class="c1">//버전 번호</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="s">"VersionName"</span><span class="o">:</span><span class="w"> </span><span class="s">"1.0"</span><span class="p">,</span><span class="w">           </span><span class="c1">//버전 이름</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="s">"FriendlyName"</span><span class="o">:</span><span class="w"> </span><span class="s">"CustomPlugin"</span><span class="p">,</span><span class="w"> </span><span class="c1">//별칭</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="s">"Description"</span><span class="o">:</span><span class="w"> </span><span class="s">""</span><span class="p">,</span><span class="w">              </span><span class="c1">//설명</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="s">"Category"</span><span class="o">:</span><span class="w"> </span><span class="s">"Other"</span><span class="p">,</span><span class="w">            </span><span class="c1">//분류</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="s">"CreatedBy"</span><span class="o">:</span><span class="w"> </span><span class="s">""</span><span class="p">,</span><span class="w">                </span><span class="c1">//작성자</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="s">"CreatedByURL"</span><span class="o">:</span><span class="w"> </span><span class="s">""</span><span class="p">,</span><span class="w">             </span><span class="c1">//작성자 링크</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="s">"DocsURL"</span><span class="o">:</span><span class="w"> </span><span class="s">""</span><span class="p">,</span><span class="w">                  </span><span class="c1">//문서 링크</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="s">"MarketplaceURL"</span><span class="o">:</span><span class="w"> </span><span class="s">""</span><span class="p">,</span><span class="w">           </span><span class="c1">//마켓플레이스 링크</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">    </span><span class="s">"SupportURL"</span><span class="o">:</span><span class="w"> </span><span class="s">""</span><span class="p">,</span><span class="w">               </span><span class="c1">//서비스 지원 링크</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="s">"CanContainContent"</span><span class="o">:</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w">     </span><span class="c1">//콘텐츠 디렉토리 포함 여부</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">    </span><span class="s">"IsBetaVersion"</span><span class="o">:</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w">         </span><span class="c1">//베타 버전 여부</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="s">"IsExperimentalVersion"</span><span class="o">:</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w"> </span><span class="c1">//실험적 버전 여부</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="s">"Installed"</span><span class="o">:</span><span class="w"> </span><span class="nb">false</span><span class="p">,</span><span class="w">             </span><span class="c1">//임베디드 여부</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">    </span><span class="s">"Modules"</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w">                    </span><span class="c1">//모듈 정의</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">            </span><span class="s">"Name"</span><span class="o">:</span><span class="w"> </span><span class="s">"CustomPlugin"</span><span class="p">,</span><span class="w">     </span><span class="c1">//모듈 이름</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">            </span><span class="s">"Type"</span><span class="o">:</span><span class="w"> </span><span class="s">"Editor"</span><span class="p">,</span><span class="w">           </span><span class="c1">//모듈 타입</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">            </span><span class="s">"LoadingPhase"</span><span class="o">:</span><span class="w"> </span><span class="s">"Default"</span><span class="w">   </span><span class="c1">//로딩 시점</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">        </span><span class="c1">//,                             //다른 모듈</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">        </span><span class="c1">//{</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">        </span><span class="c1">//  ...    </span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">        </span><span class="c1">//}</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">    </span><span class="p">]</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="p">}</span>
+</code></pre></div>
+<p>이러한 매개변수의 구성에 대한 자세한 내용은 다음을 참조하세요:</p>
+<ul>
+<li><a href="https://docs.unrealengine.com/5.2/en-US/unreal-engine-modules">https://docs.unrealengine.com/5.2/en-US/unreal-engine-modules</a></li>
+</ul>
+<p>UE에서 플러그인을 개발할 때常見的工作流는 다음과 같습니다:</p>
+<ul>
+<li>
+<p><code>편집</code> - <code>플러그인</code>을 클릭하여 플러그인 패널 열기</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20230525145122582.png" data-desc-position="bottom"><img alt="image-20230525145122582" src="../../../../04-UnrealEngine/Resources/image-20230525145122582.png"></a></p>
+</li>
+<li>
+<p>새 플러그인 추가</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20230525145306629.png" data-desc-position="bottom"><img alt="image-20230525145306629" src="../../../../04-UnrealEngine/Resources/image-20230525145306629.png"></a></p>
+</li>
+<li>
+<p>빈 플러그인 생성</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20230525145357430.png" data-desc-position="bottom"><img alt="image-20230525145357430" src="../../../../04-UnrealEngine/Resources/image-20230525145357430.png"></a></p>
+</li>
+<li>
+<p>프로젝트 구조가 변경되었으므로，此时 IDE 프로젝트 파일을 다시 생성해야 합니다</p>
+</li>
+</ul>
+<blockquote>
+<p>빈 플러그인은 좋은 시작점입니다. 다른 플러그인은 일부 부가적인 코드 템플릿을 추가한 것일 뿐，만약 이에 익숙하지 않다면 추가해보고里面의 코드가具体적으로哪些内容을增加했는지了解해보세요. 그作用을掌握하면 빈 플러그인에 추가하기만 하면 됩니다.</p>
+</blockquote>
+<p>이것은 C++ 플러그인에 필수적으로存在하는 파일입니다:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">// MyPlugin.h</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="cp">#pragma once</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"CoreMinimal.h"</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"Modules/ModuleManager.h"</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">class</span><span class="w"> </span><span class="nc">FMyPluginModule</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">IModuleInterface</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">{</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="w">    </span><span class="cm">/** IModuleInterface 구현 */</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">StartupModule</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="p">;</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ShutdownModule</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="p">;</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="p">};</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">// MyPlugin.cpp</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"MyPlugin.h"</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="cp">#define LOCTEXT_NAMESPACE "FMyPluginModule"</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">FMyPluginModule::StartupModule</span><span class="p">()</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">{</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="c1">// 이 코드는 모듈이 메모리에 로드된 후 실행됩니다. 정확한 타이밍은 모듈별 .uplugin 파일에 지정됩니다.</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">}</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="kt">void</span><span class="w"> </span><span class="nf">FMyPluginModule::ShutdownModule</span><span class="p">()</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">{</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="c1">// 이 함수는 종료 시 모듈을 정리하기 위해 호출될 수 있습니다. 동적 재로딩을 지원하는 모듈의 경우，모듈을 언로드하기 전에 이 함수를 호출합니다.</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="p">}</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="cp">#undef LOCTEXT_NAMESPACE</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="n">IMPLEMENT_MODULE</span><span class="p">(</span><span class="n">FMyPluginModule</span><span class="p">,</span><span class="w"> </span><span class="n">MyPlugin</span><span class="p">)</span><span class="w">     </span><span class="c1">//플러그인 진입점 정의</span>
+</code></pre></div>
+<p>UE는 플러그인을 로드할 때 <code>StartupModule()</code>을 호출하고，플러그인을 언로드할 때 <code>ShutdownModule()</code>을 호출합니다.</p>
+<p>플러그인 개발의 코드 흐름은 주로 다음과 같습니다:</p>
+<ul>
+<li><code>StartupModule()</code>에서 **핵심 모듈의 함수 인터페이스**를 호출하거나 **핵심 모듈의 전역 싱글톤**을 사용하여 일부 작업을 수행하거나，일부 로직을 **핵심 모듈의 진입점**에 연결하여 확장 작업을 수행합니다.</li>
+<li><code>ShutdownModule()</code>에서 <code>StartupModule()</code>에서 수행한 작업을 정리합니다.</li>
+</ul>
+<p>其中常見的一些 함수 모듈如下：</p>
+<ul>
+<li><strong>FFileHelper</strong> ：파일 작업</li>
+<li><strong>FPlatformProcess</strong> ：플랫폼 관련 작업</li>
+<li><strong>FBlueprintEditorUtils</strong> ：블루프린트 작업</li>
+<li><strong>FKismetEditorUtilities</strong> ：에디터 작업</li>
+<li><strong>FEdGraphUtilities</strong> ：그래프 작업</li>
+<li><strong>FComponentEditorUtils</strong> ：컴포넌트 에디터 작업</li>
+<li><strong>FEnumEditorUtils</strong> ：열거형 작업</li>
+<li><strong>FStructureEditorUtils</strong> ：구조체 작업</li>
+<li><strong>FEditorFolderUtils</strong> ：에디터 폴더 작업</li>
+<li><strong>FMaterialEditorUtilities</strong> ：머티리얼 작업</li>
+<li><strong>FPluginUtils</strong> ：플러그인 작업</li>
+<li><strong>UGameplayStatics</strong> ：Gameplay 관련 작업</li>
+<li>...</li>
+</ul>
+<p>전역 싱글톤如下：</p>
+<ul>
+<li><code>GEngine</code>，<code>GEditor</code>，<code>GWorld</code>：엔진에서 자주 사용되는 전역 싱글톤</li>
+<li><code>FModuleManager::LoadModuleChecked&lt;FAssetToolsModule&gt;("AssetTools").Get()</code>：에셋의 생성，삭제，이름 변경，가져오기/내보내기...</li>
+<li><code>FModuleManager::LoadModuleChecked&lt;FAssetRegistryModule&gt;(TEXT("AssetRegistry")).Get()</code>：에셋의 검색，열거...</li>
+<li><code>FModuleManager::LoadModuleChecked&lt;ISettingsModule&gt;("Settings")</code>：설정 파일의 관련 관리</li>
+<li><code>FModuleManager::LoadModuleChecked&lt;FPropertyEditorModule&gt;("PropertyEditor")：속성 에디터의 관련 작업</code></li>
+<li><code>FModuleManager::LoadModuleChecked&lt;FLevelEditorModule&gt;(TEXT("LevelEditor"))：레벨 에디터의 관련 작업</code></li>
+<li><code>FModuleManager::LoadModuleChecked&lt;FBlueprintEditorModule&gt;("Kismet")：블루프린트 에디터의 관련 작업</code></li>
+<li>...</li>
+</ul>
+<p>핵심 모듈의 진입점은 일반적으로 다음을指합니다:</p>
+<ul>
+<li><strong>Callback 함수 콜백</strong></li>
+<li><strong>Delegate 델리게이트</strong></li>
+</ul>
+<p>常見的 델리게이트 정의集合有：</p>
+<ul>
+<li>
+<p><strong>FCoreUObjectDelegates</strong> ：UObject 관련 델리게이트</p>
+</li>
+<li>
+<p><strong>FCoreDelegates</strong> ：핵심 모듈의 관련 델리게이트</p>
+</li>
+<li>
+<p><strong>FEditorDelegates</strong> ：에디터 모듈의 관련 델리게이트</p>
+</li>
+<li>
+<p><strong>FWorldDelegates</strong> ：게임 월드 관련 델리게이트</p>
+</li>
+<li><strong>FGameDelegates</strong></li>
+<li>...</li>
+</ul>
+<p>플러그인을编写한 후 컴파일을执行하면，플러그인의<code>Binaries</code>目录下에以下文件이生成됩니다：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20230525162605340.png" data-desc-position="bottom"><img alt="image-20230525162605340" src="../../../../04-UnrealEngine/Resources/image-20230525162605340.png"></a></p>
+<ul>
+<li><code>*.module</code>：모듈 라이브러리의 기본 정보 정의</li>
+<li><code>*.dll</code>：동적 라이브러리</li>
+<li><code>*.pdb</code>：프로그램 디버그 데이터베이스，소스 코드를 통해 라이브러리를断点调试하기 위해 사용됩니다. 자세한 내용은 <a href="https://learn.microsoft.com/en-us/visualstudio/debugger/specify-symbol-dot-pdb-and-source-files-in-the-visual-studio-debugger">此处</a> 참조</li>
+</ul>
+<p>其中*.module的文件内容如下</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="s">"BuildId"</span><span class="o">:</span><span class="w"> </span><span class="s">"a36b278a-b317-44c3-8743-b82361b74343"</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="s">"Modules"</span><span class="o">:</span><span class="w"> </span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">        </span><span class="s">"MyPlugin"</span><span class="o">:</span><span class="w"> </span><span class="s">"UnrealEditor-MyPlugin.dll"</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="p">}</span>
+</code></pre></div>
+<p>这里需要注意的 매개변수는<code>BuildID</code>입니다.它是由 엔진生成的，当 플러그인의<code>BuildID</code>与 엔진的<code>BuildID</code>不一致时，에디터로 프로젝트를启动하면 오류가 발생합니다：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20230525165851860.png" data-desc-position="bottom"><img alt="image-20230525165851860" src="../../../../04-UnrealEngine/Resources/image-20230525165851860.png"></a></p>
+<p>엔진의<code>BuildID</code>는 다음을查看할 수 있습니다：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20230525170207274.png" data-desc-position="bottom"><img alt="image-20230525170207274" src="../../../../04-UnrealEngine/Resources/image-20230525170207274.png"></a></p>
+<h2 id="_1">기초<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<h2 id="_2">메뉴바 툴바 확장<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
+<p>엔진 개발过程中，经常会有一些需求，엔진 에디터의 메뉴바，툴바를 확장하여 버튼을增加하고便捷한 작업을执行하려는 경우가 있습니다.就像这样：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20220526100322912.png" data-desc-position="bottom"><img alt="image-20220526100322912" src="../../../../04-UnrealEngine/Resources/image-20220526100322912.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20220526115630692.png" data-desc-position="bottom"><img alt="image-20220526115630692" src="../../../../04-UnrealEngine/Resources/image-20220526115630692.png"></a></p>
+<p>UE4에서 메뉴를 확장하는主要方式는 **FExtender**를 통해였지만，UE5에서는 더易于使用的新方式 — **UToolMenus**가 있습니다.</p>
+<p>**UToolMenus ** 是一个 싱글톤 클래스，以下 코드를 통해 싱글톤 인스턴스를获取할 수 있습니다：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">UToolMenus</span><span class="o">*</span><span class="w"> </span><span class="n">ToolMenus</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UToolMenus</span><span class="o">::</span><span class="n">Get</span><span class="p">();</span>
+</code></pre></div>
+<p>UE5에서所有可扩展的 메뉴바 툴바는 <code>초기화 시</code> 함수 <code>UToolMenus::RegisterMenu</code>를调用하여注册됩니다：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">UToolMenu</span><span class="o">*</span><span class="w"> </span><span class="n">UToolMenus</span><span class="o">::</span><span class="n">RegisterMenu</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InName</span><span class="p">,</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">                                    </span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InParent</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NAME_None</span><span class="p">,</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">                                    </span><span class="n">EMultiBoxType</span><span class="w"> </span><span class="n">InType</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">EMultiBoxType</span><span class="o">::</span><span class="n">Menu</span><span class="p">,</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">                                    </span><span class="kt">bool</span><span class="w"> </span><span class="n">bWarnIfAlreadyRegistered</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">)</span>
+</code></pre></div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20230524155859423.png" data-desc-position="bottom"><img alt="image-20230524155859423" src="../../../../04-UnrealEngine/Resources/image-20230524155859423.png"></a></p>
+<p>该 함수는扩展 가능한<code>ToolMenu</code>를注册하는 데 사용됩니다. 함수의各个 매개변수 의미如下：</p>
+<ul>
+<li><code>InName</code>：注册에 사용되는链式字段，<code>LevelEditor.LevelEditorToolBar.User</code>와 같은 형식입니다.之后该字段를 Key로 사용하여<code>UToolMenu</code>를得到할 수 있습니다.</li>
+<li><code>InParent</code>：툴 메뉴의 Parent를指定합니다.</li>
+<li><code>InType</code>：该ToolMenu的 타입을指定합니다.这个 타입은该Menu를怎样扩展할 수 있는지决定합니다.以下 값을 가질 수 있습니다：<ul>
+<li><code>MenuBar</code>：메뉴바，메뉴 확장을 지원합니다.</li>
+<li><code>ToolBar</code>：툴바，툴 버튼을添加할 수 있습니다.</li>
+<li><code>VerticalToolBar</code>：수직 툴바</li>
+<li><code>SlimHorizontalToolBar</code>：수평 툴바，툴바의 간소화 버전으로，아이콘과 텍스트 요소를 수평으로 정렬할 수 있습니다.</li>
+<li><code>UniformToolBar</code>：</li>
+<li><code>Menu</code>：메뉴，메뉴 항목을添加할 수 있습니다.</li>
+<li><code>ButtonRow</code>：按行排列的 버튼，每行有最大数量的 버튼，툴바와类似하지만多行으로 구성할 수 있습니다.</li>
+</ul>
+</li>
+<li><code>bWarnIfAlreadyRegistered</code>：Bool 값，该字段已注册된 경우警告을发出합니다.</li>
+</ul>
+<p>当需要 <code>메뉴를预览하는时刻</code> ，则函数<code>UToolMenus::GenerateWidget</code>를调用하여<code>ToolMenu</code>的控件을生成합니다：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">TSharedRef</span><span class="o">&lt;</span><span class="n">SWidget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">UToolMenus</span><span class="o">::</span><span class="n">GenerateWidget</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">Name</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FToolMenuContext</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InMenuContext</span><span class="p">)</span>
+</code></pre></div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20230524154628869.png" data-desc-position="bottom"><img alt="image-20230524154628869" src="../../../../04-UnrealEngine/Resources/image-20230524154628869.png"></a></p>
+<p><code>ToolMenu</code>가 Register된之后，预览之前的任一时机，我们都可以通过函数<code>UToolMenus::ExtendMenu</code>来扩展 메뉴바的内容입니다.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">UToolMenu</span><span class="o">*</span><span class="w"> </span><span class="n">UToolMenus</span><span class="o">::</span><span class="n">ExtendMenu</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">InName</span><span class="p">)</span>
+</code></pre></div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20230524160554125.png" data-desc-position="bottom"><img alt="image-20230524160554125" src="../../../../04-UnrealEngine/Resources/image-20230524160554125.png"></a></p>
+<p>上方 코드中有大量的扩展参考，而这里也有一个简单的 플러그인扩展实例：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="cp">#pragma once</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">"Modules/ModuleManager.h"</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="k">class</span><span class="w"> </span><span class="nc">FCustomPluginModule</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">IModuleInterface</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="p">{</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">StartupModule</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">        </span><span class="c1">//플러그인启动时 UToolMenus的启动에回调을增加합니다.</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">        </span><span class="n">UToolMenus</span><span class="o">::</span><span class="n">RegisterStartupCallback</span><span class="p">(</span><span class="n">FSimpleMulticastDelegate</span><span class="o">::</span><span class="n">FDelegate</span><span class="o">::</span><span class="n">CreateRaw</span><span class="p">(</span><span class="k">this</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">FCustomPluginModule</span><span class="o">::</span><span class="n">RegisterMenus</span><span class="p">));</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">ShutdownModule</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">        </span><span class="c1">//UToolMenus的启动回调을去除하고一些状态를重置합니다.</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">        </span><span class="n">UToolMenus</span><span class="o">::</span><span class="n">UnRegisterStartupCallback</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">        </span><span class="n">UToolMenus</span><span class="o">::</span><span class="n">UnregisterOwner</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="k">private</span><span class="o">:</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="n">RegisterMenus</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="w">        </span><span class="n">FToolMenuOwnerScoped</span><span class="w"> </span><span class="nf">OwnerScoped</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<a id="__codelineno-8-21" name="__codelineno-8-21" href="#__codelineno-8-21"></a><span class="w">        </span><span class="n">UToolMenu</span><span class="o">*</span><span class="w"> </span><span class="n">Menu</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UToolMenus</span><span class="o">::</span><span class="n">Get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">ExtendMenu</span><span class="p">(</span><span class="s">"LevelEditor.LevelEditorToolBar.PlayToolBar"</span><span class="p">);</span>
+<a id="__codelineno-8-22" name="__codelineno-8-22" href="#__codelineno-8-22"></a><span class="w">        </span><span class="n">FToolMenuSection</span><span class="o">&amp;</span><span class="w"> </span><span class="n">Section</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Menu</span><span class="o">-&gt;</span><span class="n">FindOrAddSection</span><span class="p">(</span><span class="s">"PluginTools"</span><span class="p">);</span>
+<a id="__codelineno-8-23" name="__codelineno-8-23" href="#__codelineno-8-23"></a><span class="w">        </span><span class="n">FToolMenuEntry</span><span class="o">&amp;</span><span class="w"> </span><span class="n">MenuEntry</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Section</span><span class="p">.</span><span class="n">AddEntry</span><span class="p">(</span>
+<a id="__codelineno-8-24" name="__codelineno-8-24" href="#__codelineno-8-24"></a><span class="w">            </span><span class="n">FToolMenuEntry</span><span class="o">::</span><span class="n">InitToolBarButton</span><span class="p">(</span><span class="w">          </span><span class="c1">//툴바 버튼添加</span>
+<a id="__codelineno-8-25" name="__codelineno-8-25" href="#__codelineno-8-25"></a><span class="w">                </span><span class="s">"CustomToolbarButton"</span><span class="p">,</span>
+<a id="__codelineno-8-26" name="__codelineno-8-26" href="#__codelineno-8-26"></a><span class="w">                </span><span class="n">FUIAction</span>
+<a id="__codelineno-8-27" name="__codelineno-8-27" href="#__codelineno-8-27"></a><span class="w">                </span><span class="p">(</span>
+<a id="__codelineno-8-28" name="__codelineno-8-28" href="#__codelineno-8-28"></a><span class="w">                    </span><span class="n">FExecuteAction</span><span class="o">::</span><span class="n">CreateLambda</span><span class="p">([]()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-29" name="__codelineno-8-29" href="#__codelineno-8-29"></a><span class="w">                        </span><span class="n">FMessageDialog</span><span class="o">::</span><span class="n">Open</span><span class="p">(</span><span class="n">EAppMsgType</span><span class="o">::</span><span class="n">Ok</span><span class="p">,</span><span class="w"> </span><span class="n">NSLOCTEXT</span><span class="p">(</span><span class="s">"CustomNs"</span><span class="p">,</span><span class="w"> </span><span class="s">"HelloWorld"</span><span class="p">,</span><span class="w"> </span><span class="s">"Hello World!"</span><span class="p">));</span>
+<a id="__codelineno-8-30" name="__codelineno-8-30" href="#__codelineno-8-30"></a><span class="w">                    </span><span class="p">})</span>
+<a id="__codelineno-8-31" name="__codelineno-8-31" href="#__codelineno-8-31"></a><span class="w">                </span><span class="p">)</span>
+<a id="__codelineno-8-32" name="__codelineno-8-32" href="#__codelineno-8-32"></a><span class="w">            </span><span class="p">)</span>
+<a id="__codelineno-8-33" name="__codelineno-8-33" href="#__codelineno-8-33"></a><span class="w">        </span><span class="p">);</span>
+<a id="__codelineno-8-34" name="__codelineno-8-34" href="#__codelineno-8-34"></a><span class="w">        </span><span class="n">MenuEntry</span><span class="p">.</span><span class="n">InsertPosition</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FToolMenuInsert</span><span class="p">(</span><span class="n">NAME_None</span><span class="p">,</span><span class="w"> </span><span class="n">EToolMenuInsertType</span><span class="o">::</span><span class="n">First</span><span class="p">);</span>
+<a id="__codelineno-8-35" name="__codelineno-8-35" href="#__codelineno-8-35"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-8-36" name="__codelineno-8-36" href="#__codelineno-8-36"></a><span class="p">};</span>
+</code></pre></div>
+<p>该 코드는 레벨 에디터主面板的 툴바에 버튼을添加하고，点击时<code>Hello World</code>对话框을弹出합니다：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20230524163937497.png" data-desc-position="bottom"><img alt="image-20230524163937497" src="../../../../04-UnrealEngine/Resources/image-20230524163937497.png"></a></p>
+<p>我们可以在<code>UToolMenus::Get()</code>에断点를添加하고 VS의调试窗口을 통해所有可扩展的字段列表를获取할 수 있습니다：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20230524164244564.png" data-desc-position="bottom"><img alt="image-20230524164244564" src="../../../../04-UnrealEngine/Resources/image-20230524164244564.png"></a></p>
+<h2 id="_3">에셋 확장<a class="headerlink" href="#_3" title="Permanent link">¶</a></h2>
+<h2 id="_4">뷰포트 확장<a class="headerlink" href="#_4" title="Permanent link">¶</a></h2>
+<p>뷰포트를 확장하려면以下几个 구조를使用해야 합니다.</p>
+<ul>
+<li>SEditorViewport</li>
+<li>FEditorViewportClient</li>
+</ul>
+<h2 id="_5">디테일 패널 관련<a class="headerlink" href="#_5" title="Permanent link">¶</a></h2>
+<p><strong>DetailView</strong> 是 UE 反射所带来的另一个强大的功能：</p>
+<h2 id="_6">블루프린트 확장<a class="headerlink" href="#_6" title="Permanent link">¶</a></h2>
+<ul>
+<li><a href="https://ikrima.dev/ue4guide/editor-extensions/custom-blueprints/blueprint-static-analysis/">https://ikrima.dev/ue4guide/editor-extensions/custom-blueprints/blueprint-static-analysis/</a></li>
+</ul>
+<h2 id="_7">사용자 경험<a class="headerlink" href="#_7" title="Permanent link">¶</a></h2>
+<h3 id="_8">撤销重做<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
+<p>UObject는一套事务机制을拥有합니다.如果UObject가标志<code>RF_Transactional</code>을拥有하면，以下 코드를使用할 수 있습니다：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">GEditor</span><span class="o">-&gt;</span><span class="n">BeginTransaction</span><span class="p">(</span><span class="n">NSLOCTEXT</span><span class="p">(</span><span class="s">"NS"</span><span class="p">,</span><span class="w"> </span><span class="s">"Transaction"</span><span class="p">,</span><span class="w"> </span><span class="s">"Transaction"</span><span class="p">));</span><span class="w">       </span><span class="c1">//트랜잭션开始</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">Object</span><span class="o">-&gt;</span><span class="n">Modify</span><span class="p">();</span><span class="w">               </span><span class="c1">//此操作将Object的当前状态를事务中存储합니다.</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">SomeChange</span><span class="p">(</span><span class="n">Object</span><span class="p">);</span><span class="w">             </span><span class="c1">//Object的一些属性를修改합니다.</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">GEditor</span><span class="o">-&gt;</span><span class="n">EndTransaction</span><span class="p">();</span><span class="w">      </span><span class="c1">//트랜잭션结束，Object的新状态를提交합니다.</span>
+</code></pre></div>
+<p>上述操作会使得SomeChanged能够被撤销重做합니다.</p>
+<blockquote>
+<p>详细请参阅：<a href="https://blog.csdn.net/qq_29523119/article/details/96778797">https://blog.csdn.net/qq_29523119/article/details/96778797</a></p>
+</blockquote>
+<p>에디터开发中，经常会需要某个对象或窗口在撤销重做时，变更에响应해야 하는 경우(比如说一些重建을进行)，UE는撤销重做事件监听을 위한接口 **FEditorUndoClient**를提供합니다.一个简单的 코드示例如下：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">FUndoRedoListener</span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">FEditorUndoClient</span><span class="p">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="n">FUndoRedoListener</span><span class="p">(){</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">GEditor</span><span class="p">)</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">            </span><span class="n">GEditor</span><span class="o">-&gt;</span><span class="n">RegisterForUndo</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w">     </span><span class="c1">//合适的时机에该监听器를注册합니다.构造函数中不一定是必须입니다.</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="o">~</span><span class="n">FUndoRedoListener</span><span class="p">(){</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">GEditor</span><span class="p">)</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">            </span><span class="n">GEditor</span><span class="o">-&gt;</span><span class="n">UnregisterForUndo</span><span class="p">(</span><span class="k">this</span><span class="p">);</span><span class="w">   </span><span class="c1">//注册取消</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="k">protected</span><span class="o">:</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">PostUndo</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">bSuccess</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">{</span><span class="w">      </span><span class="c1">//에디터가撤销을执行한 후该函数를调用합니다.</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">        </span><span class="n">RebuildSomething</span><span class="p">();</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">    </span><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="n">PostRedo</span><span class="p">(</span><span class="kt">bool</span><span class="w"> </span><span class="n">bSuccess</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">{</span><span class="w">      </span><span class="c1">//에디터가重做을执行한 후该函数를调用합니다.</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">        </span><span class="n">RebuildSomething</span><span class="p">();</span>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="p">};</span>
+</code></pre></div>
+<h3 id="_9">피드백 상호작용<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
+<h4 id="_10">알림<a class="headerlink" href="#_10" title="Permanent link">¶</a></h4>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20220927175435715-16735895166583-168492054713617.png" data-desc-position="bottom"><img alt="image-20220927175435715" src="../../../../04-UnrealEngine/Resources/image-20220927175435715-16735895166583-168492054713617.png"></a></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">FNotificationInfo</span><span class="w"> </span><span class="n">Info</span><span class="p">(</span><span class="n">FText</span><span class="o">::</span><span class="n">FromString</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">"This is notification"</span><span class="p">)));</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">Info</span><span class="p">.</span><span class="n">FadeInDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">;</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">Info</span><span class="p">.</span><span class="n">ExpireDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">;</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">Info</span><span class="p">.</span><span class="n">FadeOutDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">;</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">FSlateNotificationManager</span><span class="o">::</span><span class="n">Get</span><span class="p">().</span><span class="n">AddNotification</span><span class="p">(</span><span class="n">Info</span><span class="p">);</span>
+</code></pre></div>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20220927141254086-16735895184905-168492056446620.png" data-desc-position="bottom"><img alt="image-20220927141254086" src="../../../../04-UnrealEngine/Resources/image-20220927141254086-16735895184905-168492056446620.png"></a></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">static</span><span class="w"> </span><span class="n">TWeakPtr</span><span class="o">&lt;</span><span class="n">SNotificationItem</span><span class="o">&gt;</span><span class="w"> </span><span class="n">NotificationPtr</span><span class="p">;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">FNotificationInfo</span><span class="w"> </span><span class="n">Info</span><span class="p">(</span><span class="n">FText</span><span class="o">::</span><span class="n">FromString</span><span class="p">(</span><span class="n">TEXT</span><span class="p">(</span><span class="s">"This is notification"</span><span class="p">)));</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">Info</span><span class="p">.</span><span class="n">FadeInDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">;</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">Info</span><span class="p">.</span><span class="n">FadeOutDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">2.0f</span><span class="p">;</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">Info</span><span class="p">.</span><span class="n">bFireAndForget</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span><span class="w">        </span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">Info</span><span class="p">.</span><span class="n">bUseThrobber</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">FNotificationButtonInfo</span><span class="w"> </span><span class="n">BtYesInfo</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FNotificationButtonInfo</span><span class="p">(</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="w">    </span><span class="n">NSLOCTEXT</span><span class="p">(</span><span class="s">"NotificationNamespace"</span><span class="p">,</span><span class="s">"Yes"</span><span class="p">,</span><span class="w"> </span><span class="s">"Yes"</span><span class="p">),</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">    </span><span class="n">NSLOCTEXT</span><span class="p">(</span><span class="s">"NotificationNamespace"</span><span class="p">,</span><span class="s">"Yes"</span><span class="p">,</span><span class="w"> </span><span class="s">"Yes"</span><span class="p">),</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="w">    </span><span class="n">FSimpleDelegate</span><span class="o">::</span><span class="n">CreateLambda</span><span class="p">([]()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="w">        </span><span class="n">TSharedPtr</span><span class="o">&lt;</span><span class="n">SNotificationItem</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Notification</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NotificationPtr</span><span class="p">.</span><span class="n">Pin</span><span class="p">();</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Notification</span><span class="p">.</span><span class="n">IsValid</span><span class="p">())</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="w">            </span><span class="n">Notification</span><span class="o">-&gt;</span><span class="n">SetEnabled</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="w">            </span><span class="n">Notification</span><span class="o">-&gt;</span><span class="n">SetExpireDuration</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">);</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="w">            </span><span class="n">Notification</span><span class="o">-&gt;</span><span class="n">ExpireAndFadeout</span><span class="p">();</span><span class="w">   </span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="w">            </span><span class="n">NotificationPtr</span><span class="p">.</span><span class="n">Reset</span><span class="p">();</span>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="w">    </span><span class="p">}),</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="w">    </span><span class="n">SNotificationItem</span><span class="o">::</span><span class="n">ECompletionState</span><span class="o">::</span><span class="n">CS_None</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a><span class="p">);</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a><span class="n">Info</span><span class="p">.</span><span class="n">ButtonDetails</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">BtYesInfo</span><span class="p">);</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a><span class="n">NotificationPtr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FSlateNotificationManager</span><span class="o">::</span><span class="n">Get</span><span class="p">().</span><span class="n">AddNotification</span><span class="p">(</span><span class="n">Info</span><span class="p">);</span>
+</code></pre></div>
+<h4 id="_11">진행 상황 표시<a class="headerlink" href="#_11" title="Permanent link">¶</a></h4>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20220927210941350-16735895089921-168492058032923.png" data-desc-position="bottom"><img alt="image-20220927210941350" src="../../../../04-UnrealEngine/Resources/image-20220927210941350-16735895089921-168492058032923.png"></a></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="kt">float</span><span class="w"> </span><span class="n">AmountOfWork</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">FScopedSlowTask</span><span class="w"> </span><span class="n">RootTask</span><span class="p">(</span><span class="n">AmountOfWork</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">NSLOCTEXT</span><span class="p">(</span><span class="s">"SlowTaskNamespace"</span><span class="p">,</span><span class="w"> </span><span class="s">"This is slow root task"</span><span class="p">,</span><span class="w"> </span><span class="s">"This is slow root task"</span><span class="p">)));</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="n">RootTask</span><span class="p">.</span><span class="n">MakeDialog</span><span class="p">();</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="w">    </span><span class="n">FScopedSlowTask</span><span class="w"> </span><span class="n">SubTask</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">NSLOCTEXT</span><span class="p">(</span><span class="s">"SlowTaskNamespace"</span><span class="p">,</span><span class="w"> </span><span class="s">"This is slow sub task"</span><span class="p">,</span><span class="w"> </span><span class="s">"This is slow sub task "</span><span class="p">)));</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="w">    </span><span class="n">SubTask</span><span class="p">.</span><span class="n">MakeDialog</span><span class="p">();</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="w">        </span><span class="n">FPlatformProcess</span><span class="o">::</span><span class="n">Sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">);</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="w">        </span><span class="n">SubTask</span><span class="p">.</span><span class="n">EnterProgressFrame</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">FText</span><span class="o">::</span><span class="n">FromString</span><span class="p">(</span><span class="s">"Sub Task"</span><span class="p">));</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a><span class="w">    </span><span class="n">RootTask</span><span class="p">.</span><span class="n">EnterProgressFrame</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">FText</span><span class="o">::</span><span class="n">FromString</span><span class="p">(</span><span class="s">"Root Task"</span><span class="p">));</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="p">}</span>
+</code></pre></div>
+<h4 id="_12"><a href="https://zhuanlan.zhihu.com/p/268069477">대화상자</a><a class="headerlink" href="#_12" title="Permanent link">¶</a></h4>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20220928100532108-167358956103511-168492058697726.png" data-desc-position="bottom"><img alt="image-20220928100532108" src="../../../../04-UnrealEngine/Resources/image-20220928100532108-167358956103511-168492058697726.png"></a></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">EAppReturnType</span><span class="o">::</span><span class="n">Type</span><span class="w"> </span><span class="n">Ret</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FMessageDialog</span><span class="o">::</span><span class="n">Open</span><span class="p">(</span><span class="n">EAppMsgType</span><span class="o">::</span><span class="n">YesNo</span><span class="p">,</span><span class="w"> </span><span class="n">NSLOCTEXT</span><span class="p">(</span><span class="s">"NS"</span><span class="p">,</span><span class="w"> </span><span class="s">"message dialog"</span><span class="p">,</span><span class="w"> </span><span class="s">"message dialog"</span><span class="p">));</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Ret</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">EAppReturnType</span><span class="o">::</span><span class="n">Yes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">   </span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="_13">기초 작업<a class="headerlink" href="#_13" title="Permanent link">¶</a></h2>
+<h3 id="_14">문자열<a class="headerlink" href="#_14" title="Permanent link">¶</a></h3>
+<h4 id="tchar">TCHAR<a class="headerlink" href="#tchar" title="Permanent link">¶</a></h4>
+<blockquote>
+<p>通常情况下，코드中的 문자열은 <strong>ANSI**를 사용하여编码되지만，**ANSI**가支持하는 문자数量가很少기 때문에，문자열 변수 리터럴을设置할 때 **TEXT()</strong> 매크로를使用하여 <strong>ANSI</strong> 리터럴을 <strong>TCHAR</strong>（본기 Unicode编码）로转换해야 합니다.</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">TCHAR</span><span class="o">*</span><span class="w"> </span><span class="n">ThisIsTChars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TEXT</span><span class="p">(</span><span class="s">"This is Raw String"</span><span class="p">);</span>
+</code></pre></div>
+<p>TCHAR와原生 문자열编码格式을转换하려면以下 매크로를使用할 수 있습니다：</p>
+<ul>
+<li>
+<p><strong>TCHAR_TO_ANSI</strong> (str) </p>
+</li>
+<li>
+<p><strong>TCHAR_TO_UTF8</strong> (str) </p>
+</li>
+<li><strong>TCHAR_TO_UTF16</strong> (str) </li>
+<li><strong>TCHAR_TO_UTF32</strong> (str) </li>
+<li><strong>TCHAR_TO_WCHAR</strong> (str) </li>
+<li>
+<p><strong>ANSI_TO_TCHAR</strong> (str) </p>
+</li>
+<li>
+<p><strong>UTF8_TO_TCHAR</strong> (str) </p>
+</li>
+<li>...</li>
+</ul>
+<p>게임은性能要求가很高기 때문에，普通的String은 UE 게임开发中各个应用场景的性能需求를满足할 수 없습니다.所以UE4는三个常用 문자열 클래스를提供합니다：</p>
+<h4 id="fstring"><a href="https://docs.unrealengine.com/4.27/zh-CN/ProgrammingAndScripting/ProgrammingWithCPP/UnrealArchitecture/StringHandling/FString/">FString</a><a class="headerlink" href="#fstring" title="Permanent link">¶</a></h4>
+<blockquote>
+<p>通用 문자열，可以修改합니다.大量의 문자열操作方法를提供합니다.</p>
+</blockquote>
+<ul>
+<li>构造<ul>
+<li>static FString <strong>Chr</strong> ( TCHAR Ch )</li>
+<li>static FString <strong>ChrN</strong> ( int32 NumCharacters, TCHAR Char )</li>
+<li>static FString <strong>FromInt</strong> ( int32 Num )</li>
+<li>static FString <strong>SanitizeFloat</strong> ( double InFloat, const int32 InMinFractionalDigits = 1 )</li>
+<li>static FString <strong>FromBlob</strong> (const uint8* SrcBuffer,const uint32 SrcSize);</li>
+</ul>
+</li>
+<li>
+<p>格式化</p>
+<ul>
+<li>static FString <strong>Printf</strong> (const FmtType&amp; Fmt, Types... Args)</li>
+<li>FString&amp; <strong>Appendf</strong> (const FmtType&amp; Fmt, Types... Args)</li>
+<li>static FString <strong>Format</strong> (const TCHAR* InFormatString, const FStringFormatOrderedArguments&amp; InOrderedArguments)</li>
+<li>static FString <strong>Format</strong> (const TCHAR* InFormatString, const FStringFormatNamedArguments&amp; InNamedArguments)</li>
+</ul>
+</li>
+<li>
+<p>转化</p>
+<ul>
+<li>void <strong>ToUpperInline</strong> ()</li>
+<li>FString <strong>ToUpper</strong> ()</li>
+<li>void <strong>ToLowerInline</strong> ()</li>
+<li>FString <strong>ToLower</strong> ()</li>
+</ul>
+</li>
+<li>
+<p>匹配</p>
+<ul>
+<li>bool <strong>Equals</strong> (const FString&amp; Other, ESearchCase::Type SearchCase = ESearchCase::CaseSensitive)</li>
+<li>int32 <strong>Compare</strong> ( const FString&amp; Other, ESearchCase::Type SearchCase = ESearchCase::CaseSensitive ) const</li>
+<li>bool <strong>IsNumeric</strong> () </li>
+<li>bool <strong>StartsWith</strong> (const FString&amp; InPrefix, ESearchCase::Type SearchCase = ESearchCase::IgnoreCase)</li>
+<li>bool <strong>EndsWith</strong> (const FString&amp; InSuffix, ESearchCase::Type SearchCase = ESearchCase::IgnoreCase ) </li>
+<li>bool <strong>MatchesWildcard</strong> (const FString&amp; Wildcard, ESearchCase::Type SearchCase = ESearchCase::IgnoreCase)</li>
+<li>bool <strong>Contains</strong> (const TCHAR* SubStr, ESearchCase::Type SearchCase = ESearchCase::IgnoreCase, 
+    ESearchDir::Type SearchDir = ESearchDir::FromStart )</li>
+</ul>
+</li>
+<li>
+<p>弹出</p>
+<ul>
+<li>void <strong>TrimStartAndEndInline</strong> ()</li>
+<li>FString <strong>TrimStartAndEnd</strong> () </li>
+<li>void <strong>TrimStartInline</strong> ()</li>
+<li>FString <strong>TrimStart</strong> () </li>
+<li>void <strong>TrimEndInline</strong> ()</li>
+<li>FString <strong>TrimEnd</strong> ()</li>
+<li>void <strong>TrimQuotesInline</strong> (bool* bQuotesRemoved = nullptr);</li>
+<li>FString <strong>TrimQuotes</strong> (bool* bQuotesRemoved = nullptr)</li>
+<li>void <strong>TrimCharInline</strong> (const TCHAR CharacterToTrim, bool* bCharRemoved)</li>
+<li>FString <strong>TrimChar</strong> (const TCHAR CharacterToTrim, bool* bCharRemoved = nullptr) </li>
+</ul>
+</li>
+<li>
+<p>查找</p>
+<ul>
+<li>int32 <strong>Find</strong> ( const TCHAR* SubStr, ESearchCase::Type SearchCase = ESearchCase::IgnoreCase, 
+        ESearchDir::Type SearchDir = ESearchDir::FromStart, int32 StartPosition=INDEX_NONE ) </li>
+<li>bool <strong>FindChar</strong> ( TCHAR InChar, int32&amp; Index )</li>
+<li>bool <strong>FindLastChar</strong> ( TCHAR InChar, int32&amp; Index ) </li>
+<li>int32 <strong>FindLastCharByPredicate</strong> (Predicate Pred, int32 Count)</li>
+<li>int32 <strong>FindLastCharByPredicate</strong> (Predicate Pred)</li>
+</ul>
+</li>
+<li>
+<p>分片</p>
+<ul>
+<li>int32 <strong>ParseIntoArray</strong> ( TArray<fstring>&amp; OutArray, const TCHAR* pchDelim, bool InCullEmpty = true ) </fstring></li>
+<li>bool <strong>Split</strong> (const FString&amp; InS, FString* LeftS, FString* RightS, ESearchCase::Type SearchCase,
+        ESearchDir::Type SearchDir = ESearchDir::FromStart) </li>
+</ul>
+</li>
+<li>
+<p>分割</p>
+<ul>
+<li>void <strong>LeftInline</strong> (int32 Count, bool bAllowShrinking = true)</li>
+<li>FString <strong>Left</strong> ( int32 Count ) </li>
+<li>void <strong>LeftChopInline</strong> (int32 Count, bool bAllowShrinking = true)</li>
+<li>FString <strong>LeftChop</strong> ( int32 Count )</li>
+<li>FString <strong>Right</strong> ( int32 Count )</li>
+<li>void <strong>RightInline</strong> (int32 Count, bool bAllowShrinking = true)</li>
+<li>FString <strong>RightChop</strong> ( int32 Count )</li>
+<li>void <strong>RightChopInline</strong> (int32 Count, bool bAllowShrinking = true)</li>
+<li>FString <strong>Mid</strong> (int32 Start, int32 Count) </li>
+<li>void <strong>MidInline</strong> (int32 Start, int32 Count = MAX_int32, bool bAllowShrinking = true)</li>
+</ul>
+</li>
+<li>拼接<ul>
+<li>static FString <strong>Join</strong> (const RangeType&amp; Range, const TCHAR* Separator)</li>
+<li>static FString <strong>JoinBy</strong> (const RangeType&amp; Range, const TCHAR* Separator, ProjectionType Proj)</li>
+</ul>
+</li>
+<li>替换<ul>
+<li>FString <strong>Replace</strong> (const TCHAR* From, const TCHAR* To, ESearchCase::Type SearchCase = ESearchCase::IgnoreCase)</li>
+<li>int32 <strong>ReplaceInline</strong> ( const TCHAR* SearchText, const TCHAR* ReplacementText, ESearchCase::Type SearchCase = ESearchCase::IgnoreCase )</li>
+<li>FString <strong>ReplaceQuotesWithEscapedQuotes</strong> () </li>
+<li>void <strong>ReplaceCharWithEscapedCharInline</strong> ( const TArray<tchar>* Chars = nullptr )</tchar></li>
+<li>FString <strong>ReplaceCharWithEscapedChar</strong> ( const TArray<tchar>* Chars = nullptr )</tchar></li>
+<li>void <strong>ReplaceEscapedCharWithCharInline</strong> ( const TArray<tchar>* Chars = nullptr )</tchar></li>
+<li>void <strong>ConvertTabsToSpacesInline</strong> (const int32 InSpacesPerTab);</li>
+<li>FString <strong>ConvertTabsToSpaces</strong> (const int32 InSpacesPerTab)</li>
+</ul>
+</li>
+<li>反转<ul>
+<li>void <strong>ReverseString</strong> ();</li>
+<li>FString <strong>Reverse</strong> ()</li>
+</ul>
+</li>
+</ul>
+<h4 id="ftext"><a href="https://docs.unrealengine.com/4.27/zh-CN/ProgrammingAndScripting/ProgrammingWithCPP/UnrealArchitecture/StringHandling/FText/">FText</a><a class="headerlink" href="#ftext" title="Permanent link">¶</a></h4>
+<blockquote>
+<p>文本 지역화（多语言）를支持하므로，사용자面向的所有文本은它를使用해야 합니다.</p>
+</blockquote>
+<h5 id="_15">文本 지역화（국제화）<a class="headerlink" href="#_15" title="Permanent link">¶</a></h5>
+<h4 id="fname"><a href="https://docs.unrealengine.com/4.27/en-US/ProgrammingAndScripting/ProgrammingWithCPP/UnrealArchitecture/StringHandling/FName/">FName</a><a class="headerlink" href="#fname" title="Permanent link">¶</a></h4>
+<blockquote>
+<p>命名에用于됩니다.它는大小写을区分하지 않으며，某个资源를快速定位하기 위해创建时 문자열内容에 따라 Hash值를计算합니다.这样比较逻辑을实现할 때 문자열内容을比较하지 않고直接 hash值是否相等을比较할 수 있습니다.</p>
+<h3 id="_16">相互转换<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">TestString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TestName</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="n">TestString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TestText</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="n">TestName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FName</span><span class="p">(</span><span class="o">*</span><span class="n">TestString</span><span class="p">);</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="n">TestName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TestText</span><span class="w">    </span><span class="c1">// FText에서 FName으로转换은不存在하지만，先 FString으로转换한 후 FName으로转换할 수 있습니다.但是 FName은大小写을区分하지 않기 때문에不可靠합니다.</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">TestText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FText</span><span class="o">::</span><span class="n">FromName</span><span class="p">(</span><span class="n">TestName</span><span class="p">)</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="n">TestText</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FText</span><span class="o">::</span><span class="n">FromString</span><span class="p">(</span><span class="n">TestString</span><span class="p">)</span>
+</code></pre></div>
+</blockquote>
+<h4 id="_17">경로<a class="headerlink" href="#_17" title="Permanent link">¶</a></h4>
+<blockquote>
+<p>FPaths</p>
+<p>FPackagePath</p>
+</blockquote>
+<h4 id="_18">정규 표현식<a class="headerlink" href="#_18" title="Permanent link">¶</a></h4>
+<blockquote>
+<p><a href="https://blog.csdn.net/justtestlike/article/details/81393221">https://blog.csdn.net/justtestlike/article/details/81393221</a></p>
+</blockquote>
+<h3 id="_19">수학<a class="headerlink" href="#_19" title="Permanent link">¶</a></h3>
+<p>UE의 수학 함수는以下两个命名空间中에位于합니다：</p>
+<ul>
+<li><a href="https://docs.unrealengine.com/4.27/en-US/API/Runtime/Core/Math/FMath/">FMath</a>：UE的基础 수학 라이브러리</li>
+<li><a href="https://docs.unrealengine.com/4.27/en-US/API/Runtime/Engine/Kismet/UKismetMathLibrary/">UkismetMathLibrary</a>：블루프린트 라이브러리，FMath의基础上大量의 함수를封装하여 블루프린트에公开합니다.</li>
+</ul>
+<h3 id="_20">시간 날짜<a class="headerlink" href="#_20" title="Permanent link">¶</a></h3>
+<h3 id="_21"><a href="https://docs.unrealengine.com/4.26/en-US/ProgrammingAndScripting/ProgrammingWithCPP/UnrealArchitecture/Timers/">타이머</a><a class="headerlink" href="#_21" title="Permanent link">¶</a></h3>
+<h3 id="_22">文件操作<a class="headerlink" href="#_22" title="Permanent link">¶</a></h3>
+<h2 id="_23">입력 출력<a class="headerlink" href="#_23" title="Permanent link">¶</a></h2>
+<h3 id="farchive">FArchive<a class="headerlink" href="#farchive" title="Permanent link">¶</a></h3>
+<h3 id="_24">文件<a class="headerlink" href="#_24" title="Permanent link">¶</a></h3>
+<p>UE中 싱글톤 클래스 **<a href="https://docs.unrealengine.com/4.26/en-US/API/Runtime/Core/HAL/IFileManager/">IFileManager</a>**를 통해大量의 文件操作을提供합니다.其中包括但不限于：</p>
+<ul>
+<li>文件的读写、移动、删除、存在性验证、可读性验证、查找（递归）</li>
+<li>目录的创建、删除、存在性验证、遍历</li>
+</ul>
+<p>文件 IO에 대해 **<a href="https://docs.unrealengine.com/4.27/en-US/API/Runtime/Core/Misc/FFileHelper/">FFileHelper</a>**中还便捷한静态方法를提供하여文件的一次性读写에用于됩니다.</p>
+<h3 id="_25">바이트 스트림<a class="headerlink" href="#_25" title="Permanent link">¶</a></h3>
+<h3 id="_26">이미지<a class="headerlink" href="#_26" title="Permanent link">¶</a></h3>
+<h3 id="_27">직렬화<a class="headerlink" href="#_27" title="Permanent link">¶</a></h3>
+<h3 id="json">Json<a class="headerlink" href="#json" title="Permanent link">¶</a></h3>
+<blockquote>
+<p>详细参考：<a href="https://www.cnblogs.com/shiroe/p/14751769.html">https://www.cnblogs.com/shiroe/p/14751769.html</a></p>
+</blockquote>
+<h3 id="xml">XML<a class="headerlink" href="#xml" title="Permanent link">¶</a></h3>
+<h2 id="_28">멀티스레딩<a class="headerlink" href="#_28" title="Permanent link">¶</a></h2>
+<h3 id="fthreadfrunnable">FThread、FRunnable<a class="headerlink" href="#fthreadfrunnable" title="Permanent link">¶</a></h3>
+<h3 id="fstreammanager">FStreamManager<a class="headerlink" href="#fstreammanager" title="Permanent link">¶</a></h3>
+<h3 id="asynctask">AsyncTask<a class="headerlink" href="#asynctask" title="Permanent link">¶</a></h3>
+<h3 id="taskgraph">TaskGraph<a class="headerlink" href="#taskgraph" title="Permanent link">¶</a></h3>
+<h2 id="_29">디버깅<a class="headerlink" href="#_29" title="Permanent link">¶</a></h2>
+<h3 id="_30">로그<a class="headerlink" href="#_30" title="Permanent link">¶</a></h3>
+<ul>
+<li>
+<p>自定义 로그 카테고리</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">// 头文件中声明</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="n">DECLARE_LOG_CATEGORY_EXTERN</span><span class="p">(</span><span class="n">CustomLogCategory</span><span class="p">,</span><span class="w"> </span><span class="n">Log</span><span class="p">,</span><span class="w"> </span><span class="n">All</span><span class="p">);</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1">// 源文件中定义</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">DEFINE_LOG_CATEGORY</span><span class="p">(</span><span class="n">CustomLogCategory</span><span class="p">);</span>
+</code></pre></div>
+</li>
+<li>
+<p>打印 로그</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">UE_LOG</span><span class="p">(</span><span class="n">CustomLogCategory</span><span class="p">,</span><span class="n">Log</span><span class="p">,</span><span class="n">TEXT</span><span class="p">(</span><span class="s">"This is log %d"</span><span class="p">),</span><span class="mi">123</span><span class="p">);</span>
+</code></pre></div>
+<ul>
+<li>Log</li>
+<li>Warning</li>
+<li>Error</li>
+</ul>
+</li>
+</ul>
+<h3 id="_31">어설션<a class="headerlink" href="#_31" title="Permanent link">¶</a></h3>
+<blockquote>
+<p>代码位于：<code>Engine\Source\Runtime\Core\Public\Misc\AssertionMacros.h</code></p>
+</blockquote>
+<ul>
+<li>checkCode</li>
+<li>check</li>
+<li>checkf</li>
+<li>checkNoEntry</li>
+<li>checkNoReentry</li>
+<li>checkNoRecursion</li>
+<li>verify</li>
+<li>verifyf</li>
+<li>unimplemented</li>
+<li>ensure</li>
+<li>ensureMsgf</li>
+<li>ensureAlways</li>
+<li>ensureAlwaysMsgf</li>
+</ul>
+<h3 id="_32">성능 분석<a class="headerlink" href="#_32" title="Permanent link">¶</a></h3>
+<h3 id="_33">콘솔 명령<a class="headerlink" href="#_33" title="Permanent link">¶</a></h3>
+<h2 id="_34">모델링 도구<a class="headerlink" href="#_34" title="Permanent link">¶</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">UBPLibrary::SetStaticMeshPivot</span><span class="p">(</span><span class="n">UStaticMesh</span><span class="o">*</span><span class="w"> </span><span class="n">InStaticMesh</span><span class="p">,</span><span class="w"> </span><span class="n">EStaticMeshPivotType</span><span class="w"> </span><span class="n">PivotType</span><span class="p">)</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="p">{</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="w">    </span><span class="k">if</span><span class="p">(</span><span class="n">InStaticMesh</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="w">    </span><span class="k">auto</span><span class="w"> </span><span class="n">InteractiveToolsContext</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewObject</span><span class="o">&lt;</span><span class="n">UEditorInteractiveToolsContext</span><span class="o">&gt;</span><span class="p">();</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="w">    </span><span class="n">InteractiveToolsContext</span><span class="o">-&gt;</span><span class="n">InitializeContextWithEditorModeManager</span><span class="p">(</span><span class="o">&amp;</span><span class="n">GLevelEditorModeTools</span><span class="p">(),</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="w">    </span><span class="n">UE</span><span class="o">::</span><span class="n">TransformGizmoUtil</span><span class="o">::</span><span class="n">RegisterTransformGizmoContextObject</span><span class="p">(</span><span class="n">InteractiveToolsContext</span><span class="p">);</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="w">    </span><span class="n">InteractiveToolsContext</span><span class="o">-&gt;</span><span class="n">ToolManager</span><span class="o">-&gt;</span><span class="n">RegisterToolType</span><span class="p">(</span><span class="s">"EditPivotTool"</span><span class="p">,</span><span class="w"> </span><span class="n">NewObject</span><span class="o">&lt;</span><span class="n">UEditPivotToolBuilder</span><span class="o">&gt;</span><span class="p">());</span>
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="w">    </span><span class="n">UStaticMeshComponent</span><span class="o">*</span><span class="w"> </span><span class="n">StaticMeshComp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">NewObject</span><span class="o">&lt;</span><span class="n">UStaticMeshComponent</span><span class="o">&gt;</span><span class="p">();</span>
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="w">    </span><span class="n">StaticMeshComp</span><span class="o">-&gt;</span><span class="n">SetStaticMesh</span><span class="p">(</span><span class="n">InStaticMesh</span><span class="p">);</span>
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="w">    </span><span class="n">InteractiveToolsContext</span><span class="o">-&gt;</span><span class="n">TargetManager</span><span class="o">-&gt;</span><span class="n">AddTargetFactory</span><span class="p">(</span><span class="n">NewObject</span><span class="o">&lt;</span><span class="n">UStaticMeshComponentToolTargetFactory</span><span class="o">&gt;</span><span class="p">());</span>
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="w">    </span><span class="n">UToolTarget</span><span class="o">*</span><span class="w"> </span><span class="n">Target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">InteractiveToolsContext</span><span class="o">-&gt;</span><span class="n">TargetManager</span><span class="o">-&gt;</span><span class="n">BuildTarget</span><span class="p">(</span><span class="n">StaticMeshComp</span><span class="p">,</span><span class="w"> </span><span class="n">FToolTargetTypeRequirements</span><span class="p">());</span>
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a><span class="w">    </span><span class="n">InteractiveToolsContext</span><span class="o">-&gt;</span><span class="n">ToolManager</span><span class="o">-&gt;</span><span class="n">SelectActiveToolType</span><span class="p">(</span><span class="n">EToolSide</span><span class="o">::</span><span class="n">Left</span><span class="p">,</span><span class="w"> </span><span class="s">"EditPivotTool"</span><span class="p">);</span>
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a><span class="w">    </span><span class="n">GLevelEditorModeTools</span><span class="p">().</span><span class="n">SelectNone</span><span class="p">();</span>
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a><span class="w">    </span><span class="n">GLevelEditorModeTools</span><span class="p">().</span><span class="n">GetSelectedComponents</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">Select</span><span class="p">(</span><span class="n">StaticMeshComp</span><span class="p">);</span>
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a><span class="w">    </span><span class="n">InteractiveToolsContext</span><span class="o">-&gt;</span><span class="n">ToolManager</span><span class="o">-&gt;</span><span class="n">ActivateTool</span><span class="p">(</span><span class="n">EToolSide</span><span class="o">::</span><span class="n">Left</span><span class="p">);</span>
+<a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">EditTool</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Cast</span><span class="o">&lt;</span><span class="n">UEditPivotTool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">InteractiveToolsContext</span><span class="o">-&gt;</span><span class="n">ToolManager</span><span class="o">-&gt;</span><span class="n">ActiveLeftTool</span><span class="p">))</span>
+<a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-20-23" name="__codelineno-20-23" href="#__codelineno-20-23"></a><span class="w">        </span><span class="n">EditTool</span><span class="o">-&gt;</span><span class="n">SetTargets</span><span class="p">({</span><span class="w"> </span><span class="n">Target</span><span class="w"> </span><span class="p">});</span>
+<a id="__codelineno-20-24" name="__codelineno-20-24" href="#__codelineno-20-24"></a><span class="w">        </span><span class="n">EditTool</span><span class="o">-&gt;</span><span class="n">RequestAction</span><span class="p">((</span><span class="n">EEditPivotToolActions</span><span class="p">)</span><span class="n">PivotType</span><span class="p">);</span>
+<a id="__codelineno-20-25" name="__codelineno-20-25" href="#__codelineno-20-25"></a><span class="w">        </span><span class="n">EditTool</span><span class="o">-&gt;</span><span class="n">Tick</span><span class="p">(</span><span class="mf">0.1</span><span class="p">);</span>
+<a id="__codelineno-20-26" name="__codelineno-20-26" href="#__codelineno-20-26"></a><span class="w">        </span><span class="n">EditTool</span><span class="o">-&gt;</span><span class="n">Shutdown</span><span class="p">(</span><span class="n">EToolShutdownType</span><span class="o">::</span><span class="n">Accept</span><span class="p">);</span>
+<a id="__codelineno-20-27" name="__codelineno-20-27" href="#__codelineno-20-27"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-20-28" name="__codelineno-20-28" href="#__codelineno-20-28"></a><span class="p">}</span>
+</code></pre></div>
+<h2 id="_35">개발心得<a class="headerlink" href="#_35" title="Permanent link">¶</a></h2>
+<p>**合理即存在**的思维方式를本着하여 **抄**하세요.</p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="创建日期">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js" data-repo="Italink/ModernGraphicsEngineGuide" data-repo-id="R_kgDOIPtbiQ" data-category-id="DIC_kwDOIPtbic4CTxOk" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous" async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078q-.408 1.096-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58 58 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.2 9.2 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125M13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

@@ -1,0 +1,3744 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+          <link rel="alternate" href="/" hreflang="zh">
+        
+          <link rel="alternate" href="/Localization/en/" hreflang="en">
+        
+          <link rel="alternate" href="/Localization/ja/" hreflang="ja">
+        
+          <link rel="alternate" href="/Localization/ko/" hreflang="ko">
+        
+          <link rel="alternate" href="/Localization/fr/" hreflang="fr">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Techniques d'optimisation de la végétation dans les mondes ouverts - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-S1J8MN27P8",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link rel="stylesheet" href="../../../../assets/stylesheets/custom.2fa34c39.min.css">
+
+  <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#techniques-doptimisation-de-la-vegetation-dans-les-mondes-ouverts" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&amp;k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76"></path></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Techniques d'optimisation de la végétation dans les mondes ouverts
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="zh" class="md-select__link">
+              Chinese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/en/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ja/" hreflang="ja" class="md-select__link">
+              Japanese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ko/" hreflang="ko" class="md-select__link">
+              Korean
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/fr/" hreflang="fr" class="md-select__link">
+              French
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  开源
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../06-Blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  个人博客
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 计算机发展史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - C++基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 宏、模板、反射
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 内存管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - GUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图形API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    图形API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 图形渲染管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 着色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 缓冲区与纹理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - 3D空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 图形API进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引擎技术
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    引擎技术
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 渲染架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 编辑器架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unreal Engine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unreal Engine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 基础编程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - Slate 开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 插件开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 粒子系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - Niagara 性能优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - Fluid Ninja 流体插件
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 开放世界制作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/7.%E9%9F%B3%E9%A2%91%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 - 音频开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/9.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E4%B8%AD%E7%9A%84%E6%A4%8D%E8%A2%AB%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9 - 植被优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/10.LOD%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 - LOD不完全指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/12.%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%86%85%E5%AE%B9%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 - 程序化内容管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/16.3DGaussianSplatting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 - 3DGaussianSplatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/17.Landscape%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 - Landscape 避坑指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开源
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开源
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1">
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UnrealEngine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    UnrealEngine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Splatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2">
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/C%2B%2B/C%2B%2B%E5%8F%8D%E5%B0%84%E7%BC%96%E8%AF%91%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++反射编译器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3">
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Qt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96%E8%BD%AF%E4%BB%B6-Specinker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频可视化软件-Specinker(已闭源)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%A2%91%E8%B0%B1%E5%88%86%E6%9E%90%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    频谱分析器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%8B%9F%E6%80%81%E7%AA%97%E5%8F%A3%E6%BB%A4%E9%95%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt拟态窗口滤镜
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E5%B1%8F%E5%B9%95%E5%8F%96%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt屏幕取色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%B8%90%E5%8F%98%E8%B0%83%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt渐变调色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E7%B2%92%E5%AD%90%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面粒子特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E6%B0%B4%E9%9D%A2%E6%B3%A2%E7%BA%B9%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面水面波纹特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../06-Blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人博客
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    个人博客
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_2">
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    五月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    八月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    六月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    四月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    九月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2019/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_3">
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人随笔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%95%B4%E6%B4%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    整活
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    杂谈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#creation-dassets-de-plantes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Création d'assets de plantes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Création d'assets de plantes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#la-douleur-de-nanite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        La douleur de Nanite
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="La douleur de Nanite">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#des-attentes-esthetiques-plus-elevees-accompagnees-dun-equilibre-de-performance-plus-difficile-a-controler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Des attentes esthétiques plus élevées, accompagnées d'un équilibre de performance plus difficile à contrôler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#impossible-de-specialiser-la-strategie-doptimisation-du-modele-et-ce-nest-pas-la-methode-doptimisation-du-modele-la-plus-performante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Impossible de spécialiser la stratégie d'optimisation du modèle, et ce n'est pas la méthode d'optimisation du modèle la plus performante
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#des-donnees-statiques-a-gradient-de-precision-fixe-facilitent-lorganisation-dune-vegetation-dense-et-performante" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Des données statiques à gradient de précision fixe facilitent l'organisation d'une végétation dense et performante
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references-de-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Références de création
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resume" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Résumé
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#organisation-de-la-vegetation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Organisation de la végétation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Organisation de la végétation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#methodes-de-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Méthodes de construction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#partition-et-streaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partition et streaming
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimisation-des-ombres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimisation des ombres
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimisation-des-collisions-et-des-interactions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimisation des collisions et des interactions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#autres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Autres
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="techniques-doptimisation-de-la-vegetation-dans-les-mondes-ouverts">Techniques d'optimisation de la végétation dans les mondes ouverts<a class="headerlink" href="#techniques-doptimisation-de-la-vegetation-dans-les-mondes-ouverts" title="Permanent link">¶</a></h1>
+<p>On suppose que vous avez déjà vu des paysages naturels magnifiques dans certains grands jeux vidéo et que vous avez été impressionnés par les effets artistiques qu'ils présentent :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808134017142.png" data-desc-position="bottom"><img alt="image-20240808134017142" src="../../../../04-UnrealEngine/Resources/image-20240808134017142.png"></a></p>
+<blockquote>
+<p><em>Ghost of Tsushima</em></p>
+</blockquote>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808134539736.png" data-desc-position="bottom"><img alt="image-20240808134539736" src="../../../../04-UnrealEngine/Resources/image-20240808134539736.png"></a></p>
+<blockquote>
+<p><em>Horizon Forbidden West</em></p>
+</blockquote>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808134944231.png" data-desc-position="bottom"><img alt="image-20240808134944231" src="../../../../04-UnrealEngine/Resources/image-20240808134944231.png"></a></p>
+<blockquote>
+<p><em>Shadow of the Tomb Raider</em></p>
+</blockquote>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808135113053.png" data-desc-position="bottom"><img alt="image-20240808135113053" src="../../../../04-UnrealEngine/Resources/image-20240808135113053.png"></a></p>
+<blockquote>
+<p><em>Kena: Bridge of Spirits</em></p>
+</blockquote>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808141433678.png" data-desc-position="bottom"><img alt="image-20240808141433678" src="../../../../04-UnrealEngine/Resources/image-20240808141433678.png"></a></p>
+<blockquote>
+<p><em>Yan Yun Shi Liu Sheng</em></p>
+</blockquote>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808135612492.png" data-desc-position="bottom"><img alt="image-20240808135612492" src="../../../../04-UnrealEngine/Resources/image-20240808135612492.png"></a></p>
+<blockquote>
+<p><em>Assassin's Creed Odyssey</em></p>
+</blockquote>
+<p>Et aucun de ces jeux n'a été fait avec UE...</p>
+<p>Il faut admettre que, bien que Unreal Engine 5 soit très puissant, il n'est pas infaillible. Pour créer des environnements naturels qui répondent aux exigences de performance des projets de jeu comme ceux mentionnés ci-dessus, nous allons faire face à de nombreux défis en dehors des technologies du moteur.</p>
+<p>Dans les environnements naturels ouverts, les problèmes de performance causés par la végétation sont souvent aussi fréquents et impactants que ceux liés à l'éclairage et aux effets spéciaux.</p>
+<p>Dans UE5, quand on parle d'optimisation de la végétation, la première chose qui vient à l'esprit est probablement de réduire le nombre de polygones, d'utiliser l'instanciation, le culling par distance, d'optimiser les matériaux, d'utiliser des LOD ou Nanite...</p>
+<p>Ces ajustements au niveau des assets et ces moyens de spécialisation complexes ont souvent du mal à soutenir une végétation luxuriante dans un environnement ouvert.</p>
+<p>C'est pourquoi cet article exposera certaines stratégies et points de vue sur l'optimisation de la végétation.</p>
+<h2 id="creation-dassets-de-plantes">Création d'assets de plantes<a class="headerlink" href="#creation-dassets-de-plantes" title="Permanent link">¶</a></h2>
+<p>La plupart des logiciels de modélisation 3D peuvent créer des assets de plantes, mais dans l'industrie du jeu vidéo, <strong><a href="https://store.speedtree.com/">Speed Tree</a></strong> est l'outil de création de végétation主流.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808182351274.png" data-desc-position="bottom"><img alt="image-20240808182351274" src="../../../../04-UnrealEngine/Resources/image-20240808182351274.png"></a></p>
+<p>Contrairement aux modèles courants comme les rochers, les objets ou les bâtiments, les plantes ont souvent un grand nombre de tiges et de feuilles. Au niveau de la géométrie, cela signifie que les modèles de plantes ont généralement un grand nombre de sommets et de polygones denses, ce qui entraîne des coûts de rendu très élevés. Voici un exemple :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808193318835.png" data-desc-position="bottom"><img alt="image-20240808193318835" src="../../../../04-UnrealEngine/Resources/image-20240808193318835.png"></a></p>
+<ul>
+<li>Un arbre pas si dense a jusqu'à 2 millions de triangles. Cette énorme quantité de données de sommets et ces nombreux dessins répétés feront travailler la GPU dur.</li>
+</ul>
+<p>Cette pratique consistant à représenter la structure d'une plante à l'aide de la géométrie d'un modèle est généralement appelée <strong>arbre/graminée modèle</strong>. Habituellement, des assets de cette taille ne peuvent pas être utilisés en grande quantité dans les projets de jeu vidéo.</p>
+<p>Dans les projets de jeu vidéo actuels, on utilise davantage la méthode <strong>d'insertion de plaques/masquage</strong> pour créer des assets de plantes. En comprimant une partie des branches et des feuilles sur une texture de plaque, on insère de nombreuses plaques sur les branches pour donner l'impression d'une végétation luxuriante. C'est une méthode de création très astucieuse. Bien qu'elle présente certaines imperfections sur le plan visuel, les gains de performance qu'elle apporte sont très objectifs.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808195330576.png" data-desc-position="bottom"><img alt="image-20240808195330576" src="../../../../04-UnrealEngine/Resources/image-20240808195330576.png"></a></p>
+<p>La méthode d'insertion de plaques a longtemps été reconnue comme la plus efficace pour le rendu de la végétation dans l'industrie du jeu vidéo, mais elle présente également certaines défauts :</p>
+<ul>
+<li>Des défauts visuels, qui se révèlent facilement en gros plan.</li>
+<li>L'utilisation de matériaux de masquage réduit le nombre de sommets, mais il existe encore un grand nombre de surdébordements (OverDraw), et le coût de rendu des ombres est plus élevé.</li>
+<li>Le modèle de plante manque de caractéristiques de sommets pour les branches et les feuilles, ce qui entraîne une perte d'effet d'éclairage global.</li>
+</ul>
+<p>Avec l'apparition de la technologie de géométrie virtuelle de UE5 - Nanite, la situation a changé quelque peu.</p>
+<p>L'avantage de Nanite réside dans l'utilisation d'un pipeline piloté par la GPU, qui permet de basculer rapidement les détails de la géométrie et d'éliminer及时 les triangles invisibles. Dans la mesure du possible sans affecter l'effet visuel, il améliore极大程度 la utilisation des sommets (taux d'occupation de l'écran).</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808202239795.png" data-desc-position="bottom"><img alt="image-20240808202239795" src="../../../../04-UnrealEngine/Resources/image-20240808202239795.png"></a></p>
+<blockquote>
+<p>Pour l'arbre modèle utilisé précédemment, l'image n'a que 1 million de pixels, mais les sommets sont 2 millions. Il est évident que la plupart des sommets ne contribuent pas beaucoup à l'effet de l'image.</p>
+</blockquote>
+<p>Concernant Nanite, voici un excellent guide d'utilisation officiel :</p>
+<ul>
+<li><a href="https://dev.epicgames.com/documentation/zh-cn/unreal-engine/nanite-virtualized-geometry-in-unreal-engine">Documentation | Géométrie virtualisée Nanite (epicgames.com)</a></li>
+<li><a href="https://www.bilibili.com/video/BV18X4y1k7R1/">[Formation officielle]23 - Création d'assets artistiques pour UE | Epic Li Wenlei</a></li>
+</ul>
+<p>Pour la végétation Nanite, l'équipe officielle a également fait une comparaison plus détaillée :</p>
+<ul>
+<li><a href="https://dev.epicgames.com/community/learning/talks-and-demos/2lyj/unreal-engine-vegetation-best-practices-for-ue5">Meilleures pratiques pour la végétation dans UE5 | Communauté de développeurs Epic (epicgames.com)</a></li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808203040303.png" data-desc-position="bottom"><img alt="image-20240808203040303" src="../../../../04-UnrealEngine/Resources/image-20240808203040303.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808203242532.png" data-desc-position="bottom"><img alt="image-20240808203242532" src="../../../../04-UnrealEngine/Resources/image-20240808203242532.png"></a></p>
+<p>Dans le rapport de test officiel, avec Nanite activé dans les deux cas, les résultats sont totalement différents de ceux de la méthode de rendu traditionnelle : les performances de l'arbre modèle sont meilleures que celles de l'arbre à plaques.</p>
+<p>Selon ce résultat d'analyse, cela signifie-t-il que nous pouvons utiliser la méthode de l'arbre modèle avec Nanite pour rendre la végétation plus efficacement ?</p>
+<p>La réponse est non.</p>
+<blockquote>
+<p>Un argument valable est : les captures d'écran des jeux mentionnés précédemment n'utilisent pas de technologie de géométrie virtuelle comme Nanite, mais ils ont également créé des paysages naturels étonnants. En revanche...</p>
+</blockquote>
+<h3 id="la-douleur-de-nanite">La douleur de Nanite<a class="headerlink" href="#la-douleur-de-nanite" title="Permanent link">¶</a></h3>
+<p>La raison de ce refus n'est pas liée à la quantité de données de sommets ou à l'occupation de la mémoire vidéo, car la végétation dans la scène est généralement dessinée par instanciation, surtout dans les environnements de monde ouvert. Nous attachons une grande importance à l'équilibre de la charge de performance entre les blocs. Bien qu'un <strong>modèle unique</strong> d'arbre avec Nanite puisse réellement avoir de meilleures performances, cela empêchera également de mettre en place une stratégie de végétation unifiée et performante.</p>
+<p>Voici quelques aspects qui exposent les problèmes liés à l'utilisation de Nanite. Les points de vue peuvent être subjectifs. Si quelque chose est incorrect, n'hésitez pas à le corriger !</p>
+<ul>
+<li>Des attentes esthétiques plus élevées, accompagnées d'un équilibre de performance plus difficile à contrôler</li>
+<li>Impossible de spécialiser la stratégie d'optimisation du modèle, et ce n'est pas la méthode d'optimisation du modèle la plus performante</li>
+<li>Des données statiques à gradient de précision fixe facilitent l'organisation d'une végétation dense et performante</li>
+</ul>
+<h4 id="des-attentes-esthetiques-plus-elevees-accompagnees-dun-equilibre-de-performance-plus-difficile-a-controler">Des attentes esthétiques plus élevées, accompagnées d'un équilibre de performance plus difficile à contrôler<a class="headerlink" href="#des-attentes-esthetiques-plus-elevees-accompagnees-dun-equilibre-de-performance-plus-difficile-a-controler" title="Permanent link">¶</a></h4>
+<p>Lors de la présentation de UE5, beaucoup d'entre vous ont probablement été impressionnés par l'effet visuel de la démonstration. À l'époque, beaucoup pensaient peut-être que nous allions bientôt entrer dans une nouvelle génération d'effets visuels de jeu vidéo :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809095412837.png" data-desc-position="bottom"><img alt="image-20240809095412837" src="../../../../04-UnrealEngine/Resources/image-20240809095412837.png"></a></p>
+<p>Croyez-le ou non, moi je l'ai cru (emoji chien), et beaucoup d'équipes que je connais l'ont aussi cru.</p>
+<p>Ceux qui ont cru ont été des cobayes officiels ces dernières années et ont eu beaucoup de mal. Cela a un impact non négligeable sur un projet commercial.</p>
+<p>Mais les critiques restent critiques. Nanite est réellement une technologie révolutionnaire, avec un avantage absolu par rapport aux LOD traditionnels. Avec les optimisations et les itérations officielles de ces dernières années, sa fiabilité s'est progressivement améliorée.</p>
+<dl>
+<dt>Actuellement, il peut réellement être largement utilisé dans les projets de jeu vidéo pratiques, mais les problèmes posés par Nanite ne viennent généralement pas de lui-même.</dt>
+<dd>
+<p>J'utilise Nanite, donc il n'est pas excessif de faire un petit caillou de millions de triangles, car il réduira automatiquement le nombre de polygones.</p>
+</dd>
+<dd>
+<p>Tu appelles ça un arbre avec si peu de sommets ? Les détails ont disparu. Tu oses dire que tu utilises UE5 ? Tu me méprises ?</p>
+</dd>
+</dl>
+<p>Ce genre de situation se produit généralement dans les équipes émergentes utilisant UE. En réalité, l'essor de UE n'est pas très ancien, et la plupart des équipes utilisant UE n'ont pas une accumulation profonde de technologies de moteur (surtout en Chine). Pour cette technologie émergente, ces équipes sont susceptibles de suivre aveuglément les discours marketing, affaiblissant ou même ignorant l'itération et l'accumulation sur la chaîne de production du contenu.</p>
+<p>Grâce à Nanite, les patrons et les équipes de développement ont souvent des exigences plus élevées en matière d'effets visuels de la scène. Sur le plan de l'optimisation, bien que Nanite puisse améliorer l'utilisation des sommets, si des assets sources avec plus de détails sont utilisés, cela signifie une plus grande occupation du disque. La scène aura également plus de sommets denses que jamais.</p>
+<p>Le nombre de sommets affectera gravement les coûts de performance de certaines phases de rendu :</p>
+<ul>
+<li>La construction de Shadow Map</li>
+<li>Le dessin du tampon de vitesse</li>
+</ul>
+<p>L'occupation du disque n'affecte pas seulement la taille finale du package, mais surtout augmente considérablement la difficulté de gestion de la scène du projet.</p>
+<p>Prenons <em>Ghost of Tsushima</em> comme exemple. Vous penserez peut-être que sa carte n'est pas特别 grande (28,62 km2), le nombre de types de modèles est faible et la précision n'est pas élevée, mais son package est de plus de 50 Go. Ce qui est plus alarmant, c'est la taille des assets lors du développement :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240623091927982.png" data-desc-position="bottom"><img alt="image-20240623091927982" src="../../../../04-UnrealEngine/Resources/image-20240623091927982.png"></a></p>
+<p>Je vous recommande vivement de regarder cette conférence GDC pour avoir une idée de la gestion des assets dans les grands projets :</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=Ur53sJdS8rQ&amp;t=794s">Zen of Streaming: Building and Loading 'Ghost of Tsushima' (youtube.com)</a></li>
+</ul>
+<p>Imaginez que nous recréions une scène comme celle de <em>Ghost of Tsushima</em> avec Nanite de UE. De manière conservatrice, si nous augmentons la précision des assets de quatre à cinq fois, on peut imaginer combien sera élevé le coût de gestion de ces assets de projet énormes.</p>
+<p>Par conséquent, pour un projet de jeu vidéo, je recommande de gérer au mieux les attentes en matière d'effets visuels de la scène. Ils ne devraient pas affecter ou entraver l'itération du gameplay.</p>
+<blockquote>
+<p>Si la scène du jeu ne peut pas fonctionner stablement à 80 images par seconde sur la machine de développement et qu'elle occupe gravement le budget de performance et l'espace d'itération du gameplay ou d'autres modules, peu importe combien elle est belle. Manquant de gameplay, à quoi ça sert ?
+Je crois que la plupart des joueurs n'achèteront pas un jeu simplement parce qu'il a un rendu photo-réaliste.</p>
+</blockquote>
+<h4 id="impossible-de-specialiser-la-strategie-doptimisation-du-modele-et-ce-nest-pas-la-methode-doptimisation-du-modele-la-plus-performante">Impossible de spécialiser la stratégie d'optimisation du modèle, et ce n'est pas la méthode d'optimisation du modèle la plus performante<a class="headerlink" href="#impossible-de-specialiser-la-strategie-doptimisation-du-modele-et-ce-nest-pas-la-methode-doptimisation-du-modele-la-plus-performante" title="Permanent link">¶</a></h4>
+<p>Habituellement, il y a deux moyens d'optimiser un modèle :</p>
+<ul>
+<li><strong>Réduction (Reduce)</strong> : Supprimer des données géométriques du modèle source pour obtenir un modèle simplifié.</li>
+<li><strong>Reconstruction (Remesh)</strong> : Approcher le modèle source avec une certaine précision de voxel à l'aide d'un algorithme de modèle voxelisé pour obtenir un modèle simplifié.</li>
+</ul>
+<p>Ces deux stratégies ont des scénarios d'utilisation différents :</p>
+<ul>
+<li>Réduction : Adaptée aux plaques. Elle est généralement utilisée pour les modèles qui exigent des angles géométriques élevés, comme le terrain, les bâtiments, les plantes, les plaques d'eau...</li>
+<li>Reconstruction : Adaptée aux modèles fermés avec une forme géométrique plutôt arrondie. Elle peut généralement garantir la forme géométrique du modèle source avec très peu de sommets, comme les rochers, les bâtiments, les objets...</li>
+</ul>
+<p>Pour un arbre, si nous utilisons ces deux stratégies pour générer un modèle simplifié avec le même nombre de triangles :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809151946858.png" data-desc-position="bottom"><img alt="image-20240809151946858" src="../../../../04-UnrealEngine/Resources/image-20240809151946858.png"></a></p>
+<blockquote>
+<p>Nanite utilise un algorithme de réduction. On peut comprendre que le modèle après réduction sera un certain gradient de précision de Nanite. La stratégie de Nanite consiste à garantir d'abord que l'image ne soit pas déformée. Si cet arbre utilise directement Nanite, à quelle distance pensez-vous qu'il affichera cette précision ? Évidemment, il faut être très loin, et à ce moment-là, il y a encore beaucoup de sommets.</p>
+</blockquote>
+<p>Ces deux stratégies ont各自 leurs problèmes :</p>
+<ul>
+<li>Reconstruction : Le modèle devient duveteux, et des blocs noirs apparaissent dans les endroits où le mappage UV est anormal. (En réalité, pour générer un modèle de reconstruction avec un bon effet, les paramètres de l'algorithme de voxel doivent être ajustés et spécialisés beaucoup.)</li>
+<li>Réduction : Perte de nombreux détails des feuilles.</li>
+</ul>
+<p>À cet égard, j'ai fait beaucoup d'essais et je peux dire clairement qu'il est difficile d'obtenir des LOD de plantes de bonne qualité grâce à un algorithme de traitement de modèle automatisé avec une stratégie unifiée.</p>
+<p>Pourquoi l'optimisation de la végétation est-elle si difficile ? Parce que souvent, on la considère comme un modèle normal dans le mécanisme de rendu pour l'optimiser, mais la partie la plus cruciale pour bien faire la végétation dans un jeu est les techniques de création.</p>
+<p>Pour créer des LOD manuellement, les artistes peuvent créer la plus grande zone de couverture possible avec peu de branches principales, ajouter des détails locaux aux branches principales avec des branches secondaires, et couper un certain nombre de branches secondaires lors de la création de LOD de bas niveau.</p>
+<p>On peut également ajuster la couleur des sommets pour distinguer les branches principales des branches secondaires, et enfin utiliser la méthode de réduction basée sur le poids de la couleur des sommets des plantes.</p>
+<blockquote>
+<p>Habituellement, on applique une couleur de sommet aux arbres comme poids pour l'amplitude de décalage des sommets lors du calcul du vent des plantes. Ce facteur de poids peut également être utilisé comme poids pour l'amplitude de simplification de la région.</p>
+</blockquote>
+<p>Cette méthode peut être utilisée pour générer plusieurs LOD de haute précision du modèle de plante, mais malheureusement, les modèles simplifiés générés de cette manière ont généralement encore un nombre élevé de sommets (lorsque le modèle est simplifié à plus de 1500 sommets, il est déjà méconnaissable). Pour réduire considérablement le nombre de sommets (sans couper les branches principales, sinon il y aura de grandes imperfections visuelles) tout en garantissant l'effet de rendu du modèle, il est évident que la méthode de simplification ne suffit pas. Nous devons casser la structure géométrique originale du modèle. Cependant, la méthode de Remesh rend souvent un arbre très duveteux et présente des problèmes de mappage UV. Son effet de rendu n'est pas bon. Y a-t-il d'autres moyens de résoudre ce problème ?</p>
+<p>La réponse est oui. Notre objectif final est de garantir l'effet de rendu du modèle, pas sa structure géométrique. Cela conduit à une autre stratégie d'optimisation du modèle : <strong>l'Impostor</strong>.</p>
+<blockquote>
+<p>"Impostor" est une traduction que j'ai faite moi-même. Traduire par "proxy" risque de créer une confusion avec Proxy, et traduire par "usurpateur" n'est pas très agréable.</p>
+</blockquote>
+<p>On utilise généralement l'Impostor comme dernier niveau LOD du modèle de végétation. Les stratégies d'Impostor les plus courantes sont les suivantes :</p>
+<ul>
+<li><strong>Billboard</strong> : Dessiner un modèle d'un angle spécifique sur une texture.</li>
+<li><strong>Flipbook</strong> : Dessiner un modèle de plusieurs angles sur une texture, puis basculer la texture affichée dans le matériau selon la vue du joueur.</li>
+<li><strong>Billboard Cloud / Mesh Card Cloud</strong> : Dessiner un modèle sur de nombreuses plaques de maillage pour créer un effet de vue similaire au modèle source.</li>
+<li><strong>Octahedron</strong> : Dessiner un modèle avec une certaine distribution de vue sur une texture, puis interpoler des images de plusieurs angles dans le matériau pour présenter une transition de vue fiable.</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/v2-ac82f9df3eb6d0ab62edc448957c80e6_r.jpg" data-desc-position="bottom"><img alt="preview" src="../../../../04-UnrealEngine/Resources/v2-ac82f9df3eb6d0ab62edc448957c80e6_r.jpg"></a></p>
+<ul>
+<li><a href="https://www.zhihu.com/zvideo/1790733617217019905">Optimisation de la végétation dans la scène de jeu — Impostor - Vidéo d'Italink - Zhihu</a></li>
+</ul>
+<p>Les principes de réalisation de ces stratégies d'Impostor ne sont pas complexes. Après avoir compris leurs principes, nous pouvons facilement mettre en place une chaîne de production d'Impostor. Cependant, il existe des SDK spécialisés que nous pouvons utiliser :</p>
+<ul>
+<li><a href="https://www.simplygon.com/">Simplygon - Établir la norme pour l'optimisation du contenu de jeu 3D</a></li>
+<li><a href="https://instalod.com/zh/">InstaLOD - Tout ce qu'il faut pour produire et optimiser automatiquement du contenu 3D</a></li>
+</ul>
+<p>J'ai utilisé InstaLOD pour mes tests (gratuit pour un usage personnel). Voici le plugin UE qu'il fournit, qui contient de nombreux algorithmes de traitement de modèle :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809161248634.png" data-desc-position="bottom"><img alt="image-20240809161248634" src="../../../../04-UnrealEngine/Resources/image-20240809161248634.png"></a></p>
+<p>Pour <strong>l'octaèdre (Octahedron)</strong>, UE fournit un plugin spécialisé :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809161621579.png" data-desc-position="bottom"><img alt="image-20240809161621579" src="../../../../04-UnrealEngine/Resources/image-20240809161621579.png"></a></p>
+<p>Pour savoir comment l'utiliser, vous pouvez consulter cet article :</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/693799380">【Optimisation de performance】Utilisation d'impostor dans Unreal (optimisation de la végétation) - Zhihu (zhihu.com)</a></li>
+</ul>
+<p>Pour les curieux du principe, vous pouvez consulter ce blog :</p>
+<ul>
+<li><a href="https://shaderbits.com/blog/octahedral-impostors">https://shaderbits.com/blog/octahedral-impostors</a></li>
+</ul>
+<blockquote>
+<p>Ce qui est le plus précieux pour un projet réel n'est pas l'éditeur, mais les interfaces de code relatives au traitement de modèle qui aident l'équipe du projet à mettre en place une chaîne de production de modèle conformément aux spécifications du projet.</p>
+</blockquote>
+<p>Avec这么多 stratégies d'Impostor, certains d'entre vous se demanderont peut-être : quelle est la meilleure en termes de performance et d'effet ?</p>
+<p>Billboard et Flipbook ont très peu de sommets, une taille de texture plus petite et un programme de shader simple. Leur performance est sans aucun doute la meilleure, mais leur effet de rendu est souvent médiocre.</p>
+<p>La controverse porte principalement sur les méthodes de Billboard Cloud et d'octaèdre. Dans de nombreux projets AAA précédents, la méthode de Billboard Cloud était基本上 utilisée. Cependant, j'ai découvert sur le forum UE que beaucoup de gens recommandent plutôt l'octaèdre.</p>
+<p>J'ai fait un simple test de comparaison. Pour savoir qui est le meilleur, il faudra peut-être plus de données :</p>
+<p><strong>Modèle source</strong></p>
+<ul>
+<li>Nombre de triangles : 639639</li>
+<li>Taille de la texture : 4096</li>
+<li>Temps de calcul GPU : 15,52 ms</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20240808105819.png" data-desc-position="bottom"><img alt="微信图片_20240808105819" src="../../../../04-UnrealEngine/Resources/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20240808105819.png"></a></p>
+<p><strong>Billboard Cloud</strong></p>
+<ul>
+<li>Nombre de triangles : 32</li>
+<li>Taille de la texture : 2048</li>
+<li>Temps de calcul GPU : 10,81 ms</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808105845345.png" data-desc-position="bottom"><img alt="image-20240808105845345" src="../../../../04-UnrealEngine/Resources/image-20240808105845345.png"></a></p>
+<p><strong>Octaèdre</strong></p>
+<ul>
+<li>Nombre de triangles : 32</li>
+<li>Taille de la texture : 2048</li>
+<li>Temps de calcul GPU : 7,75 ms</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240808105838771.png" data-desc-position="bottom"><img alt="image-20240808105838771" src="../../../../04-UnrealEngine/Resources/image-20240808105838771.png"></a></p>
+<p>On peut clairement voir que la performance et l'effet visuel de l'octaèdre sont meilleurs que ceux de la Billboard Cloud. Mais si elle n'est utilisée que comme dernier niveau LOD, la taille de la texture de la Billboard Cloud a encore beaucoup de marge d'optimisation. La méthode à adopter dépendra probablement de chacun.</p>
+<p>Si on utilise l'octaèdre, on peut créer une chaîne de LOD comme celle-ci sans affecter l'effet de l'arbre :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/v2-c6b23613225d3dfb096a7d9481959052_1440w.png" data-desc-position="bottom"><img alt="img" src="../../../../04-UnrealEngine/Resources/v2-c6b23613225d3dfb096a7d9481959052_1440w.png"></a></p>
+<p>Avec ce gradient de précision, combiné à l'instanciation, le coût de performance peut être très faible. En comparaison, il est très difficile d'atteindre le même objectif avec Nanite, car l'algorithme de <strong>réduction automatique</strong> de Nanite actuellement utilisé pour les modèles comme les arbres a une efficacité de dégradation faible. Pour garantir l'effet visuel, il considère la distribution moyenne de la précision pour garantir que l'image ne soit pas déformée, manquant de distinction des parties importantes. Il a généralement plus de détails de sommets, et l'amélioration de performance apportée par l'Impostor est incomparable à celle de Nanite.</p>
+<p>Voici un simple test de comparaison que j'ai fait :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240829162914374.png" data-desc-position="bottom"><img alt="image-20240829162914374" src="../../../../04-UnrealEngine/Resources/image-20240829162914374.png"></a></p>
+<ul>
+<li>Nanite a sans aucun doute l'effet de détail le plus fidèle, mais son coût de performance est beaucoup plus élevé que celui des LOD. De plus, Nanite est basé sur la planification géométrique selon la vue de la caméra. Lorsque la vue tourne rapidement (ce qui est très courant dans les projets de jeu), le coût GPU fluctue gravement !</li>
+</ul>
+<p>La chaîne de LOD ci-dessus nous amène également à réfléchir à un autre problème :</p>
+<ul>
+<li>Pour la compatibilité multi-qualité graphique, dans la stratégie de LOD traditionnelle, on ajuste généralement le <strong>décalage (Bias)</strong> des LOD pour la compatibilité avec différentes qualités graphiques. Par exemple, en haute qualité, la chaîne de LOD commence par <code>LOD0</code>, et en basse qualité, elle peut commencer par <code>LOD1</code> ou LOD2. Cela peut réduire considérablement le nombre de sommets et améliorer la performance de la scène. Mais dans Nanite, comment faire ?</li>
+</ul>
+<p>Les LOD des modèles sont généralement supervisés manuellement. Ils doivent garantir <strong>un amplitude d'optimisation clair</strong> et <strong>un effet de transition fluide</strong>. Pour atteindre cet objectif, chaque LOD du modèle doit être <strong>créé manuellement</strong> ou utiliser une <strong>stratégie de simplification de modèle avec des paramètres non unifiés</strong>.</p>
+<p>Nanite est différent. Nanite utilise une stratégie de réduction unifiée pour tous les modèles. Cette stratégie consiste à optimiser les sommets dans la mesure du possible tout en garantissant l'effet visuel. Cette stratégie entraînera une efficacité de dégradation élevée pour certains modèles et faible pour d'autres en raison de leurs caractéristiques différentes.</p>
+<p>Bien que Nanite puisse également ajuster le décalage et le multiplicateur de dégradation, l'utilisation de paramètres unifiés rompra certainement la stratégie mentionnée ci-dessus, entraînant une absence de garantie de l'effet visuel du modèle et des anomalies ou même des ruptures de surface inacceptables pour l'utilisateur.</p>
+<p>Ce n'est pas seulement pour la végétation, mais pour tous les modèles utilisant Nanite.</p>
+<h4 id="des-donnees-statiques-a-gradient-de-precision-fixe-facilitent-lorganisation-dune-vegetation-dense-et-performante">Des données statiques à gradient de précision fixe facilitent l'organisation d'une végétation dense et performante<a class="headerlink" href="#des-donnees-statiques-a-gradient-de-precision-fixe-facilitent-lorganisation-dune-vegetation-dense-et-performante" title="Permanent link">¶</a></h4>
+<p>Ma perception de Nanite a passé par plusieurs étapes :</p>
+<ol>
+<li>"Utiliser autant que possible" : Utiliser Nanite à tout va.</li>
+<li>Rencontrer un problème : L'herbe ne devrait pas utiliser Nanite, car l'activation de Nanite pour des objets rendus par instanciation dense causera certains bugs.</li>
+<li>Rencontrer un autre problème : Les caractéristiques de Nanite ne correspondent pas au mécanisme HISM. Théoriquement, les objets qui doivent utiliser HISM pour un rendu efficace ne peuvent pas activer Nanite.</li>
+<li>Après avoir approfondi la compréhension des moyens de création de certains projets : Qui utilise Nanite pour faire de la végétation, sérieusement ?</li>
+</ol>
+<p>Parlons d'abord du premier problème. La réduction de Nanite est favorable à une seule instance. Elle peut facilement réduire un modèle de millions de triangles avec une géométrie plutôt arrondie jusqu'à ce qu'il devienne un pixel vide et soit enfin cullé. Mais pour des cas comme l'herbe ou les arbres, qui ont des dizaines de milliers d'instances par instanciation, la dégradation de Nanite ne peut pas réduire efficacement le nombre d'instances. Un grand nombre de sommets entraînera sans aucun doute des coûts de planification énormes pour Nanite, occupant davantage les ressources de calcul de la GPU pour d'autres tâches GPU. Cela est particulièrement évident sur les modèles de milieu et de bas de gamme.</p>
+<blockquote>
+<p>Lorsque le nombre d'instances de Nanite dans l'image actuelle dépasse un certain seuil, cela peut même entraîner des anomalies visuelles. Bien que certaines commandes du moteur aident à améliorer ce phénomène.</p>
+</blockquote>
+<p>Pour le deuxième problème, il faut parler du HLOD de la partition du monde. HLOD est un <strong>proxy de远景</strong> utilisé pour afficher des objets en dehors de la plage de chargement par streaming. Les modèles ordinaires peuvent être <strong>fusionnés (Merge)</strong> + <strong>reconstruits (Remesh)</strong> dans les partitions pour générer un HLOD de远景. Mais pour la végétation, l'utilisation de l'algorithme Remesh voxelisé pour des objets avec beaucoup de plaques fragmentées générera un "cotton candy". La méthode <strong>Merge</strong> + <strong>Réduction (Reduce)</strong> ne peut pas garantir la qualité visuelle de la végétation de远景 tout en réduisant considérablement le nombre de sommets et les DrawCall. Par conséquent, le HLOD de la végétation ne peut être créé que par <strong>instanciation (Instancing)</strong>. Pour l'optimisation de l'instanciation dans la partition du monde, en plus de <strong>découper en blocs (Clustering)</strong> la végétation instanciée, on doit également utiliser <strong>HierachicalInstancedStaticMesh (HISM)</strong>. Contrairement à <strong>InstancedStaticMesh (ISM)</strong>, HISM permet de basculer les niveaux LOD à l'intérieur du maillage instancié. Par exemple, tous les arbres ci-dessous sont dessinés avec un seul HISM :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809135411348.png" data-desc-position="bottom"><img alt="image-20240809135411348" src="../../../../04-UnrealEngine/Resources/image-20240809135411348.png"></a></p>
+<p>HISM consiste本质上 à diviser le maillage instancié en ClusterTree. Chaque Cluster a son propre niveau LOD, générant finalement plusieurs niveaux d'ISM. Grâce à certaines commandes du moteur, on peut contrôler la stratégie de division de HISM. Pour les détails de réalisation, vous pouvez vous référer à :</p>
+<ul>
+<li><a href="https://blog.csdn.net/qq_29523119/article/details/123932029">Analyse du principe de UHierarchicalInstancedStaticMesh (HISM) - CSDN Blog</a></li>
+<li><a href="https://blog.csdn.net/ZJU_fish1996/article/details/108806360">Solution de rendu de végétation à grande échelle HISM - CSDN Blog</a></li>
+</ul>
+<p>Contrairement à la solution de LOD traditionnelle, Nanite n'a pas de modèle à gradient de précision fixe. Son gradient de LOD n'est pas au niveau du modèle, mais au niveau du cluster. Par conséquent, le mécanisme HISM ne peut pas fonctionner normalement sur les modèles utilisant Nanite.</p>
+<h3 id="references-de-creation">Références de création<a class="headerlink" href="#references-de-creation" title="Permanent link">¶</a></h3>
+<p>Pour les normes de création des LOD, vous pouvez vous référer au partage de Horizon sur GDC, sauf que le dernier niveau LOD devient un octaèdre :</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?v=wavnKZNSYqU&amp;t=2412s">Between Tech and Art: The Vegetation of Horizon Zero Dawn (youtube.com)</a></li>
+<li><a href="https://www.youtube.com/watch?v=MKX45_riWQA">Interactive Wind and Vegetation in 'God of War' (youtube.com)</a></li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240622181134887.png" data-desc-position="bottom"><img alt="image-20240622181134887" src="../../../../04-UnrealEngine/Resources/image-20240622181134887.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240622180652772.png" data-desc-position="bottom"><img alt="image-20240622180652772" src="../../../../04-UnrealEngine/Resources/image-20240622180652772.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240622180634547.png" data-desc-position="bottom"><img alt="image-20240622180634547" src="../../../../04-UnrealEngine/Resources/image-20240622180634547.png"></a></p>
+<h3 id="resume">Résumé<a class="headerlink" href="#resume" title="Permanent link">¶</a></h3>
+<p>J'ai dit beaucoup de choses琐碎 ci-dessus. Je vais les résumer ici :</p>
+<ul>
+<li>Pour une plante de même densité, la méthode de l'arbre modèle génère un grand nombre de sommets, et le coût de performance et de mémoire qu'elle entraîne est beaucoup plus élevé que celui de la méthode de l'arbre à plaques.</li>
+<li>Actuellement, la stratégie de réduction de Nanite a une efficacité de dégradation faible pour les feuilles, tandis que le contrôle manuel du gradient de précision des LOD et l'utilisation de l'Impostor permettent généralement de créer une végétation plus performante.</li>
+<li>Que ce soit pour l'arbre modèle ou l'arbre à plaques, l'activation de Nanite apporte certainement une amélioration de l'optimisation. Mais Nanite est incompatible avec HISM. Par conséquent, si le projet a beaucoup de végétation dans la scène, il n'est pas recommandé d'utiliser la végétation Nanite, mais plutôt d'utiliser le processus de création de LOD traditionnel avec ISM et HISM pour l'optimisation.</li>
+<li>Pour les équipes émergentes, tout le monde apprend en tâtonnant. Il est difficile de dire quelle solution est la meilleure. Une fois que vous avez décidé, vous pouvez vous reposer sur vos lauriers en suivant cette norme pour la production en grande quantité. Face à ce problème de solution indéterminée, la meilleure méthode de gestion est de mettre en place notre propre chaîne de production de contenu pour réduire au maximum le coût de沉没 lors de l'itération et de la vérification.</li>
+</ul>
+<p>Il est recommandé de mettre en place un niveau de prévisualisation des assets de la scène :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240902203849011.png" data-desc-position="bottom"><img alt="image-20240902203849011" src="../../../../04-UnrealEngine/Resources/image-20240902203849011.png"></a></p>
+<h2 id="organisation-de-la-vegetation">Organisation de la végétation<a class="headerlink" href="#organisation-de-la-vegetation" title="Permanent link">¶</a></h2>
+<p>Après avoir déterminé la chaîne de production de la végétation, il faut également考虑 la manière de planifier la végétation dans la scène.</p>
+<h3 id="methodes-de-construction">Méthodes de construction<a class="headerlink" href="#methodes-de-construction" title="Permanent link">¶</a></h3>
+<p>Dans UE, pour créer une grande quantité de végétation, il existe principalement les méthodes suivantes :</p>
+<ul>
+<li>
+<p><strong>Mode d'édition de végétation (Foliage EdMode)</strong></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809175349308.png" data-desc-position="bottom"><img alt="image-20240809175349308" src="../../../../04-UnrealEngine/Resources/image-20240809175349308.png"></a></p>
+</li>
+<li>
+<p><strong>Type de végétation de terrain (Landscape Foliage Type)</strong></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809175526774.png" data-desc-position="bottom"><img alt="image-20240809175526774" src="../../../../04-UnrealEngine/Resources/image-20240809175526774.png"></a></p>
+</li>
+<li>
+<p><strong>Framework de génération de contenu procédural (PCG)</strong> <a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809175559308.png" data-desc-position="bottom"><img alt="image-20240809175559308" src="../../../../04-UnrealEngine/Resources/image-20240809175559308.png"></a></p>
+</li>
+</ul>
+<p>Ces méthodes ont各自 leurs scénarios d'utilisation :</p>
+<ul>
+<li>
+<p>Mode d'édition de végétation : Pour un projet de jeu sérieux, je ne peux que dire que le <strong>mode d'édition de végétation est une chose à ne pas toucher du tout</strong>. Cette méthode de peinture de végétation a un coût de返工 énorme et il est difficile de faire de l'adaptation de performance cross-platform.</p>
+</li>
+<li>
+<p>PCG : Le framework PCG est sans aucun doute la meilleure méthode d'édition de végétation. Son utilisation permet de créer facilement et rapidement des communautés écologiques et de personnaliser一些 paramètres extensibles pour l'adaptation multi-platform.</p>
+</li>
+<li>Type de végétation de terrain : Il est adapté au dessin d'herbe dense. La réalisation dans UE devrait参考 le processus de gestion de l'herbe procédurale dans <em>Ghost of Tsushima</em>. Lors de la prévisualisation, les touffes d'herbe sont générées par des tâches asynchrones. Bien qu'il soit très efficace, l'utilisation du type de végétation de terrain occupe une couche de terrain pour décrire la densité de l'herbe et n'est pas adapté à une utilisation à grande échelle.</li>
+</ul>
+<h3 id="partition-et-streaming">Partition et streaming<a class="headerlink" href="#partition-et-streaming" title="Permanent link">¶</a></h3>
+<p>Tout d'abord, rappelons le contenu de la partition du monde de UE5. J'ai整理 un article à ce sujet précédemment :</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/670363215">Développement avec Unreal Engine 5 — Création de monde ouvert - Zhihu (zhihu.com)</a></li>
+</ul>
+<p>Récemment, l'équipe officielle a également donné一些 guides de construction clés :</p>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/sbsDIN6dUtq5CGhqRBR5oQ">Guide de construction du monde (qq.com)</a></li>
+<li><a href="https://www.youtube.com/watch?v=gJKGMFcg29c&amp;t=2211s">Advanced World Building in Unreal Engine - Chris Murphy / Epic Games for WA Games Week 2023 - YouTube</a></li>
+</ul>
+<p>On suppose que vous avez une certaine notion de <strong>streaming</strong> :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809170000187.png" data-desc-position="bottom"><img alt="image-20240809170000187" src="../../../../04-UnrealEngine/Resources/image-20240809170000187.png"></a></p>
+<p>Voici la configuration de la grille que j'ai utilisée dans mon projet de test personnel :</p>
+<table>
+<thead>
+<tr>
+<th>Nom de la grille (GirdName)</th>
+<th>Taille de la cellule (Cell Size)</th>
+<th>Plage de chargement (Loading Range)</th>
+<th>Priorité (Priority)</th>
+<th>BlockOnSlowStreaming</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MainGrid (Default)</td>
+<td>12800</td>
+<td>25600</td>
+<td>0</td>
+<td>false</td>
+</tr>
+<tr>
+<td>DeferGrid</td>
+<td>25600</td>
+<td>25600</td>
+<td>-9</td>
+<td>true</td>
+</tr>
+<tr>
+<td>AdvanceGrid</td>
+<td>51200</td>
+<td>51200</td>
+<td>9</td>
+<td>true</td>
+</tr>
+<tr>
+<td>SmallGrid</td>
+<td>6400</td>
+<td>12800</td>
+<td>-9</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809171548496.png" data-desc-position="bottom"><img alt="image-20240809171548496" src="../../../../04-UnrealEngine/Resources/image-20240809171548496.png"></a></p>
+<p>Habituellement, une plage de chargement de 256 m peut garantir que la plupart des effets de rendu dans le champ de vision sont normaux. Voici l'effet en vue 3D (le personnage au loin est un petit point noir à 256 m) :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809171835592.png" data-desc-position="bottom"><img alt="image-20240809171835592" src="../../../../04-UnrealEngine/Resources/image-20240809171835592.png"></a></p>
+<p>Les modèles de scène sont généralement placés dans <code>Main Grid</code>, mais考虑到 la taille de la cellule (CellSize) affecte également la distance de batch HLOD, je recommande de placer la végétation dans <code>AdvanceGrid</code>.</p>
+<p>Contrairement aux autres modèles statiques ordinaires, la végétation ne peut pas être fusionnée en un seul maillage (Merge+Remesh) dans un environnement de monde ouvert pour générer un proxy de远景 de haute qualité. Mais la végétation ne peut pas être fusionnée en un seul maillage, ou plutôt, après la fusion en un seul maillage, il n'y a pas de bonne stratégie pour garantir l'effet de la végétation tout en réduisant considérablement son nombre de sommets et en optimisant son matériau. Par conséquent, si on veut créer une végétation à grande échelle, on ne peut que l'étaler par instanciation. Pour garantir l'équilibre de la charge de performance entre les unités de partition du monde, on doit strictement contrôler le nombre de types de plantes. Sur le plan de l'effet artistique, il y aura certainement一些 compromis.</p>
+<blockquote>
+<p>Le culling par distance cause généralement des imperfections visuelles graves. Si on peut utiliser一些 moyens (comme le brouillard, les coins) pour masquer la végétation à longue distance, on n'a pas besoin de考虑 le problème du proxy de远景 dans ce cas. On considère la plante comme un maillage ordinaire, on active Nanite, et on combine le déchargement de la partition du monde ou le culling par distance pour obtenir un bon effet de performance.</p>
+</blockquote>
+<p>Habituellement, la végétation est organisée à courte distance à l'aide de HISM. Après avoir dépassé la plage de chargement :</p>
+<ul>
+<li>Pour la petite végétation, on peut ne pas afficher de proxy de远景 directement. Si on utilise l'herbe de terrain, on doit généralement garantir que la couleur de l'herbe est基本 la même que celle du terrain, afin de ne pas avoir de imperfections visuelles特别明显 à longue distance. Si on n'utilise pas l'herbe de terrain mais l'herbe procédurale, on peut烘培 une texture de couleur depuis la vue du dessus dans le blueprint procédural et la rendre sous forme de décalque comme proxy de远景 de l'herbe.</li>
+<li>Pour la grande végétation, généralement les arbres, après avoir dépassé la plage de chargement, on peut dégrader HISM en ISM utilisant le LOD de plus bas niveau comme HLOD (HISM a un coût de planification de division en clusters et de basculement de LOD). C'est comme ça :</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809173840266.png" data-desc-position="bottom"><img alt="image-20240809173840266" src="../../../../04-UnrealEngine/Resources/image-20240809173840266.png"></a></p>
+<blockquote>
+<p>Les LOD de la végétation doivent pouvoir faire une transition fluide. Comme HISM devient ISM lorsque la distance de chargement est dépassée, on doit garantir que le niveau de LOD à gauche et à droite de la distance de chargement est le même. Cela signifie que le gradient de LOD du modèle est distribué à l'intérieur de la distance de chargement. Comme UE utilise actuellement la taille de l'espace écran comme critère de basculement des LOD du modèle, on doit le convertir en distance correspondante lors de la création.</p>
+</blockquote>
+<p>Bien que la partition du monde nous aide, cela ne signifie pas que nous pouvons construire une scène infiniment grande. Son avantage est davantage le chargement sans interruption. Les ressources de calcul en temps réel de l'ordinateur sont limitées. Bien que ce mécanisme de batch puisse étendre进一步 la distance, une plage plus grande entraînera un coût de performance plus élevé et un budget plus faible pour le gameplay. Par conséquent, la distance que le personnage peut voir devrait encore être maintenue à一定 distance, par exemple 768 m :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../04-UnrealEngine/Resources/image-20240809174827247.png" data-desc-position="bottom"><img alt="image-20240809174827247" src="../../../04-UnrealEngine/Resources/image-20240809174827247.png"></a></p>
+<blockquote>
+<p>Ce n'est pas seulement pour les arbres, mais aussi pour d'autres éléments comme les modèles, les particules, les effets de matériau dynamique, etc. On recommande de遵守 cette règle.</p>
+</blockquote>
+<h2 id="optimisation-des-ombres">Optimisation des ombres<a class="headerlink" href="#optimisation-des-ombres" title="Permanent link">¶</a></h2>
+<p>Le coût des ombres de la végétation est souvent une part très importante de la scène, car elle a un grand nombre de triangles denses et chevauchants.</p>
+<p>Alors, comment optimiser les ombres ?</p>
+<p>Tout d'abord, nous devons思考 une question : pourquoi avons-nous besoin d'ombres ? Si on désactive les ombres, on verra :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809193856172.png" data-desc-position="bottom"><img alt="image-20240809193856172" src="../../../../04-UnrealEngine/Resources/image-20240809193856172.png"></a></p>
+<p>Si on demande aux joueurs après avoir vu la comparaison ci-dessus : préférez-vous l'image avec ombres ou sans ombres ?</p>
+<p>La réponse des joueurs sera probablement : Je choisis l'image avec ombres.</p>
+<p>Ensuite, on demande : Pourquoi préférez-vous l'image avec ombres ?</p>
+<p>La plupart des réponses seront : Parce que l'image sans ombres semble très违和.</p>
+<p>En effet, lorsque on désactive les ombres, la relation de层次 spatial de l'image devient beaucoup plus faible, ce qui viole la perception intuitive de l'espace par l'homme.</p>
+<p>Dans le processus de développement de jeu, on doit apprendre à deviner l'intention réelle des joueurs. Comme ici, en réalité, ce qui importe aux joueurs n'est pas d'avoir des ombres. Ils ne se soucient peut-être pas de ce qu'est une ombre. Ils n'aiment simplement pas l'image违和 sans ombres,仅此而已.</p>
+<p>Habituellement, dans les projets de jeu,追求 la correction physique ou académique est généralement sans sens, ou plutôt, son rapport qualité-prix n'est pas élevé. Ici, il suffit de garantir les besoins profonds des joueurs et de表现充分 la层次感 de l'image d'une manière performante.</p>
+<p>Regardez cette image si plate :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809195258560.png" data-desc-position="bottom"><img alt="image-20240809195258560" src="../../../../04-UnrealEngine/Resources/image-20240809195258560.png"></a></p>
+<p>Pour增加 sa层次感, qu'est-ce que vous pouvez想到 ?</p>
+<p>SSAO !</p>
+<blockquote>
+<p>SSAO n'est pas activé par défaut après l'utilisation de Lumen. On peut l'activer avec les指令 suivantes :</p>
+<p><code>r.Lumen.ScreenProbeGather.ShortRangeAO 0</code></p>
+<p><code>r.Lumen.DiffuseIndirect.SSAO 1</code>  </p>
+</blockquote>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809195940083.png" data-desc-position="bottom"><img alt="image-20240809195940083" src="../../../../04-UnrealEngine/Resources/image-20240809195940083.png"></a></p>
+<ul>
+<li>Si on peut augmenter le poids de l'AO sur l'effet de l'image, la层次感 de l'image sera beaucoup meilleure. Mais cette idée est incompatible avec le Lumen actuel. Les curieux peuvent essayer.</li>
+</ul>
+<p>L'amélioration de l'AO ne peut que增加 la sensation spatiale细微 de l'image. Sans ombre spatiale de grande superficie, l'image peut encore sembler strange.</p>
+<p>Pour l'herbe, on peut désactiver directement les ombres dynamiques de l'herbe et activer les ombres de contact. Les ombres de contact peuvent être considérées comme un algorithme d'ombre basé sur l'espace écran. Elles sont presque定制-made pour l'herbe :</p>
+<blockquote>
+<p>Après avoir activé les ombres de contact dans le composant du modèle, on peut régler la longueur des ombres de contact dans la lumière directionnelle.</p>
+</blockquote>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809201526488.png" data-desc-position="bottom"><img alt="image-20240809201526488" src="../../../../04-UnrealEngine/Resources/image-20240809201526488.png"></a></p>
+<ul>
+<li>D'après la comparaison ci-dessus, on peut voir que l'effet des ombres de contact est déjà très proche de celui des ombres dynamiques, mais son coût de performance est très faible.</li>
+</ul>
+<p>Pour l'arbre, il ne peut pas utiliser d'algorithme d'ombre basé sur l'espace écran comme l'herbe, mais on peut optimiser les données de sommets soumises aux ombres. Parce que on utilise la méthode de LOD pour rendre les arbres, si l'image affiche LOD0, on n'a pas du tout besoin d'utiliser LOD0 pour dessiner les ombres, mais plutôt LOD2 ou LOD3...</p>
+<p>Dans UE, on peut verrouiller le LOD utilisé pour construire ShadowMap à l'aide de la指令 du moteur <code>r.ForceLODShadow</code> :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809203942983.png" data-desc-position="bottom"><img alt="image-20240809203942983" src="../../../../04-UnrealEngine/Resources/image-20240809203942983.png"></a></p>
+<blockquote>
+<p>D'après la comparaison, on peut voir qu'il y a一些 différences细微 entre les ombres utilisant différents LOD. Mais si on ne le dit pas, qui le saura ?</p>
+</blockquote>
+<h2 id="optimisation-des-collisions-et-des-interactions">Optimisation des collisions et des interactions<a class="headerlink" href="#optimisation-des-collisions-et-des-interactions" title="Permanent link">¶</a></h2>
+<p>Pour la création des collisions des arbres, cela dépend具体 des exigences du projet sur la scène. Après avoir熟悉一些 algorithmes de traitement de maillage mentionnés précédemment, on peut également facilement mettre en place une chaîne de production de collision des arbres. Par exemple, on peut utiliser la caractéristique duveteuse de Remesh pour générer facilement un corps de collision avec peu de sommets comme un cotton candy, ou générer seulement la collision de la tige selon la distribution de la couleur des sommets...</p>
+<p>Pour ce qui est de l'interaction, comme on utilise HISM à courte distance, qui n'est pas un individu réel, l'interaction ne fonctionne généralement pas normalement.</p>
+<p>Si on a besoin d'interaction, on doit faire一些 traitements spéciaux sur HISM. Par exemple, le moteur a étendu <strong>UFoliageInstancedStaticMeshComponent</strong>, qui peut être utilisé pour traiter le calcul des dégâts des instances :</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809223452013.png" data-desc-position="bottom"><img alt="image-20240809223452013" src="../../../../04-UnrealEngine/Resources/image-20240809223452013.png"></a></p>
+<p>Si on a besoin, on peut également dériver HISM soi-même pour que les instances à courte distance se dégradent en un Actor réel. Je ne recommande pas d'utiliser la méthode de partition du monde pour gérer cette dégradation.</p>
+<h2 id="autres">Autres<a class="headerlink" href="#autres" title="Permanent link">¶</a></h2>
+<ul>
+<li>Essayez de désactiver l'écriture de la vitesse WPO de HISM :</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240809224217321.png" data-desc-position="bottom"><img alt="image-20240809224217321" src="../../../../04-UnrealEngine/Resources/image-20240809224217321.png"></a></p>
+<ul>
+<li>Limitez la distance de dessin maximale WPO du matériau.</li>
+<li>Le culling par distance cause généralement des imperfections visuelles graves. Si on peut utiliser一些 moyens (comme le brouillard, les coins) pour masquer la végétation à longue distance, on n'a pas besoin de考虑 le problème du proxy de远景 dans ce cas. On considère la plante comme un maillage ordinaire, on peut activer Nanite, et on combine le déchargement de la partition du monde ou le culling par distance pour obtenir un bon effet de performance.</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="创建日期">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js" data-repo="Italink/ModernGraphicsEngineGuide" data-repo-id="R_kgDOIPtbiQ" data-category-id="DIC_kwDOIPtbic4CTxOk" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous" async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078q-.408 1.096-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58 58 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.2 9.2 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125M13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

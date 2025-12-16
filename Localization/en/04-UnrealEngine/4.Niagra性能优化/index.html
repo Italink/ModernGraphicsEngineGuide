@@ -1,0 +1,3850 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+          <link rel="alternate" href="/" hreflang="zh">
+        
+          <link rel="alternate" href="/Localization/en/" hreflang="en">
+        
+          <link rel="alternate" href="/Localization/ja/" hreflang="ja">
+        
+          <link rel="alternate" href="/Localization/ko/" hreflang="ko">
+        
+          <link rel="alternate" href="/Localization/fr/" hreflang="fr">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Niagara Performance Optimization - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-S1J8MN27P8",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link rel="stylesheet" href="../../../../assets/stylesheets/custom.2fa34c39.min.css">
+
+  <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#niagara-performance-optimization" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&amp;k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76"></path></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Niagara Performance Optimization
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="zh" class="md-select__link">
+              Chinese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/en/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ja/" hreflang="ja" class="md-select__link">
+              Japanese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ko/" hreflang="ko" class="md-select__link">
+              Korean
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/fr/" hreflang="fr" class="md-select__link">
+              French
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  开源
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../06-Blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  个人博客
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 计算机发展史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - C++基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 宏、模板、反射
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 内存管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - GUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图形API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    图形API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 图形渲染管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 着色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 缓冲区与纹理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - 3D空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 图形API进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引擎技术
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    引擎技术
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 渲染架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 编辑器架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unreal Engine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unreal Engine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 基础编程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - Slate 开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 插件开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 粒子系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - Niagara 性能优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - Fluid Ninja 流体插件
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 开放世界制作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/7.%E9%9F%B3%E9%A2%91%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 - 音频开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/9.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E4%B8%AD%E7%9A%84%E6%A4%8D%E8%A2%AB%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9 - 植被优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/10.LOD%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 - LOD不完全指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/12.%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%86%85%E5%AE%B9%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 - 程序化内容管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/16.3DGaussianSplatting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 - 3DGaussianSplatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/17.Landscape%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 - Landscape 避坑指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开源
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开源
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1">
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UnrealEngine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    UnrealEngine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Splatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2">
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/C%2B%2B/C%2B%2B%E5%8F%8D%E5%B0%84%E7%BC%96%E8%AF%91%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++反射编译器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3">
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Qt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96%E8%BD%AF%E4%BB%B6-Specinker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频可视化软件-Specinker(已闭源)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%A2%91%E8%B0%B1%E5%88%86%E6%9E%90%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    频谱分析器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%8B%9F%E6%80%81%E7%AA%97%E5%8F%A3%E6%BB%A4%E9%95%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt拟态窗口滤镜
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E5%B1%8F%E5%B9%95%E5%8F%96%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt屏幕取色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%B8%90%E5%8F%98%E8%B0%83%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt渐变调色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E7%B2%92%E5%AD%90%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面粒子特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E6%B0%B4%E9%9D%A2%E6%B3%A2%E7%BA%B9%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面水面波纹特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../06-Blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人博客
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    个人博客
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_2">
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    五月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    八月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    六月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    四月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    九月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2019/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_3">
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人随笔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%95%B4%E6%B4%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    整活
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    杂谈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bounding-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bounding Box
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lifecycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Lifecycle
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Lifecycle">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#effect-pool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Effect Pool
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Effect Pool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#caching-mechanism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Caching Mechanism
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cleaning-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cleaning Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pitfalls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pitfalls
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scalability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scalability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#lod" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LOD
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#warmup-time" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Warmup Time
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-emitter-count" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Control Emitter Count
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#distinguish-between-cpu-and-gpu-particles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Distinguish Between CPU and GPU Particles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Optimization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Optimization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#performance-localization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Localization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Performance Localization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#debug-hud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug Hud
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vfx-outline-view" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VFX Outline View
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#debug-spawn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Debug Spawn
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#module-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Module Performance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resource-occupation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resource Occupation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issues-and-suggestions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Issues and Suggestions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#production-optimization" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Production Optimization
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Production Optimization">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#computing-power-awareness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Computing Power Awareness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#underlying-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Underlying Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprite-sheet-baking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sprite Sheet Baking
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#procedural-content-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procedural Content Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="niagara-performance-optimization">Niagara Performance Optimization<a class="headerlink" href="#niagara-performance-optimization" title="Permanent link">¶</a></h1>
+<p><strong>Niagara</strong> is a nearly all-powerful particle system provided by <strong>Unreal Engine</strong>. There are numerous high-quality tutorials online about how to use it to create certain effects, but the usage management and performance optimization of Niagara are often overlooked by effect artists.</p>
+<p>Since the author has been plagued by these issues for a long time, this section will supplement relevant content, hoping that after understanding it, everyone can avoid such problems as much as possible =.=.</p>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">¶</a></h2>
+<p><strong>Particle System</strong> is an important means to enrich effects in 3D scenes. Unlike <strong>Mesh</strong> in scenes, its notable features are:</p>
+<ul>
+<li>The <strong>quantity</strong> of particles is relatively large</li>
+<li>Particles <strong>move</strong> over time</li>
+</ul>
+<p>If these two features are not met (i.e., <code>small quantity</code> and <code>static</code>), artists need to consider whether to use <strong>MeshActor</strong> or particles.</p>
+<p>In UE, effects can be mainly divided into two categories:</p>
+<ul>
+<li><strong>Spawned Effects</strong>: Effects <strong>dynamically spawned</strong> in the scene using <code>SpawnSystemAtLocation</code> and <code>SpawnSystemAttached</code>.</li>
+<li><strong>Scene Effects</strong>: Effects placed in the scene <strong>as Actors</strong>.</li>
+</ul>
+<p>These two types of effects have different focus points and corresponding management measures.</p>
+<h3 id="bounding-box">Bounding Box<a class="headerlink" href="#bounding-box" title="Permanent link">¶</a></h3>
+<p>In game engines, to reduce the rendering overhead of each frame, the engine culls some invisible objects so they do not participate in GPU rendering, as shown below:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/CameraCulling.gif" data-desc-position="bottom"><img alt="img" src="../../../../04-UnrealEngine/Resources/CameraCulling.gif"></a></p>
+<blockquote>
+<p>This image is from: <a href="https://optus23.github.io/">马克·加尔维斯 - Homepage (optus23.github.io)</a></p>
+</blockquote>
+<p>If you understand <a href="https://zhuanlan.zhihu.com/p/597152918">3D View Transformation</a>, you should know that you can determine whether an object is within the camera's range by calculating all vertices of the object using the camera matrix.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/viewing-frustum-_frustum.fit_lim.size_768x.gif" data-desc-position="bottom"><img alt="img" src="../../../../04-UnrealEngine/Resources/viewing-frustum-_frustum.fit_lim.size_768x.gif"></a></p>
+<p>However, obviously, an object may have thousands of vertices. If calculations are performed for each vertex, the game engine might turn into a PPT player~</p>
+<p>To simplify this process, game engines use a clever method: replacing the object's vertices with a simple box that can enclose the object for camera culling calculations. Although the box has fewer vertices and visibility judgment is less precise, the performance improvement it brings is very significant.</p>
+<blockquote>
+<p>Logically, it can be assumed that if this box is visible, the object must be visible.</p>
+</blockquote>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007172724563.png" data-desc-position="bottom"><img alt="image-20231007172724563" src="../../../../04-UnrealEngine/Resources/image-20231007172724563.png"></a></p>
+<blockquote>
+<p>Show object bounding box: <code>ShowFlag.Bounds 1</code></p>
+</blockquote>
+<p>So everyone should understand this: <strong>In the engine, to determine whether an object is within the camera's range or occluded, generally, the reference is not its own vertex information, but the object's bounding box.</strong></p>
+<p>For <strong>StaticMesh</strong>, its vertices are static, so the engine automatically generates bounding box information when creating the asset.</p>
+<p>But for effects, since particles are dynamic, their bounding boxes cannot be generated statically.</p>
+<p>In UE, for <strong>CPU particles</strong>, the engine recalculates the Niagara bounding box boundaries every frame:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="Resources/cpasd.gif" data-desc-position="bottom"><img src="Resources/cpasd.gif" alt="cpasd" style="zoom: 67%;"></a></p>
+<p>However, due to the特殊性 of their implementation (all particle data is in the GPU, and the number of particles is often very large), <strong>GPU particles</strong> make it impossible for the CPU side to calculate the particle bounding box in real time. Developers <strong>must</strong> set a <strong>fixed boundary</strong> for them, i.e., manually set the size of the bounding box.</p>
+<blockquote>
+<p>GPU particles use a GPU-driven rendering pipeline, and the entire process has almost no interaction with the CPU. The data in the graphics rendering pipeline can often be seen as one-way: CPU-&gt;GPU. Although data can also be read back from the GPU, this process has a certain delay and high performance cost.</p>
+</blockquote>
+<p>In Niagara, you can set the bounding box of the <strong>particle emitter</strong> here:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007175720103.png" data-desc-position="bottom"><img alt="image-20231007175720103" src="../../../../04-UnrealEngine/Resources/image-20231007175720103.png"></a></p>
+<p>The simplest way is to set the bounding box for the <strong>entire particle system</strong>:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007180002716.png" data-desc-position="bottom"><img alt="image-20231007180002716" src="../../../../04-UnrealEngine/Resources/image-20231007180002716.png"></a></p>
+<p><strong>Artists must ensure the correctness of the bounding box</strong> (the bounding box should cover the entire movement space of the effect with the smallest possible area), otherwise the following consequences will occur:</p>
+<ul>
+<li>If the bounding box of the effect does not match the actual movement space, it will lead to incorrect visual culling:</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="Resources/cpsadasd.gif" data-desc-position="bottom"><img src="Resources/cpsadasd.gif" alt="cpsadasd" style="zoom: 50%;"></a></p>
+<ul>
+<li>If the bounding box of the effect is too large, it will cause effects that are clearly not within the field of view to fail to be culled and still be rendered, resulting in unnecessary overhead.</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="Resources/image-20231007181531935.png" data-desc-position="bottom"><img src="Resources/image-20231007181531935.png" alt="image-20231007181531935" style="zoom: 67%;"></a></p>
+<h3 id="lifecycle">Lifecycle<a class="headerlink" href="#lifecycle" title="Permanent link">¶</a></h3>
+<p>For <strong>Scene Effects</strong>, their lifecycle is managed by the scene at the Actor level, so we generally don't need to care about it. For <strong>Spawned Effects</strong>, there are some details we must understand regarding lifecycle management:</p>
+<p><strong>Spawned Effects</strong> refer to effects generated using several functions under <strong>UNiagaraFunctionLibrary</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">UNiagaraComponent</span><span class="o">*</span><span class="w"> </span><span class="nf">SpawnSystemAtLocation</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">WorldContextObject</span><span class="p">,</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">                                         </span><span class="k">class</span><span class="w"> </span><span class="nc">UNiagaraSystem</span><span class="o">*</span><span class="w"> </span><span class="n">SystemTemplate</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">                                         </span><span class="n">FVector</span><span class="w"> </span><span class="n">Location</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">                                         </span><span class="n">FRotator</span><span class="w"> </span><span class="n">Rotation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FRotator</span><span class="o">::</span><span class="n">ZeroRotator</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">                                         </span><span class="n">FVector</span><span class="w"> </span><span class="n">Scale</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector</span><span class="p">(</span><span class="mf">1.f</span><span class="p">),</span><span class="w"> </span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">                                         </span><span class="kt">bool</span><span class="w"> </span><span class="n">bAutoDestroy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">                                         </span><span class="kt">bool</span><span class="w"> </span><span class="n">bAutoActivate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">                                         </span><span class="n">ENCPoolMethod</span><span class="w"> </span><span class="n">PoolingMethod</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ENCPoolMethod</span><span class="o">::</span><span class="n">None</span><span class="p">,</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">                                         </span><span class="kt">bool</span><span class="w"> </span><span class="n">bPreCullCheck</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">UNiagaraComponent</span><span class="o">*</span><span class="w"> </span><span class="nf">SpawnSystemAttached</span><span class="p">(</span><span class="n">UNiagaraSystem</span><span class="o">*</span><span class="w"> </span><span class="n">SystemTemplate</span><span class="p">,</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">                                       </span><span class="n">USceneComponent</span><span class="o">*</span><span class="w"> </span><span class="n">AttachToComponent</span><span class="p">,</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">                                       </span><span class="n">FName</span><span class="w"> </span><span class="n">AttachPointName</span><span class="p">,</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">                                       </span><span class="n">FVector</span><span class="w"> </span><span class="n">Location</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">                                       </span><span class="n">FRotator</span><span class="w"> </span><span class="n">Rotation</span><span class="p">,</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">                                       </span><span class="n">FVector</span><span class="w"> </span><span class="n">Scale</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">                                       </span><span class="n">EAttachLocation</span><span class="o">::</span><span class="n">Type</span><span class="w"> </span><span class="n">LocationType</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">                                       </span><span class="kt">bool</span><span class="w"> </span><span class="n">bAutoDestroy</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">                                       </span><span class="n">ENCPoolMethod</span><span class="w"> </span><span class="n">PoolingMethod</span><span class="p">,</span><span class="w"> </span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">                                       </span><span class="kt">bool</span><span class="w"> </span><span class="n">bAutoActivate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">                                       </span><span class="kt">bool</span><span class="w"> </span><span class="n">bPreCullCheck</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+</code></pre></div>
+<p><strong>SpawnSystemAtLocation</strong> is used to spawn a particle component at a specified location, while <strong>SpawnSystemAttached</strong> is used to attach to another scene component. Regarding the lifecycle, we mainly need to pay attention to several parameters:</p>
+<ul>
+<li><strong>bAutoActivate</strong>: Whether to activate automatically. True means the particle effect will play immediately afterward.</li>
+<li><strong>bAutoDestroy</strong>: Whether to destroy automatically. True will destroy the component after the particle finishes playing.</li>
+<li><strong>bPreCullCheck</strong>: Pre-culling. If true, and the bounding box of the spawned particle system is not within the view frustum, the particle component will not be spawned, i.e., returns null.</li>
+<li><strong>PoolingMethod</strong>: Pool operation, a mechanism to reuse particle components. Its values can be:</li>
+<li><strong>None</strong></li>
+<li><strong>AutoRelease</strong>: Auto-release. After playing ends, it will be automatically stored in the effect pool for reuse.</li>
+<li><strong>ManualRelease</strong>: Manual release. The particle component can only be reused by manually calling <strong>ReleaseToPool</strong>.</li>
+<li>ManualRelease_OnComplete: Non-public option, used for internal state control of Niagara. Do not use it.</li>
+<li>FreeInPool: Non-public option, used for internal state control of Niagara. Do not use it.</li>
+</ul>
+<h4 id="effect-pool">Effect Pool<a class="headerlink" href="#effect-pool" title="Permanent link">¶</a></h4>
+<blockquote>
+<p>For detailed mechanism, refer to the article: <a href="https://zhuanlan.zhihu.com/p/394772587">【UE4】Effect Pool - Zhihu (zhihu.com)</a></p>
+</blockquote>
+<h5 id="caching-mechanism">Caching Mechanism<a class="headerlink" href="#caching-mechanism" title="Permanent link">¶</a></h5>
+<p>The main purpose of the effect pool is to reuse particle components. Its caching mechanism can be seen as:</p>
+<ul>
+<li>If the spawn parameters include pool operation (i.e., <code>PoolingMethod != ENCPoolMethod::None</code>), Niagara will search the effect pool for reusable components of the same type. If found, it will use them; otherwise, it will create a new particle component and record its usage time.</li>
+<li>Newly created particle components will not be released (<strong>meaning bAutoDestroy will be invalidated</strong>). They will be stored in the effect pool for management.</li>
+<li>For <strong>AutoRelease</strong> particle components, when playback ends, the effect pool will mark them as reusable.</li>
+<li>For <strong>ManualRelease</strong> particle components, when <strong>ReleaseToPool</strong> is called: if the particle has finished playing, it will be immediately marked as reusable; otherwise, the pool operation will be modified to <strong>ManualRelease_OnComplete</strong>, and it will also be marked as reusable when playback finishes.</li>
+</ul>
+<h5 id="cleaning-methods">Cleaning Methods<a class="headerlink" href="#cleaning-methods" title="Permanent link">¶</a></h5>
+<p><strong>UNiagaraComponentPool</strong> has a scheduled cleaning mechanism. The two main key parameters are:</p>
+<ul>
+<li><strong>GNiagaraSystemPoolKillUnusedTime</strong>: Default is 180.</li>
+<li><strong>GNiagaraSystemPoolingCleanTime</strong>: Default is 30.</li>
+</ul>
+<p>The automatic cleaning mechanism corresponding to the above configuration can be roughly regarded as: UNiagaraComponentPool will clean up particle components that have not been reused for more than 180 seconds every 30 seconds.</p>
+<blockquote>
+<p>Actually, it is not cleaned on Tick, but during each reuse. So it may not be exactly 30 seconds, and the deviation may be large.</p>
+</blockquote>
+<p>When switching World, <strong>UNiagaraComponentPool</strong> will execute Cleanup.</p>
+<p>You can also manually call <strong>UNiagaraComponentPool::ClearPool(UNiagaraSystem* System)</strong> for cleaning.</p>
+<h4 id="pitfalls">Pitfalls<a class="headerlink" href="#pitfalls" title="Permanent link">¶</a></h4>
+<ul>
+<li>If there is a pool operation (<strong>PoolingMethod</strong>), then <strong>bAutoDestroy</strong> will be invalidated.</li>
+<li>The premise for the pool mechanism to work properly is that the particle system can finish playing. Please note:</li>
+<li>Ensure there are no emitters with infinite lifecycle in the particle system.</li>
+<li>Calling ResetParticles(true) will not reach Complete.</li>
+<li>If the <strong>culling response is Dormant</strong> for scalability culling, the <strong>culled effect will not be reused</strong>, and <strong>OnSystemFinished will not trigger</strong> (strictly speaking, it is not completed).</li>
+<li>For particle components with pool operations, <strong>do not call DestoryComponent</strong>. Particle components in the pool will be cleaned up when switching World or during scheduled cleaning.</li>
+<li>If <strong>SpawnSystemAttached</strong> has a pool operation, the <strong>actual owner of the newly spawned particle component is the World, not the attached component</strong>. The particle component <strong>will not be destroyed when the attached component is destroyed</strong>.</li>
+<li>Calling <strong>ReleaseToPool</strong> on an <strong>AutoRelease</strong> particle component will cause an error.</li>
+<li>For particles with neither <strong>AutoRelease</strong> nor pool operation, their lifecycle must be strictly controlled.</li>
+</ul>
+<h3 id="scalability">Scalability<a class="headerlink" href="#scalability" title="Permanent link">¶</a></h3>
+<p>By setting the bounding box, particles can be culled <strong>visually</strong>, but it should be noted that unlike ordinary scene objects, particle systems also have <strong>simulation costs</strong>!</p>
+<p>This is a problem that many effect artists easily overlook when using Niagara. Many people think that particles stop when they are not visible, but in reality, they are still executing:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/dasd.gif" data-desc-position="bottom"><img alt="dasd" src="../../../../04-UnrealEngine/Resources/dasd.gif"></a></p>
+<p>For spawned effects, since they have a certain lifecycle, their simulation consumption is mostly negligible in most cases.</p>
+<p>However, for scene effects, if there are too many NiagaraActors placed in the scene, it will have a great impact on the entire program.</p>
+<p>To solve this problem, UE provides an asset called <strong>NiagaraEffectType</strong> to control the <strong>simulation optimization strategy</strong> of Niagara System.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007193640734.png" data-desc-position="bottom"><img alt="image-20231007193640734" src="../../../../04-UnrealEngine/Resources/image-20231007193640734.png"></a></p>
+<p>We can specify the effect type used by the NiagaraSystem here:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007193928904.png" data-desc-position="bottom"><img alt="image-20231007193928904" src="../../../../04-UnrealEngine/Resources/image-20231007193928904.png"></a></p>
+<p>Using it can fulfill the following requirements:</p>
+<ul>
+<li>Limit the maximum display distance of the particle system</li>
+<li>Limit the maximum number of particle system instances displayed in the current viewport</li>
+<li>Adjust particle effects according to performance budget</li>
+<li>Adjust the scaling factor of emitter spawn count</li>
+</ul>
+<p>Its configuration panel is as follows:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007194409696.png" data-desc-position="bottom"><img alt="image-20231007194409696" src="../../../../04-UnrealEngine/Resources/image-20231007194409696.png"></a></p>
+<p>We can add system and emitter scalability configurations. Each configuration corresponds to the scalability strategy adopted under different performance levels:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007194552208.png" data-desc-position="bottom"><img alt="image-20231007194552208" src="../../../../04-UnrealEngine/Resources/image-20231007194552208.png"></a></p>
+<p>The meanings of its parameters are as follows:</p>
+<ul>
+<li>
+<p>Culling applies to local player: Whether to allow culling effects generated, attached, or created by the local player.</p>
+</li>
+<li>
+<p>Update frequency: <code>Spawn Only</code>, <code>Low</code>, <code>Medium</code>, <code>High</code>, <code>Continuous</code>.</p>
+</li>
+</ul>
+<p>Both <strong>NiagaraEffectType</strong> and <strong>NiagaraComponent</strong> are managed by <strong>NiagaraWorldManager</strong>. <strong>NiagaraEffectType</strong> will Tick separately. The update frequency here refers to the frequency at which it detects the current state of <strong>NiagaraSystem</strong>. The higher the frequency, the more timely the culling response, but the higher the performance overhead.</p>
+<ul>
+<li>Culling response: <code>Destroy</code>, <code>Destroy and Clear</code>, <code>Dormant</code>, <code>Dormant and Clear</code>.</li>
+</ul>
+<p>Clear will immediately kill all particles and then cull the NiagaraSystem. If not cleared, no new particles will be generated, and culling will be performed after all existing particles have finished their lifecycle.</p>
+<p>The difference between Destroy and Dormant is that Destroy directly destroys the particles, while Dormant can be regarded as just hiding the particles waiting for activation.</p>
+<p>For scene effects, since they are Actors placed in the scene and will not be regenerated after destruction, they are generally set to Dormant. The specific destruction and loading are managed by the large world.</p>
+<p>For spawned effects, they are generally spawned once. If set to Dormant, they will occupy memory all the time, so they are generally destroyed.</p>
+<ul>
+<li>Importance processor: <code>Age</code>, <code>Distance</code>.</li>
+</ul>
+<p>The importance processor is mainly related to the <strong>Maximum System Instances</strong> below. The maximum system proxy determines how many instances of the same type of particle system are allowed to exist currently. The importance processor determines the priority of particle sorting. For example, if distance is the target, there are ten particle systems, and the maximum system instances is five, then <strong>NiagaraEffectType</strong> will only retain the five closest particle effects.</p>
+<ul>
+<li>System scalability settings</li>
+</ul>
+<p><strong>Setting List</strong>: Each added setting item can configure under which environments this item takes effect.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007194731440.png" data-desc-position="bottom"><img alt="image-20231007194731440" src="../../../../04-UnrealEngine/Resources/image-20231007194731440.png"></a></p>
+<ul>
+<li>Maximum distance: Cull particles according to the distance between the effect and the current player.</li>
+<li>Cull proxy mode: <code>Instanced Rendering</code>. If <strong>Instanced Rendering</strong> is enabled, an invisible particle system will be created, and all other culled particle systems of the same type will use it for rendering, which can avoid a lot of simulation costs.</li>
+<li>Maximum system proxies: Maximum number of system proxies.</li>
+<li>Budget adjustment: Adjust the scalability strategy of the particle system according to a certain budget.</li>
+<li>Visibility culling: Cull according to visibility.</li>
+</ul>
+<blockquote>
+<p>For specific descriptions, refer to the Tooltip in the editor panel.</p>
+</blockquote>
+<p>For scene effects, the author highly recommends that everyone uniformly set such an effect type for all scene effects:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007195927854.png" data-desc-position="bottom"><img alt="image-20231007195927854" src="../../../../04-UnrealEngine/Resources/image-20231007195927854.png"></a></p>
+<p>The effect of this configuration is: when the particle system is invisible, it will stop both rendering and simulation.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/dasssd.gif" data-desc-position="bottom"><img alt="dasssd" src="../../../../04-UnrealEngine/Resources/dasssd.gif"></a></p>
+<p>When some effects need special culling strategies, Niagara supports <strong>scalability overrides</strong> for individual NiagaraSystem and NiagaraEmitter, which can <strong>override</strong> the configuration of NiagaraEffectType:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007200945698.png" data-desc-position="bottom"><img alt="image-20231007200945698" src="../../../../04-UnrealEngine/Resources/image-20231007200945698.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007201137432.png" data-desc-position="bottom"><img alt="image-20231007201137432" src="../../../../04-UnrealEngine/Resources/image-20231007201137432.png"></a></p>
+<p>For detailed configuration examples of <strong>Niagara Effect Type</strong>, you can refer to: <a href="https://www.youtube.com/watch?v=-P3yaZNgeg0">https://www.youtube.com/watch?v=-P3yaZNgeg0</a></p>
+<h3 id="lod">LOD<a class="headerlink" href="#lod" title="Permanent link">¶</a></h3>
+<p>Niagara provides a built-in variable LODDistance. We can adapt Niagara's performance parameters based on its value for different distances.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008160522818.png" data-desc-position="bottom"><img alt="image-20231008160522818" src="../../../../04-UnrealEngine/Resources/image-20231008160522818.png"></a></p>
+<p>For example, LOD is usually created for spawn count:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008145838367.png" data-desc-position="bottom"><img alt="image-20231008145838367" src="../../../../04-UnrealEngine/Resources/image-20231008145838367.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/sdsssd.gif" data-desc-position="bottom"><img alt="sdsssd" src="../../../../04-UnrealEngine/Resources/sdsssd.gif"></a></p>
+<h3 id="warmup-time">Warmup Time<a class="headerlink" href="#warmup-time" title="Permanent link">¶</a></h3>
+<p>For loop effects placed in the scene, they often have a "warmup" period. In Niagara, we can set the system's warmup time to skip this warmup process:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008150524786.png" data-desc-position="bottom"><img alt="image-20231008150524786" src="../../../../04-UnrealEngine/Resources/image-20231008150524786.png"></a></p>
+<p>For scene effects with visibility culling, dormant culling will reactivate the particles, and the warmup process will play again at this time:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/dfgdasdd.gif" data-desc-position="bottom"><img alt="dfgdasdd" src="../../../../04-UnrealEngine/Resources/dfgdasdd.gif"></a></p>
+<p>But after setting the warmup time to skip the warmup process, the effect is like this:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/dfgdasdd1.gif" data-desc-position="bottom"><img alt="dfgdasdd1" src="../../../../04-UnrealEngine/Resources/dfgdasdd1.gif"></a></p>
+<h3 id="control-emitter-count">Control Emitter Count<a class="headerlink" href="#control-emitter-count" title="Permanent link">¶</a></h3>
+<p>Ideally, as long as two emitters use exactly the same renderer parameters, they should use the same emitter.</p>
+<p>Because one renderer in an emitter corresponds to one graphics rendering pipeline, and the particle system essentially processes the instanced data required by the graphics rendering pipeline.</p>
+<p>One more emitter means one more rendering data and one more particle buffer to maintain.</p>
+<p>If you just want to adjust the particle movement mechanism, you can extend it by customizing Modules.</p>
+<h3 id="distinguish-between-cpu-and-gpu-particles">Distinguish Between CPU and GPU Particles<a class="headerlink" href="#distinguish-between-cpu-and-gpu-particles" title="Permanent link">¶</a></h3>
+<p>CPU particles: Suitable for rendering a small number of particles. Since the data is located in the CPU, it can obtain information about the entire scene, easily interact with game logic, support event communication between particles, precise physical collisions, and dynamically calculate bounding box boundaries.</p>
+<p>GPU particles: Have very low performance consumption and are suitable for rendering a large number (100,000-level) of particles.</p>
+<p>When distinguishing, the first dimension to consider is the number of particles. If the number of particles is very small (such as a few or dozens), it is best to use CPU particles (because there is no need to increase GPU scheduling overhead for a few particles).</p>
+<p>When the number exceeds 1,000, we consider: Does the functional requirement need to use the features of CPU particles? If not, then GPU particles are preferred.</p>
+<p>When the number of particles is very large but the features of CPU particles are needed, the functionality of GPU particles needs to be extended at a lower code level.</p>
+<h2 id="optimization">Optimization<a class="headerlink" href="#optimization" title="Permanent link">¶</a></h2>
+<p>Regarding performance optimization, most of the time we pursue: meeting artistic requirements without causing performance卡顿.</p>
+<p>This indicator is very vague. For most beginners, all we can do is mend the fold after the sheep are lost.</p>
+<p>So the first point is crucial: we need to be able to identify performance problems before we can further formulate optimization plans.</p>
+<h3 id="performance-localization">Performance Localization<a class="headerlink" href="#performance-localization" title="Permanent link">¶</a></h3>
+<p>UE provides many commands and tools to detect the execution performance of scenes. The following videos can be used as references:</p>
+<ul>
+<li>[<a href="https://www.bilibili.com/video/BV1FT411x7hU/?spm_id_from=333.337.search-card.all.click">Official Training]22-UE Asset Optimization | Epic Xiao Yue_Bilibili</a></li>
+<li>[<a href="https://www.bilibili.com/video/BV1FV411G72Q/?vd_source=e173296de020f10e8476ed443bbdfaed">UnrealCircle Suzhou]UE4 Performance Optimization | Zhou Hua Suzhou Misha Digital Entertainment_Bilibili</a></li>
+<li><a href="https://www.bilibili.com/video/BV1Yj41147dh/?vd_source=e173296de020f10e8476ed443bbdfaed">【Repost】UnrealFest2023 UE5 Performance Optimization_Bilibili</a></li>
+</ul>
+<p>For engine programmers, they generally need to be proficient in using <strong>RenderDoc</strong>, <strong>Unreal Insight</strong>, and various Stat commands, from which we can obtain very detailed performance data.</p>
+<p>For Niagara, UE provides a special tool to monitor the execution of Niagara —— <strong>Niagara Debugger</strong>.</p>
+<p>We can open the NiagaraDebugger here:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007203244212.png" data-desc-position="bottom"><img alt="image-20231007203244212" src="../../../../04-UnrealEngine/Resources/image-20231007203244212.png"></a></p>
+<p>It can also be started in the details panel of NiagaraSystem:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007211256346.png" data-desc-position="bottom"><img alt="image-20231007211256346" src="../../../../04-UnrealEngine/Resources/image-20231007211256346.png"></a></p>
+<h4 id="debug-hud">Debug Hud<a class="headerlink" href="#debug-hud" title="Permanent link">¶</a></h4>
+<p>The <code>Debug Hud</code> page provides many configurable Niagara debug views.</p>
+<p>Check <code>Debug View Enabled</code> to see the number of particles and memory of all particle systems currently executing in the scene:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007203838084.png" data-desc-position="bottom"><img alt="image-20231007203838084" src="../../../../04-UnrealEngine/Resources/image-20231007203838084.png"></a></p>
+<p>You can check <code>System Show Bounds</code> to display the bounding box of NiagaraSystem:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007204141184.png" data-desc-position="bottom"><img alt="image-20231007204141184" src="../../../../04-UnrealEngine/Resources/image-20231007204141184.png"></a></p>
+<p>Check <code>Show System Properties</code> and add <code>Property Match String</code> to add a debug preview view of the particle system:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007204536387.png" data-desc-position="bottom"><img alt="image-20231007204536387" src="../../../../04-UnrealEngine/Resources/image-20231007204536387.png"></a></p>
+<p>Particle properties can also be previewed:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007204851243.png" data-desc-position="bottom"><img alt="image-20231007204851243" src="../../../../04-UnrealEngine/Resources/image-20231007204851243.png"></a></p>
+<p>When there are many particle systems in the scene, to eliminate interference from other particle debug views, we can set <code>Name Filter</code> to select the particle systems that the debugger needs to focus on:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007205104536.png" data-desc-position="bottom"><img alt="image-20231007205104536" src="../../../../04-UnrealEngine/Resources/image-20231007205104536.png"></a></p>
+<blockquote>
+<p>This configuration only focuses on particle systems whose names start with <code>New</code>.</p>
+</blockquote>
+<h4 id="vfx-outline-view">VFX Outline View<a class="headerlink" href="#vfx-outline-view" title="Permanent link">¶</a></h4>
+<p>The VFX Outline is used to <strong>capture frames</strong> of Niagara in the scene. It supports three view modes:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007205814852.png" data-desc-position="bottom"><img alt="image-20231007205814852" src="../../../../04-UnrealEngine/Resources/image-20231007205814852.png"></a></p>
+<p>Click <strong>Capture</strong> to capture the execution of Niagara (you can configure the capture delay time and number of frames):</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007210218516.png" data-desc-position="bottom"><img alt="image-20231007210218516" src="../../../../04-UnrealEngine/Resources/image-20231007210218516.png"></a></p>
+<p>In State mode, we can view the activation status, simulation type (CPU/GPU), and number of particles of all particle systems in the scene:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007210228693.png" data-desc-position="bottom"><img alt="image-20231007210228693" src="../../../../04-UnrealEngine/Resources/image-20231007210228693.png"></a></p>
+<p>In Performance mode, we can further view the execution consumption of the particle system in the game thread and rendering thread:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007210313044.png" data-desc-position="bottom"><img alt="image-20231007210313044" src="../../../../04-UnrealEngine/Resources/image-20231007210313044.png"></a></p>
+<p>In Debug mode, we can obtain specific particle data during the execution of the particle system:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007210419151.png" data-desc-position="bottom"><img alt="image-20231007210419151" src="../../../../04-UnrealEngine/Resources/image-20231007210419151.png"></a></p>
+<h4 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">¶</a></h4>
+<p>The Performance view provides some testing methods:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007210636923.png" data-desc-position="bottom"><img alt="image-20231007210636923" src="../../../../04-UnrealEngine/Resources/image-20231007210636923.png"></a></p>
+<h4 id="debug-spawn">Debug Spawn<a class="headerlink" href="#debug-spawn" title="Permanent link">¶</a></h4>
+<p>Debug Spawn provides an interface to spawn effect particles. Just configure the particle system and click <code>Spawn System</code> (needs to be in PIE mode):</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007211058328.png" data-desc-position="bottom"><img alt="image-20231007211058328" src="../../../../04-UnrealEngine/Resources/image-20231007211058328.png"></a></p>
+<h4 id="module-performance">Module Performance<a class="headerlink" href="#module-performance" title="Permanent link">¶</a></h4>
+<p>The time consumption of each module can be obtained in the Niagara editor:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231007211513307.png" data-desc-position="bottom"><img alt="image-20231007211513307" src="../../../../04-UnrealEngine/Resources/image-20231007211513307.png"></a></p>
+<h4 id="resource-occupation">Resource Occupation<a class="headerlink" href="#resource-occupation" title="Permanent link">¶</a></h4>
+<p>You can click <code>Size Map</code> in the asset's content menu to view the size of the referenced textures:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008101627932.png" data-desc-position="bottom"><img alt="image-20231008101627932" src="../../../../04-UnrealEngine/Resources/image-20231008101627932.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008101743881.png" data-desc-position="bottom"><img alt="image-20231008101743881" src="../../../../04-UnrealEngine/Resources/image-20231008101743881.png"></a></p>
+<h4 id="issues-and-suggestions">Issues and Suggestions<a class="headerlink" href="#issues-and-suggestions" title="Permanent link">¶</a></h4>
+<ul>
+<li>Before Unreal Engine 5.1, Niagara System had a <strong>recompilation BUG</strong>. Its manifestation is: when spawning particles in the game for the first time, the entire particle system will be recompiled. This is because saving resources in the Niagara System Editor stores some configurations different from those in the game mode, leading to inconsistent HashID of the particle system and thus invalidating the compilation cache. Therefore, if you need to evaluate the execution performance of the particle system in the game environment, the author recommends testing in the packaged environment.</li>
+<li>Unreal Engine provides very complete supporting tools for Niagara, but for a large team, it is easy to use but not easy to manage. The author highly recommends further expanding on the basis of the above toolset and adding automated processes to complete macro particle system management.</li>
+<li>For some常规 rendering optimizations, such as optimizing materials, simplifying models, and reducing Overdraw, they are also applicable to Niagara.</li>
+</ul>
+<h3 id="production-optimization">Production Optimization<a class="headerlink" href="#production-optimization" title="Permanent link">¶</a></h3>
+<p>The optimization experience summarized in the process of mending the fold after the sheep are lost is precious. It can gradually let artists understand how to create high-performance particle effects.</p>
+<p>The following are some insights that can help effect artists optimize production (mainly for GPU particles):</p>
+<h4 id="computing-power-awareness">Computing Power Awareness<a class="headerlink" href="#computing-power-awareness" title="Permanent link">¶</a></h4>
+<p><code>1920 x 1080</code> is a common resolution for computer monitors nowadays. This means there are nearly <strong>2 million</strong> pixels on the screen, which also means the computer needs to perform nearly 2 million pixel-level numerical processes to draw one frame. Currently, some mid-range hardware devices can easily draw hundreds or thousands of images per second. This amazing computing power benefits from the rapid development of the Graphics Processing Unit (GPU). Unlike the Central Processing Unit (CPU), which is the scheduling center of the computer and whose architecture needs to take all aspects of the system into account, the GPU is a specialized approach. Its architecture is filled with a large number of computing units to meet the needs of graphics operations.</p>
+<blockquote>
+<p>Taking the current cutting-edge consumer graphics card <code>GeForce RTX 4090</code> as an example, it has more than 76 billion transistors and more than 16,000 computing cores.</p>
+</blockquote>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/format%2Cpng.png" data-desc-position="bottom"><img alt="GPU VS CPU" src="../../../../04-UnrealEngine/Resources/format%2Cpng.png"></a></p>
+<p>After understanding this upper limit, we can simply correspond <code>a single GPU particle</code> to <code>a pixel point</code>. That is, under normal circumstances, mid-range graphics cards can easily simulate millions of particle effects.</p>
+<p>But it should be noted that the million-level is often the upper limit of the entire system. We usually cannot allocate all performance budgets to the particle system. So in general, if the total number of particles exceeds 100,000, it may cause performance pressure on the entire rendering system.</p>
+<p>If these 100,000 particles are converted into the corresponding number of <code>1x1</code> pixels for tiling, it roughly corresponds to an image of <code>300x300</code> size:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008104748978.png" data-desc-position="bottom"><img alt="image-20231008104748978" src="../../../../04-UnrealEngine/Resources/image-20231008104748978.png"></a></p>
+<p>The closer the <strong>screen occupation area</strong> of the particle system is to its <strong>tiling area</strong>, the better its performance (because there is less OverDraw).</p>
+<p>The following is an ordinary NiagaraSystem with 140,000 particles, which fails to match the performance it should have for such a large number:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008105515353.png" data-desc-position="bottom"><img alt="image-20231008105515353" src="../../../../04-UnrealEngine/Resources/image-20231008105515353.png"></a></p>
+<p>And as the view moves away, its OverDraw becomes more and more serious:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/dasssssd.gif" data-desc-position="bottom"><img alt="dasssssd" src="../../../../04-UnrealEngine/Resources/dasssssd.gif"></a></p>
+<blockquote>
+<p>This problem can be optimized by using LOD curves based on distance to adjust the number of particles.</p>
+</blockquote>
+<h4 id="underlying-principles">Underlying Principles<a class="headerlink" href="#underlying-principles" title="Permanent link">¶</a></h4>
+<p>Niagara itself is a programmable data processor provided by UE. In the NiagaraEditor, we can freely control the processing structure of this processor:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008110203395.png" data-desc-position="bottom"><img alt="image-20231008110203395" src="../../../../04-UnrealEngine/Resources/image-20231008110203395.png"></a></p>
+<p>And in each <strong>Stage</strong>, use the visual nodes provided by the engine to write corresponding <strong>Modules</strong> to formulate data processing logic:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008110433919.png" data-desc-position="bottom"><img alt="image-20231008110433919" src="../../../../04-UnrealEngine/Resources/image-20231008110433919.png"></a></p>
+<p>These visual node logics will be translated into ComputerShader code:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008111218076.png" data-desc-position="bottom"><img alt="image-20231008111218076" src="../../../../04-UnrealEngine/Resources/image-20231008111218076.png"></a></p>
+<p>The results of data processing will be bound to the corresponding attribute slots of the renderer, providing the renderer to complete the final expression of the particle effect:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008110706037.png" data-desc-position="bottom"><img alt="image-20231008110706037" src="../../../../04-UnrealEngine/Resources/image-20231008110706037.png"></a></p>
+<p>From the perspective of data processing, our key goal is how to create an efficient data processor. Therefore, mastering the principles of the underlying modules of Niagara is crucial for overall performance and effect control.</p>
+<p>Here is a very excellent tutorial:</p>
+<ul>
+<li>[<a href="https://www.bilibili.com/video/BV1ea411V76f/?vd_source=e173296de020f10e8476ed443bbdfaed">Official Training]09-UE Particle Basics | Xiao Yue Epic Bilibili</a></li>
+</ul>
+<h4 id="sprite-sheet-baking">Sprite Sheet Baking<a class="headerlink" href="#sprite-sheet-baking" title="Permanent link">¶</a></h4>
+<p>Niagara Editor supports baking particle effects into sprite sheets. For some effects with fixed viewing angles, we can adopt this scheme to obtain a great degree of optimization.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008151631152.png" data-desc-position="bottom"><img alt="image-20231008151631152" src="../../../../04-UnrealEngine/Resources/image-20231008151631152.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008151748551.png" data-desc-position="bottom"><img alt="image-20231008151748551" src="../../../../04-UnrealEngine/Resources/image-20231008151748551.png"></a></p>
+<h4 id="procedural-content-generation">Procedural Content Generation<a class="headerlink" href="#procedural-content-generation" title="Permanent link">¶</a></h4>
+<p>Particle systems are mainly <strong>suitable</strong> for simulating <strong>a large number of</strong> <strong>dynamic</strong> objects, but only under some specific requirements do we have to use particle systems for <strong>real-time simulation</strong>:</p>
+<ul>
+<li>Creating interactive dynamic effects</li>
+<li>Need to create a 3D effect with no visual dead angles</li>
+<li>Very large number of large-scale clusters</li>
+</ul>
+<p>Excluding the above usage scenarios, we can usually achieve the desired performance effect by <strong>baking static materials</strong>.</p>
+<p>So when creating particle effects, we need to carefully examine: Is it necessary to use the particle system for real-time simulation?</p>
+<p>If yes, then we further think: Can some real-time calculation stages in the particle system be replaced with pre-made static data?</p>
+<p>For example, when creating effects related to the scene, the simulation of particles may need some scene information as input. Most of the time, this scene data is static. We don't need to calculate the relevant information of the scene in real time at runtime. We can generate this data statically in the editor. This way, we can create effects highly integrated with the scene with less performance cost. This improvement is particularly obvious when the number of particle systems is large.</p>
+<p>We can also create <strong>Procedural Content Generation (PCG)</strong> assets on Niagara:</p>
+<ul>
+<li>In the <strong>User Parameters</strong> of <strong>Niagara System</strong>, add the scene data required by the particle system (here, a variable named <code>SpawnPositionArray</code> is added):</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008115550644.png" data-desc-position="bottom"><img alt="image-20231008115550644" src="../../../../04-UnrealEngine/Resources/image-20231008115550644.png"></a></p>
+<ul>
+<li>
+<p>Create a new <strong>Actor Blueprint</strong>, add <strong>NiagaraComponent</strong>, and specify <strong>Niagara System</strong>.</p>
+</li>
+<li>
+<p>In the <strong>BeginPlay</strong> event of the blueprint, set the parameters we added in Niagara, and <strong>promote the parameter input to a variable</strong> (<code>Partcile Spawn Position Array</code>):</p>
+</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008114722968.png" data-desc-position="bottom"><img alt="image-20231008114722968" src="../../../../04-UnrealEngine/Resources/image-20231008114722968.png"></a></p>
+<ul>
+<li>Add a function (e.g., named <code>CalcParticleSpawnPositionArray</code>) in the blueprint, check <strong>Call In Editor</strong>, and in this function, obtain scene information (no need to care about performance, you can scan Actors, cast rays...), and fill the blueprint variable value (<code>Partcile Spawn Position Array</code>):</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008115241436.png" data-desc-position="bottom"><img alt="image-20231008115241436" src="../../../../04-UnrealEngine/Resources/image-20231008115241436.png"></a></p>
+<ul>
+<li>Place the Actor blueprint in the scene, and you can find that the function we created earlier has become a clickable button in its details panel:</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231008115733236.png" data-desc-position="bottom"><img alt="image-20231008115733236" src="../../../../04-UnrealEngine/Resources/image-20231008115733236.png"></a></p>
+<ul>
+<li>
+<p>Clicking the button will execute the corresponding function logic, which will execute and fill the blueprint properties. These property values will be serialized when saved. When the game starts normally, BeginPlay will execute and submit this data to Niagara.</p>
+</li>
+<li>
+<p>Then, we can write the corresponding Module in Niagara to use this part of the data.</p>
+</li>
+</ul>
+<blockquote>
+<p>It should be noted that we cannot directly set the Niagara parameters in <code>CalcParticleSpawnPositionArray</code>, but use the blueprint variable property serialization to store the scene data.</p>
+<p>This is because the functions for setting Niagara parameters (starting with <code>NiagaraSet...</code>) directly upload the data to Niagara's data processor without storing it. Therefore, setting Niagara parameters through functions may not necessarily show parameter changes in the details panel of the NiagaraSystem (some property types do return synchronization of editor data, so changes can be seen in the details panel).</p>
+</blockquote>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="创建日期">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js" data-repo="Italink/ModernGraphicsEngineGuide" data-repo-id="R_kgDOIPtbiQ" data-category-id="DIC_kwDOIPtbic4CTxOk" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous" async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078q-.408 1.096-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58 58 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.2 9.2 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125M13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

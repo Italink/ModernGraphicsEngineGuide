@@ -1,0 +1,3789 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+          <link rel="alternate" href="/" hreflang="zh">
+        
+          <link rel="alternate" href="/Localization/en/" hreflang="en">
+        
+          <link rel="alternate" href="/Localization/ja/" hreflang="ja">
+        
+          <link rel="alternate" href="/Localization/ko/" hreflang="ko">
+        
+          <link rel="alternate" href="/Localization/fr/" hreflang="fr">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Fluid Ninja - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-S1J8MN27P8",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link rel="stylesheet" href="../../../../assets/stylesheets/custom.2fa34c39.min.css">
+
+  <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#fluid-ninja" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&amp;k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76"></path></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Fluid Ninja
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="zh" class="md-select__link">
+              Chinese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/en/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ja/" hreflang="ja" class="md-select__link">
+              Japanese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ko/" hreflang="ko" class="md-select__link">
+              Korean
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/fr/" hreflang="fr" class="md-select__link">
+              French
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  开源
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../06-Blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  个人博客
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 计算机发展史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - C++基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 宏、模板、反射
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 内存管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - GUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图形API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    图形API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 图形渲染管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 着色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 缓冲区与纹理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - 3D空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 图形API进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引擎技术
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    引擎技术
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 渲染架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 编辑器架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unreal Engine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unreal Engine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 基础编程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - Slate 开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 插件开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 粒子系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - Niagara 性能优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - Fluid Ninja 流体插件
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 开放世界制作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/7.%E9%9F%B3%E9%A2%91%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 - 音频开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/9.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E4%B8%AD%E7%9A%84%E6%A4%8D%E8%A2%AB%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9 - 植被优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/10.LOD%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 - LOD不完全指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/12.%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%86%85%E5%AE%B9%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 - 程序化内容管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/16.3DGaussianSplatting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 - 3DGaussianSplatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/17.Landscape%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 - Landscape 避坑指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开源
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开源
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1">
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UnrealEngine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    UnrealEngine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Splatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2">
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/C%2B%2B/C%2B%2B%E5%8F%8D%E5%B0%84%E7%BC%96%E8%AF%91%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++反射编译器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3">
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Qt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96%E8%BD%AF%E4%BB%B6-Specinker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频可视化软件-Specinker(已闭源)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%A2%91%E8%B0%B1%E5%88%86%E6%9E%90%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    频谱分析器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%8B%9F%E6%80%81%E7%AA%97%E5%8F%A3%E6%BB%A4%E9%95%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt拟态窗口滤镜
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E5%B1%8F%E5%B9%95%E5%8F%96%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt屏幕取色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%B8%90%E5%8F%98%E8%B0%83%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt渐变调色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E7%B2%92%E5%AD%90%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面粒子特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E6%B0%B4%E9%9D%A2%E6%B3%A2%E7%BA%B9%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面水面波纹特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../06-Blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人博客
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    个人博客
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_2">
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    五月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    八月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    六月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    四月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    九月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2019/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_3">
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人随笔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%95%B4%E6%B4%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    整活
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    杂谈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        入手方法
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        サンプル
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#blueprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        主要なBlueprint
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="主要なBlueprint">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ninjalivecomponent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NinjaLiveComponent
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ninjalive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NinjaLive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ninjalive_utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NinjaLive_Utilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ninjalive_presetmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NinjaLive_PresetManager
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ninjalive_memorypoolmanager" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NinjaLive_MemoryPoolManager
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        シミュレーションプロセス
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        使用フロー
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="使用フロー">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        入力の構築
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="入力の構築">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#texture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        静的テクスチャ（Texture）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#material" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        動的マテリアル（Material）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scene-capture-2d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        シーンカメラキャプチャ（Scene Capture 2D）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rendertarget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        レンダーターゲット（RenderTarget）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ビデオ入力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ユーザー入力
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        コリジョンインタラクション
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ブラシの調整
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        プリセット設定
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        出力マテリアル
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        まとめ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="まとめ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        优缺点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="fluid-ninja">Fluid Ninja<a class="headerlink" href="#fluid-ninja" title="Permanent link">¶</a></h1>
+<p><strong>Fluid Ninja</strong> は驚くべきインタラクティブな流体シミュレーションプラグインで、極めて低いパフォーマンス消費で圧倒的な効果を制作できます：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114145533712.png" data-desc-position="bottom"><img alt="image-20231114145533712" src="../../../../04-UnrealEngine/Resources/image-20231114145533712.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114145942912.png" data-desc-position="bottom"><img alt="image-20231114145942912" src="../../../../04-UnrealEngine/Resources/image-20231114145942912.png"></a></p>
+<ul>
+<li>作者YouTube：<a href="https://www.youtube.com/c/AndrasKetzer">https://www.youtube.com/c/AndrasKetzer</a></li>
+<li>ユーリアルマーケットプレイス：<a href="https://www.unrealengine.com/marketplace/en-US/product/fluidninja-live">https://www.unrealengine.com/marketplace/en-US/product/fluidninja-live</a></li>
+<li>ディスカッションコミュニティ（Discord）：<a href="https://discord.com/invite/rgEtwua2tu">https://discord.com/invite/rgEtwua2tu</a></li>
+</ul>
+<p>作者のYoutubeには多くの動画チュートリアルがあります：</p>
+<ul>
+<li>
+<p><a href="https://www.youtube.com/watch?v=vXalfRAnXak&amp;t=3869s">FluidNinja LIVE - ALL IN ONE TUTORIAL and making FX from scratch - YouTube</a></p>
+</li>
+<li>
+<p><a href="https://space.bilibili.com/22866318/channel/seriesdetail?sid=2277642">FluidNinja 中国語講座 - 陶仁賢 </a></p>
+</li>
+</ul>
+<h2 id="_1">入手方法<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<p>学生ユーザーの場合、Fluid Ninjaの<code>Discordコミュニティ</code>から学生無料版をダウンロードできます：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114152013980.png" data-desc-position="bottom"><img alt="image-20231114152013980" src="../../../../04-UnrealEngine/Resources/image-20231114152013980.png"></a></p>
+<p>商用ユーザーの場合、ユーリアルマーケットプレイスでFluidNinjaプラグインを購入してください：</p>
+<ul>
+<li><a href="https://www.unrealengine.com/marketplace/en-US/product/fluidninja-live">https://www.unrealengine.com/marketplace/en-US/product/fluidninja-live</a></li>
+</ul>
+<h2 id="_2">サンプル<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
+<p><code>Content/FluidNinjaLive/Tutorial/Levels/</code>に大量のサンプルレベルがあり、これらのレベルには詳細な説明文が含まれています：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114161611114.png" data-desc-position="bottom"><img alt="image-20231114161611114" src="../../../../04-UnrealEngine/Resources/image-20231114161611114.png"></a></p>
+<p>最良の学習方法は、これらのレベルを順番に再現し、パラメータ設定を理解することです：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231117162611951.png" data-desc-position="bottom"><img alt="image-20231117162611951" src="../../../../04-UnrealEngine/Resources/image-20231117162611951.png"></a></p>
+<h2 id="blueprint">主要なBlueprint<a class="headerlink" href="#blueprint" title="Permanent link">¶</a></h2>
+<h3 id="ninjalivecomponent">NinjaLiveComponent<a class="headerlink" href="#ninjalivecomponent" title="Permanent link">¶</a></h3>
+<p>NinjaLiveComponentはFluidNinjaのコアで、静的メッシュ（一般的にはパッチ、<strong>トレースメッシュ（Trace Mesh）</strong> と呼ばれる）を搭載する必要があります。流体シミュレーションの最終結果はトレースメッシュのマテリアルとして出力されます：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114162146791.png" data-desc-position="bottom"><img alt="image-20231114162146791" src="../../../../04-UnrealEngine/Resources/image-20231114162146791.png"></a></p>
+<blockquote>
+<p>上図の赤いパッチがトレースメッシュです</p>
+</blockquote>
+<h3 id="ninjalive">NinjaLive<a class="headerlink" href="#ninjalive" title="Permanent link">¶</a></h3>
+<p>NinjaLiveはFluid Ninjaが提供するデフォルトのActorで、NinjaLiveComponentのパラメータをラップし、大多数のケースに対応するトレースパッチを含んでいます。NinjaLiveComponentの設定を簡略化し、以下のような追加機能を提供します：</p>
+<ul>
+<li>ActivationVolumeを通じてNinjaFluidをカリング・スリープさせ、ActivationVolumeに入った場合にのみNinjaLiveComponentをアクティブにする</li>
+<li>InteractionVolumeを通じてより細かい粒度でインタラクション領域を設定する</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114164608493.png" data-desc-position="bottom"><img alt="image-20231114164608493" src="../../../../04-UnrealEngine/Resources/image-20231114164608493.png"></a></p>
+<h3 id="ninjalive_utilities">NinjaLive_Utilities<a class="headerlink" href="#ninjalive_utilities" title="Permanent link">¶</a></h3>
+<p>NinjaLive_Utilities（Blueprint Actor）は以下のような便利なデバッグ機能を提供します：</p>
+<ul>
+<li>このBlueprintに最も近いプレイヤーを自動制御する</li>
+<li>マウスを表示する</li>
+<li>アンチエイリアス、デプスオブフィールド、モーションブラーの品質を調整する</li>
+<li>エディタの120FPS制限を解除する</li>
+<li>...</li>
+</ul>
+<p>このBlueprintをシーンにドラッグして設定できます：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114165051217.png" data-desc-position="bottom"><img alt="image-20231114165051217" src="../../../../04-UnrealEngine/Resources/image-20231114165051217.png"></a></p>
+<h3 id="ninjalive_presetmanager">NinjaLive_PresetManager<a class="headerlink" href="#ninjalive_presetmanager" title="Permanent link">¶</a></h3>
+<p>NinjaLive_PresetManager（Blueprint Actor）はNinjaLiveのパラメータプリセットを調整するために使用されます。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114165515082.png" data-desc-position="bottom"><img alt="image-20231114165515082" src="../../../../04-UnrealEngine/Resources/image-20231114165515082.png"></a></p>
+<p>シーンにドラッグしてPIEを起動すると、以下のパネルが表示されます：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114165552571.png" data-desc-position="bottom"><img alt="image-20231114165552571" src="../../../../04-UnrealEngine/Resources/image-20231114165552571.png"></a></p>
+<h3 id="ninjalive_memorypoolmanager">NinjaLive_MemoryPoolManager<a class="headerlink" href="#ninjalive_memorypoolmanager" title="Permanent link">¶</a></h3>
+<p>NinjaLive_MemoryPoolManager（Blueprint Actor）はFluidNinjaのメモリ戦略を設定するために使用されます。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114165855058.png" data-desc-position="bottom"><img alt="image-20231114165855058" src="../../../../04-UnrealEngine/Resources/image-20231114165855058.png"></a></p>
+<h2 id="_3">シミュレーションプロセス<a class="headerlink" href="#_3" title="Permanent link">¶</a></h2>
+<p>FluidNinjaのアセットディレクトリには、<code>Help</code>という名前のBlueprintがあります：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114160604396.png" data-desc-position="bottom"><img alt="image-20231114160604396" src="../../../../04-UnrealEngine/Resources/image-20231114160604396.png"></a></p>
+<p>この中にFluid Ninjaシミュレーションのフローチャートが詳細に記述されています：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114161417804.png" data-desc-position="bottom"><img alt="image-20231114161417804" src="../../../../04-UnrealEngine/Resources/image-20231114161417804.png"></a></p>
+<p>NinjaFluidのコアは以下の点にあります：</p>
+<ul>
+<li><strong>Density（密度）</strong> テクスチャと <strong>Velocity（速度）</strong> テクスチャを構築する</li>
+<li><strong>ノイズ（Noise）</strong> を重ねて流体のランダム性を高める</li>
+<li><strong>ブラシ（Brush）</strong> を調整して流体の形状を制御する</li>
+<li><strong>出力マテリアル（Output Material）</strong> を組み合わせる</li>
+<li>最終結果を <strong>トレースメッシュ（Trace Mesh）</strong> のマテリアル表面に出力する</li>
+<li>所望の結果を得る：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/12332312.gif" data-desc-position="bottom"><img alt="12332312" src="../../../../04-UnrealEngine/Resources/12332312.gif"></a></p>
+<ul>
+<li>Densityはシングルチャンネルテクスチャで、値域は[0,1]で、現在位置の流体密度を表します。</li>
+<li>Velocityはデュアルチャンネルテクスチャで、値域は[0,1]で、現在位置の流体のベクトル速度を表します。[0,1]に正規化されているため、速度0は実際にはRG値(0.5,0.5)に対応します。上図では：</li>
+<li>VelocityテクスチャのRチャンネルは水平速度に対応し、値が<code>&lt;0.5</code>の場合流体は左に、<code>&gt;0.5</code>の場合右に流れます</li>
+<li>VelocityテクスチャのGチャンネルは垂直速度に対応し、値が<code>&lt;0.5</code>の場合流体は上に、<code>&gt;0.5</code>の場合下に流れます</li>
+<li>FluidNinjaは3チャンネルマテリアルの入力を許可し、RGチャンネルはVelocityを、BチャンネルはDensityを表します</li>
+</ul>
+<h2 id="_4">使用フロー<a class="headerlink" href="#_4" title="Permanent link">¶</a></h2>
+<p>制作プロセスでは、本質的に <strong>NinjaLiveComponent</strong> を操作することになり、その <strong>設定項目カテゴリ（Categories）</strong> は以下の通りです：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114195314683.png" data-desc-position="bottom"><img alt="image-20231114195314683" src="../../../../04-UnrealEngine/Resources/image-20231114195314683.png"></a></p>
+<ul>
+<li><code>Live Activation</code> ：Disable Componentオプションのみが存在し、Blueprintを通じて動的に設定してカリングできます。</li>
+<li><code>Live Interaction</code> ：インタラクションに関するすべての設定、例えばインタラクション対象のフィルタリング、トレースメッシュの向き・ロック、ワールド座標オフセットなど。</li>
+<li><code>Live Brush Setting</code> ：ブラシのパラメータ設定。</li>
+<li><code>Live Generic</code> ：一般設定で、主に効果のプリセット、入力、出力を調整します。</li>
+<li><code>Live Performance</code> ：パフォーマンス設定で、効果の反復回数、FPS範囲制限、LODなどを設定できます。</li>
+<li><code>Live Compatibility</code> ：互換性設定で、コリジョンチャンネル、入力の上書きなどを設定できます。</li>
+<li><code>Live Debug</code> ：デバッグ設定で、ヒント情報を印刷するためのいくつかのチェックボックスが提供されます。</li>
+<li><code>Live Raymarching</code> ：Raymarchingを設定します。</li>
+<li><code>Live Memory Management</code> ：メモリ管理を設定します。</li>
+</ul>
+<h3 id="_5">入力の構築<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
+<p>ここでの入力は主に <strong>密度（Density）</strong> と <strong>速度（Velocity）</strong> を指し、関連する入力設定パラメータは主に <strong>NiagaraComponent</strong> の<code>Live Generic</code>カテゴリ下にあります。Fluid Ninjaの入力ソースは以下の種類があります：</p>
+<ul>
+<li>静的テクスチャ</li>
+<li>動的マテリアル</li>
+<li>シーンカメラキャプチャ</li>
+<li>レンダーターゲット（RenderTarget）</li>
+<li>ストリーミングビデオ</li>
+<li>マウス入力</li>
+<li>シーンインタラクション：静的メッシュ、動的メッシュ、スケルタルメッシュ、破壊可能オブジェクト...</li>
+</ul>
+<blockquote>
+<p>上記の入力は独立しているわけではなく、共存可能です。FluidNinjaは複数の入力を混合します。詳細は<code>Help.uasset</code>のフローチャートを参照してください。</p>
+</blockquote>
+<p>マップ<code>Content/FluidNinjaLive/Tutorial/Levels/NinjaLive_Level03_SimulationInputs_LIVE17.umap</code>には、NinjaFluid入力の完全なサンプルがあります。以下にこれらの入力のキーステップを記録します：</p>
+<h4 id="texture">静的テクスチャ（Texture）<a class="headerlink" href="#texture" title="Permanent link">¶</a></h4>
+<p>静的テクスチャの入力設定はNinjaPresetデータテーブルにあります：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114201238339.png" data-desc-position="bottom"><img alt="image-20231114201238339" src="../../../../04-UnrealEngine/Resources/image-20231114201238339.png"></a></p>
+<p>通常、データテーブルの内容を直接変更することはなく、 <strong>テストレベル</strong> で <strong>NinjaLive_PresetManager</strong> が提供するエディタパネルを利用してプリセットテーブルをエクスポートします：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114202724330.png" data-desc-position="bottom"><img alt="image-20231114202724330" src="../../../../04-UnrealEngine/Resources/image-20231114202724330.png"></a></p>
+<h4 id="material">動的マテリアル（Material）<a class="headerlink" href="#material" title="Permanent link">¶</a></h4>
+<p>マテリアルの入力設定は <strong>NinjaComponent</strong> の <code>Live Generic</code> カテゴリ下にあります：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231114202905246.png" data-desc-position="bottom"><img alt="image-20231114202905246" src="../../../../04-UnrealEngine/Resources/image-20231114202905246.png"></a></p>
+<ul>
+<li><strong>Input Materials</strong> パラメータで使用可能な入力マテリアルを追加できます。複数追加することで、 <strong>NinjaLive_PresetManager</strong> で切り替えてプレビューできます。</li>
+<li><strong>Input Material Selected</strong> インデックスを調整して、現在使用する入力マテリアルを選択します。</li>
+<li><strong>RGB-Input Material</strong> をチェックすると、マテリアルのRGチャンネルがVelocityテクスチャとして、BチャンネルがDensityテクスチャとして使用されます。そうでない場合、 <strong>デフォルトではマテリアルのRチャンネルのみがDensityテクスチャとして使用されます</strong></li>
+<li><strong>Input Material Clamp</strong> をチェックすると、UV座標が[0,1]以外の画像がクリップされます。</li>
+</ul>
+<p>Ninja Fluidの入力マテリアルには、<code>マテリアルドメイン</code>を<code>ポストプロセス</code>に設定し、<code>投影光線によるシャドウ検出</code>をオフにする必要があります：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115095919654.png" data-desc-position="bottom"><img alt="image-20231115095919654" src="../../../../04-UnrealEngine/Resources/image-20231115095919654.png"></a></p>
+<h4 id="scene-capture-2d">シーンカメラキャプチャ（Scene Capture 2D）<a class="headerlink" href="#scene-capture-2d" title="Permanent link">¶</a></h4>
+<p>FluidNinjaはカメラを使用してシーンをキャプチャし、カメラ画面内の画像を流体シミュレーションの入力として使用できます。具体的な設定は <strong>NinjaComponent</strong> の <code>Live Generic</code> カテゴリ下にあります：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115100308055.png" data-desc-position="bottom"><img alt="image-20231115100308055" src="../../../../04-UnrealEngine/Resources/image-20231115100308055.png"></a></p>
+<ul>
+<li><strong>Input Scene Capture Camera</strong> で現在シーンに存在するActorを選択できます</li>
+</ul>
+<p>サンプル：</p>
+<ul>
+<li><strong>Ninja Live</strong> 、 <strong>Cube</strong> 、 <strong>シーンキャプチャ2D（Scene Capture 2D）</strong> を作成し、カメラをキャプチャ対象のCubeに向ける</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115101605904.png" data-desc-position="bottom"><img alt="image-20231115101605904" src="../../../../04-UnrealEngine/Resources/image-20231115101605904.png"></a></p>
+<ul>
+<li><strong>Ninja Live</strong> の <strong>Ninja Component</strong> でシーンキャプチャ2Dを設定し、直感的なマテリアル出力を選択する：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115101956749.png" data-desc-position="bottom"><img alt="image-20231115101956749" src="../../../../04-UnrealEngine/Resources/image-20231115101956749.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115102115854.png" data-desc-position="bottom"><img alt="image-20231115102115854" src="../../../../04-UnrealEngine/Resources/image-20231115102115854.png"></a></p>
+<ul>
+<li>
+<p>PIEを実行すると、以下の効果が見られます：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115102315733.png" data-desc-position="bottom"><img alt="image-20231115102315733" src="../../../../04-UnrealEngine/Resources/image-20231115102315733.png"></a></p>
+</li>
+<li>
+<p>シーンキャプチャ2Dでキャプチャの設定（カメラのパラメータ、オブジェクトのフィルタリング...）を調整し、 <strong>NinjaLive_PresetManager</strong> を利用してパラメータ効果を調整できます：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115103426806.png" data-desc-position="bottom"><img alt="image-20231115103426806" src="../../../../04-UnrealEngine/Resources/image-20231115103426806.png"></a></p>
+</li>
+</ul>
+<h4 id="rendertarget">レンダーターゲット（RenderTarget）<a class="headerlink" href="#rendertarget" title="Permanent link">¶</a></h4>
+<p>マテリアルの入力設定は <strong>NinjaComponent</strong> の <code>Live Generic</code> カテゴリ下にあります：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115103750131.png" data-desc-position="bottom"><img alt="image-20231115103750131" src="../../../../04-UnrealEngine/Resources/image-20231115103750131.png"></a></p>
+<ul>
+<li><strong>Use Render Target as Input</strong> をチェックすると、下方の <strong>Input Render Target</strong> が流体シミュレーションの入力として使用されます</li>
+<li><strong>Input Render Target</strong> は読み取るRender Targetを指定するために使用されます</li>
+</ul>
+<p>Fluid Ninjaでは、この方案は <strong>形状制御可能な3D流体</strong> の制作に使用できます</p>
+<p>Level3には以下のサンプルがあります：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/123123176812.gif" data-desc-position="bottom"><img alt="123123176812" src="../../../../04-UnrealEngine/Resources/123123176812.gif"></a></p>
+<ul>
+<li>左側はNiagaraパーティクルシステム、中央は投影されたRT、右側はRT+出力マテリアルを利用して最終的に表示される効果です</li>
+</ul>
+<p>サンプル：</p>
+<ul>
+<li>コンテンツブラウザで【Niagaraパーティクルシステム】を新規作成し、【既存システムからコピー】を選択する</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115104955903.png" data-desc-position="bottom"><img alt="image-20231115104955903" src="../../../../04-UnrealEngine/Resources/image-20231115104955903.png"></a></p>
+<ul>
+<li><code>ライブラリのみ</code>のチェックを外し、<code>標準</code>カテゴリで <strong>NS_ParticleCaptureBasic</strong> を見つける：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115105156054.png" data-desc-position="bottom"><img alt="image-20231115105156054" src="../../../../04-UnrealEngine/Resources/image-20231115105156054.png"></a></p>
+<ul>
+<li>
+<p>作成後パーティクルシステムを開くと、2つのデフォルトエミッタが含まれていることがわかります：</p>
+</li>
+<li>
+<p><strong>NE_ParticleCaptureBasic</strong> ：Emptyエミッタのパーティクルを、メッシュ座標を通じてRenderTargetにマッピングするために使用されます。AttributeReaderでどのエミッタをキャプチャするかを選択できます。</p>
+</li>
+<li><strong>Empty</strong> ：シミュレーション用のパーティクルエミッタ</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115105833878.png" data-desc-position="bottom"><img alt="image-20231115105833878" src="../../../../04-UnrealEngine/Resources/image-20231115105833878.png"></a></p>
+<ul>
+<li>以下に発射速度（60）を設定し、四散するランダム初速度を追加すると、以下の効果が見られます：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115110654951.png" data-desc-position="bottom"><img alt="image-20231115110654951" src="../../../../04-UnrealEngine/Resources/image-20231115110654951.png"></a></p>
+<ul>
+<li><strong>NE_ParticleCaptureBasic</strong> はキャプチャしたパーティクルデータを利用し、すべてのパーティクルの座標に基づいて <strong>「投影」</strong> を一张RenderTargetに行います。ユーザーパラメータでこの投影プロセスの策略を設定できます：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115111735046.png" data-desc-position="bottom"><img alt="image-20231115111735046" src="../../../../04-UnrealEngine/Resources/image-20231115111735046.png"></a></p>
+<ul>
+<li>ユーザーパラメータでは、デフォルトで<code>RT_PrevivewParticleCapture</code>をRT出力として使用します。これは他のパーティクルシステムと共用される可能性があるため、直接使用すると他のロジック（チュートリアルレベル）と衝突する場合があります。そのため、自身で一张RTを作成する必要があります：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115112113233.png" data-desc-position="bottom"><img alt="image-20231115112113233" src="../../../../04-UnrealEngine/Resources/image-20231115112113233.png"></a></p>
+<ul>
+<li>NiagaraSystemのデフォルトパラメータで指定し、ユーザーパラメータを調整してRTのマッピング規則を理解します：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115112418360.png" data-desc-position="bottom"><img alt="image-20231115112418360" src="../../../../04-UnrealEngine/Resources/image-20231115112418360.png"></a></p>
+<ul>
+<li>設定したNiagaraSystemをシーンにドラッグして配置し、シーンに浮かせてNinjaLiveActorを配置します。NinjaLiveの詳細パネルで<code>TraceMeshSize</code>を<code>(5,5,1)</code>に設定し、NinjaLiveComponentの詳細で<code>カメラ面向きトレースメッシュ（Camera Facing Trace Mesh）</code>をオンにし、RT入力をオンにして先ほど作成したRTを指定し、出力マテリアルを<code>MI_DensityBuffer_Red</code>に選択します：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115111345866.png" data-desc-position="bottom"><img alt="image-20231115111345866" src="../../../../04-UnrealEngine/Resources/image-20231115111345866.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115112955341.png" data-desc-position="bottom"><img alt="image-20231115112955341" src="../../../../04-UnrealEngine/Resources/image-20231115112955341.png"></a></p>
+<ul>
+<li>PIEを起動すると、以下の効果が見られます：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115113119585.png" data-desc-position="bottom"><img alt="image-20231115113119585" src="../../../../04-UnrealEngine/Resources/image-20231115113119585.png"></a></p>
+<ul>
+<li>実際には、NiagaraSystemをレンダリングする必要はなく、シミュレーションデータだけが必要です。<strong>NS_ParticleCaptureBasic</strong> がデフォルトでオンになっているのはデバッグを容易にするためです。そのため、パーティクルエミッタのレンダラーをオフにできます：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115113520770.png" data-desc-position="bottom"><img alt="image-20231115113520770" src="../../../../04-UnrealEngine/Resources/image-20231115113520770.png"></a></p>
+<ul>
+<li>さらに、RTのレンダリングもカメラ位置に依存するため、より正確な平面画像を取得するために、<strong>NiagaraSystem</strong> と <strong>NinjaLive</strong> の位置を重ね、適切な出力マテリアル効果を選択すると、以下のように表示されます：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/123176812.gif" data-desc-position="bottom"><img alt="123176812" src="../../../../04-UnrealEngine/Resources/123176812.gif"></a></p>
+<h4 id="_6">ビデオ入力<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
+<p>ビデオファイルをNinjaFluidの入力として使用するには、以下の3つのパラメータを指定する必要があります：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115181025276.png" data-desc-position="bottom"><img alt="image-20231115181025276" src="../../../../04-UnrealEngine/Resources/image-20231115181025276.png"></a></p>
+<ul>
+<li><strong>Input Media Player</strong> ：ビデオプレーヤー</li>
+<li><strong>Media Texture</strong> ：ビデオ描画に使用するテクスチャ</li>
+<li><strong>Input Media Source</strong> ：ビデオ再生ソース</li>
+</ul>
+<p>UEでビデオを再生する方法については、記事 <a href="https://zhuanlan.zhihu.com/p/135963353">https://zhuanlan.zhihu.com/p/135963353</a> を参照してください</p>
+<p>サンプル：</p>
+<ul>
+<li>NinjaLiveActorを追加し、ビデオをDensity入力として指定し、上方向のVelocityテクスチャ<code>T_Crumple</code>を設定し、出力マテリアル<code>MI_Candle1</code>を組み合わせると、以下の効果が得られます：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/123812.gif" data-desc-position="bottom"><img alt="123812" src="../../../../04-UnrealEngine/Resources/123812.gif"></a></p>
+<h4 id="_7">ユーザー入力<a class="headerlink" href="#_7" title="Permanent link">¶</a></h4>
+<p>NinjaLiveActorはデフォルトでマウス入力をオンにしており、その効果は以下の通りです：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/1236572.gif" data-desc-position="bottom"><img alt="1236572" src="../../../../04-UnrealEngine/Resources/1236572.gif"></a></p>
+<p>以下の場所でオフにできます：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231115182237273.png" data-desc-position="bottom"><img alt="image-20231115182237273" src="../../../../04-UnrealEngine/Resources/image-20231115182237273.png"></a></p>
+<h4 id="_8">コリジョンインタラクション<a class="headerlink" href="#_8" title="Permanent link">¶</a></h4>
+<p>Fluid Ninjaは物理コリジョンを入力として使用し、インタラクティブな流体効果を実現できます。簡単なサンプルは以下の通りです：</p>
+<ul>
+<li>
+<p>NinjaLiveActorを追加する</p>
+</li>
+<li>
+<p><code>Trace Mesh Size</code>と<code>Interaction Volume Size</code>を<code>(5,5,1)</code>に設定する</p>
+</li>
+<li>
+<p>NinjaLiveComponent\Live Brush Settingsを設定する。そうしないと、コリジョンブラシが小さすぎて結果が見えない場合があります</p>
+<ul>
+<li><code>Brush Scaled By Interacting Obj Size</code>をチェックする</li>
+<li><code>Primitive Obj Brush Scale</code>を20に設定する</li>
+</ul>
+</li>
+<li>
+<p>小白人を追加すると、以下の効果が見られます：</p>
+</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231117163147270.png" data-desc-position="bottom"><img alt="image-20231117163147270" src="../../../../04-UnrealEngine/Resources/image-20231117163147270.png"></a></p>
+<p>この効果はUEの物理コリジョンメカニズムによって実現され、その完全なパラメータはすべて <code>NinjaLiveComponent\Live Interaction</code> にあります：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231117162047588.png" data-desc-position="bottom"><img alt="image-20231117162047588" src="../../../../04-UnrealEngine/Resources/image-20231117162047588.png"></a></p>
+<ul>
+<li><strong>Continuous Interaction with Owner Actor</strong> ：このコンポーネントを持つActorと持続的にインタラクションする</li>
+<li><strong>Continuous Interaction incluisve Obj Type</strong> ：インタラクションするコリジョンオブジェクトタイプをフィルタリングする</li>
+<li><strong>Continuous Interaction Component Name</strong> ：インタラクションするコンポーネント名をフィルタリングする</li>
+<li><strong>Continuous Interaction Bone Names Exact</strong> ：インタラクションする骨格名をフィルタリングする</li>
+<li><strong>Single Target Mode</strong> ：シングルターゲットモード。オンにすると、FluidNinjaはコリジョンによって生成された画像がすべて一つのターゲットから生成されたとみなし、コリジョンパスをスムーズにし、断層をなくすことができます（補間）</li>
+<li><strong>Single Target Type</strong></li>
+<li><strong>Single Target Mode Skeletal Mesh Index</strong></li>
+<li><strong>Single Target Move Set Sim Speed</strong></li>
+<li><strong>Speed Influence Factor</strong> ：速度影響因子</li>
+<li><strong>Clamp Max Velocity</strong> ：最大速度を截断する</li>
+<li><strong>Camera Facing Trace Mesh</strong> ：TraceMeshが常にカメラを面向く</li>
+<li><strong>Camera Facing Lock Y-Axis</strong> ：カメラのY軸をロックする</li>
+<li><strong>Use Legacy Camera Facing</strong></li>
+<li><strong>Trace Mesh Translucent Sort Prio</strong></li>
+<li><strong>Use Custom Trace Source</strong> ：カスタムトレースリソースを使用する。オンにすると、以下の位置をカメラ位置としてコリジョン検出を行う</li>
+<li><strong>Custom Trace Source Position</strong> ：自動トレースリソースの位置</li>
+<li><strong>Trace Mesh Moving in World Space</strong> ：TraceMeshがワールド空間にある</li>
+<li><strong>Movement Not Quantized to Steps OnAxis</strong></li>
+<li><strong>Movements is Locked on This axis</strong> ：特定の軸の移動をロックする</li>
+<li><strong>Force Trace Mesh to Custom Vertical Pos</strong></li>
+<li><strong>Force Trace Mesh Vertical Position</strong> ：TraceMeshの位置をロックする</li>
+<li><strong>Enable Paint Buffer Offset in World Spacing</strong> ：ワールド空間でのペイントバッファオフセットを有効にする</li>
+<li><strong>Simple Painter Mode</strong> ：単純なペイントモードで、コリジョン入力はない</li>
+</ul>
+<p><strong>NinjaLiveActor</strong> の場合、上記パラメータがさらにカプセル化され、以下のパラメータを調整できます：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231117162207129.png" data-desc-position="bottom"><img alt="image-20231117162207129" src="../../../../04-UnrealEngine/Resources/image-20231117162207129.png"></a></p>
+<ul>
+<li><strong>Overlap Based Interaction</strong> ：コリジョンインタラクションを有効にする</li>
+<li><strong>Interaction Volume Size</strong> ：インタラクションボリュームサイズ</li>
+<li>以下のパラメータは <strong>どのオブジェクトがインタラクションボリュームと「作用」できるか</strong> をフィルタリングするために使用されます。</li>
+<li><strong>Track Actor Primitive Components With Tag</strong> ：このタグを持つコンポーネントを追跡する</li>
+<li><strong>Track Actor Skeletal Mesh Components With Tag</strong> ：このタグを持つスケルタルメッシュコンポーネントを追跡する</li>
+<li><strong>Overlap Filter Inclusive Obj Tab</strong> ：含めるオブジェクトコリジョンタイプ</li>
+<li><strong>Overlap Filter Inclusive Bone Name Exact</strong> ：含める骨格名。空の場合、すべての骨格が処理される</li>
+<li><strong>Overlap Filter Inclusive Bone Name Partial</strong> ：含める骨格名フィールド。例えばFootを入力すると、Footを含むすべての骨格名が含まれる</li>
+<li><strong>Exclude Specific Actors from Overlap</strong> ：オーバーラップから除外する特定のActorタイプ</li>
+<li><strong>Auto Exclude Large Overlapping Objects</strong> ：大きなオーバーラップオブジェクトを自動的に除外する</li>
+</ul>
+<h3 id="_9">ブラシの調整<a class="headerlink" href="#_9" title="Permanent link">¶</a></h3>
+<p>ブラシはFluidNinja入力テクスチャの作用領域のスケール因子を制御するために使用され、そのパラメータ設定は以下の通りです：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231117161748514.png" data-desc-position="bottom"><img alt="image-20231117161748514" src="../../../../04-UnrealEngine/Resources/image-20231117161748514.png"></a></p>
+<p>いくつかのキーパラメータ：</p>
+<ul>
+<li><strong>Brush Scaled Inversely by Trace Mesh Size</strong> ：ブラシがトレースメッシュのサイズに応じてスケーリングされる</li>
+<li><strong>Brush Scaled by Interacting Obj Size</strong> ：ブラシがインタラクションオブジェクトのサイズに応じてスケーリングされる</li>
+<li><strong>Use Obj Bounds Instead of Size</strong> ：インタラクションオブジェクトの境界をブラシサイズとして使用する</li>
+<li><strong>Global Brush Scale</strong> ：グローバルブラシスケール係数</li>
+</ul>
+<blockquote>
+<p>コリジョンインタラクションの効果がほとんど見えない場合、ブラシが小さすぎる可能性が高いです</p>
+</blockquote>
+<h3 id="_10">プリセット設定<a class="headerlink" href="#_10" title="Permanent link">¶</a></h3>
+<p>プリセットテーブルには流体シミュレーションに関するパラメータが含まれています：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231117165456545.png" data-desc-position="bottom"><img alt="image-20231117165456545" src="../../../../04-UnrealEngine/Resources/image-20231117165456545.png"></a></p>
+<p><strong>NinjaLive_PresetManager</strong> でパラメータのヒント情報を読み、調整して効果との関連性を理解します。パラメータ設定後、新しいテーブルとして保存します。</p>
+<h3 id="_11">出力マテリアル<a class="headerlink" href="#_11" title="Permanent link">¶</a></h3>
+<p>FluidNinjaLiveのコンテンツディレクトリには、使用されるコアマテリアルが定義されています：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231117161325291.png" data-desc-position="bottom"><img alt="image-20231117161325291" src="../../../../04-UnrealEngine/Resources/image-20231117161325291.png"></a></p>
+<p><code>Instance_*</code>フォルダ下のマテリアルインスタンスを直接使用できます</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231117161142891.png" data-desc-position="bottom"><img alt="image-20231117161142891" src="../../../../04-UnrealEngine/Resources/image-20231117161142891.png"></a></p>
+<p>または、新しいマテリアルインスタンスを作成し、親をFluidNinjaが提供するベースマテリアル（ファイル名が<code>M_NinjaOutput_</code>で始まる）に設定します：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231117161054031.png" data-desc-position="bottom"><img alt="image-20231117161054031" src="../../../../04-UnrealEngine/Resources/image-20231117161054031.png"></a></p>
+<ul>
+<li><strong>M_NinjaOutput_Basic</strong> ：ベースマテリアル</li>
+<li><strong>M_NinjaOutput_Advanced</strong> ：高度なマテリアル</li>
+<li><strong>M_NinjaOutput_TranslucentReflective</strong> ：透明反射マテリアル</li>
+<li><strong>M_NinjaOutput_WorldSpaceGeneric</strong> ：ワールド空間マテリアル</li>
+<li>...</li>
+</ul>
+<p>M_NinjaOutput_Basicを例にとると、多くの調整可能なパラメータプリセットが提供されています：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20231117161508777.png" data-desc-position="bottom"><img alt="image-20231117161508777" src="../../../../04-UnrealEngine/Resources/image-20231117161508777.png"></a></p>
+<p>FluidNinjaのTutorialとUsercaseレベルには、参考になる多くのマテリアルサンプルがあります。具体的なパラメータの意味は、再現することで学習できます。</p>
+<h2 id="_12">まとめ<a class="headerlink" href="#_12" title="Permanent link">¶</a></h2>
+<p>FluidNinjaのアイデアは巧妙で、使用するには少し手間がかかりますが、キーステップは明確です：</p>
+<ul>
+<li>シミュレーションプロセスに必要なDensity（密度）テクスチャとVelocity（速度）テクスチャを構築し、適切なブラシとプリセットを使用し、対応するマテリアルを組み合わせて最終的に所望の効果を表示します。</li>
+</ul>
+<h3 id="_13">优缺点<a class="headerlink" href="#_13" title="Permanent link">¶</a></h3>
+<ul>
+<li>FluidNinjaは2Dパッチを使用して3D視覚効果を偽装し、通常のパーティクル流体シミュレーションよりもはるかに低いパフォーマンス消費です。しかし、十分にリアルな3D効果を偽装するには、十分にリアルな2D入力が必要です。そうでない場合、特定の視点からFluidNinjaのトレースメッシュパッチが容易に看破される可能性があります。</li>
+<li>FluidNinjaは流体の入力を構築する多くの方法（テクスチャ、マテリアル、RT、Niagara、カメラ...）を提供し、ほとんどの開発ニーズを満たすことができます。しかし、細部が多く使用しにくく、所望の効果を自由自在に制作するには深い学習が必要です。</li>
+<li>FluidNinjaはパーティクルを完全に代替することはできず、<strong>インタラクティブな</strong> 流体シミュレーション（煙、炎、水など）により適しています。</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="创建日期">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js" data-repo="Italink/ModernGraphicsEngineGuide" data-repo-id="R_kgDOIPtbiQ" data-category-id="DIC_kwDOIPtbic4CTxOk" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous" async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078q-.408 1.096-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58 58 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.2 9.2 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125M13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

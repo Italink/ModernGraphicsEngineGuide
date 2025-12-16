@@ -1,0 +1,3614 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+          <link rel="alternate" href="/" hreflang="zh">
+        
+          <link rel="alternate" href="/Localization/en/" hreflang="en">
+        
+          <link rel="alternate" href="/Localization/ja/" hreflang="ja">
+        
+          <link rel="alternate" href="/Localization/ko/" hreflang="ko">
+        
+          <link rel="alternate" href="/Localization/fr/" hreflang="fr">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>16.3DGaussianSplatting - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-S1J8MN27P8",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link rel="stylesheet" href="../../../../assets/stylesheets/custom.2fa34c39.min.css">
+
+  <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#3d" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&amp;k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76"></path></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              16.3DGaussianSplatting
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="zh" class="md-select__link">
+              Chinese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/en/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ja/" hreflang="ja" class="md-select__link">
+              Japanese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ko/" hreflang="ko" class="md-select__link">
+              Korean
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/fr/" hreflang="fr" class="md-select__link">
+              French
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  开源
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../06-Blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  个人博客
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 计算机发展史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - C++基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 宏、模板、反射
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 内存管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - GUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图形API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    图形API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 图形渲染管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 着色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 缓冲区与纹理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - 3D空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 图形API进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引擎技术
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    引擎技术
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 渲染架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 编辑器架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unreal Engine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unreal Engine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 基础编程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - Slate 开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 插件开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 粒子系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - Niagara 性能优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - Fluid Ninja 流体插件
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 开放世界制作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/7.%E9%9F%B3%E9%A2%91%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 - 音频开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/9.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E4%B8%AD%E7%9A%84%E6%A4%8D%E8%A2%AB%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9 - 植被优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/10.LOD%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 - LOD不完全指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/12.%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%86%85%E5%AE%B9%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 - 程序化内容管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/16.3DGaussianSplatting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 - 3DGaussianSplatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/17.Landscape%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 - Landscape 避坑指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开源
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开源
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1">
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UnrealEngine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    UnrealEngine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Splatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2">
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/C%2B%2B/C%2B%2B%E5%8F%8D%E5%B0%84%E7%BC%96%E8%AF%91%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++反射编译器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3">
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Qt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96%E8%BD%AF%E4%BB%B6-Specinker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频可视化软件-Specinker(已闭源)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%A2%91%E8%B0%B1%E5%88%86%E6%9E%90%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    频谱分析器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%8B%9F%E6%80%81%E7%AA%97%E5%8F%A3%E6%BB%A4%E9%95%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt拟态窗口滤镜
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E5%B1%8F%E5%B9%95%E5%8F%96%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt屏幕取色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%B8%90%E5%8F%98%E8%B0%83%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt渐变调色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E7%B2%92%E5%AD%90%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面粒子特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E6%B0%B4%E9%9D%A2%E6%B3%A2%E7%BA%B9%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面水面波纹特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../06-Blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人博客
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    个人博客
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_2">
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    五月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    八月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    六月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    四月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    九月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2019/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_3">
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人随笔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%95%B4%E6%B4%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    整活
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    杂谈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3D 재구성 기술
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3d-gaussian-splatting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3D Gaussian Splatting
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        언리얼 엔진中的应用
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>16.3DGaussianSplatting</h1>
+
+<p>**3D 가우시안 스플래팅（3D Gaussian Splatting，3DGS）**은 실시간 복사장 렌더링에 사용되는 컴퓨터 그래픽스 기술로，최근 몇 년간 학술 연구의 핫 이슈이며 3D 재구성 분야에 널리 적용되고 있습니다.</p>
+<h2 id="3d">3D 재구성 기술<a class="headerlink" href="#3d" title="Permanent link">¶</a></h2>
+<p>대부분의 기술 분야가 생겨나는 것은 보통 <strong>기술적 돌파구로 비용 절감</strong>，<strong>수요 업그레이드로 시장 창출</strong>，<strong>학술 연구로 이론 제공</strong>，**산업 변혁으로 시나리오 확장**이 함께 작용한 결과입니다.</p>
+<p>3D 재구성 분야의 발전은 현재 컴퓨터 기술이 폭발적으로 발전하는 배경下에서，각 산업 분야의 3D 정보에 대한 절박한 수요에서 비롯되었습니다：</p>
+<ul>
+<li>
+<p><strong>산업 제조："제조"에서 "지능형 제조"로 업그레이드</strong></p>
+<ul>
+<li>
+<p><strong>역공학</strong>：3D 스캔으로 기존 부품의 데이터를 얻어 CAD 모델을 빠르게 재구성하여 신제품 개발 주기를 단축（예：자동차 외장 부품 금형 설계）；</p>
+</li>
+<li>
+<p><strong>품질 검사</strong>：재구성 모델과 설계 도면을 비교하여 표면 결함이나 조립 오차를 검출（예：항공 우주 부품의 고정밀 검사）；</p>
+</li>
+<li>
+<p><strong>디지털 트윈</strong>：생산 라인의 3D 가상 모델을 구축하여 장비 상태를 실시간으로 모니터링하고 공정 흐름을 최적화，지능형 제조를 실현합니다.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>의료 건강：정밀 의료와 시각화 혁명</strong></p>
+<ul>
+<li>
+<p><strong>의학 영상 3D화</strong>：CT/MRI 단층 이미지를 3D 재구성하여 장기，종양의 입체 모델을 생성，의사가 병변 위치와 수술 경로를 판단하는 데 도움（예：신경 외과의 수술 전 계획）；</p>
+</li>
+<li>
+<p><strong>생체 역학 시뮬레이션</strong>：환자의 개인 맞춤형 골격 모델을 기반으로 관절 운동을 시뮬레이션하여 맞춤형 의족이나 재활方案을制定합니다.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>문화 유산과 도시 관리：디지털화 보존과 지능화 관리</strong></p>
+<ul>
+<li>
+<p><strong>문물 보호와 복원</strong>：고정밀 3D 재구성（예：돈황 모고궐 디지털화 프로젝트）로 문화 유산의 세부 사항을 영구히 보존，파손된 문물의 가상 복원에 근거를 제공；</p>
+</li>
+<li>
+<p><strong>스마트 시티 모델링</strong>：드론 항공 측량이나 차량 탑재 LiDAR로 도시 건축물군을 재구성，교통 계획，재해 시뮬레이션（예：홍수 침수 분석）等 응용을 지원합니다.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>엔터테인먼트와 인터랙션：몰입형 경험의 기술적 필수 요건</strong></p>
+<ul>
+<li>
+<p><strong>게임과 영화 산업화</strong>：효율적인 모델링，가상 제작，실사 렌더링 및 협업 생산으로 게임과 영화 산업화가 자동화，고화질，크로스 플랫폼 협업의 디지털 생산 모델로 전환；</p>
+</li>
+<li>
+<p><strong>VR/AR 인터랙션</strong>：실시간 3D 환경 재구성은 SLAM（동기화 위치 추정과 지도 구축）의 핵심으로，Meta Quest 등 헤드셋 기기의 공간 인지와 가상-실제 융합을 지원합니다.</p>
+</li>
+</ul>
+</li>
+<li>
+<p>...</p>
+</li>
+</ul>
+<p>3D 재구성 알고리즘은 업계에서 보통 센서가 물체에 광원을 능동적으로 조사하는지 여부에 따라 다음으로 분류합니다：</p>
+<ul>
+<li><strong>능동형</strong>：능동적으로 물체에 구조화된 광（예：레이저，줄무늬 광，코딩 광 등）이나 음파를 투사，센서로 물체 표면에서 반사된 신호를 수신，최종적으로 신호를 해석하여 물체의 3D 정보를 얻습니다.常見的做法如激光扫描，모어条纹法，结构光法，ToF（비행 시간법），위상 측정 윤곽술等。</li>
+<li><strong>수동형</strong>：시각 기하학 원리에 기반，단안 또는 다안 카메라로 물체의 2D 이미지를采集，然后对图像进行解析하여 물체의 3D 정보를 얻습니다.常見的做法有立體 시각，SfM+MVS，光流法，단안 깊이 추정（예：딥러닝 방법）等。</li>
+</ul>
+<p>它們之间的差异主要如下：</p>
+<table>
+<thead>
+<tr>
+<th><strong>维度</strong></th>
+<th><strong>능동형 3D 재구성</strong></th>
+<th><strong>수동형 3D 재구성</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>하드웨어 비용</strong></td>
+<td>高（능동 광원，전용 센서 필요）</td>
+<td>低（카메라만 필요）</td>
+</tr>
+<tr>
+<td><strong>정밀도</strong></td>
+<td>高（서브 픽셀 레벨，고정밀 요구에 적합）</td>
+<td>中低（紋理와 시점에 의존，거시적 장면에 적합）</td>
+</tr>
+<tr>
+<td><strong>속도</strong></td>
+<td>快（단일 프레임或少数 이미지，실시간 응용에 적합）</td>
+<td>慢（多視圖 매칭，오프라인 계산 필요）</td>
+</tr>
+<tr>
+<td><strong>紋理 의존성</strong></td>
+<td>低（능동적으로 紋理 투사）</td>
+<td>高（물체 자체의 紋理에 의존）</td>
+</tr>
+<tr>
+<td><strong>동적 적응성</strong></td>
+<td>差（운동에 민감）</td>
+<td>较好（일부 알고리즘은 정적 장면中的 동적 물체 처리 가능）</td>
+</tr>
+<tr>
+<td><strong>典型 시장</strong></td>
+<td>工業 검사，문물 고정밀 모델링</td>
+<td>消費级 스캔，드론 측량，대형 장면 재구성</td>
+</tr>
+</tbody>
+</table>
+<p>其中 수동형의 발전은 컴퓨터 그래픽스와 밀접한 관련이 있습니다：</p>
+<ul>
+<li>
+<p>1993년 SIGGRAPH 논문<a href="https://dl.acm.org/doi/10.1145/166117.166153">《View interpolation for image synthesis》</a>에서 처음으로 이미지 합성의 다視圖 보간 개념을 제안，시점 합성 문제를 정의하여 이미지 기반 렌더링（IBR）분야를 이끌었습니다.當時 컴퓨터 그래픽 렌더링은 기하학，조명和 재질 입력 모델의 품질 제한을 받았고，IBR은 사진般逼真的 입력 이미지를 조합하여新 이미지를 생성하는 대안을 제공했습니다.隨後，시점 합성과 이미지 기반 렌더링 관련 연구가 급증，광장 렌더링，光栅图，계층 깊이图等经典 논문이出现했습니다.</p>
+</li>
+<li>
+<p>2020년 ECCV 논문<a href="https://www.matthewtancik.com/nerf">《NeRF: Representing Scenes as Neural Radiance Fields for View Synthesis》</a>에서 신경망 기반 방식을 제안，소수의 2D 이미지에서 고품질의新 시점 이미지를生成할 수 있어 3D 재구성의新局面을 열었습니다.Nerf는 완전 연결된 신경망（다층 퍼셉트론 MLP）을 사용하여 3D 장면을 표현，카메라 광선을 따라 5D 좌표를查询하고 볼륨 렌더링 기술을利用하여 출력 색상과 밀도를 이미지에投影하여 시점을 합성하며，위치 인코딩을 도입하여 MLP가 고주파 함수를 복원하여 고품질 결과를 생성할 수 있게 했습니다.</p>
+</li>
+<li>
+<p>2023년 SIGGRAPH 논문<a href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/">《3D Gaussian Splatting for Real-Time Radiance Field Rendering》</a>에서 3D 가우시안 분포를 그래픽 기본 요소로 사용하는 장면 표현 방식을 제안，NeRF之后的重要突破로 렌더링 효율과 재구성 품질을兼具하여 빠르게 학술研究的 핫 이슈가 되었습니다.</p>
+</li>
+</ul>
+<p>영화와 게임 산업에서는通常 <strong>메시（Mesh）**를 그래픽 주류의 렌더링载体로采用，它的显著特征是：**기본 요소（Primitive）</strong>（通常是三角形）+ <strong>텍스처（Texture）</strong></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250517000418286.png" data-desc-position="bottom"><img alt="image-20250517000418286" src="../../../../04-UnrealEngine/Resources/image-20250517000418286.png"></a></p>
+<p>这是因为 메시의 구조가 높은 유연성을 가지고 반복 편집이 용이하기 때문，这也使得现代 그래픽 렌더링 파이프라인의 발전이 이와密不可分，并衍生出了大量成熟的工具链，形成了标准化的行业工作流。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/the-best-dcc-software-for-3d-animation.webp" data-desc-position="bottom"><img alt="img" src="../../../../04-UnrealEngine/Resources/the-best-dcc-software-for-3d-animation.webp"></a></p>
+<p>但 Mesh가 **기하학 정밀도**와 **재질 정밀도**를 분리하는 표현方式虽然具有很多优点，但也产生了诸多复杂的问题，例如 Mesh通常需要人工或算法预先假设物体的拓扑结构（如顶点连接关系，曲面类型等）。</p>
+<p>그래픽 렌더링의任务是将 그래픽转换为 이미지，3D 재구성则是它的逆向求解过程（이미지 -&gt; 그래픽），因此使用 <strong>포인트 클라우드（Point Cloud）**를 데이터采集与处理的基础，它更容易记录 재구성 장면的 **무편향 샘플링</strong> 데이터，保留原始的 기하학 정보（如边缘，孔洞，非流形结构）。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/PointCloud.gif" data-desc-position="bottom"><img alt="PointCloud" src="../../../../04-UnrealEngine/Resources/PointCloud.gif"></a></p>
+<p>上图所示的 포인트 클라우드는 오픈 소스 도구 <strong><a href="https://github.com/colmap/colmap">Colmap</a>**을借助하여 **SFM（Structure from Motion，운동으로부터 구조 복원）</strong> + **MVS（Multi-View Stereo，多視圖 입체 시각）**로生成的，我们只需输入多个视角的 이미지：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250517133742847.png" data-desc-position="bottom"><img alt="image-20250517133742847" src="../../../../04-UnrealEngine/Resources/image-20250517133742847.png"></a></p>
+<p>SFM过程会依次执行以下几个步骤：</p>
+<ul>
+<li><strong>특징 추출（Feature Extraction）</strong>：加载输入 이미지并进行预处理，提取出各个 이미지에包含的 특징点。</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250517134831116.png" data-desc-position="bottom"><img alt="image-20250517134831116" src="../../../../04-UnrealEngine/Resources/image-20250517134831116.png"></a></p>
+<ul>
+<li>
+<p><strong>특징 매칭（Feature Matching）</strong>：不同 이미지间에서相同的 특징点을寻找，对应关系을建立。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250517134812663.png" data-desc-position="bottom"><img alt="image-20250517134812663" src="../../../../04-UnrealEngine/Resources/image-20250517134812663.png"></a></p>
+</li>
+<li>
+<p><strong>증분式 재구성（Mapper）</strong>：매칭关系을 기반으로，逐步恢复 카메라 자세和 희소 포인트 클라우드。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250517134023092.png" data-desc-position="bottom"><img alt="image-20250517134023092" src="../../../../04-UnrealEngine/Resources/image-20250517134023092.png"></a></p>
+</li>
+</ul>
+<p>而 MVS过程，则会对 SFM产生的 <strong>희소 포인트 클라우드（Sparse Point Cloud）**进一步处理得到 **조밀 포인트 클라우드（Dense Point Cloud）</strong>，它包含以下步骤：</p>
+<ul>
+<li>
+<p><strong>깊이图估计（Stereo）</strong>：每幅输入 이미지에 대해 픽셀 단위의 깊이图를生成，即估计每个 픽셀에对应的 장면点到 카메라的距离。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250517134738523.png" data-desc-position="bottom"><img alt="image-20250517134738523" src="../../../../04-UnrealEngine/Resources/image-20250517134738523.png"></a></p>
+</li>
+<li>
+<p><strong>깊이图融合（Fusion）</strong>：多幅 이미지의 깊이图를合并为一个全局一致的 조밀 포인트 클라우드，冲突을消除并空洞을填充。</p>
+</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250517134707029.png" data-desc-position="bottom"><img alt="image-20250517134707029" src="../../../../04-UnrealEngine/Resources/image-20250517134707029.png"></a></p>
+<p>但相同的 그래픽结构，포인트 클라우드通常具有庞大的数据量，上述 장면的原始 모델은<code>4,876</code>个三角形을具有，较低精度的 포인트 클라우드로转换之后却仍然包含<code>429,113</code>个点，因此 3D 재구성 분야仍然需要考虑将 포인트 클라우드转换为 Mesh，这是一些常见的做法：</p>
+<ul>
+<li><strong>포아송 재구성（Poisson Reconstruction）</strong>：포인트 클라우드를 부호화된 거리 함수（암시적曲面）的 샘플링点으로视为，포아송 방정식을求解하여 등치면（即 Mesh 표면）을提取。</li>
+<li><strong>이동 최소 제곱법（MLS，Moving Least Squares）</strong>：局部 가중 최소 제곱법으로每个点的切平面을拟合，암시적曲面을生成，再通过 Marching Cubes 알고리즘으로 Mesh를提取。</li>
+<li><strong>델로네 삼각화（Delaunay Triangulation）</strong>：2D或 3D 공간中，최대 공 빈 구准则（델로네 조건）을通过하여 삼각 메시를生成，3D 장면中对应 사면체 분할。</li>
+<li><strong>볼 회전 알고리즘（Ball Pivoting Algorithm）</strong>：固定半径的 볼을 포인트 클라우드 표면에서滚动，볼과 포인트 클라우드的交点으로三角形을形成，볼半径을调整하여 메시 밀도和细节를控制。</li>
+<li><strong>Marching Cubes 알고리즘</strong>：每个 체적 요소（立方体）에 대해，顶点가曲面内外에 있는지 여부（거리 함수或 밀도 함수로决定）에 따라 미리定义된 등치면 패턴을查找，三角形을生成。常見策略如 TSDF（Truncated Signed Distance Function，截断 부호 거리 함수）。</li>
+<li><strong>딥러닝 방법</strong>：신경망을利用하여 포인트 클라우드로부터 직접 Mesh의顶点和拓扑을预测，자동화 처리或 복잡한 형상 재구성에 적합。如<a href="https://github.com/ThibaultGROUEIX/AtlasNet">AtlasNet</a>，<a href="https://github.com/nywang16/Pixel2Mesh">PointToMesh</a>，<a href="https://github.com/facebookresearch/meshrcnn">Mesh R-CNN</a>，<a href="https://github.com/autonomousvision/convolutional_occupancy_networks">ConvONet</a>等。</li>
+</ul>
+<h2 id="3d-gaussian-splatting">3D Gaussian Splatting<a class="headerlink" href="#3d-gaussian-splatting" title="Permanent link">¶</a></h2>
+<p>학술적으로看，3DGS는传统 SFM + MVS流程的变革和拓展으로当作할 수 있습니다.</p>
+<p>它可以沿用 SFM的结果作为输入，**3D 가우시안 분포**를 그래픽 기본 요소로采用，**표준 확률적 경사 하강법（Stochastic Gradient Descent, SGD）**를通过하여原始 장면을逼近，从而得到高质量的 그래픽效果，这个流程看起来像是这样的：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250517141337442.png" data-desc-position="bottom"><img alt="image-20250517141337442" src="../../../../04-UnrealEngine/Resources/image-20250517141337442.png"></a></p>
+<p>3D 가우시안 기본 요소는 3D 공간点을中心으로，其 확률 밀도（或 복사 강도）가中心으로부터的距离增加에 따라 지수적으로 감소하는데，这么说可能有些抽象，你可以把 3D 가우시안 분포를简单想象成 <strong>색상이 있는 반투명 타원체</strong>。</p>
+<p>以上图为例，当"타원체" **3D 가우시안 분포를遵循하지 않고**且 **불투명**时，그래픽看起来将会是这样的：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250517152824546.png" data-desc-position="bottom"><img alt="image-20250517152824546" src="../../../../04-UnrealEngine/Resources/image-20250517152824546.png"></a></p>
+<p>然后依次透明度和 3D 가우시안 분포를恢复：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/PointCloudss.gif" data-desc-position="bottom"><img alt="PointCloudss" src="../../../../04-UnrealEngine/Resources/PointCloudss.gif"></a></p>
+<p>这样来看似乎就很容易理解 3D 가우시안 분포究竟是什么样的东西，而定义一个 3D 가우시안点，主要使用以下参数：</p>
+<ul>
+<li><strong>中心 위치（X，Y，Z）</strong>：가우시안点在 3D 공간的中心 위치。</li>
+<li><strong>공분산 행렬（Mat3X3）</strong>：가우시안 타원체的 형태 구조（胖瘦）를控制。</li>
+<li><strong>색상 매개변수（R，G，B）</strong>：타원체的 색상을控制。</li>
+<li><strong>불투명도（Opacity）</strong>：타원체的 불투명도를控制。</li>
+</ul>
+<p>而 Gaussian Splatting的训练过程，最终生成的<code>*.ply</code>文件实际上就是存储着一堆这样的 가우시안点，整体流程可以简单概况为：</p>
+<ul>
+<li>输入过程利用一组基本形态结构를具有的 포인트 클라우드（例如 SFM으로得到的 희소 포인트 클라우드）作为 가우시안 기본 요소的初始 위치。</li>
+<li>迭代过程中 3D 가우시안 기본 요소를 2D 이미지 평면에投影，权重与 손실을计算，확률적 경사 하강법을使用，反向传播을通过하여所有 가우시안的 매개변수（위치，색상，공분산，불투명도）를更新。</li>
+<li>迭代过程中 가우시안点的数量를动态地调整，低贡献的 기본 요소를剔除，高 오차 영역에서 조밀화를执行。</li>
+</ul>
+<p>경사 하강过程中的 매개변수控制和优化을考虑到，공분산 행렬和 색상 매개변수는另一种表达方式를使用，其中 공분산 행렬은如下的拆解을进行了：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/1v5zbNg4P-gpY642L76bAPg.png" data-desc-position="bottom"><img alt="img" src="../../../../04-UnrealEngine/Resources/1v5zbNg4P-gpY642L76bAPg.png"></a></p>
+<ul>
+<li>S는 대각 스케일 행렬，3个 스케일 값으로表示，需要注意的是，实际训练时，scale 매개변수가始终为正（因为长度不能为负），并且网络优化을便于하기 위해，通常 scale을 로그形式으로存储，也就是说：<ul>
+<li>网络输出 / Ply 文件中存储的是 <code>log(scale)</code></li>
+<li>使用时，指数 <code>exp(log(scale))</code>를取，正数的实际 scale로恢复。</li>
+</ul>
+</li>
+<li>R은 회전 행렬，사원수로表示。</li>
+</ul>
+<p>而 색상 매개변수则是 <strong>구형 조화 함수（Spherical Harmonics，SH）를使用而不是直接存储 RGB</strong>，这是为了让每个 가우시안球的 색상能够观察方向变化에 따라变化，更丰富的 표면 반사和 조명效果를表现，렌더링을更真实하게 만듭니다.</p>
+<p>观察方向을考虑하지 않으면，SH를 RGB로转换非常简单：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">C0</span> <span class="o">=</span> <span class="mf">0.28209479177387814</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">SH2RGB</span><span class="p">(</span><span class="n">sh</span><span class="p">):</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="k">return</span> <span class="n">sh</span> <span class="o">*</span> <span class="n">C0</span> <span class="o">+</span> <span class="mf">0.5</span>
+</code></pre></div>
+<p>此外，数值稳定性，경사 계산等方便을为了，通常 opacity를存储할 때也不是直接归一化的 불투명도를使用，而是 로지스틱 변환 값을存储：</p>
+<ul>
+<li>网络输出 / Ply 文件中存储的是 <code>logit(opacity)</code></li>
+<li>使用时，<code>1.0f / (1.0f + exp(-opacity))</code>를通过하여真正的 불투명도를得到。</li>
+</ul>
+<p>至此，我们 3D Gaussian Splatting的输入，过程以及输出을了解了，而 3dgs之所以那么火爆，一部分原因就在于 3dgs具有很高的 렌더링效率。</p>
+<p>因为 3D 가우시안 분포는 미분 가능하기 때문에，我们一组 매개변수로 3D 공간中的"타원체"를表示，绘制时屏幕 공간에投影，2D的 **타원**으로变成了，而这个 타원切面仍然 2D 가우시안 분포를遵循，也就意味着，我们可以 **3D 가우시안 매개변수**以及 **카메라 매개변수**在 **屏幕/이미지 공간**에서 타원的形态结构를推导出，直接光栅화를进行，这样可以大幅度减少 그래픽绘制所需的运算量。</p>
+<p>但 가우시안 기본 요소는 반투명的特性를具有하기 때문에，数据处理层面에서，카메라对它的进行半透明排序是必不可少的。</p>
+<p>目前 3dgs를 렌더링的策略主要有三类：</p>
+<ul>
+<li><a href="https://github.com/graphdeco-inria/diff-gaussian-rasterization"> <strong>diff-gaussian-rasterization</strong> </a>：공식提供的 Cuda를使用的 3DGS光栅化 라이브러리。</li>
+<li><a href="https://github.com/shg8/3DGS.cpp"> <strong>3DGS.cpp</strong> </a>：Cuda版本을参考，Vulkan 계산 파이프라인을通过하여实现的 3DGS光栅化 라이브러리。</li>
+<li>그래픽 렌더링 파이프라인을使用，具体的步骤是：几何层面에서 가우시안 기본 요소를一个平面 사각형으로视为，着色阶段에서 2D 가우시안 분포를绘制。这种做法具有较高的通用性，这是一些 오픈 소스的参考：<ul>
+<li><a href="https://github.com/dendenxu/fast-gaussian-rasterization"> <strong>fast-gaussian-rasterization</strong> </a>：Python OpenGL을使用하여几何 셰이더로实现的版本。</li>
+<li><strong><a href="https://github.com/jakobbbb/splat">splat</a></strong> ：C++ OpenGL을使用하여实例化 렌더링으로实现的版本。</li>
+<li><strong><a href="https://github.com/Italink/QEngineUtilities/blob/main/Source/Core/Source/Private/Render/Component/QGaussianSplattingPointCloudRenderComponent.cpp">QEngineUtilities</a></strong> ：C++ QRhi를使用하여实例化 렌더링으로实现的版本을包含。</li>
+</ul>
+</li>
+</ul>
+<p>以上就是 3dgs的全部内容，如果数学细节에感兴趣，这里有一篇很好的资料：</p>
+<ul>
+<li>가우시안 분포综合概述：<a href="https://medium.com/data-science/a-comprehensive-overview-of-gaussian-splatting-e7d570081362">https://medium.com/data-science/a-comprehensive-overview-of-gaussian-splatting-e7d570081362</a></li>
+</ul>
+<h2 id="_1">언리얼 엔진中的应用<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<p>3DGS的应用에关于，지식인（知乎）上有一个热门的讨论：</p>
+<ul>
+<li><a href="https://www.zhihu.com/question/626506306?share_code=b3dW4To2Z0eh&amp;utm_campaign=Sharon&amp;utm_content=group2_supplementQuestions&amp;utm_psn=1907217331651838726">3DGaussianSplatting技术的影响会有多大？ - 知乎</a></li>
+</ul>
+<p>UP最早 3DGS를了解한 것은 24年年底的时候 B站에서刷到了：</p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1gF4m1u74D">“重建”一座山只需10分钟？神奇的NeRF技术能怎么用！ - 影视飓风</a></li>
+</ul>
+<p>标题存在一定的误导性로 인해，导致 UP가视频中的流程를复现，实际效果를看到之后，NeRF가大有可为라고直呼！被啪啪打脸之后才发现这里面所采用的技术实际上是 3DGS，而非 NeRF。</p>
+<p>一个潜在的开发需求를鉴于，UP가 3DGS에 대해深入的研究를展开하게驱动着：</p>
+<ul>
+<li>因为实际游玩에进入하는开放 장면需要大量的资源（数十GB）를加载，大多数游戏都会 Launch/Loading关卡를使用，用户操作을延缓，提前加载을开始。这个过程을更加无感하게让为了，我希望 Launch关卡的背景是整个开放 장면的动态俯瞰，有点类似于<a href="https://www.bilibili.com/video/BV1tfWne4Eia/?share_source=copy_web&amp;vd_source=dfd2f1bf643a3e0722141847666af060&amp;t=587">这个效果</a>，加载完成时俯瞰视角로부터玩家视角로平滑过渡할 수 있도록，因此全 장면的轻量级视觉代理를需要，因为实际 장면在 엔진中具有庞大的 기하학数据以及复杂的 재질效果，传统的 메시烘培简化很难完成，而一些常用的 이미지 합성手段를通过往往会存在一些瑕疵，因此 3D 재구성技术를通过하여这个视觉代理를制作하는 것을想到了。</li>
+</ul>
+<p>传统的 그래픽 기본 요소와相比，3DGS存在很多的缺点：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250519151322194.png" data-desc-position="bottom"><img alt="image-20250519151322194" src="../../../../04-UnrealEngine/Resources/image-20250519151322194.png"></a></p>
+<ul>
+<li>高精度且 표면效果丰富的 그래픽을表达时，가우시안 기본 요소的数量级与三角形相近，甚至更多。</li>
+<li>가우시안 기본 요소의 반투명特性로 인해，一些剔除优化的手段가失效하게导致，并且其 렌더링时 기본 요소에 대해半透明排序를需要。</li>
+<li>가우시안 포인트 클라우드가 모델 표면에对齐되지 않고，不连续하며，색상特征만包含，这让 그래픽的光影效果가很难实现或者说只能以一种高损耗的方式工作。</li>
+</ul>
+<p>这些缺点本质上是 **가우시안 분포的数学特性**以及 **경사 하강的优化策略**로决定的，这些问题에针对，虽然 학술界에서广泛的探索를展开，但仍然被不少人 3DGS가只能用来水论文이라고诟病。</p>
+<p>工业界로回归到，计算机 그래픽技术在近数十年间，革命性的演进을经历，早期 다각형 모델링으로부터如今的次世代 렌더링까지，**정밀도，效率与真实感**上的突破가直接 게임体验的进化史를塑造了：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/igns-top-ten-open-world-games-of-all-time-thoughts-v0-bhrwxnnt9nm81.png" data-desc-position="bottom"><img alt="IGN's top ten open world games of all time. Thoughts? : r/gaming" src="../../../../04-UnrealEngine/Resources/igns-top-ten-open-world-games-of-all-time-thoughts-v0-bhrwxnnt9nm81.png"></a></p>
+<p>这不仅 하드웨어设备的高速发展로 인한 것도 아니며，同样也三项核心计算机技术在游戏过程中的广泛应用와离不开：</p>
+<ul>
+<li><strong>LOD（层次细节）</strong>：<strong>「分级响应，动态适配」</strong><ul>
+<li>目标对象的 **重要性（Significance）**에根据动态地处理 정밀도를调整，资源消耗与效果之间에서最优平衡点를寻找。</li>
+</ul>
+</li>
+<li><strong>Culling（剔除）</strong>：<strong>「定向过滤，精准聚焦」</strong><ul>
+<li>预设规则를通过하여无需处理的元素를快速识别并排除，系统冗余开销를减少。</li>
+</ul>
+</li>
+<li><strong>Streaming（流送）</strong>：<strong>「按需获取，实时调度」</strong><ul>
+<li>资源를连续 데이터 흐름으로视为，实时需求에根据动态地加载 / 卸载，从而物理资源限制를突破。</li>
+</ul>
+</li>
+</ul>
+<p>开发者가游戏画面和复杂逻辑에 대한追求가越来越高아지면서，하드웨어设备的限制를突破，现有的软件技术方案를优化为了，另一项技术也应运而生 —— <strong>임포스터（Imposter）</strong>：</p>
+<ul>
+<li><strong>抽象替代**를通过하여系统优化를实现的通用方法论，它的核心在于 **特定上下文中，足够好的简化 모델로复杂原件를替代</strong>。</li>
+</ul>
+<p>这种思想는 그래픽，분산 시스템，AI等多个领域를跨越，高性能，弹性系统를构建的关键工具로成为。</p>
+<p>임포스터技术는持续적으로「资源有限」与「体验无限」之间에서最优解를寻找，现代游戏开发的隐形加速器로成为，它通常计算量以及内存占用的大幅度削减를带来，这对 실시간 그래픽系统来说非常重要，下面是 임포스터技术在游戏行业中的一些应用：</p>
+<ul>
+<li>
+<p><strong>LOD优化</strong>：Billboard，Flipbook，Mesh Cards以及 Octahedron等手段를使用하여静态 모델的 임포스터를生成，远景的绘制开销를削减。</p>
+</li>
+<li>
+<p><strong>人群优化</strong>：远处的非关键 NPC（如远处路人）를静态实例化 메시로退化为，骨骼 애니메이션을 텍스처로烘培，以此来密集人群的效果를完成。</p>
+</li>
+<li>
+<p><strong>剔除优化</strong>：低 다각형 임포스터를使用하여包围盒를代替，特化的 GPU遮挡剔除 파이프라인을搭建，遮挡剔除效率를提升。</p>
+</li>
+<li><strong>阴影优化</strong>：그래픽对象的自阴影（Self-Shadow）를预烘培，임포스터를使用하여该实例的投射阴影（Cast Shadow）를生成，从而大幅度阴影流程的执行开销를削减。</li>
+<li>...</li>
+</ul>
+<p>而 3DGS는很有可能是 임포스터在 LOD优化上的另一种方案衍生。</p>
+<p>传统的 LOD制作流程中，业界普遍会 **简化**的手段를使用하여 모델的 LOD를生成：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250520120552279.png" data-desc-position="bottom"><img alt="image-20250520120552279" src="../../../../04-UnrealEngine/Resources/image-20250520120552279.png"></a></p>
+<p>通常<code>50%</code>的简化幅度를使用하여性能与视角质量之间에서较好的平衡를通常能，但这中策略在一些细节特征复杂，几何形状不规则的 모델上，得到的效果가并不理想。</p>
+<p>例如一百万三角形数量的 모델을一个，如果我们<code>50%</code>的简化效率로按照，通常<code>14级 LOD</code>를需要，而这显然会大量的数据를产生，且 LOD的调度开销가很高，LOD的数量를<code>8</code>以内로限制为了，简化效率가<code>75%</code>로必须提升，就像这样：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250520162715472.png" data-desc-position="bottom"><img alt="image-20250520162715472" src="../../../../04-UnrealEngine/Resources/image-20250520162715472.png"></a></p>
+<p>LOD切换时的视觉变化가更加平缓하게保证为了，LOD链之间的间隔를增加해야만，而这会显著整个 그래픽系统的运行开销를增加。</p>
+<p>因此，임포스터를引入하여这个问题를很好地解决할 수 있으며，常見的 임포스터策略有：</p>
+<ul>
+<li><strong>公告牌（Billboard）</strong>：某个特定角度的 모델을 텍스처上에绘制。</li>
+<li><strong>翻页牌（Flipbook）</strong>：多个角度的 모델을 텍스처上에绘制，最后材质上에서玩家视角에根据显示的 텍스처를切换。</li>
+<li><strong>卡片簇（Billboard Cloud/ Mesh Card Cloud）：</strong> 모델을许多的 메시插片上에绘制，从而来源 모델相似的视角效果를堆叠出。</li>
+<li><strong>八面体（Octahedron）</strong>：一定视角分布的 모델을 텍스처上에绘制，最后材质上에서多个角度的 이미지에 대해插值하여可靠的视角过渡效果를呈现出。</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250520164054339.png" data-desc-position="bottom"><img alt="image-20250520164054339" src="../../../../04-UnrealEngine/Resources/image-20250520164054339.png"></a></p>
+<p>这些策略的对比에关于，之前的植被优化的文章中有简单提及，详见 ：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/713731229">https://zhuanlan.zhihu.com/p/713731229</a></li>
+</ul>
+<p>这些策略는不同的优缺点를有着，不同的使用需求에适用于，虽然它们确实能大幅度性能开销를减少，但通常单个结构较为"匀称"的 모델에只适用于，结构复杂的组合 모델에对于，类似于这种，效果가有些差强人意：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/Imposter.gif" data-desc-position="bottom"><img alt="Imposter" src="../../../../04-UnrealEngine/Resources/Imposter.gif"></a></p>
+<p>而 3DGS的流程本身就是 경사 하강을通过하여原始 이미지를逼近，虽然高精度下，GS的数量级가原始 메시的三角形数量를很容易超过，但低精度时，传统的优化手段와相比，越是复杂的 모델，3DGS的拟合效果가越好，性价比가越高：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250520205549535.png" data-desc-position="bottom"><img alt="image-20250520205549535" src="../../../../04-UnrealEngine/Resources/image-20250520205549535.png"></a></p>
+<p>而 가우시안 포인트 클라우드가 메시와相比，还有另外一个优势，那就是：</p>
+<ul>
+<li>가우시안 포인트 클라우드는不连续的特征点이며，三角形一样连续的拓扑을具有할 필요가 없다.</li>
+</ul>
+<p>因此，가우시안 포인트 클라우드的 LOD方案实现起来非常容易，只需 가우시안点을特征的重要性에按照排序，最终显示时 GPU调度를通过하여当前视口需要绘制的 가우시안点을动态伸缩即可。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250520210403931.png" data-desc-position="bottom"><img alt="image-20250520210403931" src="../../../../04-UnrealEngine/Resources/image-20250520210403931.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/Impos11ter.gif" data-desc-position="bottom"><img alt="Impos11ter" src="../../../../04-UnrealEngine/Resources/Impos11ter.gif"></a></p>
+<p>这些理论的支撑가有了，于是 UP가一些工程化的尝试를去做了，虽然过程有点艰难，感兴趣的小伙伴可以下载下来试试看：</p>
+<ul>
+<li><a href="https://github.com/Italink/Cosmos/releases/tag/v0.0.1">https://github.com/Italink/Cosmos/releases/tag/v0.0.1</a></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>场景尺寸</th>
+<th>内容大小</th>
+<th>3DGS大小（未压缩）</th>
+<th>3DGS大小（压缩后）</th>
+<th>帧率/GPU耗时（5090D 4K）</th>
+<th>帧率/GPU耗时（3060 Laptop 1K）</th>
+<th>生成时间（7950X+5090D）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>《City Sample》</td>
+<td>16 km²</td>
+<td>64.8 GB</td>
+<td>0.69GB</td>
+<td>46.6 MB</td>
+<td>326 FPS / 1.97 ms</td>
+<td>112 FPS / 7.51ms</td>
+<td>30+ hours</td>
+</tr>
+<tr>
+<td>《Project Titan》</td>
+<td>64 km²</td>
+<td>49.4 GB</td>
+<td>1.78 GB</td>
+<td>115.1 MB</td>
+<td>294 FPS / 2.48 ms</td>
+<td>104 FPS / 7.93 ms</td>
+<td>80+ hours</td>
+</tr>
+</tbody>
+</table>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/431210404-92241e80-004c-40d6-b36d-61367240e6bd.png" data-desc-position="bottom"><img alt="431210404-92241e80-004c-40d6-b36d-61367240e6bd" src="../../../../04-UnrealEngine/Resources/431210404-92241e80-004c-40d6-b36d-61367240e6bd.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/431210065-df3f63ca-eb53-4ea0-8d53-db7054487685.png" data-desc-position="bottom"><img alt="431210065-df3f63ca-eb53-4ea0-8d53-db7054487685" src="../../../../04-UnrealEngine/Resources/431210065-df3f63ca-eb53-4ea0-8d53-db7054487685.png"></a></p>
+<p>언리얼 엔진本身의高度优化된 렌더링 아키텍처로 인해，这套 가우시안 렌더링的机制를实装之后，整体系统的 렌더링性能가想象中的那么差지 않았으며，更重要的是，传统的开放 장면搭建方案와相比，3DGS가非常强的通用性를具有，这对 장면管理的价值가非常大。</p>
+<p>实际上，目前的实现还非常大的优化空间를具有：</p>
+<ul>
+<li>3DGS的训练需要基本几何形态를具有的 포인트 클라우드를一个输入으로，目前它 Colmap的 SFM 재구성으로부터来自，그래픽本身이 엔진已知的 것이기 때문에，Colmap阶段를绕过，直接 포인트 클라우드를生成할 수 있다.</li>
+<li>
+<p>LOD的效果가更侧重于 그래픽的棱角边缘，以此来 3DGS的 조밀化路径를优化할 수 있다.</p>
+</li>
+<li>
+<p>Niagara的实现方式가很好的通用性를具有하지만，状态管理，内存调度，렌더링路径가最优가 아니다.</p>
+</li>
+<li>
+<p>目前 오픈 소스的 <code>Spz</code>压缩 알고리즘을采用하여 CPU上에서大约 10倍的压缩率를执行하지만，학술界에는 Cuda를使用的压缩方案로接近百倍的压缩率를达到할 수 있는一些方案가 있다.</p>
+</li>
+</ul>
+<p>UP个人精力有限로 인해，如果这些功能에感兴趣的话，可以自己去一些尝试를做，目前插件已完全 오픈 소스：</p>
+<ul>
+<li><a href="https://github.com/Italink/GaussianSplattingForUnrealEngine">Github | Gaussian Splatting For Unreal Engine - Italink</a> </li>
+</ul>
+<blockquote>
+<p>开发不易，如果这个插件对你有帮助的话，帮忙<a href="https://github.com/Italink/GaussianSplattingForUnrealEngine.git">点个Star</a>呀 0.0：</p>
+</blockquote>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250425144116238.png" data-desc-position="bottom"><img alt="image-20250425144116238" src="../../../../04-UnrealEngine/Resources/image-20250425144116238.png"></a></p>
+<p>插件目录下对应文件结构的功能如下：</p>
+<ul>
+<li>
+<p>Content：3DGS相关的 UE资产，目前资产版本是 5.5.4。</p>
+</li>
+<li>
+<p>Scripts：Colmap과 3DGS 알고리즘을调用的辅助 스크립트。</p>
+</li>
+<li>
+<p>Source：</p>
+<ul>
+<li>
+<p>GaussianSplattingRuntime：运行时 모듈。</p>
+<ul>
+<li><code>GaussianSplattingPointCloud</code>：自定义的 UE资产，3DGS 포인트 클라우드的结构를包含。</li>
+<li><code>AGaussianSplattingPointCloudActor</code>：预留的 GS Actor基类。</li>
+<li><code>GaussianSplattingPointCloudDataInterface</code>：Niagara 데이터 인터페이스，GaussianSplattingPointCloud的数据를 GPU에提交하여粒子系统에서使用하도록。</li>
+<li><code>Spz</code>：3D GS的压缩 알고리즘，<a href="https://github.com/nianticlabs/spz로부터来源于">https://github.com/nianticlabs/spz로부터来源于</a>。</li>
+</ul>
+</li>
+<li>
+<p>GaussianSplattingEditor：编辑器 모듈，最终打包에参与하지 않는다.</p>
+<ul>
+<li><code>GaussianSplattingEditorLibrary</code>：3DGS处理相关的 함수 인터페이스。</li>
+<li><code>GaussianSplattingEditorSettings</code>：插件相关配置。</li>
+<li><code>GaussianSplattingHLODBuilder</code>：3DGS를使用的 HLOD构建器。</li>
+<li>编辑器模式相关（左侧工具栏面板）：<ul>
+<li><code>GaussianSplattingEdMode</code></li>
+<li><code>SGaussianSplattingEdModePanel</code>：EdMode의 UI面板。</li>
+<li><code>GaussianSplattingStep</code>：EdMode의核心逻辑。</li>
+</ul>
+</li>
+<li>资产编辑器相关：<ul>
+<li><code>GaussianSplattingPointCloudEditor</code></li>
+<li><code>SGaussianSplattingPointCloudEditorViewport</code></li>
+<li><code>SGaussianSplattingPointCloudEditorViewportClient</code></li>
+<li><code>SGaussianSplattingPointCloudFeatureEditor</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="创建日期">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js" data-repo="Italink/ModernGraphicsEngineGuide" data-repo-id="R_kgDOIPtbiQ" data-category-id="DIC_kwDOIPtbic4CTxOk" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous" async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078q-.408 1.096-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58 58 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.2 9.2 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125M13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

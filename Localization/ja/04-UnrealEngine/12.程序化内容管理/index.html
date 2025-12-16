@@ -1,0 +1,3885 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+          <link rel="alternate" href="/" hreflang="zh">
+        
+          <link rel="alternate" href="/Localization/en/" hreflang="en">
+        
+          <link rel="alternate" href="/Localization/ja/" hreflang="ja">
+        
+          <link rel="alternate" href="/Localization/ko/" hreflang="ko">
+        
+          <link rel="alternate" href="/Localization/fr/" hreflang="fr">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Unreal Engine 5 開発 — プロシージャルコンテンツ管理 - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-S1J8MN27P8",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link rel="stylesheet" href="../../../../assets/stylesheets/custom.2fa34c39.min.css">
+
+  <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#unreal-engine-5" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&amp;k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76"></path></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Unreal Engine 5 開発 — プロシージャルコンテンツ管理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="zh" class="md-select__link">
+              Chinese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/en/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ja/" hreflang="ja" class="md-select__link">
+              Japanese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ko/" hreflang="ko" class="md-select__link">
+              Korean
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/fr/" hreflang="fr" class="md-select__link">
+              French
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  开源
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../06-Blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  个人博客
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 计算机发展史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - C++基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 宏、模板、反射
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 内存管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - GUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图形API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    图形API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 图形渲染管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 着色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 缓冲区与纹理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - 3D空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 图形API进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引擎技术
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    引擎技术
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 渲染架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 编辑器架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unreal Engine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unreal Engine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 基础编程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - Slate 开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 插件开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 粒子系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - Niagara 性能优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - Fluid Ninja 流体插件
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 开放世界制作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/7.%E9%9F%B3%E9%A2%91%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 - 音频开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/9.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E4%B8%AD%E7%9A%84%E6%A4%8D%E8%A2%AB%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9 - 植被优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/10.LOD%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 - LOD不完全指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/12.%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%86%85%E5%AE%B9%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 - 程序化内容管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/16.3DGaussianSplatting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 - 3DGaussianSplatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/17.Landscape%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 - Landscape 避坑指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开源
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开源
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1">
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UnrealEngine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    UnrealEngine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Splatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2">
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/C%2B%2B/C%2B%2B%E5%8F%8D%E5%B0%84%E7%BC%96%E8%AF%91%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++反射编译器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3">
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Qt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96%E8%BD%AF%E4%BB%B6-Specinker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频可视化软件-Specinker(已闭源)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%A2%91%E8%B0%B1%E5%88%86%E6%9E%90%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    频谱分析器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%8B%9F%E6%80%81%E7%AA%97%E5%8F%A3%E6%BB%A4%E9%95%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt拟态窗口滤镜
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E5%B1%8F%E5%B9%95%E5%8F%96%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt屏幕取色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%B8%90%E5%8F%98%E8%B0%83%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt渐变调色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E7%B2%92%E5%AD%90%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面粒子特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E6%B0%B4%E9%9D%A2%E6%B3%A2%E7%BA%B9%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面水面波纹特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../06-Blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人博客
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    个人博客
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_2">
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    五月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    八月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    六月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    四月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    九月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2019/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_3">
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人随笔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%95%B4%E6%B4%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    整活
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    杂谈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        プロシージャル技術
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="プロシージャル技術">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#procedural-content-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Procedural Content Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#meta-sounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Meta Sounds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#geometry-script" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Geometry Script
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#animation-blueprints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Animation Blueprints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#material-blueprint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Material Blueprint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#texture-graph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Texture Graph
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        プロシージャルコンテンツ管理
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        プロシージャルコンテンツ処理プラグイン
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="プロシージャルコンテンツ処理プラグイン">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基本用法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        搜集
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="搜集">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        レベル
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        資産
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        审查
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="审查">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#actor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actor着色
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オブジェクト属性マトリックス
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オブジェクト詳細ビュー
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オブジェクトエディタ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        处理
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="处理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        オブジェクト操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        資産操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#actor_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Actor操作
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        エディタインターフェース
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        示例
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="unreal-engine-5">Unreal Engine 5 開発 — プロシージャルコンテンツ管理<a class="headerlink" href="#unreal-engine-5" title="Permanent link">¶</a></h1>
+<p>ゲーム体験の核心は常にコンテンツであることは否定できない。これは映画業界と非常に似ているが、ゲームと映画業界の制作プロセスには明らかな違いが存在する。ゲームは優れたインタラクティブフィードバックを備え、プレイヤーが深く関与できるようにするが、計算能力の制限という厳しい条件がダモクレスの剣のように高く掲げられ、ゲーム業界のコンテンツ生産を大きく束縛している。</p>
+<p>映画業界はコンテンツ制作時に、ある程度大量の人材、物的資源、時間を投入することで「力大きければレンガでも飛ぶ」モデルを採用できる — 膨大なリソースを投入し、リソースの積み重ねと高強度の制作を通じて高品質なコンテンツを生み出す。</p>
+<p>しかしゲーム業界はこれを真似することが難しい。計算能力の制限から、ゲームはコンテンツ要素を無制限に積み重ねることができず、そうした場合ゲームのカクツキ、動作の不安定さなどの問題が発生し、プレイヤー体験に深刻な影響を与える。</p>
+<p>そのためゲーム業界でコンテンツ生産を行う前に、エンジニアリングの問題を解決することが特に重要となる。エンジニアリングプロセスを最適化し、技術手段を合理的に運用し、リソース利用効率を向上させることで、限られた計算能力の条件下でもゲームコンテンツの高品質・高効率な生産を実現し、プレイヤーの増え続けるニーズを満たすことができる。</p>
+<h2 id="_1">プロシージャル技術<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<p>過去、プロシージャルは主に開発者が注目する概念だったが、近年ゲームの工業化プロセスの加速に伴い、ゲームコンテンツ生産の各环节に静かに浸透し、精密な歯車が巨大な機械に組み込まれるように全体を効率的に運転させている。間違いなくプロシージャルはゲームコンテンツの生産能力を向上させる重要な原動力となり、ゲーム業界の発展に絶え間ない活力を注ぎ込んでいる。</p>
+<p><a href="https://en.wikipedia.org/wiki/Procedural_generation">プロシージャル（Procedural）</a>アプリケーションの本質は、問題の解決プロセスをデータ資産として保存することで、後続の開発がこれらの操作データに依存して再利用、反復などを行えるようにすることである（概念的には、プログラム内のプログラムに過ぎない）。</p>
+<p>ゲーム業界が現在プロシージャルを応用している主な分野は以下の通り：</p>
+<ul>
+<li><a href="https://docs.unrealengine.com/5.2/en-US/procedural-content-generation-overview/"><strong>プロシージャルコンテンツ生成</strong></a></li>
+<li><a href="https://en.wikipedia.org/wiki/Procedural_modeling"><strong>プロシージャルモデリング</strong></a></li>
+<li><a href="https://en.wikipedia.org/wiki/Procedural_texture"><strong>プロシージャルテクスチャ</strong></a></li>
+<li><a href="https://en.wikipedia.org/wiki/Procedural_animation"><strong>プロシージャルアニメーション</strong></a></li>
+<li><a href="https://en.wikipedia.org/wiki/Synthetic_media"><strong>プロシージャルオーディオ</strong></a></li>
+</ul>
+<p>これらの技術は既に美術資産制作の日常に徐々に浸透しており、その顕著な特徴は**パラメータ調整だけでなくプログラミングによって資産を制作する**ことである。</p>
+<p>Unreal Engineには非常に優れたプロシージャルサポートが備わっている：</p>
+<h3 id="procedural-content-generation">Procedural Content Generation<a class="headerlink" href="#procedural-content-generation" title="Permanent link">¶</a></h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/pcg-graph-editor.png" data-desc-position="bottom"><img alt="img" src="../../../../04-UnrealEngine/Resources/pcg-graph-editor.png"></a></p>
+<p>**Procedural Content Generation**はUnreal EngineにおけるPCG（Procedural Content Generation）用のツールセットで、テクニカルアーティスト、デザイナー、プログラマーに対し、資産（建物やバイオーム生成など）から世界全体まで、あらゆる複雑さのコンテンツに対応する迅速かつ反復可能なツールを構築する能力を提供する。</p>
+<p>関連参考：</p>
+<ul>
+<li><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/procedural-content-generation-overview?application_version=5.5">Procedural Content Generation Overview | Unreal Engine 5.5 Documentation | Epic Developer Community</a></li>
+<li><a href="https://www.bilibili.com/video/BV1y8411U7Hs">『UE5 PCG』公式公開レッスン：Electric Dreams環境プロジェクトの詳細研究</a></li>
+<li><a href="https://mp.weixin.qq.com/s/mGWiPKvWU_NHTktIWA6LnA">Electric Dreams PCG技術詳解（一）——用語、ツールとグラフの紹介</a></li>
+<li><a href="https://mp.weixin.qq.com/s/xHdnrFTkywF_7OjqOuALbw">Electric Dreams PCG技術詳解（二）——溝、大型Assembly</a></li>
+<li><a href="https://mp.weixin.qq.com/s/YWcd8l-VphNLrOlg3zkSzA">Electric Dreams PCG技術詳解（三）——森林、岩石とシーン背景</a></li>
+<li><a href="https://mp.weixin.qq.com/s/CWTUcRIBTXw8WvhX3jrcBw">Electric Dreams PCG技術詳解（四）——遠景、霧、カスタムノード及びサブグラフ</a></li>
+</ul>
+<h3 id="meta-sounds">Meta Sounds<a class="headerlink" href="#meta-sounds" title="Permanent link">¶</a></h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240205111218033-1741055387931-5.png" data-desc-position="bottom"><img alt="image-20240205111218033" src="../../../../04-UnrealEngine/Resources/image-20240205111218033-1741055387931-5.png"></a></p>
+<p>**Meta Sounds**はユーザー定義、サードパーティ拡張、グラフの再利用をサポートし、エディタ内でサウンドデザインを行える強力なツールを提供する。</p>
+<p>関連参考：</p>
+<ul>
+<li><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/metasounds-in-unreal-engine?application_version=5.5">MetaSounds in Unreal Engine | Unreal Engine 5.5 Documentation | Epic Developer Community</a></li>
+<li><a href="https://italink.github.io/ModernGraphicsEngineGuide/04-UnrealEngine/7.%E9%9F%B3%E9%A2%91%E5%BC%80%E5%8F%91">オーディオプログラミング基礎 - Italink</a> </li>
+<li><a href="https://www.bilibili.com/video/BV15G4y1A7B5">イベント講演 | 初心者向けMetaSoundガイド(公式字幕)</a></li>
+</ul>
+<h3 id="geometry-script">Geometry Script<a class="headerlink" href="#geometry-script" title="Permanent link">¶</a></h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/f94d82fa-2f03-4cd2-9f0c-db710c6a91cb.png" data-desc-position="bottom"><img alt="Geometry Scripting Through Blueprints" src="../../../../04-UnrealEngine/Resources/f94d82fa-2f03-4cd2-9f0c-db710c6a91cb.png"></a></p>
+<p>**Geometry Script**はBlueprintとPythonを使用してメッシュジオメトリを生成・編集するAPIセットを提供する。Editor Utility Widgets内でGeometry ScriptingとAsset Actionsを記述し、カスタムメッシュ分析関数ライブラリ、処理・編集ツールを作成できるほか、Actor Blueprint内でプロシージャルオブジェクトを作成し複雑なジオメトリクエリを実現することも可能。</p>
+<p>関連参考：</p>
+<ul>
+<li><a href="https://dev.epicgames.com/documentation/zh-cn/unreal-engine/introduction-to-geometry-scripting-in-unreal-engine?application_version=5.5">Unreal Engineにおけるジオメトリスクリプティング入門 | Unreal Engine 5.5 ドキュメント | Epic Developer Community</a></li>
+</ul>
+<h3 id="animation-blueprints">Animation Blueprints<a class="headerlink" href="#animation-blueprints" title="Permanent link">¶</a></h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/animgraph2.gif" data-desc-position="bottom"><img alt="anim graph example" src="../../../../04-UnrealEngine/Resources/animgraph2.gif"></a></p>
+<p>スケルタルメッシュをゲーム内でシミュレートまたは制御するためのBlueprint。アニメーションの混合、スケルトンの調整、毎フレーム使用する最終アニメーションポーズ（Pose）を定義するロジックを作成できる。</p>
+<p>関連参考：</p>
+<ul>
+<li><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/animation-blueprints-in-unreal-engine?application_version=5.5">Animation Blueprints in Unreal Engine | Unreal Engine 5.5 Documentation | Epic Developer Community</a></li>
+</ul>
+<h3 id="material-blueprint">Material Blueprint<a class="headerlink" href="#material-blueprint" title="Permanent link">¶</a></h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/base-color.png" data-desc-position="bottom"><img alt="Base Color" src="../../../../04-UnrealEngine/Resources/base-color.png"></a></p>
+<p>シーンオブジェクトの表面属性を定義するためのBlueprint。様々な画像（テクスチャ）、ノードベースのマテリアル式、マテリアル自体の固有属性を使用して、シーンオブジェクトの最終的な表面属性を定義できる。</p>
+<p>関連参考：</p>
+<ul>
+<li><a href="https://dev.epicgames.com/documentation/en-us/unreal-engine/unreal-engine-materials?application_version=5.5">Unreal Engine Materials | Unreal Engine 5.5 Documentation | Epic Developer Community</a></li>
+</ul>
+<h3 id="texture-graph">Texture Graph<a class="headerlink" href="#texture-graph" title="Permanent link">¶</a></h3>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/710629a0-46b1-457f-808b-5711c60e6253.png" data-desc-position="bottom"><img alt="img" src="../../../../04-UnrealEngine/Resources/710629a0-46b1-457f-808b-5711c60e6253.png"></a></p>
+<p>**Texture Graph**はアーティストに対し、外部の画像編集パッケージを使用せずにUnreal Engine内で直接テクスチャ資産を作成または編集できるインターフェースを提供する。Material Editorに似た馴染みのあるノードグラフを利用し、一連のノードを出力テクスチャに接続できる。</p>
+<p>Texture GraphをBlueprint、マテリアル、マテリアル関数と組み合わせることで、Unreal Engine内でのみ実現可能な独特のワークフローを獲得できる。</p>
+<p>Texture Graphを使用すると多くの興味深いアプリケーションが可能で、筆者は最近以下の用途で使用している：</p>
+<ul>
+<li>
+<p><strong>画像編集</strong>：開発者にとって、エディタ操作に比べコードを記述する自由度ははるかに高い。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250304104608583.png" data-desc-position="bottom"><img alt="image-20250304104608583" src="../../../../04-UnrealEngine/Resources/image-20250304104608583.png"></a></p>
+</li>
+<li>
+<p><strong>UI素材制作</strong>：Unreal EngineのUIシステムは複雑なインターフェースエフェクト（エッジブラー、ドロップシャドウ、ニューモルフィズムなど）をサポートしていない。これはUIが全体のグラフィックコンテンツの一部に過ぎず、予算が少ないためであり、これらの特性を使用するには複雑なレンダリング構造が必要となる。しかしTexture Graphを利用することで、これらの効果に必要な素材画像を生成でき、簡単なエディタ拡張と組み合わせることで、このプロセスは非常にスムーズになる。</p>
+</li>
+<li><strong>スタイル化参考生成</strong>：Texture GraphにAI呼び出しノードを拡張することで、Unreal Engine原生のグラフィックコンテンツがAIを借りて容易にスタイル化参考を実現できる。例えば筆者は以下の用途で使用した：<ul>
+<li>プロジェクトコンテンツのためにエンジン起動時のスプラッシュ画像とサムネイルを生成</li>
+<li>Scene Captureと組み合わせて動的にシーンのスタイル化ミニマップを生成</li>
+<li>特定のシーンのスタイル化ロードページを生成</li>
+<li>...</li>
+</ul>
+</li>
+</ul>
+<p>関連参考：</p>
+<ul>
+<li><a href="https://dev.epicgames.com/community/learning/tutorials/z0VJ/unreal-engine-getting-started-with-texture-graph">Getting Started with Texture Graph | Epic Developer Community</a></li>
+<li><a href="https://www.bilibili.com/video/BV1As421M7Bj/">[中国語ライブ]第51回 | UE5.4新機能のTextureGraph | 朱昌盛（天之川）</a></li>
+<li><a href="https://m.163.com/dy/article/J56TPVL50516BJGJ.html">UE5.4テクスチャグラフ入門 CG世界</a></li>
+<li><a href="https://blog.csdn.net/grayrail/article/details/140191905">UE5.4新機能 - Texture Graph入門紹介 | CSDN | 電子雲と長距離もつれ</a></li>
+<li><a href="https://www.bilibili.com/video/BV1FM4m1o7LE">UE5.4TextureGraph | GALAXIXアニメ大陸</a></li>
+</ul>
+<h2 id="_2">プロシージャルコンテンツ管理<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
+<p>上記のプロシージャル技術の応用により、我々はかつてない創作効率を獲得した。過去と比較し、現在はより短い時間、より低い予算でより豊富なゲームコンテンツを生み出すことができる。これは開発効率を大幅に向上させるだけでなく、ゲームコンテンツの境界を広げ、プレイヤーにより多様な体験を提供する。</p>
+<p>しかし何事にも両面性がある。より多くのコンテンツ生産は、管理コストの指数関数的な増加を意味する。資産管理、バージョン管理、テストと更新反復まで、各环节により多くの人材、物的資源、時間コストを投入する必要があり、膨大なコンテンツ体系が秩序正しく運行し、混乱やエラーが発生しないことを確保する。</p>
+<p>筆者は以前シーン構築時にPCG技術の使用を非常に推奨していた。なぜなら生成パイプラインを統合することで、反復と最適化がより容易になるからである。</p>
+<p>しかし実際には、現在業界におけるPCGの応用は依然として理想化されており、真に実践できる応用シーンは多くない。</p>
+<p>その主な原因はPCGが「現実に接地していない」ことにある。現在大多数のゲーム制作チームにおけるシーンデザインの職務責任划分は一般的に以下の通り：</p>
+<ul>
+<li><strong>ゲームプランナー</strong>：ゲームシーンの全体的なフレームワークを計画し、シーンの機能、ストーリー背景、スタイル定位、プレイヤーのシーン内体験フローなどを担当し、シーンデザインに明確な方向とニーズドキュメントを提供する。</li>
+<li><strong>コンセプトデザイナー</strong>：プランナーのニーズに基づきシーンのコンセプトデザインを行い、手描きまたはデジタルペインティングなどの方式で、シーンの全体的なスタイル、雰囲気、主要建築と地形の概略形態などのコンセプトスケッチを描き、後続の詳細デザインに視覚的参考を提供する。</li>
+<li><strong>シーン原画デザイナー</strong>：コンセプトデザインの基礎上で、シーン内の具体的な要素に対し詳細な原画デザインを行い、建築の構造、装飾細部、地形の起伏変化、植生と道具のスタイルなどを含み、正確な絵画形式で各要素の造型、色彩、マテリアルなどの細部を呈示し、モデラーに正確な制作青写真を提供する。</li>
+<li><strong>3Dモデラー</strong>：3Dモデリングソフトウェアを使用し、シーン原画に基づきデザインされたシーン要素を3Dモデルに構築し、建築、地形、道具などの基礎フレームを構築し、体積と空間感を与え、初步的なUV分割を行い、後続のテクスチャ描画の準備をする。</li>
+<li><strong>マテリアルライトアーティスト</strong>：3Dモデルにマテリアルとテクスチャを追加し、物体のリアルな質感（木材のテクスチャ、金属の光沢、石の粗さなど）を模擬する。同時にシーン内のライト効果を設定し、異なる雰囲気と光影効果を作り出し、シーンのリアリティと視覚的インパクトを強化する。</li>
+<li><strong>シーンサウンドデザイナー</strong>：シーンのために適切なサウンドエフェクトを創作、選択、追加することを担当し、シーンのテーマ、感情、雰囲気などに基づきサウンドデザインを行い、採集、編集、ミキシングなどの操作を通じて、サウンドエフェクトをシーンと完璧に融合させ、シーンの没入感を強化する。</li>
+<li><strong>エフェクトアーティスト</strong>：シーンのニーズに基づき、炎、煙、水流、魔法効果などの各種エフェクトをデザイン・制作し、シーンに生き生きとした趣味性を加え、プレイヤーの没入感を向上させる。</li>
+<li><strong>レベルデザイナー</strong>：主にシーンのレイアウトと計画を担当し、ゲームプレイとプランナーの要求に基づき、モンスター、道具、クエストポイント、障害物などの要素をシーン内に合理的に配置し、プレイヤーの進行ルートとレベル難易度曲線をデザインし、プレイヤーがシーン内で良好なゲーム体験を得られるように確保する。</li>
+<li><strong>シーン最適化アーティスト</strong>：制作完了したシーンに対し性能最適化を行い、モデル面数の削減、テクスチャの圧縮、ライトベイクの合理的設定などの手段を通じて、シーンのハードウェアリソース占有を低減し、ゲームの動作効率を向上させ、異なるデバイスでもスムーズに動作することを保証する。</li>
+</ul>
+<p>シーンデザインの過程では、通常上記の職種間で密接なコミュニケーションと頻繁な反復が必要で、最終的な納品を完了できる。</p>
+<p>PCGを使用する理由は、ゲームチームがコンテンツ原料（モデル、マテリアル、エフェクト、サウンドエフェクト...）の生産能力を大幅に向上させた後、同様に効率的な手段でシーン構築を完了し、性能最適化の問題を両立させる必要があるからである。</p>
+<p>しかしPCGパイプラインデザインの複雑さから、多人協働は非常に困難である。具体的なプロジェクト内では、高いレベルのTAがPCGのロジックを記述する必要があり、「そのTA」は美術制作プロセスを精通し、原材料の規範性を監督し、同時にゲームプランナーのニーズに応え、変更に迅速に対応し、エンジン基盤を理解し、性能最適化戦略を制定する必要がある。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/5a4b6bb9647d7be20323714f1b8a23414e7b9f2b.jpg" data-desc-position="bottom"><img alt="img" src="../../../../04-UnrealEngine/Resources/5a4b6bb9647d7be20323714f1b8a23414e7b9f2b.jpg"></a></p>
+<p><a href="https://forum.quartertothree.com/t/the-matrix-awakens-an-unreal-engine-5-experience/154271/67">関連情報</a>によると、Unreal Engineの《マトリックス：覚醒》サンプルの開発過程では、約<code>20-30</code>人が資産処理を担当し、チーム全体で<code>50-70</code>名のスタッフが在籍していた。これは間違いなく偉業である。</p>
+<p>このサンプルではPCGが示す巨大な潜在力を見ることができる：「容易に」これほど壮大な都市を構築した。</p>
+<p>PCGの実践が困難な原因は、多くのチームがEpicのようなチームクオリティを持つことが難しいことに直接帰結できる。</p>
+<p>次に、PCGの目標は持続的に反復可能な生産パイプラインを归纳・总结することにあるが、ゲーム製品にとってプレイヤーを引きつけるのは永遠にコンテンツとクリエイティビティであり、それらは必然的に空飛ぶ馬のように自由である。</p>
+<p>具体的なプロジェクトチーム内では、PCGは複数の職種の責任を集中させることができる。これには利点があり、迅速に反復に応えられるが、欠点もあり、各方面の人員のクリエイティビティ発揮を制限し、コンテンツクオリティと生産能力に影響を与える。</p>
+<p>PCGと異なり、プロシージャルコンテンツ管理は一種の後処理に似ている：</p>
+<ul>
+<li>プロシージャルな手段でコンテンツ組織を収束させることを目的とする。</li>
+</ul>
+<p>因此、本文は那些高深莫测的前沿技术を紹介することに着眼せず、現在のゲームコンテンツ生産過程に焦点を当て、一連の一般的なプ手段を整理・整合してUnreal Engine内の**オブジェクト（Object）<strong>、**資産（Asset）</strong>、**世界（World）**を管理する。</p>
+<p>プロシージャルな手段でコンテンツを管理する理由は、簡単に言えば：</p>
+<ul>
+<li>明らかに「直感的」な操作であっても、エディタレベルでは実現が難しい場合がある。</li>
+</ul>
+<p>このジレンマは短い対話で説明できる：</p>
+<blockquote>
+<p>A：象を知っていますか？</p>
+<p>B：もちろん知っています。</p>
+<p>A：私は象の姿が非常に好奇です、描いてくれませんか？</p>
+<p>B：申し訳ありません、私は絵が描けないのでできません~</p>
+</blockquote>
+<p>プロシージャルの目的は、具体的な目標を直接処理するのではなく、特徴を記述することで行いたいことを表現し、操作の入力と過程に一定の弾力性を持たせることである。以下のような回答を与えることに相当する：</p>
+<blockquote>
+<p>B：申し訳ありません、象を描くことはできませんが、象は非常に大きく、灰色の体、四本の脚は太くて丈夫、団扇のような大きな耳、長い鼻で物を巻き上げられ、二本の尖った長い歯があることを教えられます。後で見かけたらきっと一眼で認識できるでしょう~</p>
+</blockquote>
+<p>ゲームプロジェクトにとって、一部のコンテンツ制作関連の重厚なエディタは通常、専門の人員が開発・委託する必要がある。しかしそれ以外にも、ゲームコンテンツ制作の過程には大量の細かい**マイクロニーズ**が存在する。これらのニーズのために専門の人員をエディタツール開発に配置する必要はないが、エディタツールの補助がなければこれらのタスクは完了が難しい。例えば：</p>
+<ul>
+<li>座標領域<code>[X0,Y0  -  X1,Y1]</code>に基づき、該領域内のすべてのActorを選択し、サブレベルとしてエクスポートしてローカルテストを行う</li>
+<li>シーン内でシャドウを有効にしているすべての光源をフィルタリングし、そのシャドウの合理性を検査する</li>
+<li>すべてのメッシュコンポーネントを概観し、バウンディングボックスのサイズとその他の特徴に基づき、コンポーネントに一定の光影とカリングのLOD戦略を一括で付与する</li>
+<li>すべてのシーンエフェクトのバウンディングボックスサイズを概観し、エフェクトバウンディングボックスに異常項目が存在するか検索する</li>
+<li>特定のコンポーネントの属性（位置変換、光影スイッチ、物理戦略、レンダリング属性など）を一括で調整する</li>
+<li>資産の特定の属性のスイッチを一括で変更する</li>
+<li>特定の特徴を持つActorを一括でフィルタリングし、ハイライト表示する</li>
+<li>シーン内のすべての静的モデル<code>SM_BigTree0001</code>を収集し、落葉が舞うパーティクルエフェクトコンポーネントと木の葉が擦れるサウンドエフェクトコンポーネントを追加で提供するカプセル化されたBlueprint<code>BP_BigTree0001</code>に一括で置き換える</li>
+<li>特定の領域に一括でレイを送信してシーンをサンプリングし、レイ検出で得られたシーンデータを保存してエフェクト制作に使用する</li>
+<li>シーン内のすべての<code>StaticMeshActor</code>の<code>StaticMeshComponent</code>の<code>Disallow Nanite</code>属性を一括でプレビュー、ソート、検索、編集する</li>
+<li>特定の領域の静的メッシュを自動的に階層インスタンス化静的メッシュコンポーネントにマージする</li>
+<li>...</li>
+</ul>
+<p>これらのニーズは通常、マップ編集、シーン管理、資産管理、性能最適化の過程で高頻度に出現する。体量の小さいゲームプロジェクトでは、コンテンツが段階的に累積されるため、通常「だめなら削除する」心構えで問題は大きくならないが、大型のゲームプロジェクトではコンテンツ間の関係が錯綜しており、PCG技術で一部の圧力を緩和できるものの、これらのマイクロニーズをタイムリーかつ適切に解決しなければ、コンテンツ管理も非常に制御不能になりやすい：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250302185736501.png" data-desc-position="bottom"><img alt="image-20250302185736501" src="../../../../04-UnrealEngine/Resources/image-20250302185736501.png"></a></p>
+<ul>
+<li>ウィッチャー3 - オープンワールドのコンテンツ最適化パイプライン：<a href="https://www.youtube.com/watch?v=p8CMYD_5gE8">https://www.youtube.com/watch?v=p8CMYD_5gE8</a></li>
+</ul>
+<h2 id="_3">プロシージャルコンテンツ処理プラグイン<a class="headerlink" href="#_3" title="Permanent link">¶</a></h2>
+<p>Unreal Engineは間違いなく現在最も強力で汎用的なゲームエンジンであり、これは優れたコア構造設計に大きく依存している。Unreal Engine内のコンテンツを効率的にプロシージャル管理することを目標とする場合、その体系構造を深く理解することは特に必要で重要な意義を持つ。</p>
+<p>この部分の内容を展開すると大量のスペースを占用するため、筆者は以前の基礎体系の<a href="https://zhuanlan.zhihu.com/p/636151878">ドキュメント</a>を現在の関心点に基づき一部更新した。より多くの詳細に興味がある場合は、ネット上に多くの優れた剖析記事が存在する：</p>
+<ul>
+<li>コアアーキテクチャ：<a href="https://zhuanlan.zhihu.com/p/22813908">InsideUE - 大钊</a></li>
+<li>レンダリング体系：<a href="https://www.cnblogs.com/timlly/p/13512787.html">博客园 - 向往 | Unreal Engineレンダリング体系の剖析 </a></li>
+<li>資産管理：<a href="https://zhuanlan.zhihu.com/p/357904199">知乎 - UE4の資源管理</a></li>
+</ul>
+<p>此外、適切なプロジェクト規範がなければ、神様が来ても首を縦に振るしかないことを提醒する：</p>
+<ul>
+<li>Unreal Engine規範ガイド：<a href="https://github.com/thejinchao/ue5-style-guide">https://github.com/thejinchao/ue5-style-guide</a></li>
+</ul>
+<p>プロシージャルコンテンツ処理は通常、三つの基本ステップにまとめられる：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>graph TD
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    A(搜集：特徴を記述することで必要なオブジェクトとデータを搜集する)
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    B(审查【非必須】：搜集したデータに対し审查とフィルタリングを行う )
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    C(处理【非必須】：相应的操作ロジックを実行する___________)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    A --&gt; B
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    B --&gt; C
+</code></pre></div>
+<p>上記のフローに対し、筆者はこれらのステップを完了するための簡単なエディタフレームワーク（<strong>ProceduralContentProcessor</strong>）を構築した。これはツールボックスとして、統一構造のエディタツールを容易に派生・拡張できる。プラグインのGithubリポジトリは以下の通り：</p>
+<ul>
+<li><a href="https://github.com/Italink/ProceduralContentProcessor">https://github.com/Italink/ProceduralContentProcessor</a></li>
+</ul>
+<p>後文はこのプラグインに基づき、各段階の具体的な処理ステップを説明する。</p>
+<p>プラグインをプロジェクトの<code>Plugins</code>ディレクトリに配置した後、レベルエディタのエディタモードで<code>程序化内容处理器模式</code>を見つけることができる：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250302204354364.png" data-desc-position="bottom"><img alt="image-20250302204354364" src="../../../../04-UnrealEngine/Resources/image-20250302204354364.png"></a></p>
+<p>**Procedural Content Processor**は三つの使用可能なBlueprint資産を提供し、Blueprintを派生させて自身のエディタモードを拡張できる：</p>
+<ul>
+<li><strong>程序化资产处理器（ProceduralAssetProcessor）</strong>：**資産（Asset）**操作関連のエディタツールを記述するために使用</li>
+<li><strong>程序化关卡处理器（ProceduralWorldProcessor）</strong>：**レベル（World）**処理関連のエディタツールを記述するために使用</li>
+<li><strong>程序化Actor着色器（ProceduralActorColorationProcessor）</strong>：Actorデバッグ着色戦略を記述するために使用</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250302204605630.png" data-desc-position="bottom"><img alt="image-20250302204605630" src="../../../../04-UnrealEngine/Resources/image-20250302204605630.png"></a></p>
+<h3 id="_4">基本用法<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
+<p>**Procedural Content Processor**自体は複雑なメカニズムを提供していない。大部分はエンジンの原生機能に依存している。</p>
+<p>一つの重要な点は：</p>
+<ul>
+<li>**CallInEditor（エディタ内で呼び出し）**がチェックされたBlueprint関数（または<code>UFUNCTION</code>中に<code>CallInEditor</code>識別子を持つC++関数）は、オブジェクトの詳細パネルに対応するボタンを生成し、該ボタンをクリックすると対応する関数ロジックが実行される：</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240908160400293.png" data-desc-position="bottom"><img alt="image-20240908160400293" src="../../../../04-UnrealEngine/Resources/image-20240908160400293.png"></a></p>
+<p>これを契機として、大量のエディタツールを容易に記述できる。</p>
+<p>程序化内容处理器のBlueprint<code>クラス設定</code>内の一部のオプションはエディタ大綱の表示に影響する：</p>
+<ul>
+<li><strong>Sort Priority</strong>：ソート優先度、エディタ大綱中のドロップダウンボックスのソートに影響する。</li>
+<li><strong>Document Hyperlink</strong>：該处理器のドキュメントリンク、エディタ大綱上の【? ボタン】をクリックすると対応するURLが開かれる。</li>
+<li><strong>Override UMGClass</strong>：デフォルトの詳細パネルの代わりにUMGコントロールを使用、一般的にエディタのUIをカスタマイズするために使用。</li>
+<li><strong>Blueprint表示名称</strong>：該处理器がエディタ大綱中に実際に表示される名称。</li>
+<li><strong>Blueprint描述</strong>：該处理器がエディタ大綱中に表示される提示情報。</li>
+<li><strong>Blueprint命名空間</strong>：該处理器がエディタ大綱中の分類、多級分類は<code>.</code>で区切る。</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240908160746183.png" data-desc-position="bottom"><img alt="image-20240908160746183" src="../../../../04-UnrealEngine/Resources/image-20240908160746183.png"></a></p>
+<p>Blueprint属性中の一部の設定は詳細パネルに影響する：</p>
+<ul>
+<li><strong>可编辑实例</strong>：可编辑实例がチェックされた属性のみ、オブジェクトの詳細パネルで編集でき、そうでない場合はBlueprintエディタ中でデフォルト値を変更する必要がある。</li>
+<li><strong>只读Blueprint</strong>：チェックすると、該属性は編集不可になるがプレビュー可能。</li>
+<li><strong>配置变量</strong>：チェックすると、該属性の値は配置ファイルに保存され、次回处理器を起動する時に前回の配置が読み込まれる。</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240908163158884.png" data-desc-position="bottom"><img alt="image-20240908163158884" src="../../../../04-UnrealEngine/Resources/image-20240908163158884.png"></a></p>
+<blockquote>
+<p>エディタ制作過程中、一部の属性标识とメタデータは非常に有用であるが、Blueprintエディタに公開されていない。ここで一つのプラグインを推奨する：<a href="https://github.com/DoubleDeez/MDMetaDataEditor">https://github.com/DoubleDeez/MDMetaDataEditor</a></p>
+</blockquote>
+<p>程序化内容处理器は四つのオーバーライド可能な基本イベント関数を持つ：</p>
+<ul>
+<li><code>void Activate()</code>：处理器がアクティブになった時に呼び出される。</li>
+<li><code>void Tick(DeltaTime)</code>：处理器がアクティブになった後、毎フレーム呼び出される。</li>
+<li><code>void Deactivate()</code>：处理器が終了した時に呼び出される。</li>
+<li><code>void PostEditChangeProperty(PropertyName)</code>：处理器属性が変更された時に呼び出される。</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240908161742512.png" data-desc-position="bottom"><img alt="image-20240908161742512" src="../../../../04-UnrealEngine/Resources/image-20240908161742512.png"></a></p>
+<p>C++については、以下の関数をオーバーライドしてエディタを深度カスタマイズできる：</p>
+<ul>
+<li><code>virtual TSharedPtr&lt;SWidget&gt; BuildWidget()</code></li>
+</ul>
+<p>UEの詳細パネルは非常に強力で、**属性 + 関数**の方式だけで簡単かつ使いやすいエディタを迅速に構築できる：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240908163834227.png" data-desc-position="bottom"><img alt="image-20240908163834227" src="../../../../04-UnrealEngine/Resources/image-20240908163834227.png"></a></p>
+<h3 id="_5">搜集<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
+<h4 id="_6">レベル<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
+<p>**程序化关卡处理器（ProceduralWorldProcessor）**については、エディタ関数中で<code>GetAll...()</code>関数を呼び出してActorsを搜集できる：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250302210745673.png" data-desc-position="bottom"><img alt="image-20250302210745673" src="../../../../04-UnrealEngine/Resources/image-20250302210745673.png"></a></p>
+<h4 id="_7">資産<a class="headerlink" href="#_7" title="Permanent link">¶</a></h4>
+<p>**程序化资产处理器（ProceduralAssetProcessor）**については、エディタ関数中で<code>GetAllAssetRegistry()</code>関数を呼び出して資産レジストリを取得し、資産を操作できる：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250302211018875.png" data-desc-position="bottom"><img alt="image-20250302211018875" src="../../../../04-UnrealEngine/Resources/image-20250302211018875.png"></a></p>
+<h3 id="_8">审查<a class="headerlink" href="#_8" title="Permanent link">¶</a></h3>
+<h4 id="actor">Actor着色<a class="headerlink" href="#actor" title="Permanent link">¶</a></h4>
+<p>プラグインにはさらに一つの資産タイプ — **程序化Actor着色器（ProceduralActorColorationProcessor）**が提供されている。</p>
+<p>これは**ProceduralWorldProcessor**に比べ、<code>FLinearColor Colour(const UPrimitiveComponent* PrimitiveComponent)</code>というイベント関数が追加されており、これをオーバーライドすることで現在のシーン中のすべてのプリミティブコンポーネントに対しデバッグ着色を行える：</p>
+<blockquote>
+<p>エンジンバージョン&gt;=5.4が必要</p>
+</blockquote>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240908164234755.png" data-desc-position="bottom"><img alt="image-20240908164234755" src="../../../../04-UnrealEngine/Resources/image-20240908164234755.png"></a></p>
+<h4 id="_9">オブジェクト属性マトリックス<a class="headerlink" href="#_9" title="Permanent link">¶</a></h4>
+<p>Unreal Engine中では、公式に**属性マトリックス**機能が提供されており、資産の特定の属性を一括で変更できる：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240908164432999.png" data-desc-position="bottom"><img alt="image-20240908164432999" src="../../../../04-UnrealEngine/Resources/image-20240908164432999.png"></a></p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240908164614479.png" data-desc-position="bottom"><img alt="image-20240908164614479" src="../../../../04-UnrealEngine/Resources/image-20240908164614479.png"></a></p>
+<p>**Procedural Content Processor**はこれを基礎とし、プロシージャルな方式で任意のオブジェクト（UObject）の属性編集マトリックスを構築することをサポートする。</p>
+<p>Blueprint中に**Procedural Object Matrix**タイプのメンバー変数を追加するだけでよい：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240908165148702.png" data-desc-position="bottom"><img alt="image-20240908165148702" src="../../../../04-UnrealEngine/Resources/image-20240908165148702.png"></a></p>
+<p>エディタ関数中で以下のインターフェースを呼び出すことでオブジェクト属性マトリックスを構築でき、オブジェクトの詳細パネルに表示される：</p>
+<ul>
+<li><code>void ClearObjectMaterix()</code>：オブジェクトマトリックスをクリアする</li>
+<li><code>void AddTextField(Owner, FieldName, FieldValue)</code>：簡単なプレビューテキストを追加、<code>{Owner}</code>行、<code>{FieldName}</code>列が<code>{FieldValue}</code>で填充されることを意味する</li>
+<li><code>void AddPropertyField(Owner，PropertyName)</code>：属性エディタを追加、<code>{Owner}</code>行、<code>{PropertyName}</code>列が【OwnerオブジェクトのPropertyName属性】のエディタで填充されることを意味する</li>
+<li><code>void AddPropertyFieldBySecondaryObject(Owner，SecondaryObject，SecondaryObjectPropertyName)</code>：属性エディタを追加、<code>{Owner}</code>行、<code>{SecondaryObjectPropertyName}</code>列が【SecondaryObjectオブジェクトのSecondaryObjectPropertyName属性】のエディタで填充されることを意味する</li>
+</ul>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20240908165948105.png" data-desc-position="bottom"><img alt="image-20240908165948105" src="../../../../04-UnrealEngine/Resources/image-20240908165948105.png"></a></p>
+<p>これはエンジン中の使用例である：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250302211508994.png" data-desc-position="bottom"><img alt="image-20250302211508994" src="../../../../04-UnrealEngine/Resources/image-20250302211508994.png"></a></p>
+<h4 id="_10">オブジェクト詳細ビュー<a class="headerlink" href="#_10" title="Permanent link">¶</a></h4>
+<p>Unreal Engineの詳細パネルは任意のUObjectの属性を容易に編集できる：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250302212537095.png" data-desc-position="bottom"><img alt="image-20250302212537095" src="../../../../04-UnrealEngine/Resources/image-20250302212537095.png"></a></p>
+<p>しかし通常はオブジェクトを明確に選択する必要がある。プラグインには任意のオブジェクトの属性パネルを表示するためのBlueprint関数が提供されている：</p>
+<ul>
+<li><code>void ShowObjectDetailsView(UObject* InObject)</code></li>
+</ul>
+<p>これにより、UI、ランタイムサブオブジェクト、一時オブジェクトなどの一部のオブジェクトの属性を容易に調整できる：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250302213419881.png" data-desc-position="bottom"><img alt="image-20250302213419881" src="../../../../04-UnrealEngine/Resources/image-20250302213419881.png"></a></p>
+<h4 id="_11">オブジェクトエディタ<a class="headerlink" href="#_11" title="Permanent link">¶</a></h4>
+<p>以下のBlueprint関数を使用して対応するオブジェクトのエディタを開くことができる：</p>
+<ul>
+<li><code>void ShowObjectEditor(UObject* InObject)</code></li>
+</ul>
+<h3 id="_12">处理<a class="headerlink" href="#_12" title="Permanent link">¶</a></h3>
+<p>データの処理については、実際の業務ニーズに結びつけて具体的に実現する必要がある。現在まで**UProceduralContentProcessorLibrary**には以下のインターフェースが含まれており、必要に応じて自行追加できる：</p>
+<h4 id="_13">オブジェクト操作<a class="headerlink" href="#_13" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">static</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">UObject</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">GetAllObjectsOfClass</span><span class="p">(</span><span class="n">UClass</span><span class="o">*</span><span class="w"> </span><span class="n">Class</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bIncludeDerivedClasses</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">static</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">UObject</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">GetAllObjectsWithOuter</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">Outer</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bIncludeNestedObjects</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">static</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">UClass</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">GetAllDerivedClasses</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">UClass</span><span class="o">*</span><span class="w"> </span><span class="n">ClassToLookFor</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bRecursive</span><span class="p">);</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="k">static</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="nf">DuplicateObject</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">SourceObject</span><span class="p">,</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">Outer</span><span class="p">);</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="k">static</span><span class="w"> </span><span class="n">int32</span><span class="w"> </span><span class="nf">DeleteObjects</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">ObjectsToDelete</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bShowConfirmation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bAllowCancelDuringDelete</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="k">static</span><span class="w"> </span><span class="n">int32</span><span class="w"> </span><span class="nf">DeleteObjectsUnchecked</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">ObjectsToDelete</span><span class="p">);</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ConsolidateObjects</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">ObjectToConsolidateTo</span><span class="p">,</span><span class="w"> </span><span class="n">UPARAM</span><span class="p">(</span><span class="n">ref</span><span class="p">)</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">UObject</span><span class="o">*&gt;&amp;</span><span class="w"> </span><span class="n">ObjectsToConsolidate</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bShowDeleteConfirmation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="k">static</span><span class="w"> </span><span class="n">TSet</span><span class="o">&lt;</span><span class="n">UObject</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">GetAssetReferences</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">Object</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">UClass</span><span class="o">*&gt;&amp;</span><span class="w"> </span><span class="n">IgnoreClasses</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bIncludeDefaultRefs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IsGeneratedByBlueprint</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">InObject</span><span class="p">);</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ShowObjectDetailsView</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">InObject</span><span class="p">);</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ShowObjectEditor</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">InObject</span><span class="p">);</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="k">static</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="nf">CopyProperties</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">SourceObject</span><span class="p">,</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">TargetObject</span><span class="p">);</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ForceReplaceReferences</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">SourceObjects</span><span class="p">,</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">TargetObject</span><span class="p">);</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SetObjectPropertyByName</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">Object</span><span class="p">,</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">PropertyName</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">int</span><span class="o">&amp;</span><span class="w"> </span><span class="n">Value</span><span class="p">);</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="n">DECLARE_FUNCTION</span><span class="p">(</span><span class="n">execSetObjectPropertyByName</span><span class="p">);</span>
+</code></pre></div>
+<h4 id="_14">資産操作<a class="headerlink" href="#_14" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">ObjectIsAsset</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">InObject</span><span class="p">);</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">static</span><span class="w"> </span><span class="n">UBlueprint</span><span class="o">*</span><span class="w"> </span><span class="nf">GetBlueprint</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">InObject</span><span class="p">);</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IsNaniteEnable</span><span class="p">(</span><span class="n">UStaticMesh</span><span class="o">*</span><span class="w"> </span><span class="n">InMesh</span><span class="p">);</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SetNaniteMeshEnabled</span><span class="p">(</span><span class="n">UStaticMesh</span><span class="o">*</span><span class="w"> </span><span class="n">InMesh</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bEnabled</span><span class="p">);</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">IsMaterialHasTimeNode</span><span class="p">(</span><span class="n">AStaticMeshActor</span><span class="o">*</span><span class="w"> </span><span class="n">InActor</span><span class="p">);</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">MatchString</span><span class="p">(</span><span class="n">FString</span><span class="w"> </span><span class="n">InString</span><span class="p">,</span><span class="k">const</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FString</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">IncludeList</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FString</span><span class="o">&gt;&amp;</span><span class="w"> </span><span class="n">ExcludeList</span><span class="p">);</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">GetStaticMeshDiskSize</span><span class="p">(</span><span class="n">UStaticMesh</span><span class="o">*</span><span class="w"> </span><span class="n">StaticMesh</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bWithTexture</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="k">static</span><span class="w"> </span><span class="n">UStaticMesh</span><span class="o">*</span><span class="w"> </span><span class="nf">GetComplexCollisionMesh</span><span class="p">(</span><span class="n">UStaticMesh</span><span class="o">*</span><span class="w"> </span><span class="n">InMesh</span><span class="p">);</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SetStaticMeshPivot</span><span class="p">(</span><span class="n">UStaticMesh</span><span class="o">*</span><span class="w"> </span><span class="n">InStaticMesh</span><span class="p">,</span><span class="w"> </span><span class="n">EStaticMeshPivotType</span><span class="w"> </span><span class="n">PivotType</span><span class="p">);</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="k">static</span><span class="w"> </span><span class="n">UStaticMeshEditorSubsystem</span><span class="o">*</span><span class="w"> </span><span class="nf">GetStaticMeshEditorSubsystem</span><span class="p">();</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">GetLodScreenSize</span><span class="p">(</span><span class="n">UStaticMesh</span><span class="o">*</span><span class="w"> </span><span class="n">InStaticMesh</span><span class="p">,</span><span class="w"> </span><span class="n">int32</span><span class="w"> </span><span class="n">LODIndex</span><span class="p">);</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">GetLodDistance</span><span class="p">(</span><span class="n">UStaticMesh</span><span class="o">*</span><span class="w"> </span><span class="n">InStaticMesh</span><span class="p">,</span><span class="w"> </span><span class="n">int32</span><span class="w"> </span><span class="n">LODIndex</span><span class="p">);</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">CalcLodDistance</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">ObjectSphereRadius</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">ScreenSize</span><span class="p">);</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">CalcScreenSize</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">ObjectSphereRadius</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">Distance</span><span class="p">);</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="nf">CalcObjectSphereRadius</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">ScreenSize</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">Distance</span><span class="p">);</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="k">static</span><span class="w"> </span><span class="n">UTexture2D</span><span class="o">*</span><span class="w"> </span><span class="nf">ConstructTexture2D</span><span class="p">(</span><span class="n">UTextureRenderTarget2D</span><span class="o">*</span><span class="w"> </span><span class="n">TextureRenderTarget2D</span><span class="p">,</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">Outer</span><span class="p">,</span><span class="w"> </span><span class="n">FString</span><span class="w"> </span><span class="n">Name</span><span class="p">,</span><span class="w"> </span><span class="n">TextureCompressionSettings</span><span class="w"> </span><span class="n">CompressionSettings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TC_Default</span><span class="p">);</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="k">static</span><span class="w"> </span><span class="n">UTexture2D</span><span class="o">*</span><span class="w"> </span><span class="nf">ConstructTexture2DByRegion</span><span class="p">(</span><span class="n">UTextureRenderTarget2D</span><span class="o">*</span><span class="w"> </span><span class="n">TextureRenderTarget2D</span><span class="p">,</span><span class="w"> </span><span class="n">FBox2D</span><span class="w"> </span><span class="n">Region</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">Outer</span><span class="p">,</span><span class="w"> </span><span class="n">FString</span><span class="w"> </span><span class="n">Name</span><span class="p">,</span><span class="w"> </span><span class="n">TextureCompressionSettings</span><span class="w"> </span><span class="n">CompressionSettings</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">TC_Default</span><span class="p">);</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a>
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">UpdateTexture2D</span><span class="p">(</span><span class="n">UTextureRenderTarget2D</span><span class="o">*</span><span class="w"> </span><span class="n">TextureRenderTarget2D</span><span class="p">,</span><span class="w"> </span><span class="n">UTexture2D</span><span class="o">*</span><span class="w"> </span><span class="n">Texture</span><span class="p">);</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="k">static</span><span class="w"> </span><span class="n">FNiagaraSystemInfo</span><span class="w"> </span><span class="nf">GetNiagaraSystemInformation</span><span class="p">(</span><span class="n">UNiagaraSystem</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">InNaigaraSystem</span><span class="p">);</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="k">static</span><span class="w"> </span><span class="n">FVector2D</span><span class="w"> </span><span class="nf">ProjectWorldToScreen</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FVector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InWorldPos</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bClampToScreenRectangle</span><span class="p">);</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a>
+<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">DeprojectScreenToWorld</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">FVector2D</span><span class="o">&amp;</span><span class="w"> </span><span class="n">InScreenPos</span><span class="p">,</span><span class="w"> </span><span class="n">FVector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">OutWorldOrigin</span><span class="p">,</span><span class="w"> </span><span class="n">FVector</span><span class="o">&amp;</span><span class="w"> </span><span class="n">OutWorldDirection</span><span class="p">);</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>
+<a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a><span class="k">static</span><span class="w"> </span><span class="n">UPhysicalMaterial</span><span class="o">*</span><span class="w"> </span><span class="nf">GetSimplePhysicalMaterial</span><span class="p">(</span><span class="n">UPrimitiveComponent</span><span class="o">*</span><span class="w"> </span><span class="n">Component</span><span class="p">);</span>
+</code></pre></div>
+<h4 id="actor_1">Actor操作<a class="headerlink" href="#actor_1" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">static</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">AActor</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">BreakISM</span><span class="p">(</span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="n">InISMActor</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bDestorySourceActor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">static</span><span class="w"> </span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="nf">MergeISM</span><span class="p">(</span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">AActor</span><span class="o">*&gt;</span><span class="w"> </span><span class="n">InSourceActors</span><span class="p">,</span><span class="w"> </span><span class="n">TSubclassOf</span><span class="o">&lt;</span><span class="n">UInstancedStaticMeshComponent</span><span class="o">&gt;</span><span class="w"> </span><span class="n">InISMClass</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bDestorySourceActor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SetHLODLayer</span><span class="p">(</span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="n">InActor</span><span class="p">,</span><span class="w"> </span><span class="n">UHLODLayer</span><span class="w"> </span><span class="o">*</span><span class="n">InHLODLayer</span><span class="p">);</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">SelectActor</span><span class="p">(</span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="n">InActor</span><span class="p">);</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">LookAtActor</span><span class="p">(</span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="n">InActor</span><span class="p">);</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="k">static</span><span class="w"> </span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="nf">SpawnTransientActor</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">WorldContextObject</span><span class="p">,</span><span class="w"> </span><span class="n">TSubclassOf</span><span class="o">&lt;</span><span class="n">AActor</span><span class="o">&gt;</span><span class="w"> </span><span class="n">Class</span><span class="p">,</span><span class="w"> </span><span class="n">FTransform</span><span class="w"> </span><span class="n">Transform</span><span class="p">);</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="k">static</span><span class="w"> </span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="nf">ReplaceActor</span><span class="p">(</span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="n">InSrc</span><span class="p">,</span><span class="w"> </span><span class="n">TSubclassOf</span><span class="o">&lt;</span><span class="n">AActor</span><span class="o">&gt;</span><span class="w"> </span><span class="n">InDst</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bNoteSelectionChange</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ReplaceActors</span><span class="p">(</span><span class="n">TMap</span><span class="o">&lt;</span><span class="n">AActor</span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="n">TSubclassOf</span><span class="o">&lt;</span><span class="n">AActor</span><span class="o">&gt;&gt;</span><span class="w"> </span><span class="n">ActorMap</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bNoteSelectionChange</span><span class="p">);</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ActorSetIsSpatiallyLoaded</span><span class="p">(</span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="n">Actor</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">bIsSpatiallyLoaded</span><span class="p">);</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">ActorAddDataLayer</span><span class="p">(</span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="n">Actor</span><span class="p">,</span><span class="w"> </span><span class="n">UDataLayerAsset</span><span class="o">*</span><span class="w"> </span><span class="n">DataLayerAsset</span><span class="p">);</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">ActorRemoveDataLayer</span><span class="p">(</span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="n">Actor</span><span class="p">,</span><span class="w"> </span><span class="n">UDataLayerAsset</span><span class="o">*</span><span class="w"> </span><span class="n">DataLayerAsset</span><span class="p">);</span>
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a><span class="k">static</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">ActorContainsDataLayer</span><span class="p">(</span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="n">Actor</span><span class="p">,</span><span class="w"> </span><span class="n">UDataLayerAsset</span><span class="o">*</span><span class="w"> </span><span class="n">DataLayerAsset</span><span class="p">);</span>
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a><span class="k">static</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="nf">ActorGetRuntimeGrid</span><span class="p">(</span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="n">Actor</span><span class="p">);</span>
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ActorSetRuntimeGrid</span><span class="p">(</span><span class="n">AActor</span><span class="o">*</span><span class="w"> </span><span class="n">Actor</span><span class="p">,</span><span class="w"> </span><span class="n">FName</span><span class="w"> </span><span class="n">GridName</span><span class="p">);</span>
+</code></pre></div>
+<h4 id="_15">エディタインターフェース<a class="headerlink" href="#_15" title="Permanent link">¶</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">BeginTransaction</span><span class="p">(</span><span class="n">FText</span><span class="w"> </span><span class="n">Text</span><span class="p">);</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ModifyObject</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">Object</span><span class="p">);</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">EndTransaction</span><span class="p">();</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="k">static</span><span class="w"> </span><span class="n">UUserWidget</span><span class="o">*</span><span class="w"> </span><span class="n">AddDialog</span><span class="p">(</span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">Outer</span><span class="p">,</span><span class="w"> </span><span class="n">TSubclassOf</span><span class="o">&lt;</span><span class="n">UUserWidget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">WidgetClass</span><span class="p">,</span><span class="w"> </span><span class="n">FText</span><span class="w"> </span><span class="n">WindowTitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">INVTEXT</span><span class="p">(</span><span class="s">"Dialog"</span><span class="p">),</span><span class="w"> </span><span class="n">FVector2D</span><span class="w"> </span><span class="n">DialogSize</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector2D</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span><span class="w"> </span><span class="mi">300</span><span class="p">),</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">IsModalWindow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">true</span><span class="p">);</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="k">static</span><span class="w"> </span><span class="n">EMsgBoxReturnType</span><span class="w"> </span><span class="nf">AddMessageBox</span><span class="p">(</span><span class="n">EMsgBoxType</span><span class="w"> </span><span class="n">Type</span><span class="p">,</span><span class="w"> </span><span class="n">FText</span><span class="w"> </span><span class="n">Msg</span><span class="p">);</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="k">static</span><span class="w"> </span><span class="n">UUserWidget</span><span class="o">*</span><span class="w"> </span><span class="nf">AddContextMenu</span><span class="p">(</span><span class="n">UUserWidget</span><span class="o">*</span><span class="w"> </span><span class="n">ParentWidget</span><span class="p">,</span><span class="w"> </span><span class="n">TSubclassOf</span><span class="o">&lt;</span><span class="n">UUserWidget</span><span class="o">&gt;</span><span class="w"> </span><span class="n">WidgetClass</span><span class="p">,</span><span class="w"> </span><span class="n">FVector2D</span><span class="w"> </span><span class="n">SummonLocation</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FVector2D</span><span class="o">::</span><span class="n">ZeroVector</span><span class="p">);</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">DismissAllMenus</span><span class="p">();</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">AddNotification</span><span class="p">(</span><span class="n">FText</span><span class="w"> </span><span class="n">Notification</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">FadeInDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">ExpireDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">FadeOutDuration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span><span class="p">);</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">AddNotificationWithButton</span><span class="p">(</span><span class="n">FText</span><span class="w"> </span><span class="n">Notification</span><span class="p">,</span><span class="w"> </span><span class="n">UObject</span><span class="o">*</span><span class="w"> </span><span class="n">Object</span><span class="p">,</span><span class="w"> </span><span class="n">TArray</span><span class="o">&lt;</span><span class="n">FName</span><span class="o">&gt;</span><span class="w"> </span><span class="n">FunctionNames</span><span class="p">);</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">PushSlowTask</span><span class="p">(</span><span class="n">FText</span><span class="w"> </span><span class="n">TaskName</span><span class="p">,</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">AmountOfWork</span><span class="p">);</span>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">EnterSlowTaskProgressFrame</span><span class="p">(</span><span class="kt">float</span><span class="w"> </span><span class="n">ExpectedWorkThisFrame</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1.f</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">FText</span><span class="o">&amp;</span><span class="w"> </span><span class="n">Text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FText</span><span class="p">());</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>
+<a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">PopSlowTask</span><span class="p">();</span>
+<a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>
+<a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="k">static</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">ClearAllSlowTask</span><span class="p">();</span>
+</code></pre></div>
+<h3 id="_16">示例<a class="headerlink" href="#_16" title="Permanent link">¶</a></h3>
+<p>目前プラグインには以下の簡単な示例参考が提供されている：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250302220514764.png" data-desc-position="bottom"><img alt="image-20250302220514764" src="../../../../04-UnrealEngine/Resources/image-20250302220514764.png"></a></p>
+<p><strong>Function Test</strong>：インターフェーステスト</p>
+<ul>
+<li>ISM Merge and Break：ISM拆解合并インターフェースをテスト</li>
+<li>Actor Replace：Actor替换インターフェースをテスト</li>
+</ul>
+<p><strong>Custom Debug View</strong>：後処理デバッグビュー、シーン中の傾斜が特定の値より大きい区域を表示するために使用：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250304111841651.png" data-desc-position="bottom"><img alt="image-20250304111841651" src="../../../../04-UnrealEngine/Resources/image-20250304111841651.png"></a></p>
+<p><strong>CustomUMG</strong>：エディタパネルのカスタマイズ方法を演示、通知、ポップアップ、ダイアログ、進捗バー、オブジェクト詳細パネル、オブジェクトエディタを表示：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250302221514142.png" data-desc-position="bottom"><img alt="image-20250302221514142" src="../../../../04-UnrealEngine/Resources/image-20250302221514142.png"></a></p>
+<p><strong>CustomObjectMatrix</strong>：オブジェクト属性エディタの用法を演示：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250302221712571.png" data-desc-position="bottom"><img alt="image-20250302221712571" src="../../../../04-UnrealEngine/Resources/image-20250302221712571.png"></a></p>
+<p><strong>CustomActorColoration</strong>：Actor着色の用法を演示</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../04-UnrealEngine/Resources/image-20250302221732554.png" data-desc-position="bottom"><img alt="image-20250302221712571" src="../../../../04-UnrealEngine/Resources/image-20250302221732554.png"></a></p>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="创建日期">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js" data-repo="Italink/ModernGraphicsEngineGuide" data-repo-id="R_kgDOIPtbiQ" data-category-id="DIC_kwDOIPtbic4CTxOk" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous" async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078q-.408 1.096-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58 58 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.2 9.2 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125M13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

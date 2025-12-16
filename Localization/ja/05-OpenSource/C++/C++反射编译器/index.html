@@ -1,0 +1,3984 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+          <link rel="alternate" href="/" hreflang="zh">
+        
+          <link rel="alternate" href="/Localization/en/" hreflang="en">
+        
+          <link rel="alternate" href="/Localization/ja/" hreflang="ja">
+        
+          <link rel="alternate" href="/Localization/ko/" hreflang="ko">
+        
+          <link rel="alternate" href="/Localization/fr/" hreflang="fr">
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>C++ リフレクションコンパイラ - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-S1J8MN27P8",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link rel="stylesheet" href="../../../../../assets/stylesheets/custom.2fa34c39.min.css">
+
+  <link href="../../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#c" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&amp;k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76"></path></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              C++ リフレクションコンパイラ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="zh" class="md-select__link">
+              Chinese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/en/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ja/" hreflang="ja" class="md-select__link">
+              Japanese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ko/" hreflang="ko" class="md-select__link">
+              Korean
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/fr/" hreflang="fr" class="md-select__link">
+              French
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  开源
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../06-Blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  个人博客
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 计算机发展史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - C++基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 宏、模板、反射
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 内存管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - GUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图形API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    图形API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 图形渲染管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 着色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 缓冲区与纹理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - 3D空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 图形API进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引擎技术
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    引擎技术
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 渲染架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 编辑器架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unreal Engine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unreal Engine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 基础编程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - Slate 开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 插件开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 粒子系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - Niagara 性能优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - Fluid Ninja 流体插件
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 开放世界制作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/7.%E9%9F%B3%E9%A2%91%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 - 音频开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/9.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E4%B8%AD%E7%9A%84%E6%A4%8D%E8%A2%AB%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9 - 植被优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/10.LOD%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 - LOD不完全指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/12.%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%86%85%E5%AE%B9%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 - 程序化内容管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/16.3DGaussianSplatting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 - 3DGaussianSplatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../04-UnrealEngine/17.Landscape%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 - Landscape 避坑指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开源
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开源
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1">
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UnrealEngine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    UnrealEngine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Splatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2">
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/C%2B%2B/C%2B%2B%E5%8F%8D%E5%B0%84%E7%BC%96%E8%AF%91%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++反射编译器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3">
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Qt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/Qt/%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96%E8%BD%AF%E4%BB%B6-Specinker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频可视化软件-Specinker(已闭源)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/Qt/%E9%A2%91%E8%B0%B1%E5%88%86%E6%9E%90%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    频谱分析器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/Qt/Qt%E6%8B%9F%E6%80%81%E7%AA%97%E5%8F%A3%E6%BB%A4%E9%95%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt拟态窗口滤镜
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/Qt/Qt%E5%B1%8F%E5%B9%95%E5%8F%96%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt屏幕取色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/Qt/Qt%E6%B8%90%E5%8F%98%E8%B0%83%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt渐变调色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E7%B2%92%E5%AD%90%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面粒子特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E6%B0%B4%E9%9D%A2%E6%B3%A2%E7%BA%B9%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面水面波纹特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../06-Blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人博客
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    个人博客
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_2">
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2024/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    五月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2024/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2023/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2023/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2023/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2023/08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    八月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2023/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    六月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2023/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    四月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2023/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2023/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2020/09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    九月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2020/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/archive/2019/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_3">
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/category/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人随笔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/category/%E6%95%B4%E6%B4%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    整活
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../06-Blog/category/%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    杂谈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ビルド
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        プロジェクト構造の概要
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ロジックの概要
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ロジックの概要">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#xobject" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        基底クラスXObject
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        リフレクション
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xht" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        XHTの動作方式
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="XHTの動作方式">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        カスタマイズプロセス
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="カスタマイズプロセス">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        キーワードの定義
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        コレクタの記述
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        追加コードの生成
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        自動ビルド
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="自動ビルド">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        いくつかの問題
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="いくつかの問題">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        継承
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ポインタの退化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        登録タイミング
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        メタオブジェクト
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        シリアライズ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="シリアライズ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#binary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Binary
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Binary">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テンプレートの回避
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ポインタの特殊化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#include" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Includeの最適化
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json-and-cbor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Json And Cbor
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        エディタ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="c">C++ リフレクションコンパイラ<a class="headerlink" href="#c" title="Permanent link">¶</a></h1>
+<ul>
+<li>Githubリポジトリ：<a href="https://github.com/Italink/XObject">https://github.com/Italink/XObject</a></li>
+</ul>
+<h2 id="_1">ビルド<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<ul>
+<li>CMake（GUI）を使用して直接ビルド可能</li>
+</ul>
+<h2 id="_2">プロジェクト構造の概要<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
+<ul>
+<li>Core：コアモジュール</li>
+<li>3rdParty：サードパーティライブラリ</li>
+<li>XHT：コードスキャンツール</li>
+<li>Test：モジュール機能のテストプロジェクトディレクトリ</li>
+<li>XObject：基底クラスのカプセル化</li>
+</ul>
+<h2 id="_3">ロジックの概要<a class="headerlink" href="#_3" title="Permanent link">¶</a></h2>
+<h3 id="xobject">基底クラスXObject<a class="headerlink" href="#xobject" title="Permanent link">¶</a></h3>
+<p>xobjectはすべてのオブジェクトの基底クラスとして、シリアライズ、リフレクションなどの操作を提供する。</p>
+<h3 id="_4">リフレクション<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
+<p>リフレクションに使用されるライブラリはRttrである。Rttrは優れたC++リフレクションライブラリで、単純な型情報のリフレクションだけでなく、一連の完全なリフレクション処理インターフェースを提供する：</p>
+<ul>
+<li>rttr::variant：stl::anyに似た使い方だが、より強力で多くの型情報と変換インターフェースを提供する（例：int型のvariantは直接doubleにエクスポート可能。ここではintからdoubleへの変換インターフェースが呼び出され、rttrではvariantの型変換関数をカスタマイズ可能）</li>
+<li>型名に基づいて対応するインスタンスを作成することをサポートし、3つの作成モード（Type、Type*、std::shared_ptr\<type\*>）を提供する</type\*></li>
+<li>metadataは情報を追加するために使用され、この機能を利用してPropertyに多くの追加情報を付加可能</li>
+</ul>
+<p>XHTはコードスキャンに使用される（QtMocを参考）。マクロマークによって型の自動登録を実現し、RTTRが登録関数を手動で記述する必要がある問題を解決する。</p>
+<blockquote>
+<p>XHTは不要なように見えるかもしれない。自分で登録関数を書くことも当然可能だが、XHTを使用するためのより良い理由が存在する：</p>
+<ul>
+<li>Rttrだけが登録関数を記述する必要があるわけではない。シリアライズなど型に追加機能を提供する場合も登録が必要となる。現在のXObjectでは、2つの単純なクラスを含むhファイルに対し、XHTは約百行の追加コードを生成する。この部分のコードは固定形式が必要で、自分で書くと非常に手間がかかる。</li>
+<li>XHTはエラーが発生しにくい。生成ルールを定義するだけで良い。</li>
+<li>元のクラスが変更された場合、XHTは追加コードの変更を自動的に同期し、手動での変更は不要。</li>
+</ul>
+</blockquote>
+<h2 id="xht">XHTの動作方式<a class="headerlink" href="#xht" title="Permanent link">¶</a></h2>
+<ul>
+<li>XObject.h：マクロを定義する。これらのマクロマークはXHTによってキャプチャされる。</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="cp">#define XENTRY(...) \</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="cp">public: \</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="cp">    static XMetaObject* staticMetaObject(); \</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="cp">    virtual XMetaObject* metaObject() override; \</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="cp">    virtual rttr::instance instance() override { return *this; } \</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="cp">    using base_class_list = rttr::type_list&lt;__VA_ARGS__&gt;; \</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="cp">  virtual void __intrusive_deserialize(Deserializer&amp; deserializer) override; \</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="cp">    virtual void __intrusive_serialize(Serializer&amp; serializer) override; \</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="cp">    virtual void __intrusive_to_json(nlohmann::json&amp; json) const override; \</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="cp">private:</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="cp">#define XFUNCTION(...)</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="cp">#define XPROPERTY(...)</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="cp">#define XENUM(...)</span>
+</code></pre></div>
+<p>XHTは独立したコマンドラインプロジェクトで、そのパラメータ形式は以下の通り：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>AxHeadeTool ${input_file} -o ${output_dir} 
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Options:
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>-i include_dir:入力ファイルのインクルードパス
+</code></pre></div>
+<p>このツールはファイルをスキャンし、其中のシンボル情報を収集して新しいファイルを生成する。処理プロセスはmain.cppを参照。</p>
+<h3 id="_5">カスタマイズプロセス<a class="headerlink" href="#_5" title="Permanent link">¶</a></h3>
+<h4 id="_6">キーワードの定義<a class="headerlink" href="#_6" title="Permanent link">¶</a></h4>
+<p>XHTはキーワード検索テーブルを使用してファイル内容を効率的にシンボル文字列に解析する。其中のテーブル内容はファイル<code>Keywords.inl</code>に存在し、このテーブルはプロジェクト<code>KeywordsGen</code>によって自動生成される。プロジェクト内でXHTで使用されるすべてのキーワードが定義される。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Keyword</span><span class="w"> </span><span class="n">pp_keywords</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{...}</span><span class="w">   </span><span class="c1">//プリプロセスのキーワード </span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">static</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Keyword</span><span class="w"> </span><span class="n">keywords</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="s">"&lt;"</span><span class="p">,</span><span class="w"> </span><span class="s">"LANGLE"</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="s">"&gt;"</span><span class="p">,</span><span class="w"> </span><span class="s">"RANGLE"</span><span class="w"> </span><span class="p">},</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="p">...</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="s">"XENTRY"</span><span class="p">,</span><span class="s">"XENTRY_TOKEN"</span><span class="p">},</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="s">"XFUNCTION"</span><span class="p">,</span><span class="s">"XFUNCTION_TOKEN"</span><span class="p">},</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="s">"XPROPERTY"</span><span class="p">,</span><span class="s">"XPROPERTY_TOKEN"</span><span class="p">},</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="s">"XENUM"</span><span class="p">,</span><span class="s">"XENUM_TOKEN"</span><span class="p">},</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="p">...</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="p">};</span>
+</code></pre></div>
+<p>キーワードは2つのパラメータを含む。<code>{ "XENTRY","XENTRY_TOKEN"}</code>を例にすると、<code>XENTRY</code>はコードファイル中の正確なシンボルを表し、<code>XENTRY_TOKEN</code>はXHTで使用される列挙型に対応する。列挙型の定義はXHTの<code>Token.h</code>ファイルに存在する：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="cp">#define FOR_ALL_TOKENS(F) \</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="cp">    F(NOTOKEN) \</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="cp">    F(IDENTIFIER) \</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="cp">    ...</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">    </span><span class="n">F</span><span class="p">(</span><span class="n">XENTRY_TOKEN</span><span class="p">)</span><span class="w"> </span>\
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="w">    </span><span class="n">F</span><span class="p">(</span><span class="n">XFUNCTION_TOKEN</span><span class="p">)</span><span class="w"> </span>\
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="w">    </span><span class="n">F</span><span class="p">(</span><span class="n">XPROPERTY_TOKEN</span><span class="p">)</span><span class="w"> </span>\
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="w">    </span><span class="n">F</span><span class="p">(</span><span class="n">XENUM_TOKEN</span><span class="p">)</span><span class="w"> </span>\
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="w">    </span><span class="p">...</span>
+</code></pre></div>
+<p>したがって、キーワードを定義するには以下の手順が必要：</p>
+<ul>
+<li><strong>KeywordsGenプロジェクト</strong> で新しいキーワードエントリ<code>｛シンボル、列挙要素｝</code>を追加</li>
+<li><strong>KeywordsGenプロジェクト</strong> を実行すると、<strong>XHT</strong> のコードディレクトリ下に<code>Keywords.inl</code>が自動生成される</li>
+<li><strong>XHTプロジェクト</strong> の<code>Token.h</code>ファイルで<code>列挙要素</code>を定義</li>
+</ul>
+<h4 id="_7">コレクタの記述<a class="headerlink" href="#_7" title="Permanent link">¶</a></h4>
+<p><strong>FileParser</strong> プロセスは特にincludeやマクロ関連の操作を処理する必要がある場合を除き、関心を払う必要はない。唯一注意が必要なのは <strong>SymbolParser</strong> の<code>bool parse(FileDataDef&amp;, const Symbols&amp;)</code>関数である。</p>
+<p>parser内のswitchの主な階層構造は以下の通り：</p>
+<ul>
+<li>トップレベルswitch：ファイルのグローバル情報を収集</li>
+<li>namespace：名前空間の情報を収集<ul>
+<li>...</li>
+</ul>
+</li>
+<li>class/struct：クラスの情報を収集<ul>
+<li>...</li>
+</ul>
+</li>
+<li>...</li>
+</ul>
+<p>コードを参照すると、class内に <code>case AX_INVOKABLE_TOKEN</code>と<code>case AX_PROPERTY_TOKEN</code>が含まれていることがわかる。</p>
+<p><code>XPROPERTY_TOKEN</code>を例にすると、その役割は以下の形式の変数マークを完成させる：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>XPROPERTY(GET getX SET setX)    //其中 GET 和 SET 指定了该变量的get函数和set函数 
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>int var;
+</code></pre></div>
+<p><strong>SymbolParser</strong> に戻ると、このcaseが実際に<code>parseAxProperty()</code>関数を呼び出していることがわかる：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">case</span><span class="w"> </span><span class="no">XPROPERTY_TOKEN</span><span class="p">:</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="n">def</span><span class="p">.</span><span class="n">propertyList</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">parseXProperty</span><span class="p">());</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="k">break</span><span class="p">;</span>
+</code></pre></div>
+<p>関数の定義は以下の通り：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">SymbolParser::parseXProperty</span><span class="p">()</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="p">{</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">PropertyDef</span><span class="w"> </span><span class="n">axVarDef</span><span class="p">;</span><span class="w">               </span><span class="c1">//Propertyのデータ構造を定義</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">    </span><span class="n">next</span><span class="p">(</span><span class="n">LPAREN</span><span class="p">);</span><span class="w">                       </span><span class="c1">//次のシンボルに移動し、左括弧かどうかを判断</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">    </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">test</span><span class="p">(</span><span class="n">IDENTIFIER</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">          </span><span class="c1">//識別子（キーワードではない）かどうかを判断</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">        </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lexem</span><span class="p">();</span><span class="w">     </span><span class="c1">//シンボル文字列の取得</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">"GET"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">            </span><span class="c1">//取得した文字列がGETかSETかを判断</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">            </span><span class="n">next</span><span class="p">();</span><span class="w">                     </span><span class="c1">//次のシンボルに移動</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">            </span><span class="n">axVarDef</span><span class="p">.</span><span class="n">getter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lexem</span><span class="p">();</span><span class="w">  </span><span class="c1">//シンボルを保存</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">type</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s">"SET"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">            </span><span class="n">next</span><span class="p">();</span><span class="w"> </span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">            </span><span class="n">axVarDef</span><span class="p">.</span><span class="n">setter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lexem</span><span class="p">();</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="w">    </span><span class="n">next</span><span class="p">(</span><span class="n">RPAREN</span><span class="p">);</span><span class="w">                       </span><span class="c1">//次のシンボルに移動し、右括弧かどうかを判断</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="w">    </span><span class="n">axVarDef</span><span class="p">.</span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">parseType</span><span class="p">();</span><span class="w">        </span><span class="c1">//変数の型を解析</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="w">    </span><span class="n">next</span><span class="p">(</span><span class="n">IDENTIFIER</span><span class="p">);</span><span class="w">                   </span><span class="c1">//次のシンボルに移動し、識別子かどうかを判断</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="w">    </span><span class="n">axVarDef</span><span class="p">.</span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lexem</span><span class="p">();</span><span class="w">            </span><span class="c1">//変数名を取得</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="w">    </span><span class="n">until</span><span class="p">(</span><span class="n">SEMIC</span><span class="p">);</span><span class="w">                       </span><span class="c1">//セミコロンに一致するまで後方に移動</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">axVarDef</span><span class="p">;</span>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="p">}</span>
+</code></pre></div>
+<p>すべてのデータ構造は<code>DataDef.h</code>ファイルに定義されている。</p>
+<p>したがって、情報の収集を完成させるには、一般的に以下の手順が必要：</p>
+<ul>
+<li><code>DataDef.h</code>で収集したいデータを定義</li>
+<li><code>SymbolParser::parser</code>内の適切な場所にcaseを追加</li>
+<li>
+<p>シンボル解析関数を記述し、<strong>Parser</strong> が提供する便利なメソッドを利用して情報の収集を完成させる</p>
+</li>
+<li>
+<p>基礎関数</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">ParserBase</span><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="nf">hasNext</span><span class="p">()</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="p">(</span><span class="n">mIndex</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">mSymbols</span><span class="p">.</span><span class="n">size</span><span class="p">());</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="n">Token</span><span class="w"> </span><span class="nf">next</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mIndex</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">mSymbols</span><span class="p">.</span><span class="n">size</span><span class="p">())</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">NOTOKEN</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mSymbols</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">mIndex</span><span class="o">++</span><span class="p">).</span><span class="n">token</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="n">Token</span><span class="w"> </span><span class="nf">peek</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">mIndex</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">mSymbols</span><span class="p">.</span><span class="n">size</span><span class="p">())</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">NOTOKEN</span><span class="p">;</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mSymbols</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">mIndex</span><span class="p">).</span><span class="n">token</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">test</span><span class="p">(</span><span class="n">Token</span><span class="p">);</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">next</span><span class="p">(</span><span class="n">Token</span><span class="p">);</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">next</span><span class="p">(</span><span class="n">Token</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">msg</span><span class="p">);</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">prev</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="o">--</span><span class="n">mIndex</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="n">Token</span><span class="w"> </span><span class="nf">lookup</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Symbol</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">symbol_lookup</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">k</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mSymbols</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">mIndex</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">k</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="n">Token</span><span class="w"> </span><span class="nf">token</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mSymbols</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">mIndex</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span><span class="n">token</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">lexem</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mSymbols</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">mIndex</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span><span class="n">lexem</span><span class="p">();</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">unquotedLexem</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mSymbols</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">mIndex</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">).</span><span class="n">unquotedLexem</span><span class="p">();</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">    </span><span class="kr">inline</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="n">Symbol</span><span class="o">&amp;</span><span class="w"> </span><span class="nf">symbol</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">mSymbols</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">mIndex</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">error</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">rollback</span><span class="p">);</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">error</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="n">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">warning</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">note</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">);</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="p">};</span>
+</code></pre></div>
+</li>
+<li>
+<p>ツール関数</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">SymbolParser</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">ParserBase</span><span class="p">{</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="n">Type</span><span class="w"> </span><span class="nf">parseType</span><span class="p">();</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">parseEnum</span><span class="p">(</span><span class="n">EnumDef</span><span class="o">*</span><span class="w"> </span><span class="n">def</span><span class="p">);</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">parseFunction</span><span class="p">(</span><span class="n">FunctionDef</span><span class="o">*</span><span class="w"> </span><span class="n">def</span><span class="p">,</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">inMacro</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">false</span><span class="p">);</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">parseMaybeFunction</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="n">ClassDef</span><span class="o">*</span><span class="w"> </span><span class="n">cdef</span><span class="p">,</span><span class="w"> </span><span class="n">FunctionDef</span><span class="o">*</span><span class="w"> </span><span class="n">def</span><span class="p">);</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">    </span><span class="kt">void</span><span class="w"> </span><span class="nf">parseFunctionArguments</span><span class="p">(</span><span class="n">FunctionDef</span><span class="o">*</span><span class="w"> </span><span class="n">def</span><span class="p">);</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="nf">lexemUntil</span><span class="p">(</span><span class="n">Token</span><span class="p">);</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="kt">bool</span><span class="w"> </span><span class="nf">until</span><span class="p">(</span><span class="n">Token</span><span class="p">);</span>
+</code></pre></div>
+</li>
+</ul>
+<h4 id="_8">追加コードの生成<a class="headerlink" href="#_8" title="Permanent link">¶</a></h4>
+<p>追加コードの生成は <strong>FileGenerator</strong> 内に位置する。</p>
+<p><code>FileGenerator.cpp</code>を開くと、追加コードの生成が単純にfprintfによってファイルにデータを書き込むことで実現されていることがわかる：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">bool</span><span class="w"> </span><span class="nf">FileGenerator::generateSource</span><span class="p">()</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="p">{</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="kt">FILE</span><span class="o">*</span><span class="w"> </span><span class="n">out</span><span class="p">;</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">path</span><span class="w"> </span><span class="n">outputPath</span><span class="p">(</span><span class="n">fileData</span><span class="o">-&gt;</span><span class="n">outputPath</span><span class="p">);</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">fopen_s</span><span class="p">(</span><span class="o">&amp;</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">outputPath</span><span class="p">.</span><span class="n">string</span><span class="p">().</span><span class="n">c_str</span><span class="p">(),</span><span class="w"> </span><span class="s">"w"</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">false</span><span class="p">;</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">header_path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">regex_replace</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">filesystem</span><span class="o">::</span><span class="n">relative</span><span class="p">(</span><span class="n">fileData</span><span class="o">-&gt;</span><span class="n">inputFilePath</span><span class="p">,</span><span class="w"> </span><span class="n">outputPath</span><span class="p">.</span><span class="n">parent_path</span><span class="p">()).</span><span class="n">string</span><span class="p">(),</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">regex</span><span class="p">(</span><span class="s">"</span><span class="se">\\\\</span><span class="s">"</span><span class="p">),</span><span class="w"> </span><span class="s">"/"</span><span class="p">);</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="s">"#include </span><span class="se">\"</span><span class="s">%s</span><span class="se">\"\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">header_path</span><span class="p">.</span><span class="n">c_str</span><span class="p">());</span><span class="w">                 </span><span class="c1">//現在のcppのhディレクトリに対する相対パスのincludeコードを生成</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="s">"#include &lt;rttr/registration&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="s">"#include &lt;XMetaObject.h&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">    </span><span class="n">fprintf</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="s">"#include &lt;Serialization/SerializationBriefSyntax.h&gt;</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">    </span><span class="n">fputs</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="w"> </span><span class="n">out</span><span class="p">);</span><span class="w">                                                       </span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="k">auto</span><span class="w"> </span><span class="n">classdef</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">fileData</span><span class="o">-&gt;</span><span class="n">classList</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">        </span><span class="n">generateAxonClass</span><span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="w"> </span><span class="n">classdef</span><span class="p">);</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">    </span><span class="n">fputs</span><span class="p">(</span><span class="s">""</span><span class="p">,</span><span class="w"> </span><span class="n">out</span><span class="p">);</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">    </span><span class="n">generateGlobalData</span><span class="p">(</span><span class="n">out</span><span class="p">);</span><span class="w">                                            </span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">    </span><span class="n">fclose</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">true</span><span class="p">;</span>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="p">}</span>
+</code></pre></div>
+<p>したがって、この段階では収集した情報に基づいてコードを書き込むだけで良い。</p>
+<h2 id="_9">自動ビルド<a class="headerlink" href="#_9" title="Permanent link">¶</a></h2>
+<p><strong>XHT</strong> があれば、手動でコマンドラインを通じてファイルを処理することができる。しかし、プロジェクト内で自動的に <strong>XHT</strong> を呼び出してコードファイルを処理したい場合はどうすれば良いだろうか？</p>
+<p><strong>XObject</strong> の <strong>CMakeLists.txt</strong> でこれが実現されている：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nb">function</span><span class="p">(</span><span class="s">target_xht_warp</span><span class="w"> </span><span class="s">PROJECT_TARGET</span><span class="w"> </span><span class="s">INPUT_FILE_PATH</span><span class="p">)</span><span class="w">            </span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="nb">get_filename_component</span><span class="p">(</span><span class="s">INPUT_FILE_NAME</span><span class="w"> </span><span class="o">${</span><span class="nv">INPUT_FILE_PATH</span><span class="o">}</span><span class="w"> </span><span class="s">NAME_WE</span><span class="p">)</span><span class="w">               </span><span class="c">#拡張子なしのファイル名を取得</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">    </span><span class="nb">set</span><span class="p">(</span><span class="s">OUTPUT_FILE_PATH</span><span class="w"> </span><span class="o">${</span><span class="nv">CMAKE_CURRENT_BINARY_DIR</span><span class="o">}</span><span class="s">/AutoGenFiles/XHT_</span><span class="o">${</span><span class="nv">INPUT_FILE_NAME</span><span class="o">}</span><span class="s">.cpp</span><span class="p">)</span><span class="w">   </span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">    </span><span class="nb">add_custom_command</span><span class="p">(</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">        </span><span class="s">OUTPUT</span><span class="w"> </span><span class="o">${</span><span class="nv">OUTPUT_FILE_PATH</span><span class="o">}</span><span class="w">                                                   </span><span class="c">#出力ファイルを指定</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">        </span><span class="s">COMMAND</span><span class="w"> </span><span class="s">XHT</span><span class="w"> </span><span class="o">${</span><span class="nv">CMAKE_CURRENT_SOURCE_DIR</span><span class="o">}</span><span class="s">/</span><span class="o">${</span><span class="nv">INPUT_FILE_PATH</span><span class="o">}</span><span class="w"> </span><span class="s">-o</span><span class="w"> </span><span class="o">${</span><span class="nv">OUTPUT_FILE_PATH</span><span class="o">}</span><span class="w">  </span><span class="c">#コマンドライン指令</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">        </span><span class="s">MAIN_DEPENDENCY</span><span class="w"> </span><span class="o">${</span><span class="nv">INPUT_FILE_PATH</span><span class="o">}</span><span class="w">                           </span><span class="c">#依存関係を指定。このファイルが変更された場合、自動的にこの指令を呼び出す</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="p">)</span><span class="w">          </span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="w">    </span><span class="nb">set_property</span><span class="p">(</span><span class="s">TARGET</span><span class="w"> </span><span class="o">${</span><span class="nv">PROJECT_TARGET</span><span class="o">}</span><span class="w"> </span><span class="s">APPEND</span><span class="w"> </span><span class="s">PROPERTY</span><span class="w"> </span><span class="s">SOURCES</span><span class="w"> </span><span class="o">${</span><span class="nv">OUTPUT_FILE_PATH</span><span class="o">}</span><span class="p">)</span><span class="w">       </span><span class="c">#ビルドターゲットに追加</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">    </span><span class="nb">source_group</span><span class="p">(</span><span class="s2">"Generated Files"</span><span class="w"> </span><span class="s">FILES</span><span class="w"> </span><span class="o">${</span><span class="nv">OUTPUT_FILE_PATH</span><span class="o">}</span><span class="p">)</span><span class="w">                                </span><span class="c">#ファイルグループ化</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="nb">endfunction</span><span class="p">()</span>
+</code></pre></div>
+<p>この関数は単一ファイルを処理し、追加コードを自動生成してプロジェクトのビルドに参加させることができる。</p>
+<p>UEやQtのように、コード中に特定のシンボルが含まれているかどうかを検出して自動的にHeaderToolを呼び出すことは可能だろうか？答案は肯定的である。cmakeは以下の関数を提供し、コードファイル中に特定のシンボルが含まれているかどうかを検索するために使用できる：</p>
+<p><a href="https://cmake.org/cmake/help/latest/module/CheckCXXSymbolExists.html"> <strong>check_cxx_symbol_exists</strong> </a></p>
+<p>しかし、実際にはこのプロセスは比較的非効率的で、ファイル全体を走査する必要がある。より良い方法はファイルの拡張子によってHeaderToolで処理する必要のあるファイルを識別することである。XObjectのCMakeListsは以下の関数も提供している：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">function</span><span class="p">(</span><span class="s">target_xht_auto</span><span class="w"> </span><span class="s">PROJECT_TARGET</span><span class="p">)</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="nb">get_target_property</span><span class="p">(</span><span class="s">TARGET_SOURCES</span><span class="w"> </span><span class="o">${</span><span class="nv">PROJECT_TARGET</span><span class="o">}</span><span class="w"> </span><span class="s">SOURCES</span><span class="p">)</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="nb">message</span><span class="p">(</span><span class="s">WARNING</span><span class="w"> </span><span class="s2">"FILES ${TARGET_SOURCES}"</span><span class="p">)</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="w">    </span><span class="nb">foreach</span><span class="p">(</span><span class="s">FILE</span><span class="w"> </span><span class="o">${</span><span class="nv">TARGET_SOURCES</span><span class="o">}</span><span class="p">)</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">        </span><span class="nb">get_filename_component</span><span class="p">(</span><span class="s">FILE_EXT</span><span class="w"> </span><span class="o">${</span><span class="nv">FILE</span><span class="o">}</span><span class="w"> </span><span class="s">EXT</span><span class="p">)</span><span class="w">     </span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">        </span><span class="nb">if</span><span class="p">(</span><span class="s">FILE_EXT</span><span class="w"> </span><span class="s">STREQUAL</span><span class="w"> </span><span class="s2">".hxx"</span><span class="p">)</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">            </span><span class="nb">target_xht_warp</span><span class="p">(</span><span class="o">${</span><span class="nv">PROJECT_TARGET</span><span class="o">}</span><span class="w"> </span><span class="o">${</span><span class="nv">FILE</span><span class="o">}</span><span class="p">)</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">        </span><span class="nb">endif</span><span class="p">()</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="nb">endforeach</span><span class="p">()</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="nb">endfunction</span><span class="p">()</span>
+</code></pre></div>
+<h4 id="_10">いくつかの問題<a class="headerlink" href="#_10" title="Permanent link">¶</a></h4>
+<h5 id="_11">継承<a class="headerlink" href="#_11" title="Permanent link">¶</a></h5>
+<p>Rttrはテンプレートを使用してリフレクション型を登録する。継承の処理はテンプレートメタプログラミングによって実現される（サブクラスが親クラスの関数を呼び出す場合、サブクラスで定義された<code>using base_class_list = rttr::type_list&lt;...&gt;</code>に基づいて親クラス中で検索される）。したがって、この定義をヘッダファイルに記述する必要があり、これによってサブクラスからこの定義が可視になる。このため、リフレクションマークを行う際に、親クラスを再度手動で指定する必要がある。例えば以下のように：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">Base</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="k">public</span><span class="w"> </span><span class="n">XObject</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="n">XENTRY</span><span class="p">(</span><span class="n">XObject</span><span class="p">)</span><span class="w">                     </span><span class="c1">//ここで親クラスを指定しなければならない。そうしないとRttrで継承関係を確定できない</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="p">}</span>
+</code></pre></div>
+<h5 id="_12">ポインタの退化<a class="headerlink" href="#_12" title="Permanent link">¶</a></h5>
+<p>Rttrでは、親クラスのポインタを使用してサブクラスのメソッドを呼び出すことができない。例えば以下のコード：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">XObject</span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Base</span><span class="p">;</span><span class="w">                  </span><span class="c1">//Baseにprintメソッドが含まれている</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="n">rttr</span><span class="o">::</span><span class="n">invoke</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="s">"print"</span><span class="p">);</span><span class="w">                </span><span class="c1">//呼び出し失敗。原因はRttrがxの実際の型を判断できないことにある</span>
+</code></pre></div>
+<p>XObjectはマクロ<code>XEntry()</code>中に以下の定義を追加している：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">virtual</span><span class="w"> </span><span class="n">rttr</span><span class="o">::</span><span class="n">instance</span><span class="w"> </span><span class="nf">instance</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="o">*</span><span class="k">this</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span>
+</code></pre></div>
+<p>これによりXObjectのサブクラスにrttrのインスタンスを取得するための仮想関数が提供され、上記のポインタの問題が回避される。呼び出しは以下のようになる：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">XObject</span><span class="o">*</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Base</span><span class="p">;</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">rttr</span><span class="o">::</span><span class="n">invoke</span><span class="p">(</span><span class="n">x</span><span class="o">-&gt;</span><span class="n">instance</span><span class="p">(),</span><span class="s">"print"</span><span class="p">);</span><span class="w">    </span><span class="c1">//呼び出し成功</span>
+</code></pre></div>
+<h5 id="_13">登録タイミング<a class="headerlink" href="#_13" title="Permanent link">¶</a></h5>
+<p>公式が提供する方法は静的登録であり、その原理は以下のように簡略化できる：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">//これはCPP中に存在する</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Register</span><span class="p">{</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="n">Register</span><span class="p">(){</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="w">        </span><span class="c1">//ここでRTTRの型登録を行う</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="p">};</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="k">static</span><span class="w"> </span><span class="n">Register</span><span class="w"> </span><span class="k">register</span><span class="p">;</span>
+</code></pre></div>
+<p>説明：RTTRはCPP中に構造体を作成し、登録関数を構造体のコンストラクタに記述し、次に静的インスタンスを作成することで、型の登録を完成させる。</p>
+<p>この方法には主に以下の問題が存在する：</p>
+<ul>
+<li>登録の順序を制御することが容易ではない。</li>
+<li>一度にすべてのリフレクション型を登録すると、プログラム起動時にカクツキが発生しやすい。</li>
+</ul>
+<p>XObjectではこの問題を解決するために <strong>XMetaObject</strong> クラスを追加している。その構造は上記の<code>Register</code>と類似している（すなわちRttrの登録コードはそのコンストラクタ中に存在する）。異なる点は、直接cpp中にXMetaObjectの静的インスタンスを作成していないことである。代わりに以下の方式で実現している：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">XObject</span><span class="p">{</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="n">XMetaObject</span><span class="o">*</span><span class="w"> </span><span class="nf">staticMetaObject</span><span class="p">(){</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">        </span><span class="k">static</span><span class="w"> </span><span class="n">XMetaObject</span><span class="w"> </span><span class="n">instance</span><span class="p">;</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="o">&amp;</span><span class="n">instance</span><span class="p">;</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>staticMetaObject()</code>関数に初めてアクセスした場合に、内部の静的インスタンスが作成される。さらにXObjectはXMetaObjectをリフレクションデータの唯一のエントリとして使用しているため、この型のリフレクションインターフェースを使用する際に、自動的にRttrの登録が行われる。</p>
+<p>ここにはさらなる詳細が存在する：</p>
+<p>サブクラスのリフレクションインターフェースを使用して親クラスのインターフェースを呼び出す場合、親クラスが既に登録されていることを保証する必要がある。</p>
+<p>XObjectではこの操作を完成させるために、サブクラスMetaObjectのコンストラクタ中で、親クラスの<code>staticMetaObject</code>を一度呼び出し、親クラスが事前に登録されることを保証している。</p>
+<blockquote>
+<h3 id="_14">メタオブジェクト<a class="headerlink" href="#_14" title="Permanent link">¶</a></h3>
+<p>上記でXMetaObjectについて言及した。ここではXObjectがどのようにそれを型の唯一のリフレクションエントリとして使用するかについて簡単に説明する。</p>
+<p>リフレクションを使用する主な目的は以下の通り：</p>
+<ul>
+<li>Propertyの読み書き、Property情報（型、メタデータ...）の取得</li>
+<li>Functionの呼び出し、Function情報（パラメータ情報...）の取得</li>
+<li>型名に基づいてインスタンスを作成</li>
+</ul>
+<p>XMetaObjectは型に関連し、インスタンスには関連しない。XMetaObjectを通じてリフレクションデータを取得するだけである。その一部のコードは以下の通り：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">XMetaObject</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="k">public</span><span class="o">:</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="w">  </span><span class="n">XMetaObject</span><span class="p">();</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span><span class="n">XObject</span><span class="o">*</span><span class="w"> </span><span class="nf">newInstance</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">rttr</span><span class="o">::</span><span class="n">argument</span><span class="o">&gt;</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{});</span><span class="w">    </span><span class="c1">//インスタンスを作成</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">  </span><span class="n">rttr</span><span class="o">::</span><span class="n">property</span><span class="w"> </span><span class="nf">getProperty</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">);</span><span class="w">                   </span><span class="c1">//nameという名前のpropertyを取得</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">  </span><span class="n">rttr</span><span class="o">::</span><span class="n">array_range</span><span class="o">&lt;</span><span class="n">rttr</span><span class="o">::</span><span class="n">property</span><span class="o">&gt;</span><span class="w"> </span><span class="n">getProperties</span><span class="p">();</span><span class="w">              </span><span class="c1">//この型のすべてのpropertyを取得</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">  </span><span class="n">rttr</span><span class="o">::</span><span class="n">method</span><span class="w"> </span><span class="nf">getMethod</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">);</span><span class="w">                       </span><span class="c1">//nameという名前のmethodを取得</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">  </span><span class="n">rttr</span><span class="o">::</span><span class="n">array_range</span><span class="o">&lt;</span><span class="n">rttr</span><span class="o">::</span><span class="n">method</span><span class="o">&gt;</span><span class="w"> </span><span class="n">getMethods</span><span class="p">();</span><span class="w">                   </span><span class="c1">//この型のすべてのmethodを取得</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>関数の呼び出しはインスタンスに関連する。関数を呼び出すにはインスタンスを提供する必要がある。この操作は以下のようになる：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">Base</span><span class="o">*</span><span class="w"> </span><span class="n">base</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Base</span><span class="p">;</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="n">XMetaObject</span><span class="o">*</span><span class="w"> </span><span class="n">meta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Base</span><span class="o">::</span><span class="n">staticMetaObject</span><span class="p">();</span><span class="w">         </span><span class="c1">//Baseの静的メタオブジェクトを取得</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="n">rttr</span><span class="o">::</span><span class="n">method</span><span class="w"> </span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">meta</span><span class="o">-&gt;</span><span class="n">getMethod</span><span class="p">(</span><span class="s">"print"</span><span class="p">);</span><span class="w">           </span><span class="c1">//Baseのprint関数の情報を取得</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="n">method</span><span class="p">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">base</span><span class="p">);</span><span class="w">                                      </span><span class="c1">//呼び出し時にインスタンスを提供する必要がある</span>
+</code></pre></div>
+<p>周知のように、弱化されたポインタ型は実際の型の静的関数を呼び出すことができない。即ち：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">XObejct</span><span class="w"> </span><span class="o">*</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Base</span><span class="p">;</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">x</span><span class="o">-&gt;</span><span class="n">staticMetaObject</span><span class="p">();</span><span class="w">        </span><span class="c1">//この時XObject::staticMetaObject()が呼び出され、Base::staticMetaObject()ではない</span>
+</code></pre></div>
+<p>この問題を解決するために、マクロ<code>XEntry()</code>中に以下の定義が追加されている：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">virtual</span><span class="w"> </span><span class="n">XMetaObject</span><span class="o">*</span><span class="w"> </span><span class="nf">metaObject</span><span class="p">()</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">staticMetaObject</span><span class="p">();</span><span class="w"> </span><span class="p">}</span>
+</code></pre></div>
+<p>また、Rttrでは型名に基づいて型プール中で検索するコストが高い。この問題を解決するために、XMetaObjectはMetaObjectからrttr::typeへのバインディングを行うための追加の仮想関数を提供している：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">virtual</span><span class="w"> </span><span class="n">rttr</span><span class="o">::</span><span class="n">type</span><span class="w"> </span><span class="nf">getRttrType</span><span class="p">()</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="n">rttr</span><span class="o">::</span><span class="n">type</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="kt">void</span><span class="o">&gt;</span><span class="p">();</span><span class="w"> </span><span class="p">};</span><span class="w"> </span>
+</code></pre></div>
+<p>XHTがRttrの登録関数を生成する際に、この関数の定義も生成する。この関数は確定したrttr::typeを返す。</p>
+<p>メタオブジェクトのインターフェースに基づいて、XObjectはインスタンスに関連するいくつかのリフレクションインターフェースも提供している：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="kt">bool</span><span class="w"> </span><span class="nf">setProperty</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">rttr</span><span class="o">::</span><span class="n">argument</span><span class="w"> </span><span class="n">var</span><span class="p">);</span><span class="w">       </span><span class="c1">//プロパティを設定</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="n">rttr</span><span class="o">::</span><span class="n">variant</span><span class="w"> </span><span class="nf">getProperty</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">name</span><span class="p">);</span><span class="w">              </span><span class="c1">//プロパティを取得</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="n">rttr</span><span class="o">::</span><span class="n">variant</span><span class="w"> </span><span class="nf">invoke</span><span class="p">(</span><span class="n">rttr</span><span class="o">::</span><span class="n">string_view</span><span class="w"> </span><span class="n">name</span><span class="p">,</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">rttr</span><span class="o">::</span><span class="n">argument</span><span class="o">&gt;</span><span class="w"> </span><span class="n">args</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{});</span><span class="w">      </span><span class="c1">//関数を呼び出す</span>
+</code></pre></div>
+</blockquote>
+<h3 id="_15">シリアライズ<a class="headerlink" href="#_15" title="Permanent link">¶</a></h3>
+<p>シリアライズ関数を手動で記述する場合、シリアライズは困難ではない。しかし自動シリアライズを実現したい場合、以下の難題に直面する：</p>
+<ul>
+<li>カスタム型のシリアライズ</li>
+<li>複雑型（コンテナ）のシリアライズ</li>
+<li>ポインタのデシリアライズ</li>
+<li>デシリアライズのランタイムエラーチェック</li>
+</ul>
+<p>異なるシリアライズ目的には異なる処理方式が存在する：</p>
+<ul>
+<li>バイナリシリアライズは最高の性能とメモリ効率を持つが、その内容は読みにくい。</li>
+<li>非バイナリシリアライズ（xml、json、cborなど）はエレガントなストレージ構造を持ち、可読性が非常に高いが、性能とメモリの損耗は相対的に高い。</li>
+</ul>
+<h4 id="binary">Binary<a class="headerlink" href="#binary" title="Permanent link">¶</a></h4>
+<p>バイナリシリアライズに使用されるライブラリは<a href="https://github.com/fraillt/bitsery">BitSery</a>である。いくつかのテンプレート操作によって複雑型（コンテナ）のシリアライズをサポートしている。</p>
+<p>ある型がBitSeryシリアライズをサポートするためには、テンプレート関数<code>serialize(Serialize&amp; s, type&amp; o)</code>を提供するだけで良い：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">MyStruct</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">i</span><span class="p">;</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="w"> </span><span class="n">fs</span><span class="p">;</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="p">};</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="k">template</span><span class="w"> </span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">Serialize</span><span class="o">&gt;</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="kt">void</span><span class="w"> </span><span class="n">serialize</span><span class="p">(</span><span class="n">Serialize</span><span class="o">&amp;</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="n">MyStruct</span><span class="o">&amp;</span><span class="w"> </span><span class="n">o</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="c1">//このテンプレート関数はシリアライズ関数としても、デシリアライズ関数としても使用可能</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="w">    </span><span class="n">s</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">i</span><span class="p">);</span>
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="w">    </span><span class="n">s</span><span class="p">(</span><span class="n">o</span><span class="p">.</span><span class="n">fs</span><span class="p">);</span>
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a><span class="p">}</span>
+</code></pre></div>
+<p>このオブジェクトをシリアライズするには以下のように：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="k">using</span><span class="w"> </span><span class="n">SerializeBuffer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">;</span><span class="w">       </span><span class="c1">//Bufferの型を定義</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="k">using</span><span class="w"> </span><span class="n">OutputAdapter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bitsery</span><span class="o">::</span><span class="n">OutputBufferAdapter</span><span class="o">&lt;</span><span class="n">SerializeBuffer</span><span class="o">&gt;</span><span class="p">;</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="k">using</span><span class="w"> </span><span class="n">InputAdapter</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bitsery</span><span class="o">::</span><span class="n">InputBufferAdapter</span><span class="o">&lt;</span><span class="n">SerializeBuffer</span><span class="o">&gt;</span><span class="p">;</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="k">using</span><span class="w"> </span><span class="n">Serializer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bitsery</span><span class="o">::</span><span class="n">Serializer</span><span class="o">&lt;</span><span class="n">OutputAdapter</span><span class="o">&gt;</span><span class="p">;</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="k">using</span><span class="w"> </span><span class="n">Deserializer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bitsery</span><span class="o">::</span><span class="n">Deserializer</span><span class="o">&lt;</span><span class="n">InputAdapter</span><span class="o">&gt;</span><span class="p">;</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">(){</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="w">    </span><span class="n">MyStruct</span><span class="w"> </span><span class="n">myStruct</span><span class="p">;</span>
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">    </span><span class="n">SerializeBuffer</span><span class="w"> </span><span class="n">buffer</span><span class="p">;</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="w">    </span><span class="c1">//シリアライズ。myStructをbufferに出力する</span>
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="w">    </span><span class="n">bitsery</span><span class="o">::</span><span class="n">quickSerialization</span><span class="p">(</span><span class="n">OutputAdapter</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span><span class="w"> </span><span class="n">myStruct</span><span class="p">);</span><span class="w"> </span>
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a>
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="w">    </span><span class="c1">//デシリアライズ。bufferからデータを読み取ってmyStructに入力する</span>
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a><span class="w">    </span><span class="n">bitsery</span><span class="o">::</span><span class="n">quickDeserialization</span><span class="p">(</span><span class="n">InputAdapter</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span><span class="w"> </span><span class="n">myStruct</span><span class="p">);</span><span class="w">      </span>
+<a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a><span class="p">}</span>
+</code></pre></div>
+<h5 id="_16">テンプレートの回避<a class="headerlink" href="#_16" title="Permanent link">¶</a></h5>
+<p>XObjectではテンプレートを回避するために、シリアライズとデシリアライズ関数を分割し、マクロ <strong>XENTRY()</strong> 中に以下の定義を追加している：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">__intrusive_deserialize</span><span class="p">(</span><span class="n">Deserializer</span><span class="o">&amp;</span><span class="w"> </span><span class="n">deserializer</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"> </span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">__intrusive_serialize</span><span class="p">(</span><span class="n">Serializer</span><span class="o">&amp;</span><span class="w"> </span><span class="n">serializer</span><span class="p">)</span><span class="w"> </span><span class="k">override</span><span class="p">;</span><span class="w"> </span>
+</code></pre></div>
+<p>その関数の実装はXHTによってPropertyに基づいて生成される。此外、ここでは親クラスのシリアライズ関数も呼び出される。</p>
+<blockquote>
+<p>ここではテンプレートを使用してBitsery APIを転送している。存在する問題は、テンプレートによって型の継承関係を判断できないことである。</p>
+<p>幸いなことに、Rttrの継承を実現する際にいくつかの定義が追加されている。これらの定義を利用すると、ある型がXObjectのサブクラスであるかどうかを容易に判断できる：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">std</span><span class="o">::</span><span class="n">enable_if</span><span class="o">&lt;</span><span class="w"> </span><span class="n">std</span><span class="o">::</span><span class="n">is_class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rttr</span><span class="o">::</span><span class="n">detail</span><span class="o">::</span><span class="n">has_base_class_list</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">*</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="o">&gt;</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="kt">void</span><span class="w"> </span><span class="n">serialize</span><span class="p">(</span><span class="n">Serializer</span><span class="o">&amp;</span><span class="w"> </span><span class="n">serializer</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">  </span><span class="n">ptr</span><span class="p">.</span><span class="n">__intrusive_serialize</span><span class="p">(</span><span class="n">serializer</span><span class="p">);</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="p">}</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">std</span><span class="o">::</span><span class="n">enable_if</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_class</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rttr</span><span class="o">::</span><span class="n">detail</span><span class="o">::</span><span class="n">has_base_class_list</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">*</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="o">&gt;</span>
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="kt">void</span><span class="w"> </span><span class="n">serialize</span><span class="p">(</span><span class="n">Deserializer</span><span class="o">&amp;</span><span class="w"> </span><span class="n">deserializer</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="w">  </span><span class="n">ptr</span><span class="p">.</span><span class="n">__intrusive_deserialize</span><span class="p">(</span><span class="n">deserializer</span><span class="p">);</span>
+<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="p">}</span>
+</code></pre></div>
+</blockquote>
+<h5 id="_17">ポインタの特殊化<a class="headerlink" href="#_17" title="Permanent link">¶</a></h5>
+<p>Bitseryはポインタのシリアライズをサポートしていないため、ポインタのシリアライズテンプレートを専門的に記述する必要がある。</p>
+<p>ポインタ型と原型には2つの異なる点が存在する：</p>
+<ul>
+<li>ポインタは空になる可能性があり、nullptrはシリアライズできない</li>
+<li>ポインタのデシリアライズ時に、新しいインスタンスを作成する必要がある場合がある</li>
+</ul>
+<p>これら2つの問題を解決するために、以下の解決方式が採用されている：</p>
+<ul>
+<li>シリアライズ時にポインタの型を書き込む。空ポインタの場合は空の型を書き込む。デシリアライズ時には必ず先に型を読み取る。型が空でない場合はシリアライズを続行する。</li>
+<li>シリアライズ時にポインタの型を書き込んでいるため、RTTRを利用して型名に基づいて新しいインスタンスを作成できる。但し、この型が無参コンストラクタを登録していることを保証する必要がある。</li>
+</ul>
+<p>しかし、XObjectについてはさらに多くのことを行う必要がある。<code>XObject* x = new Base();</code>中のxについては、単純に<code>std::remove_pointer_t&lt;T&gt;::type</code>を使用して原型を取得することができない。したがって、XObjectの型については、インスタンスのmetaObjectオブジェクトから取得する必要がある。その核心コードは以下の通り：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">std</span><span class="o">::</span><span class="n">enable_if</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_pointer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">rttr</span><span class="o">::</span><span class="n">detail</span><span class="o">::</span><span class="n">has_base_class_list</span><span class="o">&lt;</span><span class="n">rttr</span><span class="o">::</span><span class="n">detail</span><span class="o">::</span><span class="n">raw_type_t</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;::</span><span class="n">value</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">*</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="o">&gt;</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a><span class="kt">void</span><span class="w"> </span><span class="n">serialize</span><span class="p">(</span><span class="n">Serializer</span><span class="o">&amp;</span><span class="w"> </span><span class="n">writer</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">typeName</span><span class="p">;</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ptr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="w">        </span><span class="n">rttr</span><span class="o">::</span><span class="n">type</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rttr</span><span class="o">::</span><span class="n">type</span><span class="o">::</span><span class="n">get</span><span class="o">&lt;</span><span class="n">rttr</span><span class="o">::</span><span class="n">detail</span><span class="o">::</span><span class="n">raw_type_t</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span><span class="p">();</span><span class="w">     </span><span class="c1">//ポインタ型に基づいて原始型を取得</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="w">        </span><span class="n">typeName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">type</span><span class="p">.</span><span class="n">get_raw_type</span><span class="p">().</span><span class="n">get_name</span><span class="p">().</span><span class="n">to_string</span><span class="p">();</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="w">    </span><span class="n">writer</span><span class="p">(</span><span class="n">typeName</span><span class="p">);</span><span class="w">                   </span><span class="c1">//型を書き込む</span>
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ptr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="w">        </span><span class="n">writer</span><span class="p">(</span><span class="o">*</span><span class="n">ptr</span><span class="p">);</span><span class="w">                   </span><span class="c1">//ポインタが空でない場合、このポインタが指すデータを書き込む</span>
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a><span class="p">}</span>
+<a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a>
+<a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">std</span><span class="o">::</span><span class="n">enable_if</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_pointer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">rttr</span><span class="o">::</span><span class="n">detail</span><span class="o">::</span><span class="n">has_base_class_list</span><span class="o">&lt;</span><span class="n">rttr</span><span class="o">::</span><span class="n">detail</span><span class="o">::</span><span class="n">raw_type_t</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;::</span><span class="n">value</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">*</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="o">&gt;</span>
+<a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a><span class="kt">void</span><span class="w"> </span><span class="n">serialize</span><span class="p">(</span><span class="n">Serializer</span><span class="o">&amp;</span><span class="w"> </span><span class="n">writer</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">typeName</span><span class="p">;</span>
+<a id="__codelineno-28-17" name="__codelineno-28-17" href="#__codelineno-28-17"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ptr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-18" name="__codelineno-28-18" href="#__codelineno-28-18"></a><span class="w">        </span><span class="n">rttr</span><span class="o">::</span><span class="n">type</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ptr</span><span class="o">-&gt;</span><span class="n">metaObject</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getRttrType</span><span class="p">();</span><span class="w">                         </span><span class="c1">//metaObjectから型を取得</span>
+<a id="__codelineno-28-19" name="__codelineno-28-19" href="#__codelineno-28-19"></a><span class="w">        </span><span class="n">typeName</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">type</span><span class="p">.</span><span class="n">get_raw_type</span><span class="p">().</span><span class="n">get_name</span><span class="p">().</span><span class="n">to_string</span><span class="p">();</span>
+<a id="__codelineno-28-20" name="__codelineno-28-20" href="#__codelineno-28-20"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-28-21" name="__codelineno-28-21" href="#__codelineno-28-21"></a><span class="w">    </span><span class="n">writer</span><span class="p">(</span><span class="n">typeName</span><span class="p">);</span><span class="w">                   </span><span class="c1">//型を書き込む</span>
+<a id="__codelineno-28-22" name="__codelineno-28-22" href="#__codelineno-28-22"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ptr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-23" name="__codelineno-28-23" href="#__codelineno-28-23"></a><span class="w">        </span><span class="n">writer</span><span class="p">(</span><span class="o">*</span><span class="n">ptr</span><span class="p">);</span><span class="w">                   </span><span class="c1">//ポインタが空でない場合、このポインタが指すデータを書き込む</span>
+<a id="__codelineno-28-24" name="__codelineno-28-24" href="#__codelineno-28-24"></a><span class="w">    </span><span class="p">}</span><span class="w">   </span>
+<a id="__codelineno-28-25" name="__codelineno-28-25" href="#__codelineno-28-25"></a><span class="p">}</span>
+<a id="__codelineno-28-26" name="__codelineno-28-26" href="#__codelineno-28-26"></a>
+<a id="__codelineno-28-27" name="__codelineno-28-27" href="#__codelineno-28-27"></a><span class="k">template</span><span class="o">&lt;</span><span class="k">typename</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="k">typename</span><span class="w"> </span><span class="nc">std</span><span class="o">::</span><span class="n">enable_if</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">is_pointer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">value</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">*</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">nullptr</span><span class="o">&gt;</span>
+<a id="__codelineno-28-28" name="__codelineno-28-28" href="#__codelineno-28-28"></a><span class="kt">void</span><span class="w"> </span><span class="n">serialize</span><span class="p">(</span><span class="n">Deserializer</span><span class="o">&amp;</span><span class="w"> </span><span class="n">reader</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="o">&amp;</span><span class="w"> </span><span class="n">ptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-28-29" name="__codelineno-28-29" href="#__codelineno-28-29"></a><span class="w">    </span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="w"> </span><span class="n">typeName</span><span class="p">;</span><span class="w">               </span>
+<a id="__codelineno-28-30" name="__codelineno-28-30" href="#__codelineno-28-30"></a><span class="w">    </span><span class="n">reader</span><span class="p">(</span><span class="n">typeName</span><span class="p">);</span><span class="w">                   </span><span class="c1">//型を読み取る</span>
+<a id="__codelineno-28-31" name="__codelineno-28-31" href="#__codelineno-28-31"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">typeName</span><span class="p">.</span><span class="n">empty</span><span class="p">())</span><span class="w">               </span><span class="c1">//型が空の場合、直接返す</span>
+<a id="__codelineno-28-32" name="__codelineno-28-32" href="#__codelineno-28-32"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-28-33" name="__codelineno-28-33" href="#__codelineno-28-33"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ptr</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="k">nullptr</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">               </span><span class="c1">//デシリアライズが指すオブジェクトが既に空でない場合、直接それに対してデシリアライズを行う</span>
+<a id="__codelineno-28-34" name="__codelineno-28-34" href="#__codelineno-28-34"></a><span class="w">        </span><span class="n">reader</span><span class="p">(</span><span class="o">*</span><span class="n">ptr</span><span class="p">);</span>
+<a id="__codelineno-28-35" name="__codelineno-28-35" href="#__codelineno-28-35"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-28-36" name="__codelineno-28-36" href="#__codelineno-28-36"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-28-37" name="__codelineno-28-37" href="#__codelineno-28-37"></a><span class="w">    </span><span class="n">rttr</span><span class="o">::</span><span class="n">type</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">rttr</span><span class="o">::</span><span class="n">type</span><span class="o">::</span><span class="n">get_by_name</span><span class="p">(</span><span class="n">typeName</span><span class="p">);</span><span class="w">        </span><span class="c1">//Rttr型を取得</span>
+<a id="__codelineno-28-38" name="__codelineno-28-38" href="#__codelineno-28-38"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">type</span><span class="p">.</span><span class="n">is_valid</span><span class="p">())</span>
+<a id="__codelineno-28-39" name="__codelineno-28-39" href="#__codelineno-28-39"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-28-40" name="__codelineno-28-40" href="#__codelineno-28-40"></a><span class="w">    </span><span class="n">rttr</span><span class="o">::</span><span class="n">variant</span><span class="w"> </span><span class="n">var</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">type</span><span class="p">.</span><span class="n">create</span><span class="p">();</span><span class="w">                          </span><span class="c1">//Rttrを利用してインスタンスを作成</span>
+<a id="__codelineno-28-41" name="__codelineno-28-41" href="#__codelineno-28-41"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">var</span><span class="p">.</span><span class="n">can_convert</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">                                </span>
+<a id="__codelineno-28-42" name="__codelineno-28-42" href="#__codelineno-28-42"></a><span class="w">        </span><span class="k">return</span><span class="p">;</span>
+<a id="__codelineno-28-43" name="__codelineno-28-43" href="#__codelineno-28-43"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-28-44" name="__codelineno-28-44" href="#__codelineno-28-44"></a><span class="w">    </span><span class="n">ptr</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">var</span><span class="p">.</span><span class="n">get_value</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">();</span><span class="w">                                   </span><span class="c1">//インスタンスが合法的な場合、それに対してデシリアライズを行う</span>
+<a id="__codelineno-28-45" name="__codelineno-28-45" href="#__codelineno-28-45"></a><span class="w">    </span><span class="n">reader</span><span class="p">(</span><span class="o">*</span><span class="n">ptr</span><span class="p">);</span>
+<a id="__codelineno-28-46" name="__codelineno-28-46" href="#__codelineno-28-46"></a><span class="p">}</span>
+</code></pre></div>
+<h5 id="include">Includeの最適化<a class="headerlink" href="#include" title="Permanent link">¶</a></h5>
+<p>Bitseryは**Header - Only**ライブラリである。すべての内容を**XObject.h**に導入しないため、ここでは核心的な定義を**SerializationDefine.h**に書き込み、XObjectはこのファイルだけを含むようにしている。その他のコードは**SerializationBriefSyntax.h**中に導入され、XHTが追加コードを生成する際にこのファイルを含むようになる。</p>
+<h4 id="json-and-cbor">Json And Cbor<a class="headerlink" href="#json-and-cbor" title="Permanent link">¶</a></h4>
+<p>ここで使用されるライブラリは <a href="https://github.com/nlohmann/json.git">nlohmann json</a>である。ここでの実装は少し草率で、デシリアライズは完成していないため、デバッグにのみ使用可能である。シリアライズ関数もXHTによって生成される。当然のことながら、<strong>XENTRY()</strong> 中に新しい定義が追加されている：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="k">virtual</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">__intrusive_to_json</span><span class="p">(</span><span class="n">nlohmann</span><span class="o">::</span><span class="n">json</span><span class="o">&amp;</span><span class="w"> </span><span class="n">json</span><span class="p">)</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="k">override</span><span class="p">;</span>
+</code></pre></div>
+<p>その処理方式もバイナリシリアライズと類似している。</p>
+<p>jsonシリアライズは当初リフレクションによって実現しようと考えていた。以前Qtでもリフレクションによってjsonシリアライズを行っていたためである。しかし、実際に実装しようとしたときに、それが想像以上に簡単ではないことに気づいた。</p>
+<p>rttrを通じてrttr::variantデータを読み取ることができる。どのようにしてそれを自動的にjson中のデータに変換することができるだろうか？以下のようにするしかないようだ：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="n">rttr</span><span class="o">::</span><span class="n">variant</span><span class="w"> </span><span class="n">property</span><span class="p">;</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="k">if</span><span class="p">(</span><span class="n">var</span><span class="p">.</span><span class="n">isType</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">()){</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">    </span><span class="n">json</span><span class="p">[</span><span class="n">propertyName</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">property</span><span class="p">.</span><span class="n">get_value</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="p">}</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">var</span><span class="p">.</span><span class="n">isType</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">()){</span>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="w">    </span><span class="n">json</span><span class="p">[</span><span class="n">propertyName</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">property</span><span class="p">.</span><span class="n">get_value</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">();</span>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="p">}</span>
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="p">(...){</span>
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="w">    </span><span class="p">...</span>
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>曲線...救国...？</p>
+</blockquote>
+<p>以前はQtでQVariantに対してIOを行うと、自動的に対応する型のシリアライズ関数に転送されると思っていた。</p>
+<p>しかしrttr::variantはこのような操作をサポートしていない。そのため、この部分の欠陥を補填するためにQVariantの実装方法を調査した。</p>
+<p>その実装方法も実はこのようなものである。ただし、Mapを使用して関数を格納している：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="n">rttr</span><span class="o">::</span><span class="n">variant</span><span class="w"> </span><span class="n">property</span><span class="p">;</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="n">json</span><span class="p">[</span><span class="n">propertyName</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">FuncMap</span><span class="p">[</span><span class="n">property</span><span class="p">.</span><span class="n">typeId</span><span class="p">()](</span><span class="n">property</span><span class="p">);</span>
+</code></pre></div>
+<p>カスタム型については、Qtはマクロ <strong>Q_DECLARE_METATYPE</strong> を使用して修飾する必要があると宣言している：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">CustomType</span><span class="p">{};</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a><span class="n">Q_DECLARE_METATYPE</span><span class="p">(</span><span class="n">CustomType</span><span class="p">)</span><span class="w">  </span><span class="c1">//このマクロはmeta typeを登録する。この型にシリアライズ関数が存在する場合、関数ポインタと型idをバインドする。</span>
+</code></pre></div>
+<p>RTTRの登録はこのような操作をサポートしていない。因此、ここでは暫くXHTを使用してjsonのシリアライズ関数を生成することにする。</p>
+<h3 id="_18">エディタ<a class="headerlink" href="#_18" title="Permanent link">¶</a></h3>
+<p>Coreモジュールは完全にEditorモジュールに依存していない。EditorモジュールはCore中のリフレクションデータを利用してエディタを制作する。</p>
+<p>以前は多くのエディタを書き、多くの試行を行った。主に以下の段階を経てきた：</p>
+<ul>
+<li>
+<p><strong>エディタを核心とする</strong></p>
+</li>
+<li>
+<p>初期の開発目的も非常に単純であった：どのようなエディタが必要で、どのような効果を完成させるために、直接エディタのUIとロジックを設計し、エディタが直接効果クラスのメソッドを呼び出して効果編集を行う。時には効果クラスにエディタ用の特定のAPIを提供する必要さえあった。このように最後まで行うと、元の効果クラスは面目がなくなり、エディタと効果クラスのコードも到処に書かれ、カップリングが非常に深刻になる。最後にインポート・エクスポートインターフェースを記述する際にも非常に注意深くなければならない。</p>
+</li>
+<li>
+<p><strong>Propertyを核心とする型エディタ</strong> ：これまでに多くの段階を経て移行してきたが、言及する意義はない。以下の特徴を通じていくつかの理解を得ることができる：</p>
+</li>
+<li>
+<p>propertyを編集目標とし、ロジックが一致する読み書きインターフェースを持つ</p>
+<blockquote>
+<p>効果クラスを記述する際に、編集可能なpropertyを予約し、それに対応する読み書きインターフェースを提供する必要がある。また、これらのpropertyを使用する際に、それらの同期状況を保証する必要がある。これによってエディタのシリアライズによって生成されたデータを正しく利用することができる。</p>
+</blockquote>
+</li>
+<li>
+<p>エディタ部品とデータ型が一対一に対応する</p>
+<blockquote>
+<p>即ち：</p>
+<p>int型にはintの編集部品、曲線クラスには曲線の編集部品、ツリー構造にはツリーの編集部品...</p>
+<p>これらの部品の粒度は非常に細かく、完全なエディタはこれらの小さな部品から組み立てられる。</p>
+</blockquote>
+</li>
+</ul>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="创建日期">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js" data-repo="Italink/ModernGraphicsEngineGuide" data-repo-id="R_kgDOIPtbiQ" data-category-id="DIC_kwDOIPtbic4CTxOk" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous" async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078q-.408 1.096-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58 58 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.2 9.2 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125M13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

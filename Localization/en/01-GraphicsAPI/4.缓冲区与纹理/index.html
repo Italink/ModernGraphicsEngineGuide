@@ -1,0 +1,3717 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+          <link rel="alternate" href="/" hreflang="zh">
+        
+          <link rel="alternate" href="/Localization/en/" hreflang="en">
+        
+          <link rel="alternate" href="/Localization/ja/" hreflang="ja">
+        
+          <link rel="alternate" href="/Localization/ko/" hreflang="ko">
+        
+          <link rel="alternate" href="/Localization/fr/" hreflang="fr">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Buffers and Textures - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-S1J8MN27P8",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link rel="stylesheet" href="../../../../assets/stylesheets/custom.2fa34c39.min.css">
+
+  <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#buffers-and-textures" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&amp;k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76"></path></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Buffers and Textures
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="zh" class="md-select__link">
+              Chinese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/en/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ja/" hreflang="ja" class="md-select__link">
+              Japanese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ko/" hreflang="ko" class="md-select__link">
+              Korean
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/fr/" hreflang="fr" class="md-select__link">
+              French
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  开源
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../06-Blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  个人博客
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 计算机发展史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - C++基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 宏、模板、反射
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 内存管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - GUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图形API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    图形API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 图形渲染管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 着色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 缓冲区与纹理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - 3D空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 图形API进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引擎技术
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    引擎技术
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 渲染架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 编辑器架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unreal Engine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unreal Engine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 基础编程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - Slate 开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 插件开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 粒子系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - Niagara 性能优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - Fluid Ninja 流体插件
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 开放世界制作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/7.%E9%9F%B3%E9%A2%91%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 - 音频开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/9.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E4%B8%AD%E7%9A%84%E6%A4%8D%E8%A2%AB%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9 - 植被优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/10.LOD%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 - LOD不完全指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/12.%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%86%85%E5%AE%B9%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 - 程序化内容管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/16.3DGaussianSplatting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 - 3DGaussianSplatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/17.Landscape%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 - Landscape 避坑指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开源
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开源
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1">
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UnrealEngine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    UnrealEngine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Splatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2">
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/C%2B%2B/C%2B%2B%E5%8F%8D%E5%B0%84%E7%BC%96%E8%AF%91%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++反射编译器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3">
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Qt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96%E8%BD%AF%E4%BB%B6-Specinker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频可视化软件-Specinker(已闭源)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%A2%91%E8%B0%B1%E5%88%86%E6%9E%90%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    频谱分析器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%8B%9F%E6%80%81%E7%AA%97%E5%8F%A3%E6%BB%A4%E9%95%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt拟态窗口滤镜
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E5%B1%8F%E5%B9%95%E5%8F%96%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt屏幕取色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%B8%90%E5%8F%98%E8%B0%83%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt渐变调色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E7%B2%92%E5%AD%90%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面粒子特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E6%B0%B4%E9%9D%A2%E6%B3%A2%E7%BA%B9%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面水面波纹特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../06-Blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人博客
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    个人博客
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_2">
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    五月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    八月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    六月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    四月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    九月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2019/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_3">
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人随笔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%95%B4%E6%B4%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    整活
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    杂谈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#buffers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Buffers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Buffers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vertex-buffers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Vertex Buffers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#index-buffers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Index Buffers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uniform-buffers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uniform Buffers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage-buffers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage Buffers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#textures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Textures
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#memory-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Memory Management
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="buffers-and-textures">Buffers and Textures<a class="headerlink" href="#buffers-and-textures" title="Permanent link">¶</a></h1>
+<h2 id="buffers">Buffers<a class="headerlink" href="#buffers" title="Permanent link">¶</a></h2>
+<p>A <strong>Buffer</strong> holds a section of memory on the GPU along with related characteristics—<strong>Type</strong> and <strong>Usage</strong>.</p>
+<p><strong>Type</strong> determines the storage properties of the Buffer. Graphics APIs typically categorize them into:</p>
+<ul>
+<li><strong>Host Local Memory</strong>: Memory visible only to the Host, usually referred to as regular memory.</li>
+<li><strong>Device Local Memory</strong>: Memory visible only to the Device, usually referred to as video memory.</li>
+<li><strong>Host Local Device Memory</strong>: Memory managed by the Host but visible to the Device.</li>
+<li><strong>Device Local Host Memory</strong>: Memory managed by the Device but visible to the Host.</li>
+</ul>
+<blockquote>
+<p>Host usually refers to the CPU side, while Device refers to the GPU side.</p>
+</blockquote>
+<p>For details, refer to:</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/166387973">Vulkan Memory Management</a></li>
+</ul>
+<p>Using the appropriate memory type can significantly improve memory read/write efficiency. In modern graphics engine pipelines, <strong>Device Memory</strong> is used as much as possible. When submitting data from the CPU to it, since the Host cannot access it directly, data is typically uploaded to a <strong>Host-visible Memory</strong> first, then copied to the corresponding <strong>Device Memory</strong> via commands. We generally call the Buffer holding Host-visible memory a <a href="https://link.zhihu.com/?target=https%3A//vulkan-tutorial.com/Vertex_buffers/Staging_buffer">Staging Buffer</a>.</p>
+<p>In terms of <strong>Usage</strong>, Buffers usually have the following <strong>Flags</strong>:</p>
+<ul>
+<li><strong>VertexBuffer</strong>: Used to store vertex data.</li>
+<li><strong>IndexBuffer</strong>: Used to store index data.</li>
+<li><strong>UniformBuffer</strong>: Used to store constant data.</li>
+<li><strong>StorageBuffer</strong>: Used for data computation in Compute pipelines.</li>
+<li><strong>IndirectDrawBuffer</strong>: Used to provide rendering parameters for indirect rendering.</li>
+</ul>
+<p>In the graphics rendering pipeline chapter, we used QRhi to easily create a buffer for storing vertex data (<strong>VertexBuffer</strong>):</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mVertexBuffer</span><span class="p">;</span><span class="w">   </span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Immutable</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">VertexBuffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">VertexData</span><span class="p">)));</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">mVertexBuffer</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span><span class="w"> </span><span class="c1">// In QRhi, calling the create function of a rendering resource object actually creates the corresponding GPU resource; before this, we are just adjusting the parameter state machine.</span>
+</code></pre></div>
+<p>Use the <code>newBuffer</code> function to request a new buffer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">QRhiBuffer</span><span class="o">*</span><span class="w"> </span><span class="nf">QRhi::newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Type</span><span class="w"> </span><span class="n">type</span><span class="p">,</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">                            </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">UsageFlags</span><span class="w"> </span><span class="n">usage</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">                            </span><span class="n">quint32</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+</code></pre></div>
+<p>The meanings of the function parameters are as follows:</p>
+<ul>
+<li>
+<p><strong>Type</strong>: The type of the Buffer, which determines its storage properties.</p>
+</li>
+<li>
+<p><strong>Immutable</strong>: Used to store data that is never expected to change, with very efficient GPU read/write performance. It is usually placed in <strong>Device Local</strong> GPU memory and cannot be directly read/written by the CPU. However, QRhi supports uploading to it—the principle is: each time data is uploaded, a new <strong>Host Local</strong> <strong>Staging Buffer</strong> is created as a relay to upload new data. This operation is very costly.</p>
+</li>
+<li>
+<p><strong>Static</strong>: Also stored in <strong>Device Local</strong> GPU memory. Unlike Immutable, the <strong>Staging Buffer</strong> created during the first data upload is retained permanently.</p>
+</li>
+<li>
+<p><strong>Dynamic</strong>: Used to store frequently changing data. It is placed in <strong>Host Local</strong> GPU memory and typically uses a double-buffering mechanism to avoid delaying the graphics rendering pipeline.</p>
+</li>
+<li>
+<p><strong>Usage</strong>: The purpose of the Buffer. <code>Flags</code> indicates that multiple <code>Flags</code> can coexist using the <code>|</code> operator.</p>
+</li>
+<li>
+<p><strong>VertexBuffer</strong>: Indicates the Buffer can be used as a vertex buffer, storing vertex data as input to the graphics rendering pipeline.</p>
+</li>
+<li><strong>IndexBuffer</strong>: Indicates the Buffer can be used as an index buffer, storing index data to select vertex data.</li>
+<li><strong>UniformBuffer</strong>: Indicates the Buffer can be used as a Uniform buffer, storing Uniform data as common input to shaders.</li>
+<li>
+<p><strong>StorageBuffer</strong>: Indicates the Buffer can be used as a Storage buffer, which can be read from and written to by compute shaders.</p>
+</li>
+<li>
+<p><strong>Size</strong>: The actual size of the Buffer (in bytes).</p>
+</li>
+</ul>
+<h3 id="vertex-buffers">Vertex Buffers<a class="headerlink" href="#vertex-buffers" title="Permanent link">¶</a></h3>
+<p><strong>Vertex Buffers</strong> serve as input to the pipeline.</p>
+<p>In QRhi, this is reflected in the need to specify vertex input for the graphics rendering pipeline when recording rendering commands:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setGraphicsPipeline</span><span class="p">(</span><span class="n">mPipeline</span><span class="p">.</span><span class="n">get</span><span class="p">());</span><span class="w">                            </span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setViewport</span><span class="p">(</span><span class="n">QRhiViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">mSwapChain</span><span class="o">-&gt;</span><span class="n">currentPixelSize</span><span class="p">().</span><span class="n">width</span><span class="p">(),</span><span class="w"> </span><span class="n">mSwapChain</span><span class="o">-&gt;</span><span class="n">currentPixelSize</span><span class="p">().</span><span class="n">height</span><span class="p">()));</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setShaderResources</span><span class="p">();</span><span class="w">                                        </span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">const</span><span class="w"> </span><span class="n">QRhiCommandBuffer</span><span class="o">::</span><span class="n">VertexInput</span><span class="w"> </span><span class="nf">vertexInput</span><span class="p">(</span><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w">   </span><span class="c1">// Bind mVertexBuffer to Buffer0 with a memory offset of 0</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setVertexInput</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">vertexInput</span><span class="p">);</span><span class="w">                              </span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w">                                                         </span>
+</code></pre></div>
+<p>When creating the pipeline, you must set the <strong>Vertex Input Layout</strong> for the pipeline, which defines the parsing rules for the buffer. In previous chapters, we used the following vertex data:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">VertexData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">                                       </span><span class="c1">// Vertex data</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="c1">// position(xy)  color(rgba)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">     </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">     </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">};</span>
+</code></pre></div>
+<p>To allow the vertex data to be used by the following vertex shader input:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">position</span><span class="p">;</span><span class="w">  </span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">color</span><span class="p">;</span>
+</code></pre></div>
+<p>We can define the following vertex input layout:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">QRhiVertexInputLayout</span><span class="w"> </span><span class="n">inputLayout</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">inputLayout</span><span class="p">.</span><span class="n">setBindings</span><span class="p">({</span><span class="w">        </span><span class="c1">// Define the stride of a single set of vertex data for each VertexBuffer; only one VertexBuffer is used here</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="c1">// This is 6*sizeof(float), which means the GPU will read 24 bytes of data from Buffer 0 as a single set of vertex data to pass to the VertexShader</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">QRhiVertexInputBinding</span><span class="p">(</span><span class="mi">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">))</span><span class="w"> </span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">});</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">inputLayout</span><span class="p">.</span><span class="n">setAttributes</span><span class="p">({</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="c1">// From the single set of vertex data obtained from Buffer 0, read Float2-sized data at offset 0 as input for location 0</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="n">QRhiVertexInputAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">QRhiVertexInputAttribute</span><span class="o">::</span><span class="n">Float2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="c1">// From the single set of vertex data obtained from Buffer 0, read Float4-sized data at offset sizeof(float)*2 as input for location 1</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="n">QRhiVertexInputAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">QRhiVertexInputAttribute</span><span class="o">::</span><span class="n">Float4</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w">   </span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">});</span>
+</code></pre></div>
+<p>During graphics rendering processing, computers only care about data in memory and not the symbolic meaning of that data. It is because of the vertex input layout that we can organize the storage structure of vertices ourselves during programming.</p>
+<p>Above, we placed all data in a <code>float array</code>. Now we can use a more intuitive structure:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Vertex</span><span class="p">{</span><span class="w">                  </span><span class="c1">// Vertex structure</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">QVector4D</span><span class="w"> </span><span class="n">color</span><span class="p">;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">};</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">QVector</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">    </span><span class="c1">// Vertex data</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-0.5f</span><span class="p">},</span><span class="w">  </span><span class="p">{</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="w"> </span><span class="p">}},</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">},</span><span class="w">  </span><span class="p">{</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="w"> </span><span class="p">}},</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">},</span><span class="w">  </span><span class="p">{</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="w"> </span><span class="p">}},</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>We only need to populate the vertex data and create the vertex buffer using <code>sizeof(Vertex) * vertices.size()</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mVertexBuffer</span><span class="p">;</span><span class="w">   </span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Immutable</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">VertexBuffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vertex</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vertices</span><span class="p">.</span><span class="n">size</span><span class="p">()));</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">mVertexBuffer</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span><span class="w"> </span>
+</code></pre></div>
+<p>And use the following vertex input layout:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">QRhiVertexInputLayout</span><span class="w"> </span><span class="n">inputLayout</span><span class="p">;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">inputLayout</span><span class="p">.</span><span class="n">setBindings</span><span class="p">({</span><span class="w">   </span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="n">QRhiVertexInputBinding</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vertex</span><span class="p">))</span><span class="w">      </span><span class="c1">// The stride of a single vertex data is the size of the Vertex structure</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">});</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">inputLayout</span><span class="p">.</span><span class="n">setAttributes</span><span class="p">({</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="n">QRhiVertexInputAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">QRhiVertexInputAttribute</span><span class="o">::</span><span class="n">Float2</span><span class="p">,</span><span class="w"> </span><span class="n">offsetof</span><span class="p">(</span><span class="n">Vertex</span><span class="p">,</span><span class="n">position</span><span class="p">)),</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="n">QRhiVertexInputAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">QRhiVertexInputAttribute</span><span class="o">::</span><span class="n">Float4</span><span class="p">,</span><span class="w"> </span><span class="n">offsetof</span><span class="p">(</span><span class="n">Vertex</span><span class="p">,</span><span class="n">color</span><span class="p">)),</span><span class="w">  </span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="p">});</span>
+</code></pre></div>
+<blockquote>
+<p>The <strong>offsetof</strong> operator can be used to get the memory offset of a member variable in a struct or class.</p>
+</blockquote>
+<p>When uploading, just use the raw data of the array:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">uploadStaticBuffer</span><span class="p">(</span><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="n">mVertices</span><span class="p">.</span><span class="n">data</span><span class="p">());</span>
+</code></pre></div>
+<h3 id="index-buffers">Index Buffers<a class="headerlink" href="#index-buffers" title="Permanent link">¶</a></h3>
+<p><strong>Index Buffers</strong> are used to select vertex data input to the pipeline.</p>
+<p>A common application scenario is:</p>
+<ul>
+<li>Since the basic primitives supported by graphics APIs are only points, lines, and triangles, when drawing polygons, multiple triangles are used for tessellation. Take a quadrilateral as an example: a quadrilateral can be divided into two triangles, which have six vertices. However, a quadrilateral actually has only four vertices. If using triangle tessellation, we would need to waste space equivalent to two vertex data entries to store overlapping vertices. Therefore, we need a strategy to reuse vertex data in the vertex buffer to draw a quadrilateral composed of two triangles using only four vertices.</li>
+</ul>
+<p>When the pipeline processes vertex input, it divides the data in the vertex buffer into ordered sets of vertex data according to the vertex input layout. In the <strong>default case</strong>, all these vertex data sets are passed to the VertexShader for processing.</p>
+<p>The role of the index buffer is to, after dividing into ordered sets of vertex data, select from the original vertex data through a series of indices (Index) and assemble new vertex data to pass to the VertexShader for processing.</p>
+<p>Suppose we use the following vertex data:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">VertexData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="c1">// position(xy)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">     </span><span class="mf">1.0f</span><span class="p">,</span><span class="w">   </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">     </span><span class="mf">1.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-1.0f</span><span class="p">,</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="mf">-1.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-1.0f</span><span class="p">,</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="mf">-1.0f</span><span class="p">,</span><span class="w">   </span><span class="mf">1.0f</span><span class="p">,</span><span class="w">  </span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="p">};</span>
+</code></pre></div>
+<p>We can use the following index data to assemble new vertex data from the above vertices using 6 indices:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">IndexData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="p">};</span>
+</code></pre></div>
+<p>Like VertexBuffer, we just need to create an IndexBuffer:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mIndexBuffer</span><span class="p">;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">mIndexBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Immutable</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">IndexBuffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">IndexData</span><span class="p">)));</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">mIndexBuffer</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<p>And submit the index data when first recording rendering commands:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">uploadStaticBuffer</span><span class="p">(</span><span class="n">mIndexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="n">IndexData</span><span class="p">);</span>
+</code></pre></div>
+<p>The rendering commands become:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setGraphicsPipeline</span><span class="p">(</span><span class="n">mPipeline</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setViewport</span><span class="p">(</span><span class="n">QRhiViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">mSwapChain</span><span class="o">-&gt;</span><span class="n">currentPixelSize</span><span class="p">().</span><span class="n">width</span><span class="p">(),</span><span class="w"> </span><span class="n">mSwapChain</span><span class="o">-&gt;</span><span class="n">currentPixelSize</span><span class="p">().</span><span class="n">height</span><span class="p">()));</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setShaderResources</span><span class="p">();</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="k">const</span><span class="w"> </span><span class="n">QRhiCommandBuffer</span><span class="o">::</span><span class="n">VertexInput</span><span class="w"> </span><span class="nf">vertexBindings</span><span class="p">(</span><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1">// Specify the IndexBuffer and clarify that it uses UInt32-formatted index data</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setVertexInput</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">vertexBindings</span><span class="p">,</span><span class="w"> </span><span class="n">mIndexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiCommandBuffer</span><span class="o">::</span><span class="n">IndexUInt32</span><span class="p">);</span><span class="w">  </span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="c1">// Use drawIndexed instead of draw so rendering will read 6 indices from the IndexBuffer, assemble 6 vertices using data from the vertex buffer, and draw triangles</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">drawIndexed</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="uniform-buffers">Uniform Buffers<a class="headerlink" href="#uniform-buffers" title="Permanent link">¶</a></h3>
+<p><strong>Uniform Buffers</strong> are used to provide some common read-only data for shaders in the pipeline.</p>
+<p>In QRhi, you can create a UniformBuffer using the following code:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mUniformBuffer</span><span class="p">;</span><span class="w">   </span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Dynamic</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">UniformBuffer</span><span class="p">,</span><span class="w"> </span><span class="n">mUniformBuffer</span><span class="p">));</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">mUniformBuffer</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<ul>
+<li>The type of UniformBuffer must be <code>QRhiBuffer::Dynamic</code>.</li>
+<li><code>UniformBufferSize</code> indicates the required buffer size in bytes.</li>
+</ul>
+<p>When creating a UniformBuffer, we usually don't directly use <code>UniformBufferSize</code> to create a block of memory, but instead use an auxiliary struct definition, such as:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="p">};</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1">//...</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Dynamic</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">UniformBuffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">UniformBlock</span><span class="p">)));</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="c1">//...</span>
+</code></pre></div>
+<p>The advantage of this is that we can give some intuitive structure to this memory through the struct definition.</p>
+<p>For example, in the above struct, a total of <code>12 bytes</code> of memory are allocated: the <code>first 8 bytes</code> store a 2D vector, and the <code>last 4 bytes</code> store a float.</p>
+<p>Uniform Buffers belong to <strong>Shader Resources</strong>. To use them, you need to add a binding entry to the shader resource binding (i.e., descriptor set layout) of the pipeline:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">mShaderBindings</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderResourceBindings</span><span class="p">());</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="n">mShaderBindings</span><span class="o">-&gt;</span><span class="n">setBindings</span><span class="p">({</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="n">QRhiShaderResourceBinding</span><span class="o">::</span><span class="n">uniformBuffer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiShaderResourceBinding</span><span class="o">::</span><span class="n">StageFlag</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w"> </span><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">())</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="p">});</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="n">mShaderBindings</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<ul>
+<li>QRhiShaderResourceBinding provides some static methods to add shader resource binding entries; here we use the static function <code>QRhiShaderResourceBinding::uniformBuffer()</code>.</li>
+<li><code>0</code> represents the binding index.</li>
+<li><code>QRhiShaderResourceBinding::StageFlag::VertexStage</code> indicates the UniformBlock can be used in the fragment shading stage; <code>Flag</code> indicates this is a combinable identifier.</li>
+</ul>
+<p>With the above code structure, we can use the following code in the vertex shader to use UniformBuffer data:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">"</span><span class="dl">(</span><span class="s">#version 440</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="s">    layout(binding = 0) uniform UniformBlock{   // 0 corresponds to the ShaderResourceBinding definition</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="s">        vec2 mousePos;</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="s">        float time;</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="s">    }UBO;</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="s">    //...</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="dl">)</span><span class="s">"</span><span class="p">);</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="n">Q_ASSERT</span><span class="p">(</span><span class="n">vs</span><span class="p">.</span><span class="n">isValid</span><span class="p">());</span>
+</code></pre></div>
+<p>To correctly parse the memory structure in the UniformBuffer, we define an interface block in the Shader with the same memory layout as the C++ struct. The above is a simplified写法; the following may be more familiar:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">"</span><span class="dl">(</span><span class="s">#version 440    </span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="s">    struct UniformBlock{</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="s">        vec2 mousePos;</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="s">        float time;</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="s">    };</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="s">    layout(binding = 0) uniform UniformBlock UBO;</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="s">    //...</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="dl">)</span><span class="s">"</span><span class="p">);</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="n">Q_ASSERT</span><span class="p">(</span><span class="n">vs</span><span class="p">.</span><span class="n">isValid</span><span class="p">());</span>
+</code></pre></div>
+<p>Submitting UniformBlock data is similar to other Buffers:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">UniformBlock</span><span class="w"> </span><span class="n">ubo</span><span class="p">;</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">ubo</span><span class="p">.</span><span class="n">mousePos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QVector2D</span><span class="p">(</span><span class="n">mapFromGlobal</span><span class="p">(</span><span class="n">QCursor</span><span class="o">::</span><span class="n">pos</span><span class="p">()))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">qApp</span><span class="o">-&gt;</span><span class="n">devicePixelRatio</span><span class="p">();</span><span class="w">     </span><span class="c1">// Get mouse position</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">ubo</span><span class="p">.</span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QTime</span><span class="o">::</span><span class="n">currentTime</span><span class="p">().</span><span class="n">msecsSinceStartOfDay</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1000.0f</span><span class="p">;</span><span class="w">                       </span><span class="c1">// Get current time</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">updateDynamicBuffer</span><span class="p">(</span><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">UniformBlock</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ubo</span><span class="p">);</span>
+</code></pre></div>
+<p>In the above code, we used the following struct definitions:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// c++</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="p">};</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// shader</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">    </span><span class="n">vec2</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>Note that in the block structure defined in the Shader, the graphics API may add padding between block members to maintain hardware alignment and may optimize out unused members.</p>
+<p>In the above structure, if we swap the positions of <code>vec2 mousePos;</code> and <code>float time;</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// c++</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="p">};</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// shader</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">    </span><span class="n">vec2</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>Although the structure definitions seem the same, there are significant differences in memory layout.</p>
+<p>Taking OpenGL as an example: OpenGL requires <code>vec2</code> to follow <code>8-byte</code> alignment. This causes the UniformBlock structure definition in the shader to add <code>4 bytes</code> of padding between <code>time</code> and <code>mousePos</code> to ensure <code>mousePos</code> is <code>8-byte</code> aligned. This means the actual size of the shader-side struct is not <code>12 bytes</code> but <code>16 bytes</code>. If the C++ side still treats it as <code>12 bytes</code>, the Uniform data uploaded from the C++ side will not match what the Shader receives.</p>
+<p>To solve this problem, a brute-force method is to manually pad data on the C++ side to ensure alignment:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// c++</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">__padding</span><span class="p">;</span><span class="w">     </span><span class="c1">// This variable is used for padding alignment to match the memory structure in the Shader</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="p">};</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// shader</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">    </span><span class="n">vec2</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="p">};</span>
+</code></pre></div>
+<p>In C++11, a more elegant method is provided—<a href="https://en.cppreference.com/w/cpp/language/alignas">alignas</a>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// c++</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="k">alignas</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span><span class="w">      </span><span class="c1">// Use alignas to specify 8-byte alignment for this member</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="p">};</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// shader</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="w">    </span><span class="n">vec2</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>For more details on buffer alignment, refer to:</p>
+<ul>
+<li><a href="https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/08%20Advanced%20GLSL/#uniform_1">Learn OpenGL Uniform Block Layout</a></li>
+<li><a href="https://www.khronos.org/opengl/wiki/Interface_Block_(GLSL)#Memory_layout">OpenGL Wiki - Interface_Block</a></li>
+</ul>
+<h3 id="storage-buffers">Storage Buffers<a class="headerlink" href="#storage-buffers" title="Permanent link">¶</a></h3>
+<p><strong>Storage Buffers</strong> are used to provide readable and writable data in Compute Pipelines.</p>
+<p>Their usage is almost identical to UniformBuffers. The main differences between them are:</p>
+<ul>
+<li><strong>Storage Buffers can allocate very large video memory</strong>: The OpenGL specification guarantees Uniform Buffers can be up to <strong>16KB</strong>, while Storage Buffers can be up to <strong>128MB</strong>.</li>
+<li><strong>Storage Buffers are writable and even support atomic operations</strong>: Reads and writes to Storage Buffers may be out of order, so they often require memory barriers to ensure synchronization.</li>
+<li><strong>Storage Buffers support variable storage</strong>: This means blocks in Storage Buffers can define unbounded arrays, like <code>int arr[];</code>. In shaders, <code>arr.length</code> can be used to get the array length, whereas blocks in Uniform Buffers require explicit array sizes when defining arrays.</li>
+<li><strong>Under the same conditions, SSBO access is slower than Uniform Buffers</strong>: Storage Buffers are usually accessed like buffer textures, while Uniform Buffer data is read through internally shader-accessible memory.</li>
+</ul>
+<p>Their usage will be explained in the later Compute Shader chapter. Here is a comprehensive document:</p>
+<ul>
+<li><a href="https://www.khronos.org/opengl/wiki/Shader_Storage_Buffer_Object">https://www.khronos.org/opengl/wiki/Shader_Storage_Buffer_Object</a></li>
+</ul>
+<h2 id="textures">Textures<a class="headerlink" href="#textures" title="Permanent link">¶</a></h2>
+<p>In previous chapters, we generated a colored triangle image using three vertex attributes and rasterization interpolation:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../01-GraphicsAPI/Resources/image-20230503194533809.png" data-desc-position="bottom"><img alt="image-20230503194533809" src="../../../../01-GraphicsAPI/Resources/image-20230503194533809.png"></a></p>
+<p>In computers, if we want to draw an image—since images often have many non-linearly gradient attributes—continuing to use vertices to pass color attributes would require millions of triangles for a single image. Although this data volume is manageable for GPUs, such a large number of triangles would undoubtedly put enormous pressure on the geometry and rasterization stages.</p>
+<p>For example, this is a noise image only <code>500*500</code> in size:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../01-GraphicsAPI/Resources/image-20230520124250341.png" data-desc-position="bottom"><img alt="image-20230520124250341" src="../../../../01-GraphicsAPI/Resources/image-20230520124250341.png"></a></p>
+<p>Each color is not linearly gradient. If we describe these attributes using vertices, we would need 2.5 million vertices, meaning the graphics rendering pipeline would need to process nearly a million triangles to render this image. Clearly, this operation is very performance-intensive.</p>
+<p>To solve the problem of image rendering, graphics APIs introduced another concept—<strong>Textures</strong>.</p>
+<p>They exist as <strong>Shader Resources</strong> in the graphics rendering pipeline. Similar to buffers, they hold a section of GPU memory and include characteristics—<strong>Image Format</strong>, <strong>Sample Count</strong>, and <strong>Type Flags</strong>.</p>
+<p>In QRhi, you can create a texture using the following interface:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">QRhiTexture</span><span class="o">*</span><span class="w"> </span><span class="nf">QRhi::newTexture</span><span class="p">(</span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">Format</span><span class="w"> </span><span class="n">format</span><span class="p">,</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">                        </span><span class="k">const</span><span class="w"> </span><span class="n">QSize</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pixelSize</span><span class="p">,</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">                        </span><span class="kt">int</span><span class="w"> </span><span class="n">sampleCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">                        </span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">Flags</span><span class="w"> </span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{});</span>
+</code></pre></div>
+<ul>
+<li><strong>format</strong>: Image format. Common image formats include:</li>
+<li><code>RGBA8</code>: Has four channels—Red <code>R</code>, Green <code>G</code>, Blue <code>B</code>, and Alpha <code>A</code>. <code>8</code> means each channel occupies <code>8 bits</code> (one byte), which can represent 256 feature values.</li>
+<li><code>R8</code>: Has a single Red (R) channel. <code>8</code> means each channel occupies <code>8 bits</code>.</li>
+<li><code>RGBA32F</code>: Floating-point texture with four channels—Red <code>R</code>, Green <code>G</code>, Blue <code>B</code>, and Alpha <code>A</code>. <code>32</code> means each channel occupies <code>32 bits</code> (four bytes). Non-floating-point textures can only store values between [0,1]; values outside this range are discarded. Floating-point textures allow values on the image to exceed this range.</li>
+<li><code>D24S8</code>: Uses <code>24 bits</code> for the depth channel and <code>8 bits</code> for the stencil channel.</li>
+<li>...</li>
+<li><strong>pixelSize</strong>: The size of the image to create.</li>
+<li><strong>sampleCount</strong>: Number of samples, default is 1 (no multisampling for anti-aliasing). Generally, computers support setting sample counts to {1, 2, 4, 8}.</li>
+<li><strong>flags</strong>: Texture flags. By default, QRhi creates a 2D texture. This flag can specify other types (e.g., 1D, 3D, cube, texture array) and behavioral characteristics (e.g., whether to generate Mipmaps, whether it can be a transfer source, whether it can be read/written by compute shaders, whether it can be used as a RenderTarget attachment).</li>
+</ul>
+<p>We can create a texture using the following code:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">QImgae</span><span class="w"> </span><span class="n">mImage</span><span class="p">;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiTexture</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mTexture</span><span class="p">;</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="n">mImage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QImage</span><span class="p">(</span><span class="s">"{Your Image Path}"</span><span class="p">).</span><span class="n">convertedTo</span><span class="p">(</span><span class="n">QImage</span><span class="o">::</span><span class="n">Format_RGBA8888</span><span class="p">);</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="n">mTexture</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newTexture</span><span class="p">(</span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">RGBA8</span><span class="p">,</span><span class="w"> </span><span class="n">mImage</span><span class="p">.</span><span class="n">size</span><span class="p">()));</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="n">mTexture</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<p>To map the image onto geometric shapes, we add an attribute to the vertices of the geometric shape—<strong>Texture Coordinates</strong>.</p>
+<blockquote>
+<p>Texture coordinates range from 0 to 1 on the x and y axes. Obtaining texture colors using texture coordinates is called Sampling. Texture coordinates start at (0, 0) (the bottom-left corner of the texture image) and end at (1, 1) (the top-right corner). The following image shows how texture coordinates are mapped onto a triangle.</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../01-GraphicsAPI/Resources/tex_coords.png" data-desc-position="bottom"><img alt="img" src="../../../../01-GraphicsAPI/Resources/tex_coords.png"></a></p>
+<p>To distinguish from coordinate components of spatial positions, texture coordinates generally use u, v, w instead of x, y, z. Since 2D textures are commonly used, texture coordinates are often called <strong>UV</strong>.</p>
+</blockquote>
+<p>Additionally, there are some issues we need to consider:</p>
+<ul>
+<li>Suppose an image stored on disk with size <code>100*100</code> is zoomed to <code>1000*1000</code> during preview. The original image has only 10,000 pixels but needs to display 1,000,000 pixels on the screen. You might think of rasterization interpolation from earlier, but now we are not drawing the image using vertices but as a shader texture resource. Interpolation is definitely needed, but what interpolation method should be used?</li>
+<li>Suppose we want to perform the following operation on every point of an image: calculate the average of each pixel with its 8 neighboring pixels. This看似 simple operation has a major problem—the pixels around the edges do not have 8 neighboring pixels, meaning we need to handle them specially. Special handling implies logical branches, and as mentioned in the previous chapter, GPUs are not good at logical processing. Is there another way? If we can sample the missing pixels at the boundaries normally and return a value (e.g., 0), we wouldn't need to handle boundaries specially. This operation means we might sample the image outside the texture coordinate range [0,1]. What value should be returned in such cases?</li>
+</ul>
+<p>This is the responsibility of the <strong>Sampler</strong>—defining <strong>Interpolation Filtering Behavior</strong> and <strong>Out-of-Bounds Handling Strategy</strong>.</p>
+<p>Here is an excellent article explaining these behaviors; readers are strongly encouraged to read it:</p>
+<ul>
+<li><a href="https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/#_3">https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/#_3</a></li>
+</ul>
+<p>In QRhi, you can create a sampler using the following function:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">Filter</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">    </span><span class="n">None</span><span class="p">,</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">    </span><span class="n">Nearest</span><span class="p">,</span><span class="w">        </span><span class="c1">// Nearest Neighbor Filtering: takes the pixel value closest to the texture coordinate</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">    </span><span class="n">Linear</span><span class="w">          </span><span class="c1">// Linear Filtering: interpolates based on pixels around the texture coordinate         </span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="p">};</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="k">enum</span><span class="w"> </span><span class="nc">AddressMode</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="w">    </span><span class="n">Repeat</span><span class="p">,</span><span class="w">         </span><span class="c1">// Repeat: out-of-bounds parts use repeated images</span>
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="w">    </span><span class="n">ClampToEdge</span><span class="p">,</span><span class="w">    </span><span class="c1">// Clamp to edge: out-of-bounds parts use pixel values from the image edges</span>
+<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="w">    </span><span class="n">Mirror</span><span class="p">,</span><span class="w">         </span><span class="c1">// Mirror: out-of-bounds parts use mirrored images</span>
+<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="p">};</span>
+<a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="n">QRhiSampler</span><span class="o">*</span><span class="nf">QRhi::newSampler</span><span class="p">(</span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="w"> </span><span class="n">magFilter</span><span class="p">,</span>
+<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="w"> </span><span class="n">minFilter</span><span class="p">,</span>
+<a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="w"> </span><span class="n">mipmapMode</span><span class="p">,</span>
+<a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="w"> </span><span class="n">addressU</span><span class="p">,</span>
+<a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="w"> </span><span class="n">addressV</span><span class="p">,</span>
+<a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="w"> </span><span class="n">addressW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Repeat</span><span class="p">);</span>
+</code></pre></div>
+<ul>
+<li><strong>magFilter</strong>: Magnification filter—sampling method used when the image is zoomed in.</li>
+<li><strong>minFilter</strong>: Minification filter—sampling method used when the image is zoomed out.</li>
+<li><strong>mipmapMode</strong>: Mipmap sampling mode (explained in the next article).</li>
+<li><strong>addressU</strong>: Out-of-bounds handling strategy in the horizontal direction.</li>
+<li><strong>addressV</strong>: Out-of-bounds handling strategy in the vertical direction.</li>
+<li><strong>addressW</strong>: Out-of-bounds handling strategy in the direction perpendicular to the screen in 3D space (can be ignored for 2D textures).</li>
+</ul>
+<p>You can create a sampler using the following method:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiSampler</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mSapmler</span><span class="p">;</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="n">mSapmler</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newSampler</span><span class="p">(</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="o">::</span><span class="n">Linear</span><span class="p">,</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="o">::</span><span class="n">Linear</span><span class="p">,</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="o">::</span><span class="n">Nearest</span><span class="p">,</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="o">::</span><span class="n">Repeat</span><span class="p">,</span>
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="o">::</span><span class="n">Repeat</span><span class="p">,</span>
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="o">::</span><span class="n">Repeat</span>
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="p">));</span>
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="n">mSapmler</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<p>Like UniformBuffer, Textures are <strong>Shader Resources</strong>. To use them, you need to bind them in <strong>ShaderResourceBinding</strong>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="n">mShaderBindings</span><span class="o">-&gt;</span><span class="n">setBindings</span><span class="p">({</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">    </span><span class="n">QRhiShaderResourceBinding</span><span class="o">::</span><span class="n">sampledTexture</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w">                                                    </span><span class="c1">// Binding index in the pipeline</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">                                              </span><span class="n">QRhiShaderResourceBinding</span><span class="o">::</span><span class="n">StageFlag</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w">  </span><span class="c1">// Can be used in the fragment shader</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">                                              </span><span class="n">mTexture</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w">                                       </span><span class="c1">// Texture object</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">                                              </span><span class="n">mSapmler</span><span class="p">.</span><span class="n">get</span><span class="p">())</span><span class="w">                                       </span><span class="c1">// Sampler object</span>
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="p">});</span>
+</code></pre></div>
+<p>With the above code, we can sample the texture in the fragment shader using the following code:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">vUV</span><span class="p">;</span><span class="w">           </span><span class="c1">// Texture coordinates passed from the vertex shading stage via rasterization</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">outFragColor</span><span class="p">;</span><span class="w"> </span><span class="c1">// Fragment color output</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="k">layout</span><span class="p">(</span><span class="n">binding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">inTexture</span><span class="p">;</span><span class="w">    </span><span class="c1">// Shader texture resource</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">(){</span>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">    </span><span class="n">outFragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">inTexture</span><span class="p">,</span><span class="n">vUV</span><span class="p">);</span><span class="w">  </span><span class="c1">// Sample the image using the texture function based on UV coordinates; returns a vec4</span>
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>Here are some useful tips:</p>
+<ul>
+<li>In GLSL, you can use the function <code>textureSize(inTexture, 0)</code> to get the texture size.</li>
+<li>When testing the effects of some Passes in certain chapters, you may often need to draw full-screen textures. There's a simple method: generate vertex and texture coordinates for a rectangle using the built-in vertex shader variable <code>gl_VertexIndex</code> without any vertex input. Just use an empty <strong>InputVertexLayout</strong> and call <code>cmdBuffer-&gt;draw(4)</code> to draw the rectangle texture. The vertex shader creation is as follows:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">VertexStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">"</span><span class="dl">(</span><span class="s">#version 450</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="s">    layout (location = 0) out vec2 vUV;</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="s">    out gl_PerVertex{</span>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="s">        vec4 gl_Position;</span>
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="s">    };</span>
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="s">    void main() {</span>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="s">        vUV = vec2((gl_VertexIndex &lt;&lt; 1) &amp; 2, gl_VertexIndex &amp; 2);      /</span>
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="s">        gl_Position = vec4(vUV * 2.0f - 1.0f, 0.0f, 1.0f);</span>
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="s">#if Y_UP_IN_NDC              // Since DX and GL/VK have different NDC coordinates, compatibility handling is needed here</span>
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="s">        vUV.y = 1 - vUV.y;</span>
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a><span class="s">#endif </span>
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a><span class="s">    }</span><span class="dl">)</span><span class="s">"</span>
+<a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a><span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">QShaderDefinitions</span><span class="p">()</span><span class="w">   </span><span class="c1">// This parameter simply adds #define Y_UP_IN_NDC 1 at the beginning of the code       </span>
+<a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a><span class="w">    </span><span class="p">.</span><span class="n">addDefinition</span><span class="p">(</span><span class="s">"Y_UP_IN_NDC"</span><span class="p">,</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">isYUpInNDC</span><span class="p">())</span>
+<a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>For details: <a href="https://stackoverflow.com/questions/2588875/whats-the-best-way-to-draw-a-fullscreen-quad-in-opengl-3-2">https://stackoverflow.com/questions/2588875/whats-the-best-way-to-draw-a-fullscreen-quad-in-opengl-3-2</a></p>
+</blockquote>
+<h2 id="examples">Examples<a class="headerlink" href="#examples" title="Permanent link">¶</a></h2>
+<p>The <a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/1-GraphicsAPI/04-BufferAndTexture/Source/main.cpp">04-BufferAndTexture</a> example in this tutorial demonstrates how to use <strong>Uniform Buffers</strong>, <strong>Index Buffers</strong>, and <strong>Textures</strong>. You can use it as a reference to implement interesting things:</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../01-GraphicsAPI/Resources/418.gif" data-desc-position="bottom"><img alt="418" src="../../../../01-GraphicsAPI/Resources/418.gif"></a></p>
+<h2 id="memory-management">Memory Management<a class="headerlink" href="#memory-management" title="Permanent link">¶</a></h2>
+<p>In the <a href="https://zhuanlan.zhihu.com/p/603325037">C++ Memory Management</a> chapter, we introduced some methods for managing CPU memory in C++. For GPU memory, there are also specific terms. Here are some detailed documents:</p>
+<ul>
+<li><strong>Vulkan Dos and Don'ts</strong>: <a href="https://developer.nvidia.com/blog/vulkan-dos-donts/">https://developer.nvidia.com/blog/vulkan-dos-donts/</a></li>
+<li><strong>DX12 Dos and Don'ts</strong>: <a href="https://developer.nvidia.com/dx12-dos-and-donts">https://developer.nvidia.com/dx12-dos-and-donts</a></li>
+</ul>
+<p>There are also third-party libraries we can rely on:</p>
+<ul>
+<li><strong>Vulkan Memory Allocator</strong>: <a href="https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator">https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator</a></li>
+<li><strong>D3D12 Memory Allocator</strong>: <a href="https://github.com/GPUOpen-LibrariesAndSDKs/D3D12MemoryAllocator">https://github.com/GPUOpen-LibrariesAndSDKs/D3D12MemoryAllocator</a></li>
+</ul>
+<blockquote>
+<p>Fortunately, QRhi already includes these two memory allocators internally: <a href="https://github.com/qt/qtbase/tree/dev/src/gui/rhi">https://github.com/qt/qtbase/tree/dev/src/gui/rhi</a></p>
+</blockquote>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="创建日期">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js" data-repo="Italink/ModernGraphicsEngineGuide" data-repo-id="R_kgDOIPtbiQ" data-category-id="DIC_kwDOIPtbic4CTxOk" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous" async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078q-.408 1.096-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58 58 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.2 9.2 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125M13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>

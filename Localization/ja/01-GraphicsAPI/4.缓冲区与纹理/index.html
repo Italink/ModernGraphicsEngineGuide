@@ -1,0 +1,3724 @@
+<!DOCTYPE html><html lang="zh" class="no-js"><head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+        
+          <link rel="alternate" href="/" hreflang="zh">
+        
+          <link rel="alternate" href="/Localization/en/" hreflang="en">
+        
+          <link rel="alternate" href="/Localization/ja/" hreflang="ja">
+        
+          <link rel="alternate" href="/Localization/ko/" hreflang="ko">
+        
+          <link rel="alternate" href="/Localization/fr/" hreflang="fr">
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>バッファとテクスチャ - Modern Graphics Engine Guide</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../Stylesheet/mkdocs_extra.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+<script id="__analytics">function __md_analytics(){function e(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],e("js",new Date),e("config","G-S1J8MN27P8"),document.addEventListener("DOMContentLoaded",(function(){document.forms.search&&document.forms.search.query.addEventListener("blur",(function(){this.value&&e("event","search",{search_term:this.value})}));document$.subscribe((function(){var t=document.forms.feedback;if(void 0!==t)for(var a of t.querySelectorAll("[type=submit]"))a.addEventListener("click",(function(a){a.preventDefault();var n=document.location.pathname,d=this.getAttribute("data-md-value");e("event","feedback",{page:n,data:d}),t.firstElementChild.disabled=!0;var r=t.querySelector(".md-feedback__note [data-md-value='"+d+"']");r&&(r.hidden=!1)})),t.hidden=!1})),location$.subscribe((function(t){e("config","G-S1J8MN27P8",{page_path:t.pathname})}))}));var t=document.createElement("script");t.async=!0,t.src="https://www.googletagmanager.com/gtag/js?id=G-S1J8MN27P8",document.getElementById("__analytics").insertAdjacentElement("afterEnd",t)}</script>
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+  <link rel="stylesheet" href="../../../../assets/stylesheets/custom.2fa34c39.min.css">
+
+  <link href="../../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+            html.glightbox-open { overflow: initial; height: 100%; }
+            .gslide-title { margin-top: 0px; user-select: text; }
+            .gslide-desc { color: #666; user-select: text; }
+            .gslide-image img { background: white; }
+            .gscrollbar-fixer { padding-right: 15px; }
+            .gdesc-inner { font-size: 0.75rem; }
+            body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color); }
+            body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color); }
+            body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color); }
+        </style></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+              <button class="md-banner__button md-icon" aria-label="不再显示此消息">
+                
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+              </button>
+            
+            
+  加入讨论
+  <a href="https://jq.qq.com/?_wv=1027&amp;k=zxLqjaHA">
+    <span class="twemoji twitter">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3.18 13.54c.58-1.38 1.39-2.4 1.99-2.62-.01-.8.14-1.3.39-1.7 0-.03-.06-.36.16-.77C5.87 4.85 8.21 2 12 2s6.13 2.85 6.28 6.45c.22.41.16.74.16.77.25.4.4.9.39 1.7.6.22 1.41 1.24 1.99 2.63.75 1.76.87 3.45.27 3.75-.41.2-1.06-.3-1.67-1.18-.24.98-.84 1.88-1.69 2.59.9.33 1.48.87 1.48 1.48 0 1-1.58 1.81-3.52 1.81-1.76 0-3.19-.66-3.48-1.5h-.42c-.29.84-1.72 1.5-3.48 1.5-1.94 0-3.52-.81-3.52-1.81 0-.61.58-1.15 1.48-1.48-.85-.71-1.45-1.61-1.69-2.59-.61.88-1.26 1.38-1.67 1.18-.6-.3-.48-1.99.27-3.76"></path></svg>
+    </span>
+    <strong>Q群：128731454</strong>
+  </a>
+  
+
+          </div>
+          
+            <script>var el=document.querySelector("[data-md-component=announce]");if(el){var content=el.querySelector(".md-typeset");__md_hash(content.innerHTML)===__md_get("__announce")&&(el.hidden=!0)}</script>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-header__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Modern Graphics Engine Guide
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              バッファとテクスチャ
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="Switch to dark mode" type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo" aria-label="" type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="选择当前语言">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"></path></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/" hreflang="zh" class="md-select__link">
+              Chinese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/en/" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ja/" hreflang="ja" class="md-select__link">
+              Japanese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/ko/" hreflang="ko" class="md-select__link">
+              Korean
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/Localization/fr/" hreflang="fr" class="md-select__link">
+              French
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  开篇
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  C++
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  图形API
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  引擎技术
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Unreal Engine
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  开源
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../06-Blog/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  个人博客
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="Modern Graphics Engine Guide" class="md-nav__button md-logo" aria-label="Modern Graphics Engine Guide" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+
+    </a>
+    Modern Graphics Engine Guide
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Italink/ModernGraphicsEngineGuide" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+  </div>
+  <div class="md-source__repository">
+    Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开篇
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2">
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/1.%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8F%B2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 计算机发展史
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/2.C%2B%2B%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - C++基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/3.%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/4.%E5%AE%8F%E3%80%81%E6%A8%A1%E6%9D%BF%E3%80%81%E5%8F%8D%E5%B0%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 宏、模板、反射
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/5.%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 内存管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../00-C%2B%2B/6.GUI/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - GUI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3">
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    图形API
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    图形API
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/0.%E6%A6%82%E8%BF%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 概述
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/1.%E5%9F%BA%E7%A1%80/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 基础
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/2.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 图形渲染管线
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/3.%E7%9D%80%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 着色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/4.%E7%BC%93%E5%86%B2%E5%8C%BA%E4%B8%8E%E7%BA%B9%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - 缓冲区与纹理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/5.%E4%B8%89%E7%BB%B4%E7%A9%BA%E9%97%B4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - 3D空间
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../01-GraphicsAPI/6.%E5%9B%BE%E5%BD%A2%E6%B8%B2%E6%9F%93%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 图形API进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4">
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    引擎技术
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    引擎技术
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/0.%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 渲染架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/1.%E7%BC%96%E8%BE%91%E5%99%A8%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - 编辑器架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../02-EngineTechnology/Waitting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - DebugDraw
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5">
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Unreal Engine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Unreal Engine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/0.%E5%9F%BA%E7%A1%80%E7%BC%96%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0 - 基础编程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/1.Slate%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1 - Slate 开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/2.%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2 - 插件开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/3.%E7%B2%92%E5%AD%90%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3 - 粒子系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/4.Niagra%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4 - Niagara 性能优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/5.FluidNinja%E6%B5%81%E4%BD%93%E6%8F%92%E4%BB%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5 - Fluid Ninja 流体插件
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/6.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E5%88%B6%E4%BD%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6 - 开放世界制作
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/7.%E9%9F%B3%E9%A2%91%E5%BC%80%E5%8F%91/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7 - 音频开发
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/9.%E5%BC%80%E6%94%BE%E4%B8%96%E7%95%8C%E4%B8%AD%E7%9A%84%E6%A4%8D%E8%A2%AB%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9 - 植被优化
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/10.LOD%E4%B8%8D%E5%AE%8C%E5%85%A8%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10 - LOD不完全指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/12.%E7%A8%8B%E5%BA%8F%E5%8C%96%E5%86%85%E5%AE%B9%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12 - 程序化内容管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/16.3DGaussianSplatting/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16 - 3DGaussianSplatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../04-UnrealEngine/17.Landscape%E9%81%BF%E5%9D%91%E6%8C%87%E5%8D%97/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17 - Landscape 避坑指南
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6">
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    开源
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    开源
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_1">
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UnrealEngine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    UnrealEngine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/UnrealEngine/GaussianSplattingForUnrealEngine/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gaussian Splatting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_2">
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    C++
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/C%2B%2B/C%2B%2B%E5%8F%8D%E5%B0%84%E7%BC%96%E8%AF%91%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    C++反射编译器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6_3">
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Qt
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%9F%B3%E9%A2%91%E5%8F%AF%E8%A7%86%E5%8C%96%E8%BD%AF%E4%BB%B6-Specinker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    音频可视化软件-Specinker(已闭源)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/%E9%A2%91%E8%B0%B1%E5%88%86%E6%9E%90%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    频谱分析器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%8B%9F%E6%80%81%E7%AA%97%E5%8F%A3%E6%BB%A4%E9%95%9C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt拟态窗口滤镜
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E5%B1%8F%E5%B9%95%E5%8F%96%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt屏幕取色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%B8%90%E5%8F%98%E8%B0%83%E8%89%B2%E5%99%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt渐变调色器
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E7%B2%92%E5%AD%90%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面粒子特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../05-OpenSource/Qt/Qt%E6%A1%8C%E9%9D%A2%E6%B0%B4%E9%9D%A2%E6%B3%A2%E7%BA%B9%E7%89%B9%E6%95%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Qt桌面水面波纹特效
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7">
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../06-Blog/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人博客
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    个人博客
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_2">
+        
+          
+          <label class="md-nav__link" for="__nav_7_2" id="__nav_7_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    归档
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    归档
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/05/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    五月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2024/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2024
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/08/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    八月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/06/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    六月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/04/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    四月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/03/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    三月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2023/02/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    二月 2023
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/09/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    九月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2020/01/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    一月 2020
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/archive/2019/11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    十一月 2019
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7_3">
+        
+          
+          <label class="md-nav__link" for="__nav_7_3" id="__nav_7_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    分类
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    分类
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E4%B8%AA%E4%BA%BA%E9%9A%8F%E7%AC%94/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    个人随笔
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%95%B4%E6%B4%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    整活
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+    
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../06-Blog/category/%E6%9D%82%E8%B0%88/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    杂谈
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        バッファ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="バッファ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        頂点バッファ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        インデックスバッファ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uniform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uniform バッファ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage バッファ
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        テクスチャ
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        例
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        メモリ管理
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="_1">バッファとテクスチャ<a class="headerlink" href="#_1" title="Permanent link">¶</a></h1>
+<h2 id="_2">バッファ<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
+<p><strong>バッファ（Buffer）</strong> はGPU上のメモリ領域と、それに関連する特性—— <strong>タイプ（Type）</strong> と <strong>用途（Usage）</strong> ——を保持します。</p>
+<p><strong>タイプ（Type）</strong> はバッファのストレージ特性を決定し、グラフィックスAPIでは一般的に以下のように分類されます：</p>
+<ul>
+<li><strong>Host Local Memory</strong> ：Hostからのみアクセス可能なメモリで、通常「通常メモリ」と呼ばれます</li>
+<li><strong>Device Local Memory</strong> ：Deviceからのみアクセス可能なメモリで、通常「ビデオメモリ」と呼ばれます</li>
+<li><strong>Host Local Device Memory</strong> ：Hostによって管理され、Deviceからアクセス可能なメモリ</li>
+<li><strong>Device Local Host Memory</strong> ：Deviceによって管理され、Hostからアクセス可能なメモリ</li>
+</ul>
+<blockquote>
+<p>Host は多くの場合CPU側、 Device はGPU側を指します</p>
+</blockquote>
+<p>詳細については以下を参照してください：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/166387973">Vulkan メモリ管理</a></li>
+</ul>
+<p>適切なメモリタイプを使用することでメモリの読み書き効率が大幅に向上します。現代のグラフィックスエンジンのパイプラインでは、可能な限り <strong>Device Memory</strong> を使用します。CPUからデータを送信する場合、Hostが直接アクセスできないため、通常は <strong>Host可視のMemroy</strong> にデータをアップロードし、その後命令によって対応する <strong>Device Memory</strong> にコピーします。このHost可視メモリを保持するバッファを一般的に <a href="https://link.zhihu.com/?target=https%3A//vulkan-tutorial.com/Vertex_buffers/Staging_buffer">Staging Buffer</a> と呼びます。</p>
+<p><strong>用途（Usage）</strong> において、バッファは通常以下の <strong>フラグ（Flag）</strong> を持ちます：</p>
+<ul>
+<li><strong>VertexBuffer</strong> ：頂点データを格納するために使用</li>
+<li><strong>IndexBuffer</strong> ：インデックスデータを格納するために使用</li>
+<li><strong>UniformBuffer</strong> ：定数データを格納するために使用</li>
+<li><strong>StorageBuffer</strong> ：Computeパイプラインにおけるデータ計算に使用</li>
+<li><strong>IndirectDrawBuffer</strong> ：間接レンダリングのレンダリングパラメータを提供するために使用</li>
+</ul>
+<p>グラフィックスレンダリングパイプラインの章では、QRhiを使用して頂点データを格納するバッファ（ <strong>VertexBuffer</strong> ）を簡単に作成しました：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mVertexBuffer</span><span class="p">;</span><span class="w">   </span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Immutable</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">VertexBuffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">VertexData</span><span class="p">)));</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">mVertexBuffer</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span><span class="w"> </span><span class="c1">//QRhiでは、レンダリングリソースオブジェクトのcreate関数を呼び出すことで実際にGPUリソースが作成されます。これまではパラメータ状態機械を調整しているだけです</span>
+</code></pre></div>
+<p><code>newBuffer</code>関数を使用して新しいバッファを申請できます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">QRhiBuffer</span><span class="o">*</span><span class="w"> </span><span class="nf">QRhi::newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Type</span><span class="w"> </span><span class="n">type</span><span class="p">,</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">                            </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">UsageFlags</span><span class="w"> </span><span class="n">usage</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">                            </span><span class="n">quint32</span><span class="w"> </span><span class="n">size</span><span class="p">);</span>
+</code></pre></div>
+<p>関数パラメータの意味は以下の通りです：</p>
+<ul>
+<li>
+<p><strong>Type</strong> ：バッファのタイプで、バッファのストレージ特性を決定します。</p>
+</li>
+<li>
+<p><strong>Immutable</strong> ：永続的に変更されないデータを格納するために使用し、非常に効率的なGPU読み書き性能を持ちます。通常 <strong>Device Local</strong> のGPUメモリに配置され、CPUから直接読み書きすることはできませんが、QRhiはアップロードをサポートしています。その原理は：データをアップロードするたびに <strong>Host Local</strong> の <strong>Staging Buffer</strong> を新規作成し、中継として新しいデータをアップロードすることです。この操作のコストは非常に高いです。</p>
+</li>
+<li>
+<p><strong>Static</strong> ：同様に <strong>Device Local</strong> のGPUメモリに格納されます。Immutableと異なる点は、初回データアップロード時に作成された <strong>Staging Buffer</strong> が常に保持されることです。</p>
+</li>
+<li>
+<p><strong>Dynamic</strong> ：頻繁に変化するデータを格納するために使用し、 <strong>Host Local</strong> のGPUメモリに配置されます。グラフィックスレンダリングパイプラインを遅延させないため、通常ダブルバッファ機構を使用します。</p>
+</li>
+<li>
+<p><strong>Usage</strong> ：バッファの用途で、<code>Flags</code>は演算子<code>|</code>を使用して複数の<code>Flag</code>を共存させることができることを示します</p>
+</li>
+<li>
+<p><strong>VertexBuffer</strong> ：このバッファが頂点バッファとして使用可能であることを示し、頂点データを格納してグラフィックスレンダリングパイプラインの入力とします</p>
+</li>
+<li><strong>IndexBuffer</strong> ：このバッファがインデックスバッファとして使用可能であることを示し、インデックスデータを格納して頂点データを選択します</li>
+<li><strong>UniformBuffer</strong> ：このバッファがUniformバッファとして使用可能であることを示し、Uniformデータを格納してシェーダの共通入力とします</li>
+<li>
+<p><strong>StorageBuffer</strong> ：このバッファがStorageバッファとして使用可能であることを示し、このバッファはコンピュートシェーダによって読み書きされることができます</p>
+</li>
+<li>
+<p><strong>Size</strong> ：バッファのサイズ（単位はバイト）</p>
+</li>
+</ul>
+<h3 id="_3">頂点バッファ<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<p><strong>頂点バッファ（VertexBuffer）</strong> はパイプラインの入力として使用されます。</p>
+<p>QRhiでは、レンダリング命令を記録する際に、グラフィックスレンダリングパイプラインに頂点入力を指定しなければならないことに体現されます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setGraphicsPipeline</span><span class="p">(</span><span class="n">mPipeline</span><span class="p">.</span><span class="n">get</span><span class="p">());</span><span class="w">                            </span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setViewport</span><span class="p">(</span><span class="n">QRhiViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">mSwapChain</span><span class="o">-&gt;</span><span class="n">currentPixelSize</span><span class="p">().</span><span class="n">width</span><span class="p">(),</span><span class="w"> </span><span class="n">mSwapChain</span><span class="o">-&gt;</span><span class="n">currentPixelSize</span><span class="p">().</span><span class="n">height</span><span class="p">()));</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setShaderResources</span><span class="p">();</span><span class="w">                                        </span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">const</span><span class="w"> </span><span class="n">QRhiCommandBuffer</span><span class="o">::</span><span class="n">VertexInput</span><span class="w"> </span><span class="nf">vertexInput</span><span class="p">(</span><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span><span class="w">   </span><span class="c1">// mVertexBufferをBuffer0にバインドし、メモリオフセット値は0</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setVertexInput</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">vertexInput</span><span class="p">);</span><span class="w">                              </span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">draw</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span><span class="w">                                                         </span>
+</code></pre></div>
+<p>また、パイプラインを作成する際に、パイプラインに <strong>頂点入力レイアウト（VertexInputLayout）</strong> を設定しなければなりません。これはバッファの解析ルールを指定するために使用されます。前の章では、以下のような頂点データを使用しました：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">VertexData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">                                       </span><span class="c1">//頂点データ</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="c1">//position(xy)      color(rgba)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">     </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">     </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">      </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">};</span>
+</code></pre></div>
+<p>この頂点データを以下の頂点シェーダ入力で使用するために：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">position</span><span class="p">;</span><span class="w">  </span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">color</span><span class="p">;</span>
+</code></pre></div>
+<p>以下のような頂点入力レイアウトを定義できます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">QRhiVertexInputLayout</span><span class="w"> </span><span class="n">inputLayout</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">inputLayout</span><span class="p">.</span><span class="n">setBindings</span><span class="p">({</span><span class="w">        </span><span class="c1">//各VertexBufferの単一組頂点データのスパンを定義し、ここでは1つのVertexBufferのみ使用</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="c1">//ここは6*sizeof(float)で、GPUがインデックス0のBufferから24バイトのデータを読み取り、単一組の頂点データとしてVertexShaderに渡すと考えることができます</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="n">QRhiVertexInputBinding</span><span class="p">(</span><span class="mi">6</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">))</span><span class="w"> </span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="p">});</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">inputLayout</span><span class="p">.</span><span class="n">setAttributes</span><span class="p">({</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">    </span><span class="c1">//Buffer 0から取得した単一組の頂点データ中で、オフセット値0からFloat2サイズのデータを読み取り、location 0の入力とします</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">    </span><span class="n">QRhiVertexInputAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">QRhiVertexInputAttribute</span><span class="o">::</span><span class="n">Float2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">    </span><span class="c1">//Buffer 0から取得した単一組の頂点データ中で、オフセット値sizeof(float)*2からFloat4サイズのデータを読み取り、location 1の入力とします</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="n">QRhiVertexInputAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">QRhiVertexInputAttribute</span><span class="o">::</span><span class="n">Float4</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">),</span><span class="w">   </span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="p">});</span>
+</code></pre></div>
+<p>グラフィックスレンダリングの処理過程で、コンピュータが関心を持つのはメモリ上のデータだけで、これらのデータの象徴的な意味は関係ありません。頂点入力レイアウトが存在するため、プログラミング時に頂点のストレージ構造を自由に組織することができます。</p>
+<p>上記ではすべてのデータを<code>float配列</code>に配置しましたが、現在はより直感的な構造を使用できます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">Vertex</span><span class="p">{</span><span class="w">                  </span><span class="c1">//頂点の構造</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">position</span><span class="p">;</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="n">QVector4D</span><span class="w"> </span><span class="n">color</span><span class="p">;</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">};</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">QVector</span><span class="o">&lt;</span><span class="n">Vertex</span><span class="o">&gt;</span><span class="w"> </span><span class="n">vertices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="w">    </span><span class="c1">//頂点データ</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-0.5f</span><span class="p">},</span><span class="w">  </span><span class="p">{</span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="w"> </span><span class="p">}},</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="mf">-0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">},</span><span class="w">  </span><span class="p">{</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="w"> </span><span class="p">}},</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="p">{</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="mf">0.5f</span><span class="p">,</span><span class="w">   </span><span class="mf">0.5f</span><span class="p">},</span><span class="w">  </span><span class="p">{</span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">0.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0f</span><span class="w"> </span><span class="p">}},</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>頂点データを埋めるだけで、<code>sizeof(Vertex) * vertices.size()</code>で頂点バッファを作成できます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mVertexBuffer</span><span class="p">;</span><span class="w">   </span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Immutable</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">VertexBuffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vertex</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">vertices</span><span class="p">.</span><span class="n">size</span><span class="p">()));</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">mVertexBuffer</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span><span class="w"> </span>
+</code></pre></div>
+<p>そして以下のような頂点入力レイアウトを使用します：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">QRhiVertexInputLayout</span><span class="w"> </span><span class="n">inputLayout</span><span class="p">;</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">inputLayout</span><span class="p">.</span><span class="n">setBindings</span><span class="p">({</span><span class="w">   </span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="n">QRhiVertexInputBinding</span><span class="p">(</span><span class="k">sizeof</span><span class="p">(</span><span class="n">Vertex</span><span class="p">))</span><span class="w">      </span><span class="c1">//単一頂点データのスパンはVertex構造のサイズです</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">});</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">inputLayout</span><span class="p">.</span><span class="n">setAttributes</span><span class="p">({</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">    </span><span class="n">QRhiVertexInputAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">QRhiVertexInputAttribute</span><span class="o">::</span><span class="n">Float2</span><span class="p">,</span><span class="w"> </span><span class="n">offsetof</span><span class="p">(</span><span class="n">Vertex</span><span class="p">,</span><span class="n">position</span><span class="p">)),</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="n">QRhiVertexInputAttribute</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="n">QRhiVertexInputAttribute</span><span class="o">::</span><span class="n">Float4</span><span class="p">,</span><span class="w"> </span><span class="n">offsetof</span><span class="p">(</span><span class="n">Vertex</span><span class="p">,</span><span class="n">color</span><span class="p">)),</span><span class="w">  </span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="p">});</span>
+</code></pre></div>
+<blockquote>
+<p><strong>offsetof</strong> 演算子は、メンバ変数が構造体またはクラス内のメモリオフセットを取得するために使用できます</p>
+</blockquote>
+<p>アップロード時には配列の裸データを使用すればよいです：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">uploadStaticBuffer</span><span class="p">(</span><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="n">mVertices</span><span class="p">.</span><span class="n">data</span><span class="p">());</span>
+</code></pre></div>
+<h3 id="_4">インデックスバッファ<a class="headerlink" href="#_4" title="Permanent link">¶</a></h3>
+<p><strong>インデックスバッファ（IndexBuffer）</strong> はパイプラインに入力される頂点データを選択するために使用されます。</p>
+<p>一般的な応用シーンは以下の通りです：</p>
+<ul>
+<li>グラフィックスAPIがサポートする基本プリミティブは点、線、三角形のみであるため、多角形を描画する場合、複数の三角形を使用して拼接します。四角形を例にとると、1つの四角形は2つの三角形に分割できます。2つの三角形には6つの頂点がありますが、実際に四角形には4つの頂点しかありません。三角形で拼接する場合、重複する頂点を格納するために2つの頂点データの空間サイズを浪費する必要があります。そのため、頂点バッファ内の頂点データを再利用し、4つの頂点で2つの三角形からなる四角形を描画する策略が必要です。</li>
+</ul>
+<p>パイプラインが頂点入力を処理する際、頂点入力レイアウトに基づいて頂点バッファ内のデータを一組ずつの順序付き頂点データに分割します。<strong>デフォルトの場合</strong>、これらの頂点データはすべてVertexShaderに処理されるために渡されます。</p>
+<p>インデックスバッファの役割は、一組ずつの順序付き頂点データに分割した後、一連のインデックス（Index）を通じて、元の頂点データから選択し、新しい頂点データを組み立ててVertexShaderに渡すことです。</p>
+<p>以下のような頂点データを使用するとします：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">float</span><span class="w"> </span><span class="n">VertexData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">    </span><span class="c1">//position(xy)</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">     </span><span class="mf">1.0f</span><span class="p">,</span><span class="w">   </span><span class="mf">1.0f</span><span class="p">,</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="w">     </span><span class="mf">1.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-1.0f</span><span class="p">,</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">    </span><span class="mf">-1.0f</span><span class="p">,</span><span class="w">  </span><span class="mf">-1.0f</span><span class="p">,</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="mf">-1.0f</span><span class="p">,</span><span class="w">   </span><span class="mf">1.0f</span><span class="p">,</span><span class="w">  </span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="p">};</span>
+</code></pre></div>
+<p>以下のようなインデックスデータを使用して、上記の頂点から6つのインデックスで新しい頂点データを組み立てることができます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">static</span><span class="w"> </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">IndexData</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="w">    </span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="w">    </span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="p">};</span>
+</code></pre></div>
+<p>VertexBufferと同様に、IndexBufferを作成するだけです：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mIndexBuffer</span><span class="p">;</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">mIndexBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Immutable</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">IndexBuffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">IndexData</span><span class="p">)));</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">mIndexBuffer</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<p>そして初回レンダリング命令を記録する際にインデックスデータを提交します：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">uploadStaticBuffer</span><span class="p">(</span><span class="n">mIndexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="n">IndexData</span><span class="p">);</span>
+</code></pre></div>
+<p>レンダリング命令は以下のようになります：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setGraphicsPipeline</span><span class="p">(</span><span class="n">mPipeline</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setViewport</span><span class="p">(</span><span class="n">QRhiViewport</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">mSwapChain</span><span class="o">-&gt;</span><span class="n">currentPixelSize</span><span class="p">().</span><span class="n">width</span><span class="p">(),</span><span class="w"> </span><span class="n">mSwapChain</span><span class="o">-&gt;</span><span class="n">currentPixelSize</span><span class="p">().</span><span class="n">height</span><span class="p">()));</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setShaderResources</span><span class="p">();</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="k">const</span><span class="w"> </span><span class="n">QRhiCommandBuffer</span><span class="o">::</span><span class="n">VertexInput</span><span class="w"> </span><span class="nf">vertexBindings</span><span class="p">(</span><span class="n">mVertexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">);</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1">//IndexBufferを指定し、IndexBufferがUInt32形式のインデックスデータを使用することを明確にします</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">setVertexInput</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">vertexBindings</span><span class="p">,</span><span class="w"> </span><span class="n">mIndexBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiCommandBuffer</span><span class="o">::</span><span class="n">IndexUInt32</span><span class="p">);</span><span class="w">  </span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="c1">//drawの代わりにdrawIndexedを使用し、これによりレンダリングはIndexBufferから6つのインデックスを読み取り、頂点バッファ内のデータを利用して6つの頂点を組み立て、三角形を描画します</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="n">cmdBuffer</span><span class="o">-&gt;</span><span class="n">drawIndexed</span><span class="p">(</span><span class="mi">6</span><span class="p">);</span>
+</code></pre></div>
+<h3 id="uniform">Uniform バッファ<a class="headerlink" href="#uniform" title="Permanent link">¶</a></h3>
+<p><strong>Uniform バッファ（Uniform Buffer）</strong> はパイプラインにシェーダ共通の読み取り専用データを提供するために使用されます。</p>
+<p>QRhiでは、以下のコードでUniformBufferを作成できます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiBuffer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mUniformBuffer</span><span class="p">;</span><span class="w">   </span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Dynamic</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">UniformBuffer</span><span class="p">,</span><span class="w"> </span><span class="n">mUniformBuffer</span><span class="p">));</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">mUniformBuffer</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<ul>
+<li>UniformBufferのタイプは必ず <code>QRhiBuffer::Dynamic</code> である必要があります</li>
+<li><code>UniformBufferSize</code> は必要なバッファのバイトサイズを示します</li>
+</ul>
+<p>通常、UniformBufferを作成する際には、直接<code>UniformBufferSize</code>を使用してメモリ領域を作成するのではなく、補助的な構造体定義を通じて行います。例えば：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="p">};</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1">//...</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newBuffer</span><span class="p">(</span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">Dynamic</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiBuffer</span><span class="o">::</span><span class="n">UniformBuffer</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">UniformBlock</span><span class="p">)));</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="c1">//...</span>
+</code></pre></div>
+<p>これを行う利点は、構造体定義を通じてこのメモリ領域に直感的な構造を与えることができることです。</p>
+<p>例えば上記の構造体では、合計<code>12バイト</code>のメモリを申請し、<code>前8バイト</code>は2次元ベクトルを格納し、<code>後4バイト</code>は浮動小数点数を格納します。</p>
+<p>Uniform Bufferは <strong>シェーダリソース（Shader Resource）</strong> に属します。使用するには、パイプラインのシェーダリソースバインディング（即ちディスクリプタセットレイアウト）にバインディング項目を追加する必要があります：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="n">mShaderBindings</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderResourceBindings</span><span class="p">());</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="n">mShaderBindings</span><span class="o">-&gt;</span><span class="n">setBindings</span><span class="p">({</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">    </span><span class="n">QRhiShaderResourceBinding</span><span class="o">::</span><span class="n">uniformBuffer</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">QRhiShaderResourceBinding</span><span class="o">::</span><span class="n">StageFlag</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w"> </span><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">())</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="p">});</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="n">mShaderBindings</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<ul>
+<li>QRhiShaderResourceBindingでは、シェーダリソースバインディング項目を追加するための静的メソッドが提供されています。ここでは静的関数<code>QRhiShaderResourceBinding::uniformBuffer()</code>を使用します</li>
+<li><code>0</code>はバインディングのインデックスを代表します</li>
+<li><code>QRhiShaderResourceBinding::StageFlag::VertexStage</code>はこのUniformBlockがフラグメント着色段階で使用可能であることを示し、<code>Flag</code>はこれが組み合わせ可能な識別子であることを示します。</li>
+</ul>
+<p>C++コードに上記の構造のサポートがあれば、頂点シェーダで以下のようにUniformBufferデータを使用できます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">"</span><span class="dl">(</span><span class="s">#version 440</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="s">    layout(binding = 0) uniform UniformBlock{   // 0 はShaderResourceBindingの定義に対応</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a><span class="s">        vec2 mousePos;</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="s">        float time;</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="s">    }UBO;</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="s">    //...</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="dl">)</span><span class="s">"</span><span class="p">);</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="n">Q_ASSERT</span><span class="p">(</span><span class="n">vs</span><span class="p">.</span><span class="n">isValid</span><span class="p">());</span>
+</code></pre></div>
+<p>UniformBuffer内のメモリ構造を正しく解析するために、ShaderでC++構造体のメモリレイアウトと同じ <a href="https://www.khronos.org/opengl/wiki/Interface_Block_(GLSL)">インターフェースブロック（Interface Block）</a> を定義しました。上記は簡略化された書き方で、以下の書き方の方が親しみやすいかもしれません：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">"</span><span class="dl">(</span><span class="s">#version 440    </span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="s">    struct UniformBlock{</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="s">        vec2 mousePos;</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="s">        float time;</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="s">    };</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="s">    layout(binding = 0) uniform UniformBlock UBO;</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="s">    //...</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="dl">)</span><span class="s">"</span><span class="p">);</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="n">Q_ASSERT</span><span class="p">(</span><span class="n">vs</span><span class="p">.</span><span class="n">isValid</span><span class="p">());</span>
+</code></pre></div>
+<p>UniformBlockデータを提交する方式は他のBufferと大きな違いはありません：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="n">UniformBlock</span><span class="w"> </span><span class="n">ubo</span><span class="p">;</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="n">ubo</span><span class="p">.</span><span class="n">mousePos</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QVector2D</span><span class="p">(</span><span class="n">mapFromGlobal</span><span class="p">(</span><span class="n">QCursor</span><span class="o">::</span><span class="n">pos</span><span class="p">()))</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">qApp</span><span class="o">-&gt;</span><span class="n">devicePixelRatio</span><span class="p">();</span><span class="w">     </span><span class="c1">//マウス位置を取得</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">ubo</span><span class="p">.</span><span class="n">time</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QTime</span><span class="o">::</span><span class="n">currentTime</span><span class="p">().</span><span class="n">msecsSinceStartOfDay</span><span class="p">()</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mf">1000.0f</span><span class="p">;</span><span class="w">                       </span><span class="c1">//現在時間を取得</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a><span class="n">batch</span><span class="o">-&gt;</span><span class="n">updateDynamicBuffer</span><span class="p">(</span><span class="n">mUniformBuffer</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">UniformBlock</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">ubo</span><span class="p">);</span>
+</code></pre></div>
+<p>上記のコードでは、以下のような構造体定義を使用しました：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">//c++</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="p">};</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// shader</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="w">    </span><span class="n">vec2</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>注意が必要なのは、Shaderで定義されたブロック構造は、グラフィックスAPIがブロックメンバ間にハードウェアアライメントを保持するためのパディングを行う可能性があり、未使用のメンバを最適化して削除する可能性もあることです。</p>
+<p>上記の構造で、<code>vec2 mousePos;</code>と <code>float time;</code>の位置を交換すると：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">//c++</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="p">};</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// shader</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a><span class="w">    </span><span class="n">vec2</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>構造定義上は同じように見えますが、メモリレイアウトには深刻な違いがあります。</p>
+<p>OpneGLを例にとると、OpenGLでは<code>vec2</code>が<code>8バイト</code>アライメントに従うことを要求します。これにより、shader中のUniformBlockの構造定義では、<code>time</code>と<code>mousePos</code>の間に<code>4バイト</code>のパディングが行われ、<code>mousePos</code>が<code>8バイト</code>アライメントであることが保証されます。これはshader側の構造体の実際のサイズが<code>12バイト</code>ではなく<code>16バイト</code>であることを意味します。この時C++側が依然として<code>12バイト</code>として処理すると、C++側がアップロードしたUniformデータとShader側が受け取ったデータが一致しなくなります。</p>
+<p>この問題を解決するための粗暴な方法は、C++側で手動でデータをパディングしてアライメントを保証することです：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">//c++</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="w">    </span><span class="kt">uint32_t</span><span class="w"> </span><span class="n">__padding</span><span class="p">;</span><span class="w">     </span><span class="c1">//この変数はアライメントを保証するためのパディングに使用され、Shader中のメモリ構造と一致させます</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a><span class="w">    </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="p">};</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a>
+<a id="__codelineno-23-7" name="__codelineno-23-7" href="#__codelineno-23-7"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// shader</span>
+<a id="__codelineno-23-8" name="__codelineno-23-8" href="#__codelineno-23-8"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-23-9" name="__codelineno-23-9" href="#__codelineno-23-9"></a><span class="w">    </span><span class="n">vec2</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-23-10" name="__codelineno-23-10" href="#__codelineno-23-10"></a><span class="p">};</span>
+</code></pre></div>
+<p>C++11では、よりエレガントな方法—— <a href="https://en.cppreference.com/w/cpp/language/alignas">alignas</a> ——が提供されています：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">//c++</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="w">    </span><span class="k">alignas</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="w"> </span><span class="n">QVector2D</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span><span class="w">      </span><span class="c1">//alignasを使用してこのメンバが8バイトアライメントを使用することを指定</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a><span class="p">};</span>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="k">struct</span><span class="w"> </span><span class="nc">UniformBlock</span><span class="p">{</span><span class="w">        </span><span class="c1">// shader</span>
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a><span class="w">    </span><span class="kt">float</span><span class="w"> </span><span class="n">time</span><span class="p">;</span>
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a><span class="w">    </span><span class="n">vec2</span><span class="w"> </span><span class="n">mousePos</span><span class="p">;</span>
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="p">};</span>
+</code></pre></div>
+<p>バッファアライメントについて、より詳細な資料は以下の通りです：</p>
+<ul>
+<li><a href="https://learnopengl-cn.github.io/04%20Advanced%20OpenGL/08%20Advanced%20GLSL/#uniform_1">Learn OpenGL Uniform Block Layout</a></li>
+<li><a href="https://www.khronos.org/opengl/wiki/Interface_Block_(GLSL)#Memory_layout">OpenGL Wiki - Interface_Block </a></li>
+</ul>
+<h3 id="storage">Storage バッファ<a class="headerlink" href="#storage" title="Permanent link">¶</a></h3>
+<p><strong>Storage バッファ（Storage Buffer）</strong> は計算パイプライン（Compute Pipelines）において読み書き可能なデータを提供するために使用されます。</p>
+<p>その使用方法はUniformBufferとほぼ同じで、主な違いは以下の通りです：</p>
+<ul>
+<li><strong>Storage Buffer は非常に大きなビデオメモリを申請できる</strong> ： OpenGL規格はUniform Bufferのサイズが <strong>16KB</strong> に達することを保証しますが、Storage Bufferは <strong>128 MB</strong> に達することができます。</li>
+<li><strong>Storage Buffer は可写性であり、原子（Atomic）操作をサポートする</strong> ：Storage Bufferの読み書きは順不同である可能性があるため、同期を保証するためにメモリバリアを追加する必要があることが多いです。</li>
+<li><strong>Storage Buffer は可変ストレージをサポートする</strong> ：これはStorage Buffer内のブロック（Block）で、<code>int arr[];</code>のような無境界配列を定義できることを意味します。シェーダ中で<code>arr.length</code>を使用して配列の長さを取得できますが、Uniform Buffer内のブロックでは配列を定義する際に配列サイズを明確に指定する必要があります。</li>
+<li><strong>同条件下で、SSBOのアクセスはUniform Bufferより遅い</strong> ：Storage Bufferは通常バッファテクスチャと同様にアクセスされますが、Uniform Bufferデータは内部シェーダアクセス可能なメモリを通じて読み取られます。</li>
+</ul>
+<p>後の計算シェーダの章でその使用方法を説明します。ここに完全なドキュメントがあります：</p>
+<ul>
+<li><a href="https://www.khronos.org/opengl/wiki/Shader_Storage_Buffer_Object">https://www.khronos.org/opengl/wiki/Shader_Storage_Buffer_Object</a></li>
+</ul>
+<h2 id="_5">テクスチャ<a class="headerlink" href="#_5" title="Permanent link">¶</a></h2>
+<p>前の章では、3つの頂点特徴を通じてラスタライズ補間を利用し、カラフルな三角形画像を生成しました：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../01-GraphicsAPI/Resources/image-20230503194533809.png" data-desc-position="bottom"><img alt="image-20230503194533809" src="../../../../01-GraphicsAPI/Resources/image-20230503194533809.png"></a></p>
+<p>コンピュータで画像を描画したい場合、画像には非常に多くの特徴があり、これらの特徴は線形グラデーションではないことが多いです。頂点の方式で画像の色特徴を伝達し続けると、一枚の画像に数百万個の三角形が必要になる可能性があります。このデータ量はGPUにとって問題ないかもしれませんが、これほど多くの三角形は幾何学およびラスタライズ段階に巨大な圧力を与えることは間違いありません。</p>
+<p>例えば、これはサイズが僅か<code>500*500</code>のノイズ画像です：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../01-GraphicsAPI/Resources/image-20230520124250341.png" data-desc-position="bottom"><img alt="image-20230520124250341" src="../../../../01-GraphicsAPI/Resources/image-20230520124250341.png"></a></p>
+<p>その各カラーは線形グラデーションではないため、頂点の方式でこれらの特徴を記述する場合、250万個の頂点が必要になります。これはグラフィックスレンダリングパイプラインがこの画像をレンダリングしようとすると、数百万個の三角形を処理する必要があることを意味します。明らかに、この操作の性能消費は非常に高いです。</p>
+<p>画像レンダリングの難題を解決するため、グラフィックスAPIは別の概念—— <strong>テクスチャ（Texture）</strong> ——を提出しました。</p>
+<p>它は <strong>シェーダリソース（Shader Resource）</strong> の形式でグラフィックスレンダリングパイプラインに存在し、バッファと同様にGPU上のメモリ領域を保持するだけでなく、 <strong>画像フォーマット（Format）、サンプル数（Sample Count）、タイプ識別子（Flags）</strong> などの特徴も含みます。</p>
+<p>QRhiでは、以下のインターフェースを使用してテクスチャを作成できます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">QRhiTexture</span><span class="o">*</span><span class="w"> </span><span class="nf">QRhi::newTexture</span><span class="p">(</span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">Format</span><span class="w"> </span><span class="n">format</span><span class="p">,</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="w">                        </span><span class="k">const</span><span class="w"> </span><span class="n">QSize</span><span class="w"> </span><span class="o">&amp;</span><span class="n">pixelSize</span><span class="p">,</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="w">                        </span><span class="kt">int</span><span class="w"> </span><span class="n">sampleCount</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="w">                        </span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">Flags</span><span class="w"> </span><span class="n">flags</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{});</span>
+</code></pre></div>
+<ul>
+<li><strong>format</strong> ：画像フォーマット。常見的な画像フォーマットは以下の通りです：</li>
+<li><code>RGBA8</code>：赤<code>R</code>、緑<code>G</code>、青<code>B</code>、透明度<code>A</code>の4つのチャネルを持ち、<code>8</code>は各チャネルが<code>8 bit</code>（即ち1バイト）を占め、256個の特徴値を表すことができます</li>
+<li><code>R8</code>：赤（R）単一チャネルを持ち、<code>8</code>は各チャネルが<code>8 bit</code>を占めます</li>
+<li><code>RGBA32F</code>：浮動小数点形式のテクスチャで、赤<code>R</code>、緑<code>G</code>、青<code>B</code>、透明度<code>A</code>の4つのチャネルを持ち、<code>32</code>は各チャネルが<code>32 bit</code>（即ち4バイト）を占めます。非浮動小数点テクスチャは[0,1]の間の値しか格納できず、範囲外の部分は破棄されますが、浮動小数点テクスチャは画像上の数値が範囲外になることを許可します。</li>
+<li><code>D24S8</code>：<code>24 bit</code>を深度チャネルとして使用し、<code>8 bit</code>をテンプレートチャネルとして使用することを示します</li>
+<li>...</li>
+<li><strong>pixelSize</strong> ：作成したい画像のサイズ。</li>
+<li><strong>sampleCount</strong> ：サンプル数。デフォルトは1で、多重サンプリング（アンチエイリアス、アンチエイリアシングに使用）を行いません。一般的に、コンピュータはサンプル数を{1，2，4，8}に設定することをサポートします</li>
+<li><strong>flags</strong> ：テクスチャ識別子。デフォルトでは、QRhiは2次元テクスチャを作成します。この識別子を通じて1次元テクスチャ、3次元テクスチャ、キューブマップテクスチャ、テクスチャ配列などの他のタイプを指定することができ、Mipmapを生成するかどうか、伝送ソースとして使用できるかどうか、計算シェーダの読み書きに使用できるかどうか、RenderTargetのアタッチメントとして使用できるかどうかなどのテクスチャの行動特徴を指定することもできます。</li>
+</ul>
+<p>以下のコードでテクスチャを作成できます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="n">QImgae</span><span class="w"> </span><span class="n">mImage</span><span class="p">;</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiTexture</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mTexture</span><span class="p">;</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="n">mImage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QImage</span><span class="p">(</span><span class="s">"{Your Image Path}"</span><span class="p">).</span><span class="n">convertedTo</span><span class="p">(</span><span class="n">QImage</span><span class="o">::</span><span class="n">Format_RGBA8888</span><span class="p">);</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="n">mTexture</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newTexture</span><span class="p">(</span><span class="n">QRhiTexture</span><span class="o">::</span><span class="n">RGBA8</span><span class="p">,</span><span class="w"> </span><span class="n">mImage</span><span class="p">.</span><span class="n">size</span><span class="p">()));</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a><span class="n">mTexture</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<p>画像を幾何学図形にマッピングするため、幾何学図形の頂点に <strong>テクスチャ座標(Texture Coordinate)</strong> という属性を追加します。</p>
+<blockquote>
+<p>テクスチャ座標はx軸とy軸で0から1の範囲にあります。テクスチャ座標を使用してテクスチャカラーを取得することをサンプリング(Sampling)と呼びます。テクスチャ座標は(0, 0)から始まり（テクスチャ画像の左下隅）、(1, 1)で終わります（テクスチャ画像の右上隅）。以下の画像はテクスチャ座標を三角形にマッピングする方法を示しています。</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../01-GraphicsAPI/Resources/tex_coords.png" data-desc-position="bottom"><img alt="img" src="../../../../01-GraphicsAPI/Resources/tex_coords.png"></a></p>
+<p>空間位置の座標成分と区別するため、テクスチャ座標は一般的にx、y、zを使用せず、u、v、wを使用します。また、2次元テクスチャがよく使用されるため、テクスチャ座標を <strong>UV</strong> と呼ぶこともよくあります</p>
+</blockquote>
+<p>また、考慮する必要のある問題がいくつかあります：</p>
+<ul>
+<li>ディスク上に保存されたサイズが<code>100*100</code>の画像をプレビュー時に<code>1000*1000</code>に拡大する場合、元々1万ピクセルデータしかない画像がスクリーン上で100万ピクセルの効果を表示する必要があります。これは前のラスタライズ補間を思い出すかもしれませんが、現在は頂点の方式で画像を描画するのではなく、シェーダテクスチャリソースの方式です。補間は必ず行われますが、どのような補間方式で行うのでしょうか？</li>
+<li>画像上の各点に対して、隣接する8つのピクセルとの平均値を計算する操作を実行するとします。この簡単な操作には非常に面倒な問題があります。境界の一周のピクセル周辺には8つのピクセルが存在しないため、特殊処理を行う必要があります。特殊処理は論理分岐の存在を意味します。前の章で述べたように、GPUは論理処理に友好的ではありません。他の方法はありますか？境界部分の欠落したピクセルをサンプリングする際にも正常にサンプリングし、値（例えば0）を返すことができれば、境界に対して特殊処理を行う必要がなくなります。この操作はテクスチャ座標の範囲[0,1]を超えて画像をサンプリングする可能性があることを意味します。この場合のサンプリングはどのような値を返すのが適切でしょうか？</li>
+</ul>
+<p>これが <strong>サンプラー（Sampler）</strong> の責任です —— <strong>補間フィルタリング行動</strong> と <strong>範囲外処理戦略</strong> を定義することです。</p>
+<p>これらの行動を紹介する非常に良い記事があります。読者は必ず参照してください：</p>
+<ul>
+<li><a href="https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/#_3">https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/#_3</a></li>
+</ul>
+<p>QRhiでは、以下の関数を使用してサンプラーを作成できます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="k">enum</span><span class="w"> </span><span class="nc">Filter</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="w">    </span><span class="n">None</span><span class="p">,</span>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="w">    </span><span class="n">Nearest</span><span class="p">,</span><span class="w">        </span><span class="c1">//最近傍フィルタリング（Nearest Neighbor Filtering）、テクスチャ座標から最も近いピクセル値を取得</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="w">    </span><span class="n">Linear</span><span class="w">          </span><span class="c1">//線形フィルタリング（Linear Filtering）、テクスチャ座標周辺のピクセルに基づいて補間         </span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="p">};</span>
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="k">enum</span><span class="w"> </span><span class="nc">AddressMode</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="w">    </span><span class="n">Repeat</span><span class="p">,</span><span class="w">         </span><span class="c1">//繰り返し、範囲外部分は繰り返しの画像を使用</span>
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a><span class="w">    </span><span class="n">ClampToEdge</span><span class="p">,</span><span class="w">    </span><span class="c1">//境界に制約：範囲外部分は画像境界のピクセル値を使用</span>
+<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a><span class="w">    </span><span class="n">Mirror</span><span class="p">,</span><span class="w">         </span><span class="c1">//ミラー：範囲外部分は画像のミラーを使用</span>
+<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="p">};</span>
+<a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="n">QRhiSampler</span><span class="o">*</span><span class="nf">QRhi::newSampler</span><span class="p">(</span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="w"> </span><span class="n">magFilter</span><span class="p">,</span>
+<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="w"> </span><span class="n">minFilter</span><span class="p">,</span>
+<a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="w"> </span><span class="n">mipmapMode</span><span class="p">,</span>
+<a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="w"> </span><span class="n">addressU</span><span class="p">,</span>
+<a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="w"> </span><span class="n">addressV</span><span class="p">,</span>
+<a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a><span class="w">                        </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="w"> </span><span class="n">addressW</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Repeat</span><span class="p">);</span>
+</code></pre></div>
+<ul>
+<li><strong>magFilter</strong> ：拡大（Magnify）フィルタリング、即ち画像を拡大する際にどのような方式でサンプリングフィルタリングを行うか</li>
+<li><strong>minFilter</strong> ：縮小（Minify）フィルタリング、即ち画像を縮小する際にどのような方式でサンプリングフィルタリングを行うか</li>
+<li><strong>mipmapMode</strong> ：ミップマップのサンプリングモード、次の記事で詳しく説明します。</li>
+<li><strong>addressU</strong> ：水平方向の範囲外処理戦略</li>
+<li><strong>addressV</strong> ：垂直方向の範囲外処理戦略</li>
+<li><strong>addressW</strong> ：3D空間でスクリーンに垂直な方向の範囲外処理戦略、2次元テクスチャではこのパラメータを無視できます。</li>
+</ul>
+<p>以下の方式でサンプラーを作成できます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a><span class="n">QScopedPointer</span><span class="o">&lt;</span><span class="n">QRhiSampler</span><span class="o">&gt;</span><span class="w"> </span><span class="n">mSapmler</span><span class="p">;</span>
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a><span class="n">mSapmler</span><span class="p">.</span><span class="n">reset</span><span class="p">(</span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newSampler</span><span class="p">(</span>
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="o">::</span><span class="n">Linear</span><span class="p">,</span>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="o">::</span><span class="n">Linear</span><span class="p">,</span>
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">Filter</span><span class="o">::</span><span class="n">Nearest</span><span class="p">,</span>
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="o">::</span><span class="n">Repeat</span><span class="p">,</span>
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="o">::</span><span class="n">Repeat</span><span class="p">,</span>
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a><span class="w">    </span><span class="n">QRhiSampler</span><span class="o">::</span><span class="n">AddressMode</span><span class="o">::</span><span class="n">Repeat</span>
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a><span class="p">));</span>
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a><span class="n">mSapmler</span><span class="o">-&gt;</span><span class="n">create</span><span class="p">();</span>
+</code></pre></div>
+<p>テクスチャはUniformBufferと同様に <strong>シェーダリソース（Shader Resource）</strong> に属し、使用するには <strong>シェーダリソースバインディング（ShaderResourceBinding）</strong> でバインディングする必要があります：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a><span class="n">mShaderBindings</span><span class="o">-&gt;</span><span class="n">setBindings</span><span class="p">({</span>
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">    </span><span class="n">QRhiShaderResourceBinding</span><span class="o">::</span><span class="n">sampledTexture</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w">                                                    </span><span class="c1">//パイプライン中のバインディングインデックス</span>
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">                                              </span><span class="n">QRhiShaderResourceBinding</span><span class="o">::</span><span class="n">StageFlag</span><span class="o">::</span><span class="n">FragmentStage</span><span class="p">,</span><span class="w">  </span><span class="c1">//フラグメントシェーダ中で使用可能</span>
+<a id="__codelineno-29-4" name="__codelineno-29-4" href="#__codelineno-29-4"></a><span class="w">                                              </span><span class="n">mTexture</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span><span class="w">                                       </span><span class="c1">//テクスチャオブジェクト</span>
+<a id="__codelineno-29-5" name="__codelineno-29-5" href="#__codelineno-29-5"></a><span class="w">                                              </span><span class="n">mSapmler</span><span class="p">.</span><span class="n">get</span><span class="p">())</span><span class="w">                                       </span><span class="c1">//サンプラーオブジェクト</span>
+<a id="__codelineno-29-6" name="__codelineno-29-6" href="#__codelineno-29-6"></a><span class="p">});</span>
+</code></pre></div>
+<p>上記のコードのサポートがあれば、フラグメントシェーダで以下のコードを使用してテクスチャをサンプリングできます：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kt">vec2</span><span class="w"> </span><span class="n">vUV</span><span class="p">;</span><span class="w">           </span><span class="c1">//頂点着色段階からラスタライズを経て伝達されたテクスチャ座標</span>
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a><span class="k">layout</span><span class="p">(</span><span class="n">location</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mo">0</span><span class="p">)</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">vec4</span><span class="w"> </span><span class="n">outFragColor</span><span class="p">;</span><span class="w"> </span><span class="c1">//フラグメントカラー出力</span>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="k">layout</span><span class="p">(</span><span class="n">binding</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">uniform</span><span class="w"> </span><span class="kt">sampler2D</span><span class="w"> </span><span class="n">inTexture</span><span class="p">;</span><span class="w">    </span><span class="c1">//シェーダテクスチャリソース</span>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="kt">void</span><span class="w"> </span><span class="n">main</span><span class="p">(){</span>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">    </span><span class="n">outFragColor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">texture</span><span class="p">(</span><span class="n">inTexture</span><span class="p">,</span><span class="n">vUV</span><span class="p">);</span><span class="w">  </span><span class="c1">//texture関数を使用してUV座標に基づいて画像をサンプリングし、取得される値のタイプはvec4です</span>
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>ここに有用な小さなTipsがいくつかあります：</p>
+<ul>
+<li>GLSLでは<code>textureSize(inTexture, 0)</code>関数を使用してテクスチャのサイズを取得できます</li>
+<li>いくつかの章でPassの効果をテストする際にフルスクリーンテクスチャの描画を頻繁に行う可能性があります。簡単な方法があります：頂点入力を使用しない場合、頂点シェーダの組み込み変数<code>gl_VertexIndex</code>に基づいて矩形の頂点とテクスチャ座標を生成し、空の <strong>InputVertexLayout</strong> を使用して<code>cmdBuffer-&gt;draw(4)</code>を呼び出すだけで矩形テクスチャを描画できます。頂点シェーダの作成は以下の通りです：</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="n">QShader</span><span class="w"> </span><span class="n">vs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">newShaderFromCode</span><span class="p">(</span><span class="n">QShader</span><span class="o">::</span><span class="n">VertexStage</span><span class="p">,</span><span class="w"> </span><span class="sa">R</span><span class="s">"</span><span class="dl">(</span><span class="s">#version 450</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="s">    layout (location = 0) out vec2 vUV;</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="s">    out gl_PerVertex{</span>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a><span class="s">        vec4 gl_Position;</span>
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="s">    };</span>
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="s">    void main() {</span>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="s">        vUV = vec2((gl_VertexIndex &lt;&lt; 1) &amp; 2, gl_VertexIndex &amp; 2);      /</span>
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="s">        gl_Position = vec4(vUV * 2.0f - 1.0f, 0.0f, 1.0f);</span>
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a><span class="s">#if Y_UP_IN_NDC              //DXとGL、VKのNDC座標が一致しないため、ここで互換性処理が必要</span>
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="s">        vUV.y = 1 - vUV.y;</span>
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a><span class="s">#endif </span>
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a><span class="s">    }</span><span class="dl">)</span><span class="s">"</span>
+<a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a><span class="w">    </span><span class="p">,</span><span class="w"> </span><span class="n">QShaderDefinitions</span><span class="p">()</span><span class="w">   </span><span class="c1">//このパラメータは単にコードの先頭に #define Y_UP_IN_NDC 1 を追加するだけです        </span>
+<a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a><span class="w">    </span><span class="p">.</span><span class="n">addDefinition</span><span class="p">(</span><span class="s">"Y_UP_IN_NDC"</span><span class="p">,</span><span class="w"> </span><span class="n">mRhi</span><span class="o">-&gt;</span><span class="n">isYUpInNDC</span><span class="p">())</span>
+<a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a><span class="p">);</span>
+</code></pre></div>
+<blockquote>
+<p>詳細は：<a href="https://stackoverflow.com/questions/2588875/whats-the-best-way-to-draw-a-fullscreen-quad-in-opengl-3-2">https://stackoverflow.com/questions/2588875/whats-the-best-way-to-draw-a-fullscreen-quad-in-opengl-3-2</a> を参照してください</p>
+</blockquote>
+<h2 id="_6">例<a class="headerlink" href="#_6" title="Permanent link">¶</a></h2>
+<p>このチュートリアルの<a href="https://github.com/Italink/ModernGraphicsEngineGuide/blob/main/Source/1-GraphicsAPI/04-BufferAndTexture/Source/main.cpp">04-BufferAndTexture</a>例では、 <strong>Uniform Buffer</strong> 、 <strong>Index Buffer</strong> 、 <strong>Texture</strong> の使用方法を演示しています。参考にして、面白いものを実装することができます：</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../../01-GraphicsAPI/Resources/418.gif" data-desc-position="bottom"><img alt="418" src="../../../../01-GraphicsAPI/Resources/418.gif"></a></p>
+<h2 id="_7">メモリ管理<a class="headerlink" href="#_7" title="Permanent link">¶</a></h2>
+<p><a href="https://zhuanlan.zhihu.com/p/603325037">C++メモリ管理</a> の章では、C++中でCPUメモリを管理する方法をいくつか紹介しました。GPU中でも、そのメモリ使用にはいくつかの専門用語があります。詳細なドキュメントは以下の通りです：</p>
+<ul>
+<li><strong>VulkanでのDo's and Don'ts</strong> ：<a href="https://developer.nvidia.com/blog/vulkan-dos-donts/">https://developer.nvidia.com/blog/vulkan-dos-donts/</a></li>
+<li>
+<p><strong>DX12でのDo's and Don'ts</strong> ：<a href="https://developer.nvidia.com/dx12-dos-and-donts">https://developer.nvidia.com/dx12-dos-and-donts</a></p>
+</li>
+<li>
+<p><strong>Vulkan メモリ管理</strong> ：<a href="https://www.youtube.com/watch?v=rXSdDE7NWmA">https://www.youtube.com/watch?v=rXSdDE7NWmA</a></p>
+</li>
+<li>B站転載：<a href="https://www.bilibili.com/video/BV17W411S7a1/?p=3">https://www.bilibili.com/video/BV17W411S7a1/?p=3</a></li>
+<li>講演PPT：<a href="https://www.khronos.org/assets/uploads/developers/library/2018-vulkan-devday/03-Memory.pdf">https://www.khronos.org/assets/uploads/developers/library/2018-vulkan-devday/03-Memory.pdf</a></li>
+</ul>
+<p>同様に、依存できるサードパーティライブラリもいくつかあります：</p>
+<ul>
+<li><strong>Vulkan メモリアロケータ</strong> ：<a href="https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator">https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator</a></li>
+<li><strong>D3D12 メモリアロケータ</strong> ：<a href="https://github.com/GPUOpen-LibrariesAndSDKs/D3D12MemoryAllocator">https://github.com/GPUOpen-LibrariesAndSDKs/D3D12MemoryAllocator</a></li>
+</ul>
+<blockquote>
+<p>幸いなことに、QRhiは内部でこれら2つのメモリアロケータをロードしています：<a href="https://github.com/qt/qtbase/tree/dev/src/gui/rhi">https://github.com/qt/qtbase/tree/dev/src/gui/rhi</a></p>
+</blockquote>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="最后更新">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="创建日期">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_datetime" title="2025年12月16日 01:27:52 UTC">2025-12-16 01:27:52</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+  
+
+
+
+
+  <h2 id="__comments">评论</h2>
+  <!-- Insert generated snippet here -->
+  <script src="https://giscus.app/client.js" data-repo="Italink/ModernGraphicsEngineGuide" data-repo-id="R_kgDOIPtbiQ" data-category-id="DIC_kwDOIPtbic4CTxOk" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous" async>
+  </script>
+  <!-- Synchronize Giscus theme with palette -->
+  <script>
+    var giscus = document.querySelector("script[src*=giscus]")
+
+    /* Set palette on initial load */
+    var palette = __md_get("__palette")
+    if (palette && typeof palette.color === "object") {
+      var theme = palette.color.scheme === "slate" ? "dark" : "light"
+      giscus.setAttribute("data-theme", theme) 
+    }
+
+    /* Register event handlers after documented loaded */
+    document.addEventListener("DOMContentLoaded", function() {
+      var ref = document.querySelector("[data-md-component=palette]")
+      ref.addEventListener("change", function() {
+        var palette = __md_get("__palette")
+        if (palette && typeof palette.color === "object") {
+          var theme = palette.color.scheme === "slate" ? "dark" : "light"
+
+          /* Instruct Giscus to change theme */
+          var frame = document.querySelector(".giscus-frame")
+          frame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme } } },
+            "https://giscus.app"
+          )
+        }
+      })
+    })
+  </script>
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2016 - 2023 Italink
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Italink" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.zhihu.com/people/italink" target="_blank" rel="noopener" title="www.zhihu.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.721 0C2.251 0 0 2.25 0 5.719V18.28C0 21.751 2.252 24 5.721 24h12.56C21.751 24 24 21.75 24 18.281V5.72C24 2.249 21.75 0 18.281 0zm1.964 4.078q-.408 1.096-.68 2.11h4.587c.545-.006.445 1.168.445 1.171H9.384a58 58 0 0 1-.112 3.797h2.712c.388.023.393 1.251.393 1.266H9.183a9.2 9.2 0 0 1-.408 2.102l.757-.604c.452.456 1.512 1.712 1.906 2.177.473.681.063 2.081.063 2.081l-2.794-3.382c-.653 2.518-1.845 3.607-1.845 3.607-.523.468-1.58.82-2.64.516 2.218-1.73 3.44-3.917 3.667-6.497H4.491c0-.015.197-1.243.806-1.266h2.71c.024-.32.086-3.254.086-3.797H6.598c-.136.406-.158.447-.268.753-.594 1.095-1.603 1.122-1.907 1.155.906-1.821 1.416-3.6 1.591-4.064.425-1.124 1.671-1.125 1.671-1.125M13.078 6h6.377v11.33h-2.573l-2.184 1.373-.401-1.373h-1.219zm1.313 1.219v8.86h.623l.263.937 1.455-.938h1.456v-8.86z"></path></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "content.tooltips", "navigation.expand", "navigation.footer", "navigation.indexes", "navigation.sections", "navigation.instant", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow", "announce.dismiss"], "search": "../../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  
+<script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(()=>{ lightbox.reload(); });
+</script></body></html>
